@@ -45,7 +45,16 @@ public class VariableChannelFactoryInst implements VariableChannelFactory
 	/**
 	 * The VariableChannel objects produced by this VariableChannelFactoryInst.
 	 */
-	private Map<VariableID<?>, VariableChannel<?>> channels = new HashMap<>();
+	private final Map<VariableChannelKey, VariableChannel<?>> channels = new HashMap<>();
+
+	/**
+	 * Identifies one variable on one character. A VariableID alone is not enough: global variables
+	 * have the same VariableID for every character using the data set, so caching on it alone hands
+	 * every character the first character's VariableChannel (and therefore its values).
+	 */
+	private record VariableChannelKey(CharID id, VariableID<?> variableID)
+	{
+	}
 
 	@Override
 	public VariableChannel<?> getChannel(CharID id, VarScoped owner, String name)
@@ -64,7 +73,7 @@ public class VariableChannelFactoryInst implements VariableChannelFactory
 	@Override
 	public void disconnect(VariableChannel<?> variableChannel)
 	{
-		channels.remove(variableChannel.getVariableID());
+		channels.values().remove(variableChannel);
 		variableChannel.disconnect();
 	}
 
@@ -89,12 +98,12 @@ public class VariableChannelFactoryInst implements VariableChannelFactory
 	private <T> VariableChannel<T> getChannel(CharID id, VariableID<T> varID)
 	{
 		@SuppressWarnings("unchecked")
-		VariableChannel<T> ref = (VariableChannel<T>) channels.get(varID);
+		VariableChannel<T> ref = (VariableChannel<T>) channels.get(new VariableChannelKey(id, varID));
 		if (ref == null)
 		{
 			MonitorableVariableStore varStore = RESULT_FACET.get(id);
 			ref = VariableChannel.construct(MGR_FACET.get(id), varStore, varID);
-			channels.put(varID, ref);
+			channels.put(new VariableChannelKey(id, varID), ref);
 		}
 		return ref;
 	}

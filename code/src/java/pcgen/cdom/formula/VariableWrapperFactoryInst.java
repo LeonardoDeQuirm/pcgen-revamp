@@ -44,7 +44,16 @@ public class VariableWrapperFactoryInst implements VariableWrapperFactory
 	/**
 	 * The VariableWrapper objects produced by this VariableWrapperFactoryInst.
 	 */
-	private Map<VariableID<?>, VariableWrapper<?>> wrappers = new HashMap<>();
+	private final Map<VariableWrapperKey, VariableWrapper<?>> wrappers = new HashMap<>();
+
+	/**
+	 * Identifies one variable on one character. A VariableID alone is not enough: global variables
+	 * have the same VariableID for every character using the data set, so caching on it alone hands
+	 * every character the first character's VariableWrapper (and therefore its values).
+	 */
+	private record VariableWrapperKey(CharID id, VariableID<?> variableID)
+	{
+	}
 
 	@Override
 	public VariableWrapper<?> getWrapper(CharID id, VarScoped owner, String name)
@@ -61,7 +70,7 @@ public class VariableWrapperFactoryInst implements VariableWrapperFactory
 	@Override
 	public void disconnect(VariableWrapper<?> variableWrapper)
 	{
-		wrappers.remove(variableWrapper.getVariableID());
+		wrappers.values().remove(variableWrapper);
 		variableWrapper.disconnect();
 	}
 
@@ -86,12 +95,12 @@ public class VariableWrapperFactoryInst implements VariableWrapperFactory
 	private <T> VariableWrapper<T> getWrapper(CharID id, VariableID<T> varID)
 	{
 		@SuppressWarnings("unchecked")
-		VariableWrapper<T> ref = (VariableWrapper<T>) wrappers.get(varID);
+		VariableWrapper<T> ref = (VariableWrapper<T>) wrappers.get(new VariableWrapperKey(id, varID));
 		if (ref == null)
 		{
 			MonitorableVariableStore varStore = RESULT_FACET.get(id);
 			ref = VariableWrapper.construct(MGR_FACET.get(id), varStore, varID);
-			wrappers.put(varID, ref);
+			wrappers.put(new VariableWrapperKey(id, varID), ref);
 			varStore.addVariableListener(varID, ref);
 		}
 		return ref;
