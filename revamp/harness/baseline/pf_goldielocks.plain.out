@@ -1,0 +1,1071 @@
+Name:       pf_goldielocks
+Race:       Dragon (Gold) (Great Wyrm)
+Player:     Test Monkey 
+Classes:    Sorcerer/Cleric (Arcane)0 Dragon30
+Hit Points: 570
+Experience: 0 / 3600011
+Alignment:  Lawful Good
+Vision:     Blindsense (60 ft.), Darkvision (120 ft.), Low-Light Vision
+Speed:      Walk 60 ft., Fly 250 ft., Swim 60 ft.
+Languages:  Draconic
+Stat    Score   Mod
+STR  42 (+16)
+DEX  6 (-2)
+CON  28 (+9)
+INT  26 (+8)
+WIS  26 (+8)
+CHA  26 (+8)
+-------------------------- Skills --------------------------
+Skill                   Total   Rnk     Stat    Msc
+Acrobatics  0  0.0  -2  2
+Acrobatics (When Jumping)  12  0.0  -2  14
+Appraise  14  3.0  8  3
+Bluff  13  2.0  8  3
+Climb  22  3.0  16  3
+Craft (Untrained)  8  0.0  8  0
+Diplomacy  15  4.0  8  3
+Disguise  8  0.0  8  0
+Escape Artist  -2  0.0  -2  0
+Fly  19  30.0  -2  -9
+Heal  18  7.0  8  3
+Intimidate  15  4.0  8  3
+Knowledge (Arcana)  13  2.0  8  3
+Perception  8  0.0  8  0
+Perform (Untrained)  8  0.0  8  0
+Ride  -2  0.0  -2  0
+Sense Motive  13  2.0  8  3
+Stealth  -18  0.0  -2  -16
+Survival  28  17.0  8  3
+Swim  24  0.0  16  8
+-------------------------- Feats ---------------------------
+Acrobatic
+  You are skilled at leaping, jumping, and flying.
+  
+Combat Casting
+  You are adept at spellcasting when threatened or distracted.
+  
+Craft Magic Arms and Armor
+  You can create magic armor, shields, or weapons.
+  
+Craft Rod
+  You can create magic rods.
+  
+Craft Staff
+  You can create magic staves.
+  
+Craft Wand
+  You can create magic wands.
+  
+Craft Wondrous Item
+  You can create wondrous items, a type of magic item.
+  
+Eschew Materials
+  You can cast many spells without needing to utilize minor material components.
+  
+Extend Spell
+  You can make your spells last twice as long.
+  
+Flyby Attack
+  This creature can make an attack before and after it moves while flying.
+  
+Forge Ring
+  You can create magic rings.
+  
+Hover
+  This creature can hover in place with ease and can kick up clouds of dust and debris.
+  
+Multiattack
+-------------------- Special Abilities ---------------------
+
+			<name>Dragon Age Category - Great Wyrm</name>
+			<description></description>
+			<type>SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>NAME: Dragon Age Category - Great Wyrm</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - </source>
+		</special_quality>
+			<name>Bite</name>
+			<description>This is a primary attack that deals the indicated damage plus 1-1/2 times the dragon's Strength bonus (even though it has more than one attack). A dragon's bite attack has reach as if the creature were one size category larger (+10 feet for Colossal dragons).</description>
+			<type>RACEABILITY.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - </source>
+		</special_quality>
+			<name>Blindsense (Ex)</name>
+			<description>Range 60 ft.; Other creatures have blindsense, a lesser ability that lets the creature notice things it cannot see, but without the precision of blindsight. The creature with blindsense usually does not need to make Spot or Listen checks to notice and locate creatures within range of its blindsense ability, provided that it has line of effect to that creature. Any opponent the creature cannot see has total concealment (50% miss chance) against the creature with blindsense, and the blindsensing creature still has the normal miss chance when attacking foes that have concealment. Visibility still affects the movement of a creature with blindsense. A creature with blindsense is still denied its Dexterity bonus to Armor Class against attacks from creatures it cannot see.</description>
+			<type>SPECIALQUALITY.EXTRAORDINARY.VISION</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>Vision: Blindsense 60 ft.</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - </source>
+		</special_quality>
+			<name>Breath Weapon (Su)</name>
+			<description>70' Cone of Fire 24d10 Fire, DC 34, usable every 1d4 rounds. Breath weapons allow a Reflex save for half damage. You are immune to your own breath weapon.</description>
+			<type>SPECIALATTACK.SUPERNATURAL.BREATHWEAPON</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>Ability Benefit: (70' Cone of Fire 24d10 Fire, DC 34)</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Bestiary, p.298</source>
+		</special_quality>
+			<name>Breath Weapon (Su)</name>
+			<description>70' Cone of Weakening Gas, DC 34 or -12 STR, usable every 1d4 rounds. Breath weapons allow a Reflex save for half damage. You are immune to your own breath weapon.</description>
+			<type>SPECIALATTACK.SUPERNATURAL.BREATHWEAPON</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>Ability Benefit: (70' Cone of Weakening Gas, DC 34 or -12 STR)</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Bestiary, p.298</source>
+		</special_quality>
+			<name>Breath Weapon (Su)</name>
+			<description>Using a breath weapon is a standard action. A dragon can use its breath weapon once every 1d4 rounds, even if it possesses more than one breath weapon. A breath weapon always starts at an intersection adjacent to the dragon and extends in a direction of the dragon's choice. Breath weapons come in two shapes, lines and cones, whose areas vary with the dragon's size. If a breath weapon deals damage, those caught in the area can attempt Reflex saves to take half damage. The save DC against a breath weapon is 10 + 1/2 dragon's HD + dragon's Con modifier. Saves against various breath weapons use the same DC; the type of saving throw is noted in the variety descriptions. A dragon can use its breath weapon when it is grappling or being grappled.</description>
+			<type>RACEABILITY.SPECIALQUALITY.SUPERNATURAL</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - </source>
+		</special_quality>
+			<name>Change Shape (Su)</name>
+			<description>A very young or older gold dragon can assume any animal or humanoid form three times per day as if using polymorph.</description>
+			<type>SPECIALQUALITY.SUPERNATURAL</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Bestiary, p.108</source>
+		</special_quality>
+			<name>Claw</name>
+			<description>These primary attacks deal the indicated damage plus the dragon's Strength bonus.</description>
+			<type>RACEABILITY.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - </source>
+		</special_quality>
+			<name>Crush (Ex)</name>
+			<description>A flying or jumping Huge or larger dragon can land on foes as a standard action, using its whole body to crush them. Crush attacks are effective only against opponents three or more size categories smaller than the dragon. A crush attack affects as many creatures as fit in the dragon's space. Creatures in the affected area must succeed on a Reflex save (DC 34) or be pinned, automatically taking bludgeoning damage during the next round unless the dragon moves off them. If the dragon chooses to maintain the pin, it must succeed at a combat maneuver check as normal. Pinned foes take damage from the crush each round if they don't escape. A crush attack deals 4d8+24.</description>
+			<type>RACEABILITY.SPECIALATTACK.EXTRAORDINARY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>Ability Benefit: (4d8+24, DC 34)</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - , p.90</source>
+		</special_quality>
+			<name>Damage Reduction</name>
+			<description>Dragons gain damage reduction as they age, as indicated on each dragon's specific entry. Their natural weapons are treated as magic weapons for the purpose of overcoming damage reduction.</description>
+			<type>RACEABILITY.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - </source>
+		</special_quality>
+			<name>Darkvision (Ex)</name>
+			<description>Range 120 ft.; Darkvision is the extraordinary ability to see with no light source at all, out to a range specified for the creature. Darkvision is black and white only (colors cannot be discerned). It does not allow characters to see anything that they could not see otherwise-invisible objects are still invisible, and illusions are still visible as what they seem to be. Likewise, darkvision subjects a creature to gaze attacks normally. The presence of light does not spoil darkvision.</description>
+			<type>SPECIALQUALITY.EXTRAORDINARY.VISION</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>Vision: Darkvision 120 ft.</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - </source>
+		</special_quality>
+			<name>Detect Gems (Sp)</name>
+			<description>A young or older gold dragon can detect gems three times per day. This functions as locate object, but can only be used to locate gemstones.</description>
+			<type>SPECIALQUALITY.SPELLLIKE.SENSE</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Bestiary, p.108</source>
+		</special_quality>
+			<name>Divine Aid (Sp)</name>
+			<description>Once a week, a great wyrm gold dragon can call upon celestial powers for aid. This functions as a miracle.</description>
+			<type>SPECIALQUALITY.SPELLLIKE</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Bestiary, p.108</source>
+		</special_quality>
+			<name>Dragon Senses (Ex)</name>
+			<description>Dragons have darkvision 120 ft. and blindsense 60 ft. They see four times as well as a human in dim light and twice as well in normal light.</description>
+			<type>RACEABILITY.SPECIALQUALITY.EXTRAORDINARY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - </source>
+		</special_quality>
+			<name>Dragon Senses (Ex)</name>
+			<description>Dragons have darkvision 120 ft. and blindsense 60 ft. They see four times as well as a human in dim light and twice as well in normal light.</description>
+			<type>SPECIALQUALITY.EXTRAORDINARY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - </source>
+		</special_quality>
+			<name>Fast Flight (Ex)</name>
+			<description>A young or older gold dragon is treated as one size category larger when determining his fly speed.</description>
+			<type>SPECIALQUALITY.EXTRAORDINARY.MODIFYMOVEMENT</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Bestiary, p.108</source>
+		</special_quality>
+			<name>Fire Aura (Su)</name>
+			<description>An old or older gold dragon is surrounded by an aura of fire. All creatures within 10 feet of the dragon take 2d6 points of fire damage at the beginning of the dragon's turn. The dragon can activate or suppress this aura as a free action.</description>
+			<type>SPECIALQUALITY.SUPERNATURAL.AURA</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>Ability Benefit: (10 ft., 2d6 fire damage)</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Bestiary, p.108</source>
+		</special_quality>
+			<name>Frightful Presence (Ex)</name>
+			<description>A dragon's frightful presence has a range equal to 30 feet x the dragon's age category [360'], but otherwise functions as detailed on page 300.</description>
+			<type>RACEABILITY.SPECIALQUALITY.EXTRAORDINARY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - </source>
+		</special_quality>
+			<name>Immunities (Ex)</name>
+			<description>Every dragon is immune to sleep and paralysis. In addition, a dragon is immune to one or two additional forms of attack no matter what its age, as given in its description.</description>
+			<type>RACEABILITY.SPECIALQUALITY.EXTRAORDINARY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - </source>
+		</special_quality>
+			<name>Immunity to Fire (Ex)</name>
+			<description>You never take fire damage.</description>
+			<type>SPECIALQUALITY.EXTRAORDINARY.IMMUNITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>Immunity: Fire</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Bestiary, p.301</source>
+		</special_quality>
+			<name>Immunity to Magical Sleep (Ex)</name>
+			<description>You are never subject to magic sleep effects.</description>
+			<type>SPECIALQUALITY.EXTRAORDINARY.IMMUNITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>Immunity: Magical Sleep</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Bestiary, p.301</source>
+		</special_quality>
+			<name>Immunity to Paralysis (Ex)</name>
+			<description>You can never be paralyzed.</description>
+			<type>SPECIALQUALITY.EXTRAORDINARY.IMMUNITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>Immunity: Paralysis</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Bestiary, p.301</source>
+		</special_quality>
+			<name>Low-Light Vision (Ex)</name>
+			<description>You can see x4 as far as humans in low illumination. Characters with low-light vision have eyes that are so sensitive to light that they can see twice as far as normal in dim light. Low-Light Vision is color vision. A spellcaster with low-light vision can read a scroll as long as even the tiniest candle flame is next to her as a source of light. Characters with low-light vision can see outdoors on a moonlit night as well as they can during the day.</description>
+			<type>SPECIALQUALITY.EXTRAORDINARY.VISION</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>Vision: Low-Light Vision</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - </source>
+		</special_quality>
+			<name>Luck (Sp)</name>
+			<description>Once per day an adult or older gold dragon can touch a gem, usually one embedded in the dragon's hide, and enspell it to bring good luck. As long as the dragon carries the gem, it and every good creature within a given radius of it (120 ft.) receives a +1 luck bonus on all saving throws. If the dragon gives an enspelled gem to another creature, only that bearer gets the bonus. The effect lasts 1d3+12 hours. This ability is the equivalent of a 2nd-level spell.</description>
+			<type>SPECIALQUALITY.SPELLLIKE.AURA</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Bestiary, p.108</source>
+		</special_quality>
+			<name>Spell-Like Abilities</name>
+			<description>A dragon's caster level for its spelllike abilities is equal to its total Hit Dice.</description>
+			<type>RACEABILITY.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - </source>
+		</special_quality>
+			<name>Spell Resistance (Ex)</name>
+			<description>As dragons grow older, they become more resistant to spells and spell-like abilities, as indicated in the dragon descriptions. A dragon's SR is equal to 11 + its CR.</description>
+			<type>RACEABILITY.SPECIALQUALITY.EXTRAORDINARY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - </source>
+		</special_quality>
+			<name>Spells</name>
+			<description>A dragon knows and casts arcane spells as a sorcerer of the level indicated in its specific description. Its caster level depends on its age, as shown for each type.</description>
+			<type>RACEABILITY.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - </source>
+		</special_quality>
+			<name>Tail Slap</name>
+			<description>The dragon can slap one foe each round with its tail. A tail slap is a secondary attack that deals the indicated damage plus 1-1/2 times the dragon's Strength bonus (this is an exception to the normal secondary attack rules).</description>
+			<type>RACEABILITY.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - </source>
+		</special_quality>
+			<name>Tail Sweep (Ex)</name>
+			<description>This allows a Gargantuan or larger dragon to sweep with its tail as a standard action. The sweep affects a half-circle with a radius of 30 feet (or 40 feet for a Colossal dragon), extending from an intersection on the edge of the dragon's space in any direction. Creatures within the swept area are affected if they are four or more size categories smaller than the dragon. A tail sweep automatically deals 2d8+24. Affected creatures can attempt Reflex saves to take half damage (DC 34).</description>
+			<type>RACEABILITY.SPECIALATTACK.EXTRAORDINARY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>Ability Benefit: (2d8+24, DC 34)</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - , p.92</source>
+		</special_quality>
+			<name>Vulnerability to Cold (Ex)</name>
+			<description>You take half again as much (+50%) damage as normal from Cold, regardless of whether a saving throw is allowed, or if the save is a success or failure</description>
+			<type>SPECIALQUALITY.EXTRAORDINARY.WEAKNESS.VULNERABILITYENERGY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Bestiary, p.305</source>
+		</special_quality>
+			<name>Wing</name>
+			<description>The dragon can slam foes with its wings, even when flying. Wing attacks are secondary attacks that deal the indicated damage plus 1/2 the dragon's Strength bonus.</description>
+			<type>RACEABILITY.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - </source>
+		</special_quality>
+	</special_qualities>
+------------------------ Templates -------------------------
+Base Dragon HD (8), Dragon (Colossal), Dragon Attacks HD (8), Dragon Size HD (8)
+-------------------------- Combat --------------------------
+    Total / Touch / Flat Footed
+AC: 40 / 0 / 40
+Initiative:   -2
+BAB:          +30/+25/+20/+15
+Melee tohit:  +38/+33/+28/+23
+Ranged tohit: +20/+15/+10/+5
+Fortitude:    +26
+Reflex:       +15
+Will:         +25
+Unarmed attack:
+to hit:       +34/+29/+24/+19
+damage:       2d6+16
+critical:     20/x2
+Bite:
+to hit:       +38
+damage:       4d8+24
+critical:     20/x2
+Claws:
+to hit:       +38/+38
+damage:       4d6+16
+critical:     20/x2
+Tail Slap:
+to hit:       +36
+damage:       4d6+24
+critical:     20/x2
+Wing:
+to hit:       +36/+36
+damage:       2d8+8
+critical:     20/x2
+--------------------- Special Abilities --------------------
+ 
+------------------------- Equipment ------------------------
+Name                                            QTY	LBS
+Tail Slap (Natural/Primary)  1	0lbs
+Total weight carried: 0 lbs.
+Current load:         Light
+Encumbrance
+Light:  66560   
+Medium: 133120   
+Heavy:  199680
+--------------------------- Magic --------------------------
+
+Innate Spells
+Bless (Enchantment) - At Will per day
+Saves: None
+DC: 
+Casting: 1 standard action
+Duration: 30 minutes
+Range: 50 ft.
+Components: V, S, DF
+SR: Yes (harmless)
+Effect: Bless fills your allies with courage.
+Target:	The caster and all allies within a 50-ft. burst, centered on the caster
+Daylight (Evocation) - At Will per day
+Saves: None
+DC: 
+Casting: 1 standard action
+Duration: 300 minutes [D]
+Range: Touch
+Components: V, S
+SR: No
+Effect: You touch an object when you cast this spell, causing the object to shed bright light in a 60-foot radius.
+Target:	Object touched
+Detect Evil (Divination) - At Will per day
+Saves: None
+DC: 
+Casting: 1 standard action
+Duration: Concentration, up to 300 minutes [D]
+Range: 60 ft.
+Components: V, S, DF
+SR: No
+Effect: You can sense the presence of evil.
+Target:	Cone-shaped emanation
+Foresight (Divination) - At Will per day
+Saves: None or Will negates (harmless)
+DC: 27
+Casting: 1 standard action
+Duration: 300 minutes
+Range: Personal or touch
+Components: V, S, M/DF
+SR: No or yes (harmless)
+Effect: This spell grants you a powerful sixth sense in relation to yourself or another.
+Target:	See text
+Geas/Quest (Enchantment) - At Will per day
+Saves: None
+DC: 
+Casting: 10 minutes
+Duration: 30 days or until discharged [D]
+Range: Close (100 ft.)
+Components: V
+SR: Yes
+Effect: This spell functions similarly to lesser geas, except that it affects a creature of any HD and allows no saving throw.
+Target:	One living creature
+Sunburst (Evocation) - At Will per day
+Saves: Reflex partial; see text
+DC: 26
+Casting: 1 standard action
+Duration: Instantaneous
+Range: Long (1600 ft.)
+Components: V, S, M/DF
+SR: Yes
+Effect: Sunburst causes a globe of searing radiance to explode silently from a point you select.
+Target:	80-ft.-radius burst
+ () -  per day
+Saves: 
+DC: 
+Casting: 
+Duration: 
+Range: 
+Components: 
+SR: 
+Effect: 
+Target:	
+ () -  per day
+Saves: 
+DC: 
+Casting: 
+Duration: 
+Range: 
+Components: 
+SR: 
+Effect: 
+Target:	
+ () -  per day
+Saves: 
+DC: 
+Casting: 
+Duration: 
+Range: 
+Components: 
+SR: 
+Effect: 
+Target:	
+ () -  per day
+Saves: 
+DC: 
+Casting: 
+Duration: 
+Range: 
+Components: 
+SR: 
+Effect: 
+Target:	
+ () -  per day
+Saves: 
+DC: 
+Casting: 
+Duration: 
+Range: 
+Components: 
+SR: 
+Effect: 
+Target:	
+ () -  per day
+Saves: 
+DC: 
+Casting: 
+Duration: 
+Range: 
+Components: 
+SR: 
+Effect: 
+Target:	
+ () -  per day
+Saves: 
+DC: 
+Casting: 
+Duration: 
+Range: 
+Components: 
+SR: 
+Effect: 
+Target:	
+ () -  per day
+Saves: 
+DC: 
+Casting: 
+Duration: 
+Range: 
+Components: 
+SR: 
+Effect: 
+Target:	
+ () -  per day
+Saves: 
+DC: 
+Casting: 
+Duration: 
+Range: 
+Components: 
+SR: 
+Effect: 
+Target:	
+ () -  per day
+Saves: 
+DC: 
+Casting: 
+Duration: 
+Range: 
+Components: 
+SR: 
+Effect: 
+Target:	
+ () -  per day
+Saves: 
+DC: 
+Casting: 
+Duration: 
+Range: 
+Components: 
+SR: 
+Effect: 
+Target:	
+ () -  per day
+Saves: 
+DC: 
+Casting: 
+Duration: 
+Range: 
+Components: 
+SR: 
+Effect: 
+Target:	
+ () -  per day
+Saves: 
+DC: 
+Casting: 
+Duration: 
+Range: 
+Components: 
+SR: 
+Effect: 
+Target:	
+ () -  per day
+Saves: 
+DC: 
+Casting: 
+Duration: 
+Range: 
+Components: 
+SR: 
+Effect: 
+Target:	
+ () -  per day
+Saves: 
+DC: 
+Casting: 
+Duration: 
+Range: 
+Components: 
+SR: 
+Effect: 
+Target:	
+ () -  per day
+Saves: 
+DC: 
+Casting: 
+Duration: 
+Range: 
+Components: 
+SR: 
+Effect: 
+Target:	
+ () -  per day
+Saves: 
+DC: 
+Casting: 
+Duration: 
+Range: 
+Components: 
+SR: 
+Effect: 
+Target:	
+ () -  per day
+Saves: 
+DC: 
+Casting: 
+Duration: 
+Range: 
+Components: 
+SR: 
+Effect: 
+Target:	
+ () -  per day
+Saves: 
+DC: 
+Casting: 
+Duration: 
+Range: 
+Components: 
+SR: 
+Effect: 
+Target:	
+ () -  per day
+Saves: 
+DC: 
+Casting: 
+Duration: 
+Range: 
+Components: 
+SR: 
+Effect: 
+Target:	
+ () -  per day
+Saves: 
+DC: 
+Casting: 
+Duration: 
+Range: 
+Components: 
+SR: 
+Effect: 
+Target:	
+ () -  per day
+Saves: 
+DC: 
+Casting: 
+Duration: 
+Range: 
+Components: 
+SR: 
+Effect: 
+Target:	
+ () -  per day
+Saves: 
+DC: 
+Casting: 
+Duration: 
+Range: 
+Components: 
+SR: 
+Effect: 
+Target:	
+ () -  per day
+Saves: 
+DC: 
+Casting: 
+Duration: 
+Range: 
+Components: 
+SR: 
+Effect: 
+Target:	
+ () -  per day
+Saves: 
+DC: 
+Casting: 
+Duration: 
+Range: 
+Components: 
+SR: 
+Effect: 
+Target:	
+ () -  per day
+Saves: 
+DC: 
+Casting: 
+Duration: 
+Range: 
+Components: 
+SR: 
+Effect: 
+Target:	
+ () -  per day
+Saves: 
+DC: 
+Casting: 
+Duration: 
+Range: 
+Components: 
+SR: 
+Effect: 
+Target:	
+
+
+Sorcerer/Cleric (Arcane) Spells
+
+SPELLBOOKNAME0
+ 
+Level 0
+Acid Splash (Conjuration)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: Instantaneous	Range: Close (70 ft.)	Components: V, S
+SR: No	Effect: You fire a small orb of acid at the target dealing 1d3 points of acid damage.	Target: One missile of acid
+DESC: You fire a small orb of acid at the target dealing 1d3 points of acid damage.
+DESC 2:  You fire a small orb of acid at the target dealing 1d3 points of acid damage.
+Create Water (Conjuration)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: Instantaneous	Range: Close (70 ft.)	Components: V, S
+SR: No	Effect: This spell generates wholesome, drinkable water, just like clean rain water.	Target: Up to 38 gallons of water
+DESC: This spell generates wholesome, drinkable water, just like clean rain water.
+DESC 2:  This spell generates wholesome, drinkable water, just like clean rain water.
+Detect Magic (Divination)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: Concentration, up to 19 minutes [D]	Range: 60 ft.	Components: V, S
+SR: No	Effect: You detect magical auras.	Target: Cone-shaped emanation
+DESC: You detect magical auras.
+DESC 2:  You detect magical auras.
+Detect Poison (Divination)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: Instantaneous	Range: Close (70 ft.)	Components: V, S
+SR: No	Effect: You determine whether a creature, object, or area has been poisoned or is poisonous.	Target: Or Area one creature, one object, or a 5-ft. cube
+DESC: You determine whether a creature, object, or area has been poisoned or is poisonous.
+DESC 2:  You determine whether a creature, object, or area has been poisoned or is poisonous.
+Flare (Evocation)
+Saves: Fortitude negates	DC: 18	Casting: 1 standard action
+Duration: Instantaneous	Range: Close (70 ft.)	Components: V
+SR: Yes	Effect: This cantrip creates a burst of light.	Target: Burst of light
+DESC: This cantrip creates a burst of light.
+DESC 2:  This cantrip creates a burst of light.
+Ghost Sound (Illusion)
+Saves: Will disbelief	DC: 18	Casting: 1 standard action
+Duration: 19 rounds [D]	Range: Close (70 ft.)	Components: V, S, M
+SR: No	Effect: Ghost sound allows you to create a volume of sound that rises, recedes, approaches, or remains at a fixed place.	Target: Illusory sounds
+DESC: Ghost sound allows you to create a volume of sound that rises, recedes, approaches, or remains at a fixed place.
+DESC 2:  Ghost sound allows you to create a volume of sound that rises, recedes, approaches, or remains at a fixed place.
+Mage Hand (Transmutation)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: Concentration	Range: Close (70 ft.)	Components: V, S
+SR: No	Effect: You point your finger at an object and can lift it and move it at will from a distance.	Target: One nonmagical, unattended object weighing up to 5 lbs.
+DESC: You point your finger at an object and can lift it and move it at will from a distance.
+DESC 2:  You point your finger at an object and can lift it and move it at will from a distance.
+Mending (Transmutation)
+Saves: Will negates (harmless, object)	DC: 18	Casting: 10 minutes
+Duration: Instantaneous	Range: 10 ft.	Components: V, S
+SR: Yes (harmless, object)	Effect: This spell repairs damaged objects, restoring 1d4 hit points to the object.	Target: One object of up to 19 lb.
+DESC: This spell repairs damaged objects, restoring 1d4 hit points to the object.
+DESC 2:  This spell repairs damaged objects, restoring 1d4 hit points to the object.
+Open/Close (Transmutation)
+Saves: Will negates (object)	DC: 18	Casting: 1 standard action
+Duration: Instantaneous	Range: Close (70 ft.)	Components: V, S, F
+SR: Yes (object)	Effect: You can open or close [your choice] a door, chest, box, window, bag, pouch, bottle, barrel, or other container.	Target: Object weighing up to 30 lbs. or portal that can be opened or closed
+DESC: You can open or close (your choice) a door, chest, box, window, bag, pouch, bottle, barrel, or other container.
+DESC 2:  You can open or close [your choice] a door, chest, box, window, bag, pouch, bottle, barrel, or other container.
+ 
+ 
+Level 1
+Alarm (Abjuration)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: 38 hours [D]	Range: Close (70 ft.)	Components: V, S, F/DF
+SR: No	Effect: Alarm creates a subtle ward on an area you select.	Target: 20-ft.-radius emanation centered on a point in space
+DESC: Alarm creates a subtle ward on an area you select.
+DESC 2:  Alarm creates a subtle ward on an area you select.
+Animate Rope (Transmutation)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: 19 rounds	Range: Medium (290 ft.)	Components: V, S
+SR: No	Effect: You can animate a nonliving rope-like object.	Target: One rope-like object, length up to 145ft.; see text
+DESC: You can animate a nonliving rope-like object.
+DESC 2:  You can animate a nonliving rope-like object.
+Comprehend Languages (Divination)
+Saves: 	DC: 	Casting: 1 standard action
+Duration: 190 minutes	Range: Personal	Components: V, S, M/DF
+SR: 	Effect: You can understand the spoken words of creatures or read otherwise incomprehensible written messages.	Target: You
+DESC: You can understand the spoken words of creatures or read otherwise incomprehensible written messages.
+DESC 2:  You can understand the spoken words of creatures or read otherwise incomprehensible written messages.
+Cure Light Wounds (Conjuration)
+Saves: Will half (harmless); see text	DC: 19	Casting: 1 standard action
+Duration: Instantaneous	Range: Touch	Components: V, S
+SR: Yes (harmless); see text	Effect: When laying your hand upon a living creature, you channel positive energy that cures 1d8+5 points of damage.	Target: Creature touched
+DESC: When laying your hand upon a living creature, you channel positive energy that cures 1d8+(min(5,CASTERLEVEL)) points of damage.
+DESC 2:  When laying your hand upon a living creature, you channel positive energy that cures 1d8+5 points of damage.
+Curse Water (Necromancy)
+Saves: Will negates (object)	DC: 19	Casting: 1 minute
+Duration: Instantaneous	Range: Touch	Components: V, S, M
+SR: Yes (object)	Effect: This spell imbues a flask [1 pint] of water with negative energy, turning it into unholy water.	Target: Flask of water touched
+DESC: This spell imbues a flask (1 pint) of water with negative energy, turning it into unholy water.
+DESC 2:  This spell imbues a flask [1 pint] of water with negative energy, turning it into unholy water.
+ 
+ 
+Level 2
+Acid Arrow (Conjuration)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: 7 rounds	Range: Long (1160 ft.)	Components: V, S, M, F
+SR: No	Effect: An arrow of acid springs from your hand and speeds to its target dealing 2d4 points of acid damage.	Target: One arrow of acid
+DESC: An arrow of acid springs from your hand and speeds to its target dealing 2d4 points of acid damage.
+DESC 2:  An arrow of acid springs from your hand and speeds to its target dealing 2d4 points of acid damage.
+Alter Self (Transmutation)
+Saves: 	DC: 	Casting: 1 standard action
+Duration: 19 minutes [D]	Range: Personal	Components: V, S, M
+SR: 	Effect: You can assume the form of any Small or Medium creature of the humanoid type.	Target: You
+DESC: You can assume the form of any Small or Medium creature of the humanoid type.
+DESC 2:  You can assume the form of any Small or Medium creature of the humanoid type.
+Cat's Grace (Transmutation)
+Saves: Will negates (harmless)	DC: 20	Casting: 1 standard action
+Duration: 19 minutes	Range: Touch	Components: V, S, M
+SR: Yes	Effect: The transmuted creature becomes more graceful, agile, and coordinated granting a +4 enhancement bonus to Dexterity.	Target: Creature touched
+DESC: The transmuted creature becomes more graceful, agile, and coordinated granting a +4 enhancement bonus to Dexterity.
+DESC 2:  The transmuted creature becomes more graceful, agile, and coordinated granting a +4 enhancement bonus to Dexterity.
+Eagle's Splendor (Transmutation)
+Saves: Will negates (harmless)	DC: 20	Casting: 1 standard action
+Duration: 19 minutes	Range: Touch	Components: V, S, M/DF
+SR: Yes	Effect: The transmuted creature becomes more poised, articulate, and personally forceful gaining a +4 enhancement bonus to Charisma.	Target: Creature touched
+DESC: The transmuted creature becomes more poised, articulate, and personally forceful gaining a +4 enhancement bonus to Charisma.
+DESC 2:  The transmuted creature becomes more poised, articulate, and personally forceful gaining a +4 enhancement bonus to Charisma.
+Fox's Cunning (Transmutation)
+Saves: Will negates (harmless)	DC: 20	Casting: 1 standard action
+Duration: 19 minutes	Range: Touch	Components: V, S, M/DF
+SR: Yes	Effect: The target becomes smarter granting a +4 enhancement bonus to Intelligence.	Target: Creature touched
+DESC: The target becomes smarter granting a +4 enhancement bonus to Intelligence.
+DESC 2:  The target becomes smarter granting a +4 enhancement bonus to Intelligence.
+ 
+ 
+Level 3
+Arcane Sight (Divination)
+Saves: 	DC: 	Casting: 1 standard action
+Duration: 19 minutes [D]	Range: Personal	Components: V, S
+SR: 	Effect: This spell makes your eyes glow blue and allows you to see magical auras within 120 feet of you.	Target: You
+DESC: This spell makes your eyes glow blue and allows you to see magical auras within 120 feet of you.
+DESC 2:  This spell makes your eyes glow blue and allows you to see magical auras within 120 feet of you.
+Blink (Transmutation)
+Saves: 	DC: 	Casting: 1 standard action
+Duration: 19 rounds [D]	Range: Personal	Components: V, S
+SR: 	Effect: You "blink" quickly back and forth between the Material Plane and the Ethereal Plane and look as though you're winking in and out of reality at random.	Target: You
+DESC: You "blink" quickly back and forth between the Material Plane and the Ethereal Plane and look as though you're winking in and out of reality at random.
+DESC 2:  You "blink" quickly back and forth between the Material Plane and the Ethereal Plane and look as though you're winking in and out of reality at random.
+Fireball (Evocation)
+Saves: Reflex half	DC: 21	Casting: 1 standard action
+Duration: Instantaneous	Range: Long (1160 ft.)	Components: V, S, M
+SR: Yes	Effect: A fireball spell generates a searing explosion of flame that detonates with a low roar and deals 10d6 points of fire damage to every creature within the area.	Target: 20-ft.-radius spread
+DESC: A fireball spell generates a searing explosion of flame that detonates with a low roar and deals (min(10,CASTERLEVEL))d6 points of fire damage to every creature within the area.
+DESC 2:  A fireball spell generates a searing explosion of flame that detonates with a low roar and deals 10d6 points of fire damage to every creature within the area.
+ 
+  
+  
+ 
+Level 6
+Globe of Invulnerability (Abjuration)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: 19 rounds [D]	Range: 10 ft.	Components: V, S, M
+SR: No	Effect: This spell functions like lesser globe of invulnerability, except that it also excludes 4th-level spells and spell-like effects.	Target: 10-ft.-radius spherical emanation, centered on you
+DESC: This spell functions like lesser globe of invulnerability, except that it also excludes 4th-level spells and spell-like effects.
+DESC 2:  This spell functions like lesser globe of invulnerability, except that it also excludes 4th-level spells and spell-like effects.
+Guards and Wards (Abjuration)
+Saves: See text	DC: 24	Casting: 30 minutes
+Duration: 38 hours [D]	Range: Anywhere within the area to be warded	Components: V, S, M, F
+SR: See text	Effect: This powerful spell is primarily used to defend a stronghold or fortress by creating a number of magical wards and effects.	Target: Up to 3800 sq. ft. [S]
+DESC: This powerful spell is primarily used to defend a stronghold or fortress by creating a number of magical wards and effects.
+DESC 2:  This powerful spell is primarily used to defend a stronghold or fortress by creating a number of magical wards and effects.
+Heal (Conjuration)
+Saves: Will negates (harmless)	DC: 24	Casting: 1 standard action
+Duration: Instantaneous	Range: Touch	Components: V, S
+SR: Yes (harmless)	Effect: Heal enables you to channel positive energy into a creature to wipe away injury and afflictions.	Target: Creature touched
+DESC: Heal enables you to channel positive energy into a creature to wipe away injury and afflictions.
+DESC 2:  Heal enables you to channel positive energy into a creature to wipe away injury and afflictions.
+ 
+ 
+Level 7
+Arcane Sight (Greater) (Divination)
+Saves: 	DC: 	Casting: 1 standard action
+Duration: 19 minutes [D]	Range: Personal	Components: V, S
+SR: 	Effect: This spell functions like arcane sight, except that you automatically know which spells or magical effects are active upon any individual or object you see.	Target: You
+DESC: This spell functions like arcane sight, except that you automatically know which spells or magical effects are active upon any individual or object you see.
+DESC 2:  This spell functions like arcane sight, except that you automatically know which spells or magical effects are active upon any individual or object you see.
+Teleport (Greater) (Conjuration)
+Saves: None and Will negates (object)	DC: 25	Casting: 1 standard action
+Duration: Instantaneous	Range: Personal and touch	Components: V
+SR: No and yes (object)	Effect: This spell functions like teleport, except that there is no range limit and there is no chance you arrive off target.	Target: You and touched objects or other touched willing creatures
+DESC: This spell functions like teleport, except that there is no range limit and there is no chance you arrive off target.
+DESC 2:  This spell functions like teleport, except that there is no range limit and there is no chance you arrive off target.
+Vision (Divination)
+Saves: 	DC: 	Casting: 1 standard action
+Duration: See text	Range: Personal	Components: V, S, M, F
+SR: 	Effect: This spell functions like legend lore, except that it works more quickly and produces some strain on you.	Target: You
+DESC: This spell functions like legend lore, except that it works more quickly and produces some strain on you.
+DESC 2:  This spell functions like legend lore, except that it works more quickly and produces some strain on you.
+ 
+ 
+Level 8
+Antimagic Field (Abjuration)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: 190 minutes [D]	Range: 10 ft.	Components: V, S, M/DF
+SR: See text	Effect: An invisible barrier impervious to most magical effects surrounds you and moves with you.	Target: 10-ft.-radius emanation, centered on you
+DESC: An invisible barrier impervious to most magical effects surrounds you and moves with you.
+DESC 2:  An invisible barrier impervious to most magical effects surrounds you and moves with you.
+Dimensional Lock (Abjuration)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: 19 days	Range: Medium (290 ft.)	Components: V, S
+SR: Yes	Effect: You create a shimmering emerald barrier that completely blocks extradimensional travel.	Target: 20-ft.-radius emanation centered on a point in space
+DESC: You create a shimmering emerald barrier that completely blocks extradimensional travel.
+DESC 2:  You create a shimmering emerald barrier that completely blocks extradimensional travel.
+Shout (Greater) (Evocation)
+Saves: Fortitude partial or Reflex negates (object); see text	DC: 26	Casting: 1 standard action
+Duration: Instantaneous	Range: 60 ft.	Components: V, S, F
+SR: Yes (object)	Effect: This spell functions like shout, except that the cone deals 10d6 points of sonic damage.	Target: Cone-shaped burst
+DESC: This spell functions like shout, except that the cone deals 10d6 points of sonic damage.
+DESC 2:  This spell functions like shout, except that the cone deals 10d6 points of sonic damage.
+ 
+ 
+Level 9
+Teleportation Circle (Conjuration)
+Saves: None	DC: 	Casting: 10 minutes
+Duration: 190 minutes [D]	Range: 0 ft.	Components: V, M
+SR: Yes	Effect: You create a circle on the floor or other horizontal surface that teleports, as greater teleport, any creature who stands on it to a designated spot.	Target: 5-ft.-radius circle that teleports those who activate it
+DESC: You create a circle on the floor or other horizontal surface that teleports, as greater teleport, any creature who stands on it to a designated spot.
+DESC 2:  You create a circle on the floor or other horizontal surface that teleports, as greater teleport, any creature who stands on it to a designated spot.
+Wish (Universal)
+Saves: None, see text	DC: 27	Casting: 1 standard action
+Duration: See text	Range: See text	Components: V, S, M
+SR: Yes	Effect: Wish is the mightiest spell a wizard or sorcerer can cast. By simply speaking aloud, you can alter reality to better suit you.	Target: See text
+DESC: Wish is the mightiest spell a wizard or sorcerer can cast. By simply speaking aloud, you can alter reality to better suit you.
+DESC 2:  Wish is the mightiest spell a wizard or sorcerer can cast. By simply speaking aloud, you can alter reality to better suit you.
+ 
+ 
+                     
+
+      
+------------------------ Description -----------------------
+Height: 75' 0" Weight: 10000 lbs. Gender: Female	
+Eyes:   Amber Hair: , Skin: 
+Dominant Hand: Right Quirks: , 	
+Speech style:  Quotable: 
+Full Description
+
+Background
+
+Campaign Logs

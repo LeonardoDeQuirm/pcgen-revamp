@@ -1,0 +1,813 @@
+Name:       PFRPG Cleric
+Race:       Human
+Player:      
+Classes:    Cleric3
+Hit Points: 25
+Experience: 5000 / 9000
+Alignment:  Neutral Good
+Vision:     
+Speed:      Walk 20 ft.
+Languages:  Celestial, Common
+Stat    Score   Mod
+STR  10 (+0)
+DEX  10 (+0)
+CON  11 (+0)
+INT  10 (+0)
+WIS  18 (+4)
+CHA  17 (+3)
+-------------------------- Skills --------------------------
+Skill                   Total   Rnk     Stat    Msc
+Acrobatics  -5  0.0  0  -5
+Acrobatics (When Jumping)  -9  0.0  0  -9
+Appraise  0  0.0  0  0
+Bluff  3  0.0  3  0
+Climb  -5  0.0  0  -5
+Craft (Untrained)  0  0.0  0  0
+Diplomacy  10  2.0  3  5
+Disguise  3  0.0  3  0
+Escape Artist  -5  0.0  0  -5
+Fly  -5  0.0  0  -5
+Heal  10  3.0  4  3
+Intimidate  5  0.0  3  2
+Knowledge (Planes)  4  1.0  0  3
+Knowledge (Religion)  4  1.0  0  3
+Linguistics(Celestial)  4  1.0  0  3
+Perception  4  0.0  4  0
+Perform (Untrained)  3  0.0  3  0
+Ride  -5  0.0  0  -5
+Sense Motive  8  1.0  4  3
+Spellcraft  4  1.0  0  3
+Stealth  -5  0.0  0  -5
+Survival  4  0.0  4  0
+Swim  -5  0.0  0  -5
+-------------------------- Feats ---------------------------
+Persuasive
+  You are skilled at swaying attitudes and intimidating others into your way of thinking.
+  
+Selective Channeling
+  You can choose whom to affect when you channel energy.
+  
+Spell Focus (Enchantment)
+-------------------- Special Abilities ---------------------
+
+			<name>Aura (Ex)</name>
+			<description>A cleric of a chaotic, evil, good, or lawful deity has a particularly powerful aura corresponding to the deity's alignment (see the detect evil spell for details).</description>
+			<type>EXTRAORDINARY.CLASSFEATURES.CLERICCLASSFEATURES.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.</source>
+		</special_quality>
+			<name>Aura of Good (Ex)</name>
+			<description>You project a moderate good aura.</description>
+			<type>SPECIALQUALITY.EXTRAORDINARY.AURA.CLERICCLASSFEATURES.PALADINCLASSFEATURES</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook</source>
+		</special_quality>
+			<name>Bonus Feat</name>
+			<description>Humans select one extra feat at 1st level.</description>
+			<type>RACIALTRAITS.HUMAN RACIAL TRAIT.HUMAN RACIAL DEFAULT.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.27</source>
+		</special_quality>
+			<name>Bonus Hit Point</name>
+			<description></description>
+			<type>FAVOREDCLASSBONUS.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>1</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook</source>
+		</special_quality>
+			<name>Bonus Skill Rank (Knowledge (Planes), Knowledge (Religion))</name>
+			<description></description>
+			<type>FAVOREDCLASSBONUS.SPECIALQUALITY</type>
+			<associated>Knowledge (Planes),Knowledge (Religion)</associated>
+			<count>2</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook</source>
+		</special_quality>
+			<name>Channel Positive Energy</name>
+			<description></description>
+			<type>INTERNAL.CHANNEL POSITIVE ENERGY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook</source>
+		</special_quality>
+			<name>Channel Positive Energy (Su)</name>
+			<description>You can unleash a wave of positive energy. You must choose to deal 2d6 points of positive energy damage to undead creatures or to heal living creatures of 2d6 points of damage. Creatures that take damage from channeled energy receive a DC 16 Will save to halve the damage. You can use this ability 6 times per day.</description>
+			<type>CLERICCLASSFEATURES.SUPERNATURAL.SPECIALATTACK.CHANNELENERGYSELECTION.CHANNELENERGY.CHANNEL ENERGY.CHANNEL ENERGY POSITIVE.CHANNEL POSITIVE ENERGY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>Ability Benefit: (2d6, DC 16, 6/day), CheckCount: 6, CheckType: Uses per day, MasterAbility: Channel Energy</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.40</source>
+		</special_quality>
+			<name>Domains</name>
+			<description></description>
+			<type>INTERNAL.CF_DOMAIN</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook</source>
+		</special_quality>
+			<name>Orisons</name>
+			<description>You can prepare a number of orisons, or 0-level spells. These spells are cast like any other spells, but they are not expended when used and may be used again.</description>
+			<type>CLERICCLASSFEATURES.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.41</source>
+		</special_quality>
+			<name>Skilled</name>
+			<description>Humans gain an additional skill rank at 1st level and one additional rank whenever they gain a level.</description>
+			<type>RACIALTRAITS.HUMAN RACIAL TRAIT.HUMAN RACIAL DEFAULT.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.27</source>
+		</special_quality>
+			<name>Spontaneous Casting</name>
+			<description>You can channel stored spell energy into healing spells that you did not prepare ahead of time. You can "lose" any prepared spell that is not an orison or domain spell in order to cast any cure spell of the same spell level or lower (a cure spell is any spell with "Cure" in its name).</description>
+			<type>CLERICCLASSFEATURES.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.41</source>
+		</special_quality>
+			<name>Sun's Blessing (Su)</name>
+			<description>Whenever you channel positive energy to harm undead creatures, add a +3 bonus to the damage dealt. Undead do not add their channel resistance to their saves when you channel positive energy.</description>
+			<type>CLERICCLASSFEATURES.SPECIALATTACK.SUPERNATURAL.DOMAINPOWER.SUN DOMAIN</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.47</source>
+		</special_quality>
+			<name>Touch of Glory (Sp)</name>
+			<description>You can cause your hand to shimmer with divine radiance, allowing you to touch a creature as a standard action and give it a +3 bonus to a single Charisma-based skill check or Charisma ability check. This ability lasts for one hour or until the creature touched elects to apply the bonus to a roll. You can use this ability to grant the bonus 7 times per day.</description>
+			<type>CLERICCLASSFEATURES.SPECIALQUALITY.SPELLLIKE.DOMAINPOWER.GLORY DOMAIN</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>Ability Benefit: (7/day), CheckCount: 7, CheckType: Uses per Day</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.44</source>
+		</special_quality>
+	</special_qualities>
+------------------------ Templates -------------------------
+
+-------------------------- Combat --------------------------
+    Total / Touch / Flat Footed
+AC: 16 / 11 / 16
+Initiative:   +0
+BAB:          +2
+Melee tohit:  +2
+Ranged tohit: +2
+Fortitude:    +3
+Reflex:       +1
+Will:         +7
+Unarmed attack:
+to hit:       +2
+damage:       1d3
+critical:     20/x2
+Masterwork Morningstar:
+to hit:       +3
+damage:       1d8
+critical:     20/x2
+Light Crossbow:
+to hit:       +0
+damage:       1d8
+critical:     19-20/x2
+range:        80 ft.
+special properties: You draw a light crossbow back by pulling a lever. Loading a light crossbow is a move action that provokes attacks of opportunity.&nl;Normally, operating a light crossbow requires two hands. However, you can shoot, but not load, a light crossbow with one hand at a -2 penalty on attack rolls. You can shoot a light crossbow with each hand, but you take a penalty on attack rolls as if attacking with two light weapons. This penalty is cumulative with the penalty for one-handed firing.
+Light Steel Shield:
+to hit:       -2
+damage:       1d3
+critical:     20/x2
+--------------------- Special Abilities --------------------
+ 
+------------------------- Equipment ------------------------
+Name                                            QTY	LBS
+Masterwork Morningstar  1	6lbs
+Traveler's Outfit  1	5lbs
+Scale Mail  1	30lbs
+Holy Symbol, Silver  1	1lbs
+Shield, Light Steel  1	6lbs
+Backpack (11.5 lbs.)
+   Amethyst  2	0lbs
+   Bolts, Crossbow (10)  1	1lbs
+   Citrine  1	0lbs
+   Gold Piece  10	0lbs
+   Platinum Piece  5	0lbs
+   Silver Piece  10	0lbs
+   Crossbow, Light  1	4lbs	Special: You draw a light crossbow back by pulling a lever. Loading a light crossbow is a move action that provokes attacks of opportunity.&nl;Normally, operating a light crossbow requires two hands. However, you can shoot, but not load, a light crossbow with one hand at a -2 penalty on attack rolls. You can shoot a light crossbow with each hand, but you take a penalty on attack rolls as if attacking with two light weapons. This penalty is cumulative with the penalty for one-handed firing.
+   Potion of Cure Light Wounds  1	0lbs	Special: Cures 1d8+1 points of damage
+   Rations, Trail  4	4lbs
+Crossbow, Light (4 lbs.)
+Light Horse (Combat Trained) (0 lbs.)
+   Saddle, Military  1	30lbs	Special: +2 circumstance bonus on Ride checks related to staying in the saddle
+   Waterskin, Filled  1	4lbs
+   Bedroll  1	5lbs
+   Blanket, Winter  1	3lbs
+   Bolts, Crossbow (10)  1	1lbs
+Total weight carried: 59.5 lbs.
+Current load:         Medium
+Encumbrance
+Light:  33   
+Medium: 66   
+Heavy:  100
+--------------------------- Magic --------------------------
+
+
+Cleric Spells
+
+SPELLBOOKNAME0
+ 
+Level 0
+Bleed (Necromancy)
+Saves: Will negates	DC: 14	Casting: 1 standard action
+Duration: Instantaneous	Range: Close (30 ft.)	Components: V, S
+SR: Yes	Effect: You cause a living creature that is below 0 hit points but stabilized to resume dying.	Target: One living creature
+DESC: You cause a living creature that is below 0 hit points but stabilized to resume dying.
+DESC 2:  You cause a living creature that is below 0 hit points but stabilized to resume dying.
+Create Water (Conjuration)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: Instantaneous	Range: Close (30 ft.)	Components: V, S
+SR: No	Effect: This spell generates wholesome, drinkable water, just like clean rain water.	Target: Up to 6 gallons of water
+DESC: This spell generates wholesome, drinkable water, just like clean rain water.
+DESC 2:  This spell generates wholesome, drinkable water, just like clean rain water.
+Detect Magic (Divination)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: Concentration, up to 3 minutes [D]	Range: 60 ft.	Components: V, S
+SR: No	Effect: You detect magical auras.	Target: Cone-shaped emanation
+DESC: You detect magical auras.
+DESC 2:  You detect magical auras.
+Detect Poison (Divination)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: Instantaneous	Range: Close (30 ft.)	Components: V, S
+SR: No	Effect: You determine whether a creature, object, or area has been poisoned or is poisonous.	Target: Or Area one creature, one object, or a 5-ft. cube
+DESC: You determine whether a creature, object, or area has been poisoned or is poisonous.
+DESC 2:  You determine whether a creature, object, or area has been poisoned or is poisonous.
+Guidance (Divination)
+Saves: Will negates (harmless)	DC: 14	Casting: 1 standard action
+Duration: 1 minute or until discharged	Range: Touch	Components: V, S
+SR: Yes	Effect: This spell imbues the subject with a touch of divine guidance.	Target: Creature touched
+DESC: This spell imbues the subject with a touch of divine guidance.
+DESC 2:  This spell imbues the subject with a touch of divine guidance.
+Light (Evocation)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: 30 minutes	Range: Touch	Components: V, M/DF
+SR: No	Effect: This spell causes a touched object to glow like a torch.	Target: Object touched
+DESC: This spell causes a touched object to glow like a torch.
+DESC 2:  This spell causes a touched object to glow like a torch.
+Mending (Transmutation)
+Saves: Will negates (harmless, object)	DC: 14	Casting: 10 minutes
+Duration: Instantaneous	Range: 10 ft.	Components: V, S
+SR: Yes (harmless, object)	Effect: This spell repairs damaged objects, restoring 1d4 hit points to the object.	Target: One object of up to 3 lb.
+DESC: This spell repairs damaged objects, restoring 1d4 hit points to the object.
+DESC 2:  This spell repairs damaged objects, restoring 1d4 hit points to the object.
+Purify Food and Drink (Transmutation)
+Saves: Will negates (object)	DC: 14	Casting: 1 standard action
+Duration: Instantaneous	Range: 10 ft.	Components: V, S
+SR: Yes (object)	Effect: This spell makes spoiled, rotten, diseased, poisonous, or otherwise contaminated food and water pure and suitable for eating and drinking.	Target: 3 cu. ft. of contaminated food and water
+DESC: This spell makes spoiled, rotten, diseased, poisonous, or otherwise contaminated food and water pure and suitable for eating and drinking.
+DESC 2:  This spell makes spoiled, rotten, diseased, poisonous, or otherwise contaminated food and water pure and suitable for eating and drinking.
+Read Magic (Divination)
+Saves: 	DC: 	Casting: 1 standard action
+Duration: 30 minutes	Range: Personal	Components: V, S, F
+SR: 	Effect: You can decipher magical inscriptions on objects--books, scrolls, weapons, and the like--that would otherwise be unintelligible.	Target: You
+DESC: You can decipher magical inscriptions on objects--books, scrolls, weapons, and the like--that would otherwise be unintelligible.
+DESC 2:  You can decipher magical inscriptions on objects--books, scrolls, weapons, and the like--that would otherwise be unintelligible.
+Resistance (Abjuration)
+Saves: Will negates (harmless)	DC: 14	Casting: 1 standard action
+Duration: 1 minute	Range: Touch	Components: V, S, M/DF
+SR: Yes (harmless)	Effect: You imbue the subject with magical energy that protects it from harm, granting it a +1 resistance bonus on saves.	Target: Creature touched
+DESC: You imbue the subject with magical energy that protects it from harm, granting it a +1 resistance bonus on saves.
+DESC 2:  You imbue the subject with magical energy that protects it from harm, granting it a +1 resistance bonus on saves.
+Spark (Evocation, FireSchool)
+Saves: Fortitude negates (object)	DC: 14	Casting: 1 standard action
+Duration: Instantaneous	Range: Close (30 ft.)	Components: V or S
+SR: Yes (object)	Effect: Ignites flammable objects.	Target: one Fine object
+DESC: Ignites flammable objects.
+DESC 2:  Ignites flammable objects.
+Stabilize (Conjuration)
+Saves: Will negates (harmless)	DC: 14	Casting: 1 standard action
+Duration: Instantaneous	Range: Close (30 ft.)	Components: V, S
+SR: Yes (harmless)	Effect: Upon casting this spell, you target a living creature that has -1 or fewer hit points.	Target: One living creature
+DESC: Upon casting this spell, you target a living creature that has -1 or fewer hit points.
+DESC 2:  Upon casting this spell, you target a living creature that has -1 or fewer hit points.
+Virtue (Transmutation)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: 1 min.	Range: Touch	Components: V, S, DF
+SR: Yes (harmless)	Effect: With a touch, you infuse a creature with a tiny surge of life, granting the subject 1 temporary hit point.	Target: Creature touched
+DESC: With a touch, you infuse a creature with a tiny surge of life, granting the subject 1 temporary hit point.
+DESC 2:  With a touch, you infuse a creature with a tiny surge of life, granting the subject 1 temporary hit point.
+ 
+ 
+Level 1
+Ant Haul (Transmutation)
+Saves: Fortitude negates (harmless)	DC: 15	Casting: 1 standard action
+Duration: 6 hours	Range: Touch	Components: V, S, M/DF
+SR: Yes (harmless)	Effect: Triples carrying capacity of a creature.	Target: creature touched
+DESC: Triples carrying capacity of a creature.
+DESC 2:  Triples carrying capacity of a creature.
+Bane (Enchantment)
+Saves: Will negates	DC: 16	Casting: 1 standard action
+Duration: 3 minutes	Range: 50 ft.	Components: V, S, DF
+SR: Yes	Effect: Bane fills your enemies with fear and doubt.	Target: 50-ft.-radius burst, centered on you
+DESC: Bane fills your enemies with fear and doubt.
+DESC 2:  Bane fills your enemies with fear and doubt.
+Bless (Enchantment)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: 3 minutes	Range: 50 ft.	Components: V, S, DF
+SR: Yes (harmless)	Effect: Bless fills your allies with courage.	Target: The caster and all allies within a 50-ft. burst, centered on the caster
+DESC: Bless fills your allies with courage.
+DESC 2:  Bless fills your allies with courage.
+Bless Water (Transmutation)
+Saves: Will negates (object)	DC: 15	Casting: 1 minute
+Duration: Instantaneous	Range: Touch	Components: V, S, M
+SR: Yes (object)	Effect: This transmutation imbues a flask of water with positive energy, turning it into holy water.	Target: Flask of water touched
+DESC: This transmutation imbues a flask of water with positive energy, turning it into holy water.
+DESC 2:  This transmutation imbues a flask of water with positive energy, turning it into holy water.
+Cause Fear (Necromancy)
+Saves: Will partial	DC: 15	Casting: 1 standard action
+Duration: 1d4 rounds or 1 round; see text	Range: Close (30 ft.)	Components: V, S
+SR: Yes	Effect: The affected creature becomes frightened.	Target: One living creature with 5 or fewer HD
+DESC: The affected creature becomes frightened.
+DESC 2:  The affected creature becomes frightened.
+Command (Enchantment)
+Saves: Will negates	DC: 16	Casting: 1 standard action
+Duration: 1 round	Range: Close (30 ft.)	Components: V
+SR: Yes	Effect: You give the subject a single command, which it obeys to the best of its ability at its earliest opportunity.	Target: One living creature
+DESC: You give the subject a single command, which it obeys to the best of its ability at its earliest opportunity.
+DESC 2:  You give the subject a single command, which it obeys to the best of its ability at its earliest opportunity.
+Comprehend Languages (Divination)
+Saves: 	DC: 	Casting: 1 standard action
+Duration: 30 minutes	Range: Personal	Components: V, S, M/DF
+SR: 	Effect: You can understand the spoken words of creatures or read otherwise incomprehensible written messages.	Target: You
+DESC: You can understand the spoken words of creatures or read otherwise incomprehensible written messages.
+DESC 2:  You can understand the spoken words of creatures or read otherwise incomprehensible written messages.
+Cure Light Wounds (Conjuration)
+Saves: Will half (harmless); see text	DC: 15	Casting: 1 standard action
+Duration: Instantaneous	Range: Touch	Components: V, S
+SR: Yes (harmless); see text	Effect: When laying your hand upon a living creature, you channel positive energy that cures 1d8+3 points of damage.	Target: Creature touched
+DESC: When laying your hand upon a living creature, you channel positive energy that cures 1d8+(min(5,CASTERLEVEL)) points of damage.
+DESC 2:  When laying your hand upon a living creature, you channel positive energy that cures 1d8+3 points of damage.
+Dancing Lantern (Transmutation, FireSchool)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: 3 hours [D]	Range: Touch	Components: V, S, F
+SR: No	Effect: Animates a lantern that follows you.	Target: Animates one lantern
+DESC: Animates a lantern that follows you.
+DESC 2:  Animates a lantern that follows you.
+Deathwatch (Necromancy)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: 30 minutes	Range: 30 ft.	Components: V, S
+SR: No	Effect: Using the powers of necromancy, you can determine the condition of creatures near death within the spell's range.	Target: Cone-shaped emanation
+DESC: Using the powers of necromancy, you can determine the condition of creatures near death within the spell's range.
+DESC 2:  Using the powers of necromancy, you can determine the condition of creatures near death within the spell's range.
+Detect Chaos (Divination)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: Concentration, up to 30 minutes [D]	Range: 60 ft.	Components: V, S, DF
+SR: No	Effect: You can sense the auras of chaotic creatures.	Target: Cone-shaped emanation
+DESC: You can sense the auras of chaotic creatures.
+DESC 2:  You can sense the auras of chaotic creatures.
+Detect Evil (Divination)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: Concentration, up to 30 minutes [D]	Range: 60 ft.	Components: V, S, DF
+SR: No	Effect: You can sense the presence of evil.	Target: Cone-shaped emanation
+DESC: You can sense the presence of evil.
+DESC 2:  You can sense the presence of evil.
+Detect Good (Divination)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: Concentration, up to 30 minutes [D]	Range: 60 ft.	Components: V, S, DF
+SR: No	Effect: You can sense the presence of good.	Target: Cone-shaped emanation
+DESC: You can sense the presence of good.
+DESC 2:  You can sense the presence of good.
+Detect Law (Divination)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: Concentration, up to 30 minutes [D]	Range: 60 ft.	Components: V, S, DF
+SR: No	Effect: You can sense the auras of lawful creatures.	Target: Cone-shaped emanation
+DESC: You can sense the auras of lawful creatures.
+DESC 2:  You can sense the auras of lawful creatures.
+Detect Undead (Divination)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: Concentration, up to 3 minutes [D]	Range: 60 ft.	Components: V, S, M/DF
+SR: No	Effect: You can detect the aura that surrounds undead creatures.	Target: Cone-shaped emanation
+DESC: You can detect the aura that surrounds undead creatures.
+DESC 2:  You can detect the aura that surrounds undead creatures.
+Divine Favor (Evocation)
+Saves: 	DC: 	Casting: 1 standard action
+Duration: 1 minute	Range: Personal	Components: V, S, DF
+SR: 	Effect: Calling upon the strength and wisdom of a deity, you gain a +1 luck bonus on attack and weapon damage rolls.	Target: You
+DESC: Calling upon the strength and wisdom of a deity, you gain a +(max(1,min(3,floor(CASTERLEVEL/3)))) luck bonus on attack and weapon damage rolls.
+DESC 2:  Calling upon the strength and wisdom of a deity, you gain a +1 luck bonus on attack and weapon damage rolls.
+Doom (Necromancy)
+Saves: Will negates	DC: 15	Casting: 1 standard action
+Duration: 3 minutes	Range: Medium (130 ft.)	Components: V, S, DF
+SR: Yes	Effect: This spell fills a single subject with a feeling of horrible dread that causes it to become shaken.	Target: One living creature
+DESC: This spell fills a single subject with a feeling of horrible dread that causes it to become shaken.
+DESC 2:  This spell fills a single subject with a feeling of horrible dread that causes it to become shaken.
+Endure Elements (Abjuration)
+Saves: Will negates (harmless)	DC: 15	Casting: 1 standard action
+Duration: 24 hours	Range: Touch	Components: V, S
+SR: Yes (harmless)	Effect: A creature protected by endure elements suffers no harm from being in a hot or cold environment.	Target: Creature touched
+DESC: A creature protected by endure elements suffers no harm from being in a hot or cold environment.
+DESC 2:  A creature protected by endure elements suffers no harm from being in a hot or cold environment.
+Endure Elements (Abjuration)
+Saves: Will negates (harmless)	DC: 15	Casting: 1 standard action
+Duration: 24 hours	Range: Touch	Components: V, S
+SR: Yes (harmless)	Effect: A creature protected by endure elements suffers no harm from being in a hot or cold environment.	Target: Creature touched
+DESC: A creature protected by endure elements suffers no harm from being in a hot or cold environment.
+DESC 2:  A creature protected by endure elements suffers no harm from being in a hot or cold environment.
+Entropic Shield (Abjuration)
+Saves: 	DC: 	Casting: 1 standard action
+Duration: 3 minutes [D]	Range: Personal	Components: V, S
+SR: 	Effect: A magical field appears around you, glowing with a chaotic blast of multicolored hues deflecting incoming arrows, rays, and other ranged attacks.	Target: You
+DESC: A magical field appears around you, glowing with a chaotic blast of multicolored hues deflecting incoming arrows, rays, and other ranged attacks.
+DESC 2:  A magical field appears around you, glowing with a chaotic blast of multicolored hues deflecting incoming arrows, rays, and other ranged attacks.
+Hide from Undead (Abjuration)
+Saves: Will negates (harmless); see text	DC: 15	Casting: 1 standard action
+Duration: 30 minutes [D]	Range: Touch	Components: V, S, DF
+SR: Yes	Effect: Undead cannot see, hear, or smell creatures warded by this spell.	Target: 3 creatures touched
+DESC: Undead cannot see, hear, or smell creatures warded by this spell.
+DESC 2:  Undead cannot see, hear, or smell creatures warded by this spell.
+Inflict Light Wounds (Necromancy)
+Saves: Will half	DC: 15	Casting: 1 standard action
+Duration: Instantaneous	Range: Touch	Components: V, S
+SR: Yes	Effect: When laying your hand upon a creature, you channel negative energy that deals 1d8+3 points of damage.	Target: Creature touched
+DESC: When laying your hand upon a creature, you channel negative energy that deals 1d8+(min(5,CASTERLEVEL)) points of damage.
+DESC 2:  When laying your hand upon a creature, you channel negative energy that deals 1d8+3 points of damage.
+Magic Stone (Transmutation)
+Saves: Will negates (harmless, object)	DC: 15	Casting: 1 standard action
+Duration: 30 minutes or until discharged	Range: Touch	Components: V, S, DF
+SR: Yes (harmless, object)	Effect: You transmute as many as three pebbles, which can be no larger than sling bullets, so that they strike with great force when thrown or slung.	Target: Up to three pebbles touched
+DESC: You transmute as many as three pebbles, which can be no larger than sling bullets, so that they strike with great force when thrown or slung.
+DESC 2:  You transmute as many as three pebbles, which can be no larger than sling bullets, so that they strike with great force when thrown or slung.
+Magic Weapon (Transmutation)
+Saves: Will negates (harmless, object)	DC: 15	Casting: 1 standard action
+Duration: 3 minutes	Range: Touch	Components: V, S, DF
+SR: Yes (harmless, object)	Effect: Magic weapon gives a weapon a +1 enhancement bonus on attack and damage rolls.	Target: Weapon touched
+DESC: Magic weapon gives a weapon a +1 enhancement bonus on attack and damage rolls.
+DESC 2:  Magic weapon gives a weapon a +1 enhancement bonus on attack and damage rolls.
+Obscuring Mist (Conjuration, WaterSchool)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: 3 minutes [D]	Range: 20 ft.	Components: V, S
+SR: No	Effect: A misty, stationary vapor arises around you obscuring all sight, including darkvision, beyond 5 feet.	Target: Cloud spreads in 20-ft. radius from you, 20 ft. high
+DESC: A misty, stationary vapor arises around you obscuring all sight, including darkvision, beyond 5 feet.
+DESC 2:  A misty, stationary vapor arises around you obscuring all sight, including darkvision, beyond 5 feet.
+Protection from Chaos (Abjuration)
+Saves: Will negates (harmless)	DC: 15	Casting: 1 standard action
+Duration: 3 minutes [D]	Range: Touch	Components: V, S, M/DF
+SR: No; see text	Effect: This spell wards a creature from attacks by chaotic creatures, from mental control, and from summoned creatures.	Target: Creature touched
+DESC: This spell wards a creature from attacks by chaotic creatures, from mental control, and from summoned creatures.
+DESC 2:  This spell wards a creature from attacks by chaotic creatures, from mental control, and from summoned creatures.
+Protection from Evil (Abjuration)
+Saves: Will negates (harmless)	DC: 15	Casting: 1 standard action
+Duration: 3 minutes [D]	Range: Touch	Components: V, S, M/DF
+SR: No; see text	Effect: This spell wards a creature from attacks by evil creatures, from mental control, and from summoned creatures.	Target: Creature touched
+DESC: This spell wards a creature from attacks by evil creatures, from mental control, and from summoned creatures.
+DESC 2:  This spell wards a creature from attacks by evil creatures, from mental control, and from summoned creatures.
+Protection from Law (Abjuration)
+Saves: Will negates (harmless)	DC: 15	Casting: 1 standard action
+Duration: 3 minutes [D]	Range: Touch	Components: V, S, M/DF
+SR: No; see text	Effect: This spell wards a creature from attacks by lawful creatures, from mental control, and from summoned creatures.	Target: Creature touched
+DESC: This spell wards a creature from attacks by lawful creatures, from mental control, and from summoned creatures.
+DESC 2:  This spell wards a creature from attacks by lawful creatures, from mental control, and from summoned creatures.
+Remove Fear (Abjuration)
+Saves: Will negates (harmless)	DC: 15	Casting: 1 standard action
+Duration: 10 minutes; see text	Range: Close (30 ft.)	Components: V, S
+SR: Yes (harmless)	Effect: You instill courage in the subject, granting it a +4 morale bonus against fear effects for 10 minutes.	Target: 1 creatures, no two of which can be more than 30 ft. apart
+DESC: You instill courage in the subject, granting it a +4 morale bonus against fear effects for 10 minutes.
+DESC 2:  You instill courage in the subject, granting it a +4 morale bonus against fear effects for 10 minutes.
+Sanctuary (Abjuration)
+Saves: Will negates	DC: 15	Casting: 1 standard action
+Duration: 3 rounds	Range: Touch	Components: V, S, DF
+SR: No	Effect: Any opponent attempting to directly attack the warded creature, even with a targeted spell, must attempt a Will save.	Target: Creature touched
+DESC: Any opponent attempting to directly attack the warded creature, even with a targeted spell, must attempt a Will save.
+DESC 2:  Any opponent attempting to directly attack the warded creature, even with a targeted spell, must attempt a Will save.
+Shield of Faith (Abjuration)
+Saves: Will negates (harmless)	DC: 15	Casting: 1 standard action
+Duration: 3 minutes	Range: Touch	Components: V, S, M
+SR: Yes (harmless)	Effect: This spell creates a shimmering, magical field around the target that averts and deflects attacks.	Target: Creature touched
+DESC: This spell creates a shimmering, magical field around the target that averts and deflects attacks.
+DESC 2:  This spell creates a shimmering, magical field around the target that averts and deflects attacks.
+Shield of Faith (Abjuration)
+Saves: Will negates (harmless)	DC: 15	Casting: 1 standard action
+Duration: 3 minutes	Range: Touch	Components: V, S, M
+SR: Yes (harmless)	Effect: This spell creates a shimmering, magical field around the target that averts and deflects attacks.	Target: Creature touched
+DESC: This spell creates a shimmering, magical field around the target that averts and deflects attacks.
+DESC 2:  This spell creates a shimmering, magical field around the target that averts and deflects attacks.
+Summon Monster I (Conjuration)
+Saves: None	DC: 	Casting: 1 round
+Duration: 3 rounds [D]	Range: Close (30 ft.)	Components: V, S, F/DF
+SR: No	Effect: This spell summons an extraplanar creature.	Target: One summoned creature
+DESC: This spell summons an extraplanar creature.
+DESC 2:  This spell summons an extraplanar creature.
+ 
+ 
+Level 2
+Aid (Enchantment)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: 3 minutes	Range: Touch	Components: V, S, DF
+SR: Yes (harmless)	Effect: Aid grants +1 morale bonus on attack rolls and saves vs fear effects, plus 1d8 + 3 temporary hit points.	Target: Living creature touched
+DESC: Aid grants +1 morale bonus on attack rolls and saves vs fear effects, plus 1d8 + (min(CASTERLEVEL,10)) temporary hit points.
+DESC 2:  Aid grants +1 morale bonus on attack rolls and saves vs fear effects, plus 1d8 + 3 temporary hit points.
+Align Weapon (Transmutation)
+Saves: Will negates (harmless, object)	DC: 16	Casting: 1 standard action
+Duration: 3 minutes	Range: Touch	Components: V, S, DF
+SR: Yes (harmless, object)	Effect: Align weapon makes a weapon chaotic, evil, good, or lawful, as you choose.	Target: Weapon touched or 50 projectiles [all of which must be together at the time of casting]
+DESC: Align weapon makes a weapon chaotic, evil, good, or lawful, as you choose.
+DESC 2:  Align weapon makes a weapon chaotic, evil, good, or lawful, as you choose.
+Augury (Divination)
+Saves: 	DC: 	Casting: 1 minute
+Duration: Instantaneous	Range: Personal	Components: V, S, M, F
+SR: 	Effect: An augury can tell you whether a particular action will bring good or bad results for you in the immediate future.	Target: You
+DESC: An augury can tell you whether a particular action will bring good or bad results for you in the immediate future.
+DESC 2:  An augury can tell you whether a particular action will bring good or bad results for you in the immediate future.
+Bear's Endurance (Transmutation)
+Saves: Will negates (harmless)	DC: 16	Casting: 1 standard action
+Duration: 3 minutes	Range: Touch	Components: V, S, M/DF
+SR: Yes	Effect: The affected creature gains greater vitality and stamina granting the subject a +4 enhancement bonus to Constitution.	Target: Creature touched
+DESC: The affected creature gains greater vitality and stamina granting the subject a +4 enhancement bonus to Constitution.
+DESC 2:  The affected creature gains greater vitality and stamina granting the subject a +4 enhancement bonus to Constitution.
+Bless Weapon (Transmutation)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: 3 minutes	Range: Touch	Components: V, S
+SR: No	Effect: This transmutation makes a weapon strike true against evil foes.	Target: Weapon touched
+DESC: This transmutation makes a weapon strike true against evil foes.
+DESC 2:  This transmutation makes a weapon strike true against evil foes.
+Blessing of Courage and Life (Conjuration)
+Saves: Will negates (harmless)	DC: 16	Casting: 1 standard action
+Duration: 3 minutes [see below]	Range: Close (30 ft.)	Components: V, S, DF
+SR: Yes (harmless)	Effect: Grants a +2 bonus on saves vs. fear and death.	Target: one living creature
+DESC: Grants a +2 bonus on saves vs. fear and death.
+DESC 2:  Grants a +2 bonus on saves vs. fear and death.
+Bull's Strength (Transmutation)
+Saves: Will negates (harmless)	DC: 16	Casting: 1 standard action
+Duration: 3 minutes	Range: Touch	Components: V, S, M/DF
+SR: Yes (harmless)	Effect: The subject becomes stronger granting a +4 enhancement bonus to Strength.	Target: Creature touched
+DESC: The subject becomes stronger granting a +4 enhancement bonus to Strength.
+DESC 2:  The subject becomes stronger granting a +4 enhancement bonus to Strength.
+Calm Emotions (Enchantment)
+Saves: Will negates	DC: 17	Casting: 1 standard action
+Duration: Concentration, up to 3 rounds [D]	Range: Medium (130 ft.)	Components: V, S, DF
+SR: Yes	Effect: This spell calms agitated creatures.	Target: Creatures in a 20-ft.-radius spread
+DESC: This spell calms agitated creatures.
+DESC 2:  This spell calms agitated creatures.
+Consecrate (Evocation)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: 6 hours	Range: Close (30 ft.)	Components: V, S, M, DF
+SR: No	Effect: This spell blesses an area with positive energy.	Target: 20-ft.-radius emanation
+DESC: This spell blesses an area with positive energy.
+DESC 2:  This spell blesses an area with positive energy.
+Cure Moderate Wounds (Conjuration)
+Saves: Will half (harmless) or Will half; see text	DC: 16	Casting: 1 standard action
+Duration: Instantaneous	Range: Touch	Components: V, S
+SR: Yes (harmless) or yes; see text	Effect: When laying your hand upon a living creature, you channel positive energy that cures 2d8+3 points of damage.	Target: Creature touched
+DESC: When laying your hand upon a living creature, you channel positive energy that cures 2d8+(min(10,CASTERLEVEL)) points of damage.
+DESC 2:  When laying your hand upon a living creature, you channel positive energy that cures 2d8+3 points of damage.
+Darkness (Evocation)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: 3 minutes [D]	Range: Touch	Components: V, M/DF
+SR: No	Effect: This spell causes an object to radiate darkness out to a 20-foot radius.	Target: Object touched
+DESC: This spell causes an object to radiate darkness out to a 20-foot radius.
+DESC 2:  This spell causes an object to radiate darkness out to a 20-foot radius.
+Delay Poison (Conjuration)
+Saves: Fortitude negates (harmless)	DC: 16	Casting: 1 standard action
+Duration: 3 hours	Range: Touch	Components: V, S, DF
+SR: Yes (harmless)	Effect: The subject becomes temporarily immune to poison.	Target: Creature touched
+DESC: The subject becomes temporarily immune to poison.
+DESC 2:  The subject becomes temporarily immune to poison.
+Eagle's Splendor (Transmutation)
+Saves: Will negates (harmless)	DC: 16	Casting: 1 standard action
+Duration: 3 minutes	Range: Touch	Components: V, S, M/DF
+SR: Yes	Effect: The transmuted creature becomes more poised, articulate, and personally forceful gaining a +4 enhancement bonus to Charisma.	Target: Creature touched
+DESC: The transmuted creature becomes more poised, articulate, and personally forceful gaining a +4 enhancement bonus to Charisma.
+DESC 2:  The transmuted creature becomes more poised, articulate, and personally forceful gaining a +4 enhancement bonus to Charisma.
+Enthrall (Enchantment)
+Saves: Will negates; see text	DC: 17	Casting: 1 round
+Duration: 1 hour or less	Range: Medium (130 ft.)	Components: V, S
+SR: Yes	Effect: If you have the attention of a group of creatures, you can use this spell to hold them enthralled.	Target: Any number of creatures
+DESC: If you have the attention of a group of creatures, you can use this spell to hold them enthralled.
+DESC 2:  If you have the attention of a group of creatures, you can use this spell to hold them enthralled.
+Find Traps (Divination)
+Saves: 	DC: 	Casting: 1 standard action
+Duration: 3 minutes	Range: Personal	Components: V, S
+SR: 	Effect: You gain intuitive insight into the workings of traps.	Target: You
+DESC: You gain intuitive insight into the workings of traps.
+DESC 2:  You gain intuitive insight into the workings of traps.
+Gentle Repose (Necromancy)
+Saves: Will negates (object)	DC: 16	Casting: 1 standard action
+Duration: 3 days	Range: Touch	Components: V, S, M/DF
+SR: Yes (object)	Effect: You preserve the remains of a dead creature so that they do not decay.	Target: Corpse touched
+DESC: You preserve the remains of a dead creature so that they do not decay.
+DESC 2:  You preserve the remains of a dead creature so that they do not decay.
+Ghostbane Dirge (Transmutation)
+Saves: Will negates	DC: 16	Casting: 1 standard action
+Duration: 3 rounds	Range: Close (30 ft.)	Components: V, S, M/DF
+SR: Yes	Effect: Incorporeal creature takes half damage from nonmagical weapons.	Target: one incorporeal creature
+DESC: Incorporeal creature takes half damage from nonmagical weapons.
+DESC 2:  Incorporeal creature takes half damage from nonmagical weapons.
+Grace (Abjuration)
+Saves: 	DC: 	Casting: 1 swift action
+Duration: see text	Range: Personal	Components: V
+SR: 	Effect: Movement doesn't provoke attacks of opportunity.	Target: You
+DESC: Movement doesn't provoke attacks of opportunity.
+DESC 2:  Movement doesn't provoke attacks of opportunity.
+Heat Metal (Transmutation)
+Saves: Will negates (object)	DC: 16	Casting: 1 standard action
+Duration: 7 rounds	Range: Close (30 ft.)	Components: V, S, DF
+SR: Yes (object)	Effect: Heat metal causes metal objects to become red-hot.	Target: Metal equipment of one creature per two levels, no two of which can be more than 30 ft. apart; or 75 lbs. of metal, all of which must be within a 30-ft. circle
+DESC: Heat metal causes metal objects to become red-hot.
+DESC 2:  Heat metal causes metal objects to become red-hot.
+Hold Person (Enchantment)
+Saves: Will negates; see text	DC: 17	Casting: 1 standard action
+Duration: 3 rounds [D]; see text	Range: Medium (130 ft.)	Components: V, S, F/DF
+SR: Yes	Effect: The subject becomes paralyzed and freezes in place.	Target: One humanoid creature
+DESC: The subject becomes paralyzed and freezes in place.
+DESC 2:  The subject becomes paralyzed and freezes in place.
+Inflict Moderate Wounds (Necromancy)
+Saves: Will half	DC: 16	Casting: 1 standard action
+Duration: Instantaneous	Range: Touch	Components: V, S
+SR: Yes	Effect: When laying your hand upon a creature, you channel negative energy that deals 2d8+3 points of damage.	Target: Creature touched
+DESC: When laying your hand upon a creature, you channel negative energy that deals 2d8+(min(10,CASTERLEVEL)) points of damage.
+DESC 2:  When laying your hand upon a creature, you channel negative energy that deals 2d8+3 points of damage.
+Instant Armor (Conjuration)
+Saves: 	DC: 	Casting: 1 standard action
+Duration: 3 minutes [D]	Range: Personal	Components: V, S, DF
+SR: 	Effect: Summon armor temporarily replacing your current attire.	Target: You
+DESC: Summon armor temporarily replacing your current attire.
+DESC 2:  Summon armor temporarily replacing your current attire.
+Make Whole (Transmutation)
+Saves: Will negates (harmless, object)	DC: 16	Casting: 10 minutes
+Duration: Instantaneous	Range: Close (30 ft.)	Components: V, S
+SR: Yes (harmless, object)	Effect: This spell functions as mending, except that it repairs 3d6 points of damage when cast on a construct creature.	Target: One object of up to 30 cu. ft. or one construct creature of any size
+DESC: This spell functions as mending, except that it repairs (min(5,CASTERLEVEL))d6 points of damage when cast on a construct creature.
+DESC 2:  This spell functions as mending, except that it repairs 3d6 points of damage when cast on a construct creature.
+Owl's Wisdom (Transmutation)
+Saves: Will negates (harmless)	DC: 16	Casting: 1 standard action
+Duration: 3 minutes	Range: Touch	Components: V, S, M/DF
+SR: Yes	Effect: The transmuted creature becomes wiser gaining a +4 enhancement bonus to Wisdom.	Target: Creature touched
+DESC: The transmuted creature becomes wiser gaining a +4 enhancement bonus to Wisdom.
+DESC 2:  The transmuted creature becomes wiser gaining a +4 enhancement bonus to Wisdom.
+Remove Paralysis (Conjuration)
+Saves: Will negates (harmless)	DC: 16	Casting: 1 standard action
+Duration: Instantaneous	Range: Close (30 ft.)	Components: V, S
+SR: Yes (harmless)	Effect: You can free one or more creatures from the effects of temporary paralysis or related magic.	Target: Up to four creatures, no two of which can be more than 30 ft. apart
+DESC: You can free one or more creatures from the effects of temporary paralysis or related magic.
+DESC 2:  You can free one or more creatures from the effects of temporary paralysis or related magic.
+Resist Energy (Abjuration, AirSchool, EarthSchool, FireSchool, WaterSchool)
+Saves: Fortitude negates (harmless)	DC: 16	Casting: 1 standard action
+Duration: 30 minutes	Range: Touch	Components: V, S, DF
+SR: Yes (harmless)	Effect: This abjuration grants a creature limited protection from damage of whichever one of five energy types you select.	Target: Creature touched
+DESC: This abjuration grants a creature limited protection from damage of whichever one of five energy types you select.
+DESC 2:  This abjuration grants a creature limited protection from damage of whichever one of five energy types you select.
+Restoration (Lesser) (Conjuration)
+Saves: Will negates (harmless)	DC: 16	Casting: 3 rounds
+Duration: Instantaneous	Range: Touch	Components: V, S
+SR: Yes (harmless)	Effect: Lesser restoration dispels any magical effects reducing one of the subject's ability scores or cures 1d4 points of temporary ability damage to one of the subject's ability scores.	Target: Creature touched
+DESC: Lesser restoration dispels any magical effects reducing one of the subject's ability scores or cures 1d4 points of temporary ability damage to one of the subject's ability scores.
+DESC 2:  Lesser restoration dispels any magical effects reducing one of the subject's ability scores or cures 1d4 points of temporary ability damage to one of the subject's ability scores.
+Share Language (Divination)
+Saves: Will negates (harmless)	DC: 16	Casting: 1 standard action
+Duration: 24 hours	Range: Touch	Components: V, S, M
+SR: Yes (harmless)	Effect: Subject understands chosen language.	Target: creature touched
+DESC: Subject understands chosen language.
+DESC 2:  Subject understands chosen language.
+Shatter (Evocation, EarthSchool)
+Saves: Will negates (object); Will negates (object) or Fortitude half; see text	DC: 16	Casting: 1 standard action
+Duration: Instantaneous	Range: Close (30 ft.)	Components: V, S, M/DF
+SR: Yes	Effect: Shatter creates a loud, ringing noise that breaks brittle, nonmagical objects; sunders a single solid, nonmagical object; or damages a crystalline creature.	Target: Or Target 5-ft.-radius spread; or one solid object or one crystalline creature
+DESC: Shatter creates a loud, ringing noise that breaks brittle, nonmagical objects; sunders a single solid, nonmagical object; or damages a crystalline creature.
+DESC 2:  Shatter creates a loud, ringing noise that breaks brittle, nonmagical objects; sunders a single solid, nonmagical object; or damages a crystalline creature.
+Shield Other (Abjuration)
+Saves: Will negates (harmless)	DC: 16	Casting: 1 standard action
+Duration: 3 hours [D]	Range: Close (30 ft.)	Components: V, S, F
+SR: Yes (harmless)	Effect: This spell wards the subject and creates a mystic connection between you and the subject so that some of its wounds are transferred to you.	Target: One creature
+DESC: This spell wards the subject and creates a mystic connection between you and the subject so that some of its wounds are transferred to you.
+DESC 2:  This spell wards the subject and creates a mystic connection between you and the subject so that some of its wounds are transferred to you.
+Silence (Illusion)
+Saves: Will negates; see text or none (object)	DC: 16	Casting: 1 round
+Duration: 3 rounds [D]	Range: Long (520 ft.)	Components: V, S
+SR: Yes; see text or no (object)	Effect: Upon the casting of this spell, complete silence prevails in the affected area.	Target: 20-ft.-radius emanation centered on a creature, object, or point in space
+DESC: Upon the casting of this spell, complete silence prevails in the affected area.
+DESC 2:  Upon the casting of this spell, complete silence prevails in the affected area.
+Sound Burst (Evocation)
+Saves: Fortitude partial	DC: 16	Casting: 1 standard action
+Duration: Instantaneous	Range: Close (30 ft.)	Components: V, S, F/DF
+SR: Yes	Effect: You blast an area with a tremendous cacophony.	Target: 10-ft.-radius spread
+DESC: You blast an area with a tremendous cacophony.
+DESC 2:  You blast an area with a tremendous cacophony.
+Spiritual Weapon (Evocation)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: 3 rounds [D]	Range: Medium (130 ft.)	Components: V, S, DF
+SR: Yes	Effect: A weapon made of force appears and attacks foes at a distance, as you direct it, dealing 1d8+1 force damage per hit.	Target: Magic weapon of force
+DESC: A weapon made of force appears and attacks foes at a distance, as you direct it, dealing 1d8+(min(5,floor(CASTERLEVEL/3))) force damage per hit.
+DESC 2:  A weapon made of force appears and attacks foes at a distance, as you direct it, dealing 1d8+1 force damage per hit.
+Status (Divination)
+Saves: Will negates (harmless)	DC: 16	Casting: 1 standard action
+Duration: 3 hours	Range: Touch	Components: V, S
+SR: Yes (harmless)	Effect: When you need to keep track of comrades who may get separated, status allows you to mentally monitor their relative positions and general condition.	Target: 1 living creatures
+DESC: When you need to keep track of comrades who may get separated, status allows you to mentally monitor their relative positions and general condition.
+DESC 2:  When you need to keep track of comrades who may get separated, status allows you to mentally monitor their relative positions and general condition.
+Summon Monster II (Conjuration, AirSchool, EarthSchool, FireSchool, WaterSchool)
+Saves: None	DC: 	Casting: 1 round
+Duration: 3 rounds [D]	Range: Close (30 ft.)	Components: V, S, F/DF
+SR: No	Effect: This spell functions like summon monster I, except that you can summon one creature from the 2nd-level list or 1d3 creatures of the same kind from the 1st-level list.	Target: One summoned creature
+DESC: This spell functions like summon monster I, except that you can summon one creature from the 2nd-level list or 1d3 creatures of the same kind from the 1st-level list.
+DESC 2:  This spell functions like summon monster I, except that you can summon one creature from the 2nd-level list or 1d3 creatures of the same kind from the 1st-level list.
+Undetectable Alignment (Abjuration)
+Saves: Will negates (object)	DC: 16	Casting: 1 standard action
+Duration: 24 hours	Range: Close (30 ft.)	Components: V, S
+SR: Yes (object)	Effect: An undetectable alignment spell conceals the alignment of an object or a creature from all forms of divination.	Target: One creature or object
+DESC: An undetectable alignment spell conceals the alignment of an object or a creature from all forms of divination.
+DESC 2:  An undetectable alignment spell conceals the alignment of an object or a creature from all forms of divination.
+Weapon of Awe (Transmutation)
+Saves: Will negates (harmless, object)	DC: 16	Casting: 1 standard action
+Duration: 3 minutes	Range: Touch	Components: V, S, DF
+SR: Yes (harmless, object)	Effect: Weapon gets +2 on damage rolls.	Target: weapon touched
+DESC: Weapon gets +2 on damage rolls.
+DESC 2:  Weapon gets +2 on damage rolls.
+Zone of Truth (Enchantment)
+Saves: Will negates	DC: 17	Casting: 1 standard action
+Duration: 3 minutes	Range: Close (30 ft.)	Components: V, S, DF
+SR: Yes	Effect: Creatures within the emanation area [or those who enter it] can't speak any deliberate and intentional lies.	Target: 20-ft.-radius emanation
+DESC: Creatures within the emanation area (or those who enter it) can't speak any deliberate and intentional lies.
+DESC 2:  Creatures within the emanation area [or those who enter it] can't speak any deliberate and intentional lies.
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+                     
+
+      
+------------------------ Description -----------------------
+Height: 5' 11" Weight: 185 lbs. Gender: Male	
+Eyes:   Blue Hair: Blond,Neat Skin: Pasty
+Dominant Hand: Right Quirks: Depressed, Egoist	
+Speech style: High-pitched Quotable: Get these spiders off me!
+Full Description
+
+Background
+Grew up on a farm, encouraged to the service of Sarenrae by the local priest.
+
+Has adventured in service of the church for a year and now is looking to form an adventuring party to hunt through the Vericostial catacombs for undead that have been snatching citizens.
+Campaign Logs

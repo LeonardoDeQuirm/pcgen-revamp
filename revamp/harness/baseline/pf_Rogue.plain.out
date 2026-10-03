@@ -1,0 +1,469 @@
+Name:       Ronald Millbridge
+Race:       Halfling
+Player:     James 
+Classes:    Rogue12
+Hit Points: 68
+Experience: 220000 / 315000
+Alignment:  Neutral Good
+Vision:     
+Speed:      Walk 25 ft.
+Languages:  Aklo, Common, Elven, Giant, Halfling, Hallit, Skald, Sylvan, Varisian
+Stat    Score   Mod
+STR  12 (+1)
+DEX  22 (+6)
+CON  11 (+0)
+INT  15 (+2)
+WIS  12 (+1)
+CHA  14 (+2)
+-------------------------- Skills --------------------------
+Skill                   Total   Rnk     Stat    Msc
+Acrobatics  28  12.0  6  10
+Acrobatics (When Jumping)  24  12.0  6  6
+Appraise  6  1.0  2  3
+Bluff  14  9.0  2  3
+Climb  9  3.0  1  5
+Craft (Traps)  6  1.0  2  3
+Craft (Untrained)  2  0.0  2  0
+Diplomacy  7  2.0  2  3
+Disable Device  29  12.0  6  11
+Disguise  16  11.0  2  3
+Escape Artist  21  12.0  6  3
+Fly  8  0.0  6  2
+Handle Animal  4  2.0  2  0
+Heal  1  0.0  1  0
+Intimidate  6  1.0  2  3
+Knowledge (Dungeoneering)  6  1.0  2  3
+Knowledge (Engineering)  3  1.0  2  0
+Knowledge (Geography)  14  12.0  2  0
+Knowledge (Local)  9  4.0  2  3
+Linguistics(Skald, Sylvan)  6  1.0  2  3
+Perception  18  12.0  1  5
+Perception (Trapfinding)  28  12.0  1  15
+Perform (Untrained)  2  0.0  2  0
+Profession (Cook)  5  1.0  1  3
+Ride  6  0.0  6  0
+Sense Motive  7  3.0  1  3
+Sleight of Hand  11  2.0  6  3
+Stealth  25  12.0  6  7
+Survival  1  0.0  1  0
+Swim  11  2.0  1  8
+Use Magic Device  13  8.0  2  3
+-------------------------- Feats ---------------------------
+Combat Expertise
+  You can increase your defense at the expense of your accuracy.
+  
+Dodge
+  Your training and reflexes allow you to react swiftly to avoid an opponent's attack.
+  
+Fleet
+  You are faster than most.
+  
+Improved Two-Weapon Fighting
+  You are skilled at fighting with two weapons.
+  
+Quick Draw
+  You can draw weapons faster than most.
+  
+Two-Weapon Fighting
+  You can fight with a weapon in each of your hands. You can make one extra attack each round with the secondary weapon.
+  
+Weapon Finesse
+-------------------- Special Abilities ---------------------
+
+			<name>Bonus Hit Point (6x)</name>
+			<description></description>
+			<type>FAVOREDCLASSBONUS.SPECIALQUALITY</type>
+			<associated>,,,,,</associated>
+			<count>6</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook</source>
+		</special_quality>
+			<name>Bonus Skill Rank (Handle Animal, Knowledge (Dungeoneering), Knowledge (Engineering), Knowledge (Geography), Knowledge (Local), Sense Motive)</name>
+			<description></description>
+			<type>FAVOREDCLASSBONUS.SPECIALQUALITY</type>
+			<associated>Handle Animal,Knowledge (Dungeoneering),Knowledge (Engineering),Knowledge (Geography),Knowledge (Local),Sense Motive</associated>
+			<count>6</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook</source>
+		</special_quality>
+			<name>Brigand</name>
+			<description>You hail from the River Kingdoms or the more lawless reaches of Brevoy. Life has been hard for you. Perhaps your parents and siblings were crooks and con artists, or maybe your rough, lonely life lead you to fall in with thieves and worse. You know how to ambush travelers, bully traders, avoid the law, and camp where no one might find you. Recently, you've run into some trouble, either with the law or with other bandits, and you're looking to get away to somewhere no one would ever think to look for you. An expedition into the rugged wilderness seems like a perfect way to lie low until the trouble blows over. You gain a +1 trait bonus on Bluff, Diplomacy, Intimidate, and Sense Motive checks when dealing with brigands, thieves, bandits, and their ilk.</description>
+			<type>TRAIT.CAMPAIGNTRAIT</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Kingmaker Player's Guide, p.10</source>
+		</special_quality>
+			<name>Canny Observer (Ex)</name>
+			<description>When a rogue with this talent makes a Perception check to hear the details of a conversation or to find concealed or secret objects (including doors and traps), she gains a +4 bonus.</description>
+			<type>ROGUETALENT.SPECIALQUALITY.EXTRAORDINARY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Player's Guide, p.130</source>
+		</special_quality>
+			<name>Crippling Strike (Ex)</name>
+			<description>You can sneak attack opponents with such precision that your blows weaken and hamper them. An opponent damaged by one of your sneak attacks also takes 2 points of Strength damage.</description>
+			<type>ROGUECLASSFEATURES.SPECIALATTACK.EXTRAORDINARY.ROGUEADVANCEDTALENT.ATTACKOPTION</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.69</source>
+		</special_quality>
+			<name>Evasion</name>
+			<description></description>
+			<type>ROGUECLASSFEATURES</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook</source>
+		</special_quality>
+			<name>Fearless</name>
+			<description>Halflings receive a +2 racial bonus on all saving throws against fear. This bonus stacks with the bonus granted by halfling luck.</description>
+			<type>RACIALTRAITS.HALFLING RACIAL TRAIT.HALFLING RACIAL DEFAULT.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>SaveBonus: +2 racial bonus on all saving throws against fear. This bonus stacks with the bonus granted by halfling luck.</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.26</source>
+		</special_quality>
+			<name>Guileful Polyglot (Aklo, Giant, Hallit, Varisian) (Ex)</name>
+			<description>A rogue with this talent who has at least one rank in Linguistics gains four additional languages. A rogue with this talent who does not have any ranks in Linguistics gains two additional languages. If the rogue later gains ranks in Linguistics, she gains two additional languages, to a total of four additional languages above those granted by the Linguistics skill itself.</description>
+			<type>GUILEFULPOLYGOTLANG.SPECIALQUALITY.EXTRAORDINARY</type>
+			<associated>Aklo,Giant,Hallit,Varisian</associated>
+			<count>4</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Player's Guide, p.130</source>
+		</special_quality>
+			<name>Guileful Polyglot</name>
+			<description>A rogue with this talent who has at least one rank in Linguistics gains four additional languages. A rogue with this talent who does not have any ranks in Linguistics gains two additional languages. If the rogue later gains ranks in Linguistics, she gains two additional languages, to a total of four additional languages above those granted by the Linguistics skill itself.</description>
+			<type>ROGUETALENT</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Player's Guide, p.130</source>
+		</special_quality>
+			<name>Halfling Luck</name>
+			<description>Halflings receive a +1 racial bonus on all saving throws.</description>
+			<type>RACIALTRAITS.HALFLING RACIAL TRAIT.HALFLING RACIAL DEFAULT.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.26</source>
+		</special_quality>
+			<name>Improved Evasion (Ex)</name>
+			<description>You can avoid damage from many area-effect attacks. If you make a successful Reflex save against an attack that normally deals half damage on a successful save, you instead take no damage, and even on a failed saving throw you take only half damage. If you are helpless, you do not gain the benefit of improved evasion.</description>
+			<type>SPECIALQUALITY.EXTRAORDINARY.DEFENSIVE.ADVANCEDROGUETALENT.ROGUECLASSFEATURES.RANGERCLASSFEATURES.MONKCLASSFEATURES</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook</source>
+		</special_quality>
+			<name>Improved Uncanny Dodge (Ex)</name>
+			<description>You can no longer be flanked. This defense denies a rogue the ability to sneak attack you by flanking you, unless the attacker is a rogue of at least level 16.</description>
+			<type>SPECIALQUALITY.EXTRAORDINARY.DEFENSIVE</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook</source>
+		</special_quality>
+			<name>Keen Senses</name>
+			<description>Halflings receive a +2 racial bonus on Perception skill checks.</description>
+			<type>RACIALTRAITS.HALFLING RACIAL TRAIT.HALFLING RACIAL DEFAULT.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.26</source>
+		</special_quality>
+			<name>Natural-Born Leader</name>
+			<description>You've always found yourself in positions where others look up to you as a leader, and you can distinctly remember an event from your early childhood where you led several other children to accomplish a goal that each of you individually could not. All cohorts, followers, or summoned creatures under your leadership gain a +1 morale bonus on Will saves to avoid mind-affecting effects. If you ever take the Leadership feat, you gain a +1 trait bonus to your Leadership score.</description>
+			<type>TRAIT.BASICTRAIT.SOCIALTRAIT</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Player's Guide, p.330</source>
+		</special_quality>
+			<name>Rogue ~ Uncanny Dodge Tracker</name>
+			<description></description>
+			<type>ROGUECLASSFEATURES</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook</source>
+		</special_quality>
+			<name>Sneak Attack (Ex)</name>
+			<description>If you can catch an opponent when he is unable to defend himself effectively from your attack, you can strike a vital spot for extra damage. Your attack deals 6d6 points of extra damage anytime your target would be denied a Dexterity bonus to AC, or when you flank your target. Should you score a critical hit with a sneak attack, this extra damage is not multiplied. Ranged attacks can count as sneak attacks only if the target is within 30 feet. With a weapon that deals nonlethal damage, you can make a sneak attack that deals nonlethal damage instead of lethal damage. You cannot use a weapon that deals lethal damage to deal nonlethal damage in a sneak attack, not even with the usual -4 penalty. You must be able to see the target well enough to pick out a vital spot and must be able to reach such a spot. You cannot sneak attack while striking a creature with concealment.</description>
+			<type>ROGUECLASSFEATURES.ALCHEMISTCLASSFEATURES.SPECIALATTACK.EXTRAORDINARY.ATTACKOPTION</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>Ability Benefit: 6d6</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.68</source>
+		</special_quality>
+			<name>Sure-Footed</name>
+			<description>Halflings receive a +2 racial bonus on Acrobatics and Climb skill checks.</description>
+			<type>RACIALTRAITS.HALFLING RACIAL TRAIT.HALFLING RACIAL DEFAULT.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.26</source>
+		</special_quality>
+			<name>Trapfinding (Ex)</name>
+			<description>You add +6 to Perception skill checks made to locate traps and to Disable Device skill checks. You can use the Disable Device skill to disarm magical traps.</description>
+			<type>ROGUECLASSFEATURES.RANGERCLASSFEATURES.SPECIALQUALITY.EXTRAORDINARY.TRAPFINDING</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.68</source>
+		</special_quality>
+			<name>Trap Sense (Ex)</name>
+			<description>You gain a +4 bonus on Reflex saves made to avoid traps, and a +4 dodge bonus to AC against attacks made by traps.</description>
+			<type>SPECIALQUALITY.EXTRAORDINARY.DEFENSIVE.BARBARIANCLASSFEATURES.CLASSFEATURES</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>Ability Benefit: +4, SaveBonus: +4 Reflex to avoid traps</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook</source>
+		</special_quality>
+			<name>Trap Spotter (Ex)</name>
+			<description>Whenever you come within 10 feet of a trap, you receive an immediate Perception skill check to notice the trap. This check should be made in secret by the GM.</description>
+			<type>ROGUECLASSFEATURES.SPECIALQUALITY.EXTRAORDINARY.ROGUETALENT</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.69</source>
+		</special_quality>
+			<name>Uncanny Dodge (Ex)</name>
+			<description>You can react to danger before your senses would normally allow you to do so. You cannot be caught flat-footed, nor do you lose your Dexterity bonus to AC if the attacker is invisible. You still lose your Dexterity bonus to AC if immobilized. You can still lose your Dexterity bonus to AC if an opponent successfully uses the feint action against you.</description>
+			<type>SPECIALQUALITY.EXTRAORDINARY.DEFENSIVE</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook</source>
+		</special_quality>
+			<name>Weapon Familiarity</name>
+			<description>Halflings are proficient with slings and treat any weapon with the word "halfling" in its name as a martial weapon.</description>
+			<type>RACIALTRAITS.HALFLING RACIAL TRAIT.HALFLING RACIAL DEFAULT.SPECIALQUALITY.WEAPON FAMILIARITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.26</source>
+		</special_quality>
+	</special_qualities>
+------------------------ Templates -------------------------
+
+-------------------------- Combat --------------------------
+    Total / Touch / Flat Footed
+AC: 27 / 23 / 21
+Initiative:   +6
+BAB:          +9/+4
+Melee tohit:  +11/+6
+Ranged tohit: +16/+11
+Fortitude:    +8
+Reflex:       +18
+Will:         +9
+Unarmed attack:
+to hit:       +16/+11
+damage:       1d2+1
+critical:     20/x2
+Dagger +1 (Small):
+to hit:       +15/+10
+damage:       1d3+1
+critical:     19-20/x2
+Dagger +1 (Small/Thrown):
+to hit:       +17/+12
+damage:       1d3+1
+critical:     19-20/x2
+range:        10 ft.
+Rapier +1 (Small):
+to hit:       +15/+10
+damage:       1d4+2
+critical:     18-20/x2
+Oil:
+to hit:       +14/+9
+damage:       1d6-1
+critical:     20/x2
+range:        10 ft.
+special properties: splash weapon, full-round action to prepare, 50% chance to ignite
+Sling (Small):
+to hit:       +16/+11
+damage:       1d3+1
+critical:     20/x2
+range:        50 ft.
+Masterwork Sap (Small):
+to hit:       +17/+12
+damage:       1d4+1
+critical:     20/x2
+Dagger (Small):
+to hit:       +16/+11
+damage:       1d3+1
+critical:     19-20/x2
+Dagger (Small/Thrown):
+to hit:       +16/+11
+damage:       1d3
+critical:     19-20/x2
+range:        10 ft.
+Masterwork Morningstar (Small/Alchemical Silver):
+to hit:       +12/+7
+damage:       1d6
+critical:     20/x2
+Masterwork Rapier (Small/Cold Iron):
+to hit:       +17/+12
+damage:       1d4+1
+critical:     18-20/x2
+special properties: cold iron
+--------------------- Special Abilities --------------------
+ 
+------------------------- Equipment ------------------------
+Name                                            QTY	LBS
+Amulet of Natural Armor +2  1	0lbs
+Headband of Vast Intelligence +2 ( Maximize Knowledge SkillKnowledge (Geography))  1	1lbs	Special: Grants maximum skill ranks in Knowledge (Geography)
+Dagger +1 (Small)  1	0lbs
+Rapier +1 (Small)  1	1lbs
+Ring of Protection +2  1	0lbs
+Ring of Swimming  1	0lbs
+Belt of Incredible Dexterity +2  1	1lbs
+Chain Shirt +1 (Small/Mithral)  1	6lbs
+Cloak of Resistance +3  1	1lbs
+Outfit (Explorer's/Small)  1	2lbs
+Boots of Elvenkind  1	1lbs
+Bullets, Sling (10)  2	10lbs
+Masterwork Thieves' Tools  1	1lbs
+Masterwork Sap (Small)  1	1lbs
+Backpack (Masterwork) (Small) (10.5 lbs.)
+   Case, Map  1	0lbs
+   Flint and Steel  1	0lbs
+   Inkpen  2	0lbs
+   Lantern, Bullseye  1	3lbs
+   Oil, 1 Pint Flask  1	1lbs	Special: splash weapon, full-round action to prepare, 50% chance to ignite
+   Potion of Cure Light Wounds  1	0lbs	Special: Cures 1d8+1 points of damage
+   Rations, Trail  1	1lbs
+   Rope of Climbing  1	3lbs
+   Sealing Wax  1	1lbs
+Case, Map (0.5 lbs.)
+   Map of Inner Daggermark  1	0lbs	Special: (Parchment (Sheet))
+   Parchment (Sheet)  4	0lbs
+Pouch, Belt (0.64 lbs.)
+   Gold Piece  1	0lbs
+   Silver Piece  6	0lbs
+Sling (Small) (0 lbs.)
+Dog, Riding (0 lbs.)
+   Dagger (Small)  1	0lbs
+   Bedroll  1	5lbs
+   Masterwork Morningstar (Small/Alchemical Silver)  1	3lbs
+   Masterwork Rapier (Small/Cold Iron)  1	1lbs	Special: cold iron
+   Saddle, Riding  1	25lbs
+   Saddlebags  1	8lbs
+   Waterskin  1	0lbs
+Saddlebags (39 lbs.)
+   Oil, 1 Pint Flask  1	1lbs	Special: splash weapon, full-round action to prepare, 50% chance to ignite
+   Rations, Trail  4	4lbs
+   Grappling Hook  1	4lbs
+   Map Maker's Kit  1	2lbs
+   Tent  1	20lbs
+Waterskin (0 lbs.)
+Total weight carried: 36.89 lbs.
+Current load:         Light
+Encumbrance
+Light:  37   
+Medium: 75   
+Heavy:  112
+--------------------------- Magic --------------------------
+
+      
+      
+------------------------ Description -----------------------
+Height: 2' 10" Weight: 32 lbs. Gender: Male	
+Eyes:   Brown Hair: Red-brown, Skin: Almond
+Dominant Hand: Left Quirks: Planner, Pleasant smelling	
+Speech style:  Quotable: 
+Full Description
+
+Background
+
+Campaign Logs

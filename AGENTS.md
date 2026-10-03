@@ -252,6 +252,15 @@ Conventions/gotchas observed:
 - Issue tracker: Jira at https://pcgenorg.atlassian.net (CODE/DATA/etc.) as referenced in README and docs/faqpages/faqsubmittingabugreport.md
 - Community: Discord (https://discord.gg/M7GH5BS), Slack (by invitation)
 
+## Fork additions: `revamp/` (new front end)
+
+This fork (`LeonardoDeQuirm/pcgen-revamp`) adds a new UI on top of the unchanged engine, all under `revamp/`:
+
+- `revamp/sidecar/`: Java HTTP API over the engine (single worker thread; engine questions such as choosers are parked and surfaced as HTTP 202 replies). Build with `powershell revamp/sidecar/build.ps1` after `./gradlew qbuild -x test`.
+- `revamp/ui/`: React + TypeScript + Vite app; `revamp/harness/`: Python tests against the real engine; `revamp/start-dev.ps1` runs everything on a copy of a character.
+- Start with `CLAUDE.md` (commands, rules, gotchas) and `revamp/PROGRESS.md` (state and to-do).
+- Changes to PCGen's own files so far: variable channels/wrappers are now cached per character (funds were shared between open characters), and the Half-Orc race now applies its identifying template (`IsHalfOrc`).
+
 ---
 
 _This file documents observed behavior and commands present in this repository as of the current state. It should be updated whenever significant changes are made — especially during LLM-assisted development sessions._

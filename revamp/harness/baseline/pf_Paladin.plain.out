@@ -1,0 +1,653 @@
+Name:       Florian Syrkov
+Race:       Human (Varisian)
+Player:     James 
+Classes:    Paladin6
+Hit Points: 52
+Experience: 23000 / 35000
+Alignment:  Lawful Good
+Vision:     
+Speed:      Walk 20 ft.
+Languages:  Common, Varisian
+Stat    Score   Mod
+STR  18 (+4)
+DEX  12 (+1)
+CON  14 (+2)
+INT  8 (-1)
+WIS  12 (+1)
+CHA  14 (+2)
+-------------------------- Skills --------------------------
+Skill                   Total   Rnk     Stat    Msc
+Acrobatics  -4  0.0  1  -5
+Acrobatics (When Jumping)  -8  0.0  1  -9
+Appraise  -1  0.0  -1  0
+Bluff  2  0.0  2  0
+Climb  -1  0.0  4  -5
+Craft (Untrained)  -1  0.0  -1  0
+Diplomacy  14  6.0  2  6
+Disguise  2  0.0  2  0
+Escape Artist  -4  0.0  1  -5
+Fly  -4  0.0  1  -5
+Handle Animal  6  1.0  2  3
+Heal  1  0.0  1  0
+Intimidate  2  0.0  2  0
+Knowledge (Nobility)  3  1.0  -1  3
+Knowledge (Religion)  3  1.0  -1  3
+Linguistics(Varisian)  0  1.0  -1  0
+Perception  3  2.0  1  0
+Perform (Dance)  3  1.0  2  0
+Perform (Untrained)  2  0.0  2  0
+Profession (Merchant)  5  1.0  1  3
+Ride  0  1.0  1  -2
+Sense Motive  5  1.0  1  3
+Stealth  -4  0.0  1  -5
+Survival  1  0.0  1  0
+Swim  -1  0.0  4  -5
+-------------------------- Feats ---------------------------
+Power Attack
+  You can make exceptionally deadly melee attacks by sacrificing accuracy for strength.
+  
+Reward of Grace
+  When you lay on hands, divine energy ripples through you, granting you grace.
+  
+Skill Focus (Diplomacy)
+  You are particularly adept at your chosen skill.
+  
+Weapon Focus (Heavy Flail)
+-------------------- Special Abilities ---------------------
+
+			<name>Aura of Courage (Su)</name>
+			<description>You are immune to fear (magical or otherwise). Each ally within 10 feet of you gains a +4 morale bonus on saving throws against fear effects. This ability functions only while you are conscious, not if you are unconscious or dead.</description>
+			<type>PALADINCLASSFEATURES.SPECIALQUALITY.SUPERNATURAL.AURA.AURA OF COURAGE</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.61</source>
+		</special_quality>
+			<name>Aura of Good (Ex)</name>
+			<description>You project a strong good aura.</description>
+			<type>SPECIALQUALITY.EXTRAORDINARY.AURA.CLERICCLASSFEATURES.PALADINCLASSFEATURES</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook</source>
+		</special_quality>
+			<name>Aura of Good</name>
+			<description></description>
+			<type>PALADINCLASSFEATURES</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook</source>
+		</special_quality>
+			<name>Bonus Energy Resistance (2x)</name>
+			<description>Add +1 to the paladin's energy resistance to one kind of energy (maximum +10).</description>
+			<type>SPECIALQUALITY.FAVOREDCLASSBONUS.FAVOREDCLASSPALADIN</type>
+			<associated>,</associated>
+			<count>2</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Player's Guide</source>
+		</special_quality>
+			<name>Bonus Feat</name>
+			<description>Humans select one extra feat at 1st level.</description>
+			<type>RACIALTRAITS.HUMAN RACIAL TRAIT.HUMAN RACIAL DEFAULT.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.27</source>
+		</special_quality>
+			<name>Bonus Skill Rank (Diplomacy, Diplomacy, Diplomacy, Diplomacy)</name>
+			<description></description>
+			<type>FAVOREDCLASSBONUS.SPECIALQUALITY</type>
+			<associated>Diplomacy,Diplomacy,Diplomacy,Diplomacy</associated>
+			<count>4</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook</source>
+		</special_quality>
+			<name>Celestial Spirit (Sp)</name>
+			<description>Your divine bond allows you to enhance your weapon as a standard action by calling upon the aid of a celestial spirit for 6 minutes. When called, the spirit causes the weapon to shed light as a torch. This spirit grants the weapon a +1 enhancement bonus. This bonus can be added to the weapon, stacking with existing weapon bonuses to a maximum of +5, or it can be used to add any of the following weapon properties: defending, flaming, keen, merciful (+1), axiomatic, disruption, flaming burst, holy (+2), speed (+3), and brilliant energy (+4). Adding these properties consumes an amount of bonus equal to the property's cost. These bonuses are added to any properties the weapon already has, but duplicate abilities do not stack. If the weapon is not magical, at least a +1 enhancement bonus must be added before any other properties can be added. The bonus and properties granted by the spirit are determined when the spirit is called and cannot be changed until the spirit is called again. The celestial spirit imparts no bonuses if the weapon is held by anyone other than you but resumes giving bonuses if returned to you. These bonuses apply to only one end of a double weapon. You can use this ability 1 times per day. If a weapon bonded with a celestial spirit is destroyed, you lose the use of this ability for 30 days, or until you gain a level, whichever comes first. During this 30-day period, you take a -1 penalty on attack and weapon damage rolls.</description>
+			<type>PALADINCLASSFEATURES.SPECIALQUALITY.SPELLLIKE.DIVINEBOND.DIVINE BOND</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>CheckCount: 1, CheckType: Uses per day</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.63</source>
+		</special_quality>
+			<name>Chance Savior</name>
+			<description>Fate smiled on you and Professor Lorrimor one day in the not so distant past. Through a matter of pure chance, you were in a position to save the late scholar's life and did so. His gratitude was effusive, and he promised that he would never forget you. You are unsure of the nature of the summons in his will, but believe he may have listed you as a possible heir in thanks for saving him from an untimely demise. Your ability to think quickly on your feet has stayed with you, and you quite often feel that you're in the right place at the right time. You gain a +2 trait bonus on Initiative checks.</description>
+			<type>TRAIT.CAMPAIGNTRAIT</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Carrion Crown Player's Guide, p.12</source>
+		</special_quality>
+			<name>Channel Positive Energy</name>
+			<description></description>
+			<type>INTERNAL.CHANNEL POSITIVE ENERGY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook</source>
+		</special_quality>
+			<name>Channel Positive Energy (Su)</name>
+			<description>You can unleash a wave of positive energy dealing 3d6 (DC 15 for half) 2/day. You can unleash a wave of positive energy. You must choose to deal 3d6 points of positive energy damage to undead creatures or to heal living creatures of 3d6 points of damage. Creatures that take damage from channeled energy receive a DC 15 Will save to halve the damage. Using this ability consumes two uses of her lay on hands ability.</description>
+			<type>PALADINCLASSFEATURES.SPECIALATTACK.SUPERNATURAL.CHANNEL ENERGY.CHANNEL ENERGY POSITIVE.CHANNEL POSITIVE ENERGY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>Ability Benefit: (3d6, DC 15), ChildAbility: Lay on Hands, MasterAbility: Channel Energy</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook</source>
+		</special_quality>
+			<name>Detect Evil (Sp)</name>
+			<description>At will, you can use Detect Evil, as the Spell. You can, as a move action, concentrate on a single individual or item within 60 feet and determine if it is evil, learning the strength of its aura as if having studied it for 3 rounds. While focusing on one individual or object, you do not detect evil in any other object or individual within range.</description>
+			<type>PALADINCLASSFEATURES.SPECIALQUALITY.SPELLLIKE.DETECT EVIL</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.60</source>
+		</special_quality>
+			<name>Divine Health (Ex)</name>
+			<description>You are immune to all diseases, including supernatural and magical diseases, including mummy rot.</description>
+			<type>PALADINCLASSFEATURES.SPECIALQUALITY.EXTRAORDINARY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.61</source>
+		</special_quality>
+			<name>Lay on Hands (Su)</name>
+			<description>You can heal wounds (your own or those of others) by touch. Each day you can use this ability 5 times per day. With one use of this ability, you can heal 3d6 hit points of damage. Using this ability is a standard action, unless you target yourself, in which case it is a swift action. Despite the name of this ability, you only need one free hand to use this ability. Alternatively, you can use this healing power to deal damage to undead creatures, dealing 3d6 points of damage. Using Lay on Hands in this way requires a melee touch attack and doesn't provide an attack of opportunity. Undead do not receive a saving throw against this damage.</description>
+			<type>PALADINCLASSFEATURES.SPECIALQUALITY.SUPERNATURAL.LAYONHANDS.LAY ON HANDS</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>CheckCount: 5, CheckType: Uses per Day, MasterAbility: Lay on Hands</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.61</source>
+		</special_quality>
+			<name>Rich Parents</name>
+			<description>You were born into a rich family, perhaps even the nobility. Your starting cash increases to 900 gp.</description>
+			<type>TRAIT.BASICTRAIT.SOCIALTRAIT</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Player's Guide, p.330</source>
+		</special_quality>
+			<name>Mercy (Sickened) (Su)</name>
+			<description>Whenever you use Lay on Hands to heal damage to one target, the target is no longer sickened.</description>
+			<type>PALADINCLASSFEATURES.SPECIALQUALITY.SUPERNATURAL.MERCY.LAYONHANDS</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.61</source>
+		</special_quality>
+			<name>Skilled</name>
+			<description>Humans gain an additional skill rank at 1st level and one additional rank whenever they gain a level.</description>
+			<type>RACIALTRAITS.HUMAN RACIAL TRAIT.HUMAN RACIAL DEFAULT.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.27</source>
+		</special_quality>
+			<name>Smite Evil (Su)</name>
+			<description>You can call out to the powers of good to aid you in your struggle against evil 2 times per day. As a swift action, you choose one target within sight to smite. If this target is evil, you add +2 to your attack rolls and +6 to all damage rolls made against the target of your smite. If the target of Smite Evil is an outsider with the evil subtype, an evil-aligned dragon, or an undead creature, the bonus to damage on the first successful attack increases to +12. Regardless of the target, Smite Evil attacks automatically bypass any DR the creature might possess. In addition, while smite evil is in effect, you gain a +2 deflection bonus to your AC against attacks made by the target of the smite. If you target a creature that is not evil, the smite is wasted with no effect. The Smite Evil effect remains until the target of the smite is dead or the next time you rest and regain your uses of this ability.</description>
+			<type>PALADINCLASSFEATURES.SPECIALATTACK.SUPERNATURAL.SMITE EVIL</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>CheckCount: 2, CheckType: Uses per day</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.60</source>
+		</special_quality>
+			<name>Mercy (Staggered) (Su)</name>
+			<description>Whenever you use Lay on Hands to heal damage to one target, the target is no longer staggered, unless it is at exactly 0 hit points.</description>
+			<type>PALADINCLASSFEATURES.SPECIALQUALITY.SUPERNATURAL.MERCY.LAYONHANDS</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.61</source>
+		</special_quality>
+	</special_qualities>
+------------------------ Templates -------------------------
+
+-------------------------- Combat --------------------------
+    Total / Touch / Flat Footed
+AC: 22 / 13 / 21
+Initiative:   +3
+BAB:          +6/+1
+Melee tohit:  +10/+5
+Ranged tohit: +7/+2
+Fortitude:    +9
+Reflex:       +5
+Will:         +8
+Unarmed attack:
+to hit:       +10/+5
+damage:       1d3+4
+critical:     20/x2
+Flail +1 (Heavy):
+to hit:       +12/+7
+damage:       1d10+7
+critical:     19-20/x2
+special properties: disarm, trip
+Flail +1 (Heavy) [Power Attack (Two-Handed)]:
+to hit:       +10/+5
+damage:       1d10+13
+critical:     19-20/x2
+special properties: disarm, trip
+Spiked Gauntlet:
+to hit:       +10/+5
+damage:       1d4+4
+critical:     20/x2
+Holy Water:
+to hit:       +7/+2
+damage:       1d6-4
+critical:     20/x2
+range:        10 ft.
+special properties: splash weapon
+Oil:
+to hit:       +7/+2
+damage:       1d6-4
+critical:     20/x2
+range:        10 ft.
+special properties: splash weapon, full-round action to prepare, 50% chance to ignite
+Dagger:
+to hit:       +10/+5
+damage:       1d4+4
+critical:     19-20/x2
+Dagger (Thrown):
+to hit:       +7/+2
+damage:       1d4
+critical:     19-20/x2
+range:        10 ft.
+Javelin:
+to hit:       +7/+2
+damage:       1d6
+critical:     20/x2
+range:        30 ft.
+Longsword (Alchemical Silver):
+to hit:       +10/+5
+damage:       1d8+3
+critical:     19-20/x2
+Wooden Stake:
+to hit:       +10/+5
+damage:       1d4+4
+critical:     20/x2
+Wooden Stake (Thrown):
+to hit:       +7/+2
+damage:       1d4
+critical:     20/x2
+range:        10 ft.
+Wooden Stake:
+to hit:       +10/+5
+damage:       1d4+4
+critical:     20/x2
+Wooden Stake (Thrown):
+to hit:       +7/+2
+damage:       1d4
+critical:     20/x2
+range:        10 ft.
+--------------------- Special Abilities --------------------
+ 
+------------------------- Equipment ------------------------
+Name                                            QTY	LBS
+Flail +1 (Heavy)  1	10lbs	Special: disarm, trip
+Flail +1 (Heavy)  1	0lbs	Special: disarm, trip
+Gauntlet, Spiked  1	0lbs
+Ring of Protection +1  1	0lbs
+Full Plate +1  1	50lbs
+Longsword (Alchemical Silver)  1	4lbs
+Stake (Wood)  2	2lbs
+Traveler's Outfit  1	5lbs
+Backpack (20 lbs.)
+   Rope, Silk (50 ft.)  1	5lbs
+   Antitoxin  1	0lbs	Special: +5 alchemical bonus to Fortitude saves against poison for 1 hour
+   Flint and Steel  1	0lbs
+   Holy Symbol, Silver  1	1lbs
+   Holy Water  2	2lbs	Special: splash weapon
+   Iron Spike  3	3lbs
+   Lantern, Bullseye  1	3lbs
+   Oil, 1 Pint Flask  2	2lbs	Special: splash weapon, full-round action to prepare, 50% chance to ignite
+   Sunrod  2	2lbs
+Heavy Horse (Combat Trained) (0 lbs.)
+   Javelin  2	4lbs
+   Saddle, Military  1	30lbs	Special: +2 circumstance bonus on Ride checks related to staying in the saddle
+   Saddlebags  1	8lbs
+Saddlebags (31 lbs.)
+   Wooden Stake  2	2lbs
+   Bedroll  1	5lbs
+   Grappling Hook  1	4lbs
+   Explorer's Outfit  1	8lbs
+   Waterskin, Filled  1	4lbs
+Total weight carried: 98 lbs.
+Current load:         Light
+Encumbrance
+Light:  100   
+Medium: 200   
+Heavy:  300
+--------------------------- Magic --------------------------
+
+
+Paladin Spells
+
+SPELLBOOKNAME0
+  
+ 
+Level 1
+Bless (Enchantment)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: 3 minutes	Range: 50 ft.	Components: V, S, DF
+SR: Yes (harmless)	Effect: Bless fills your allies with courage.	Target: The caster and all allies within a 50-ft. burst, centered on the caster
+DESC: Bless fills your allies with courage.
+DESC 2:  Bless fills your allies with courage.
+Bless Water (Transmutation)
+Saves: Will negates (object)	DC: 13	Casting: 1 minute
+Duration: Instantaneous	Range: Touch	Components: V, S, M
+SR: Yes (object)	Effect: This transmutation imbues a flask of water with positive energy, turning it into holy water.	Target: Flask of water touched
+DESC: This transmutation imbues a flask of water with positive energy, turning it into holy water.
+DESC 2:  This transmutation imbues a flask of water with positive energy, turning it into holy water.
+Bless Weapon (Transmutation)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: 3 minutes	Range: Touch	Components: V, S
+SR: No	Effect: This transmutation makes a weapon strike true against evil foes.	Target: Weapon touched
+DESC: This transmutation makes a weapon strike true against evil foes.
+DESC 2:  This transmutation makes a weapon strike true against evil foes.
+Bowstaff (Transmutation)
+Saves: Will negates (harmless, object)	DC: 13	Casting: 1 swift action
+Duration: 3 rounds [D]	Range: Personal	Components: V
+SR: Yes (harmless, object)	Effect: A shortbow may double as a club, or a longbow as a quarterstaff.	Target: one weapon [bow]
+DESC: A shortbow may double as a club, or a longbow as a quarterstaff.
+DESC 2:  A shortbow may double as a club, or a longbow as a quarterstaff.
+Challenge Evil (Enchantment)
+Saves: Will negates	DC: 13	Casting: 1 standard action
+Duration: 3 minutes [D]	Range: Close (30 ft.)	Components: V, DF
+SR: Yes	Effect: Sickens creature if it refuses to fight you.	Target: one evil creature
+DESC: Sickens creature if it refuses to fight you.
+DESC 2:  Sickens creature if it refuses to fight you.
+Compel Hostility (Enchantment)
+Saves: see text	DC: 13	Casting: 1 standard action
+Duration: 3 rounds	Range: Personal	Components: V, S, M
+SR: see text	Effect: Compels opponents to attack you instead of your allies.	Target: You
+DESC: Compels opponents to attack you instead of your allies.
+DESC 2:  Compels opponents to attack you instead of your allies.
+Create Water (Conjuration)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: Instantaneous	Range: Close (30 ft.)	Components: V, S
+SR: No	Effect: This spell generates wholesome, drinkable water, just like clean rain water.	Target: Up to 6 gallons of water
+DESC: This spell generates wholesome, drinkable water, just like clean rain water.
+DESC 2:  This spell generates wholesome, drinkable water, just like clean rain water.
+Cure Light Wounds (Conjuration)
+Saves: Will half (harmless); see text	DC: 13	Casting: 1 standard action
+Duration: Instantaneous	Range: Touch	Components: V, S
+SR: Yes (harmless); see text	Effect: When laying your hand upon a living creature, you channel positive energy that cures 1d8+3 points of damage.	Target: Creature touched
+DESC: When laying your hand upon a living creature, you channel positive energy that cures 1d8+(min(5,CASTERLEVEL)) points of damage.
+DESC 2:  When laying your hand upon a living creature, you channel positive energy that cures 1d8+3 points of damage.
+Detect Poison (Divination)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: Instantaneous	Range: Close (30 ft.)	Components: V, S
+SR: No	Effect: You determine whether a creature, object, or area has been poisoned or is poisonous.	Target: Or Area one creature, one object, or a 5-ft. cube
+DESC: You determine whether a creature, object, or area has been poisoned or is poisonous.
+DESC 2:  You determine whether a creature, object, or area has been poisoned or is poisonous.
+Detect Undead (Divination)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: Concentration, up to 3 minutes [D]	Range: 60 ft.	Components: V, S, M/DF
+SR: No	Effect: You can detect the aura that surrounds undead creatures.	Target: Cone-shaped emanation
+DESC: You can detect the aura that surrounds undead creatures.
+DESC 2:  You can detect the aura that surrounds undead creatures.
+Diagnose Disease (Divination)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: Instantaneous	Range: Close (30 ft.)	Components: V, S
+SR: No	Effect: Detect and identify diseases.	Target: One creature, one object, or a 5-ft. cube
+DESC: Detect and identify diseases.
+DESC 2:  Detect and identify diseases.
+Divine Favor (Evocation)
+Saves: 	DC: 	Casting: 1 standard action
+Duration: 1 minute	Range: Personal	Components: V, S, DF
+SR: 	Effect: Calling upon the strength and wisdom of a deity, you gain a +1 luck bonus on attack and weapon damage rolls.	Target: You
+DESC: Calling upon the strength and wisdom of a deity, you gain a +(max(1,min(3,floor(CASTERLEVEL/3)))) luck bonus on attack and weapon damage rolls.
+DESC 2:  Calling upon the strength and wisdom of a deity, you gain a +1 luck bonus on attack and weapon damage rolls.
+Endure Elements (Abjuration)
+Saves: Will negates (harmless)	DC: 13	Casting: 1 standard action
+Duration: 24 hours	Range: Touch	Components: V, S
+SR: Yes (harmless)	Effect: A creature protected by endure elements suffers no harm from being in a hot or cold environment.	Target: Creature touched
+DESC: A creature protected by endure elements suffers no harm from being in a hot or cold environment.
+DESC 2:  A creature protected by endure elements suffers no harm from being in a hot or cold environment.
+Ghostbane Dirge (Transmutation)
+Saves: Will negates	DC: 13	Casting: 1 standard action
+Duration: 3 rounds	Range: Close (30 ft.)	Components: V, S, M/DF
+SR: Yes	Effect: Incorporeal creature takes half damage from nonmagical weapons.	Target: one incorporeal creature
+DESC: Incorporeal creature takes half damage from nonmagical weapons.
+DESC 2:  Incorporeal creature takes half damage from nonmagical weapons.
+Grace (Abjuration)
+Saves: 	DC: 	Casting: 1 swift action
+Duration: see text	Range: Personal	Components: V
+SR: 	Effect: Movement doesn't provoke attacks of opportunity.	Target: You
+DESC: Movement doesn't provoke attacks of opportunity.
+DESC 2:  Movement doesn't provoke attacks of opportunity.
+Hero's Defiance (Conjuration)
+Saves: 	DC: 	Casting: 1 immediate action
+Duration: Instantaneous	Range: Personal	Components: V
+SR: 	Effect: Allows the use of lay on hands while falling unconscious.	Target: You
+DESC: Allows the use of lay on hands while falling unconscious.
+DESC 2:  Allows the use of lay on hands while falling unconscious.
+Honeyed Tongue (Transmutation)
+Saves: 	DC: 	Casting: 1 standard action
+Duration: 30 minutes	Range: Personal	Components: V, M/DF
+SR: 	Effect: Roll 2 dice when using Diplomacy, take higher roll.	Target: You
+DESC: Roll 2 dice when using Diplomacy, take higher roll.
+DESC 2:  Roll 2 dice when using Diplomacy, take higher roll.
+Horn of Pursuit (Evocation)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: 1 round	Range: Personal	Components: S
+SR: No	Effect: Create three notes heard miles away.	Target: 3 peals of a horn
+DESC: Create three notes heard miles away.
+DESC 2:  Create three notes heard miles away.
+Knight's Calling (Enchantment)
+Saves: Will negates	DC: 13	Casting: 1 standard action
+Duration: 1 round	Range: Close (30 ft.)	Components: V, DF
+SR: Yes	Effect: Forces target to move toward you and fight you.	Target: one creature
+DESC: Forces target to move toward you and fight you.
+DESC 2:  Forces target to move toward you and fight you.
+Know the Enemy (Divination)
+Saves: None	DC: 	Casting: 1 minute
+Duration: Instantaneous	Range: Personal	Components: V, S, DF
+SR: No	Effect: Gain +10 on a monster Knowledge check.	Target: You
+DESC: Gain +10 on a monster Knowledge check.
+DESC 2:  Gain +10 on a monster Knowledge check.
+Liberating Command (Transmutation)
+Saves: Will negates (harmless)	DC: 13	Casting: 1 immediate action
+Duration: instantaneous	Range: Close (30 ft.)	Components: V
+SR: Yes (harmless)	Effect: Target makes an Escape Artist check as an immediate action and gains a bonus on it.	Target: one creature
+DESC: Target makes an Escape Artist check as an immediate action and gains a bonus on it.
+DESC 2:  Target makes an Escape Artist check as an immediate action and gains a bonus on it.
+Litany of Sloth (Enchantment)
+Saves: Will negates	DC: 13	Casting: 1 swift action
+Duration: 1 round	Range: Close (30 ft.)	Components: V, S, DF
+SR: Yes	Effect: Single target cannot make attacks of opportunity for 1 round.	Target: one creature
+DESC: Single target cannot make attacks of opportunity for 1 round.
+DESC 2:  Single target cannot make attacks of opportunity for 1 round.
+Longshot (Transmutation)
+Saves: 	DC: 	Casting: 1 standard action
+Duration: 3 minutes	Range: Personal	Components: V, S, M/DF
+SR: 	Effect: Grants a +10 foot bonus to the range increment for any ranged weapon fired.	Target: You
+DESC: Grants a +10 foot bonus to the range increment for any ranged weapon fired.
+DESC 2:  Grants a +10 foot bonus to the range increment for any ranged weapon fired.
+Magic Weapon (Transmutation)
+Saves: Will negates (harmless, object)	DC: 13	Casting: 1 standard action
+Duration: 3 minutes	Range: Touch	Components: V, S, DF
+SR: Yes (harmless, object)	Effect: Magic weapon gives a weapon a +1 enhancement bonus on attack and damage rolls.	Target: Weapon touched
+DESC: Magic weapon gives a weapon a +1 enhancement bonus on attack and damage rolls.
+DESC 2:  Magic weapon gives a weapon a +1 enhancement bonus on attack and damage rolls.
+Protection from Chaos (Abjuration)
+Saves: Will negates (harmless)	DC: 13	Casting: 1 standard action
+Duration: 3 minutes [D]	Range: Touch	Components: V, S, M/DF
+SR: No; see text	Effect: This spell wards a creature from attacks by chaotic creatures, from mental control, and from summoned creatures.	Target: Creature touched
+DESC: This spell wards a creature from attacks by chaotic creatures, from mental control, and from summoned creatures.
+DESC 2:  This spell wards a creature from attacks by chaotic creatures, from mental control, and from summoned creatures.
+Protection from Evil (Abjuration)
+Saves: Will negates (harmless)	DC: 13	Casting: 1 standard action
+Duration: 3 minutes [D]	Range: Touch	Components: V, S, M/DF
+SR: No; see text	Effect: This spell wards a creature from attacks by evil creatures, from mental control, and from summoned creatures.	Target: Creature touched
+DESC: This spell wards a creature from attacks by evil creatures, from mental control, and from summoned creatures.
+DESC 2:  This spell wards a creature from attacks by evil creatures, from mental control, and from summoned creatures.
+Rally Point (Enchantment)
+Saves: Will negates (harmless)	DC: 13	Casting: 1 standard action
+Duration: 3 minutes [D]	Range: 5 ft.	Components: V, S, DF
+SR: Yes (harmless)	Effect: Square gives good creatures bonuses.	Target: one 5-ft. square
+DESC: Square gives good creatures bonuses.
+DESC 2:  Square gives good creatures bonuses.
+Read Magic (Divination)
+Saves: 	DC: 	Casting: 1 standard action
+Duration: 30 minutes	Range: Personal	Components: V, S, F
+SR: 	Effect: You can decipher magical inscriptions on objects--books, scrolls, weapons, and the like--that would otherwise be unintelligible.	Target: You
+DESC: You can decipher magical inscriptions on objects--books, scrolls, weapons, and the like--that would otherwise be unintelligible.
+DESC 2:  You can decipher magical inscriptions on objects--books, scrolls, weapons, and the like--that would otherwise be unintelligible.
+Resistance (Abjuration)
+Saves: Will negates (harmless)	DC: 13	Casting: 1 standard action
+Duration: 1 minute	Range: Touch	Components: V, S, M/DF
+SR: Yes (harmless)	Effect: You imbue the subject with magical energy that protects it from harm, granting it a +1 resistance bonus on saves.	Target: Creature touched
+DESC: You imbue the subject with magical energy that protects it from harm, granting it a +1 resistance bonus on saves.
+DESC 2:  You imbue the subject with magical energy that protects it from harm, granting it a +1 resistance bonus on saves.
+Restoration (Lesser) (Conjuration)
+Saves: Will negates (harmless)	DC: 13	Casting: 3 rounds
+Duration: Instantaneous	Range: Touch	Components: V, S
+SR: Yes (harmless)	Effect: Lesser restoration dispels any magical effects reducing one of the subject's ability scores or cures 1d4 points of temporary ability damage to one of the subject's ability scores.	Target: Creature touched
+DESC: Lesser restoration dispels any magical effects reducing one of the subject's ability scores or cures 1d4 points of temporary ability damage to one of the subject's ability scores.
+DESC 2:  Lesser restoration dispels any magical effects reducing one of the subject's ability scores or cures 1d4 points of temporary ability damage to one of the subject's ability scores.
+Sanctify Corpse (Evocation)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: 24 hours	Range: Touch	Components: V, S, DF, M
+SR: No	Effect: Prevent a corpse from becoming an undead creature.	Target: Corpse touched
+DESC: Prevent a corpse from becoming an undead creature.
+DESC 2:  Prevent a corpse from becoming an undead creature.
+Sun Metal (Transmutation)
+Saves: Fortitude negates (object)	DC: 13	Casting: 1 standard action
+Duration: 3 rounds [see text]	Range: Touch	Components: V, S
+SR: Yes (object)	Effect: Weapon touched bursts into flames.	Target: one melee weapon
+DESC: Weapon touched bursts into flames.
+DESC 2:  Weapon touched bursts into flames.
+Tactical Acumen (Enchantment)
+Saves: Will negates (harmless)	DC: 13	Casting: 1 standard action
+Duration: 3 rounds [D]	Range: 30ft.	Components: V, S, M/DF
+SR: Yes (harmless)	Effect: You gain an additional +1 on attack rolls or to AC due to battlefield positioning.	Target: The caster and all allies within a 30-ft.-radius burst, centered on the caster
+DESC: You gain an additional +1 on attack rolls or to AC due to battlefield positioning.
+DESC 2:  You gain an additional +1 on attack rolls or to AC due to battlefield positioning.
+Veil of Positive Energy (Abjuration)
+Saves: 	DC: 	Casting: 1 standard action
+Duration: 30 minutes [D]	Range: Personal or 5 ft.; see text	Components: V, S, DF
+SR: 	Effect: +2 AC, +2 on saves vs. undead.	Target: You or all creatures within 5 ft.; see text
+DESC: +2 AC, +2 on saves vs. undead.
+DESC 2:  +2 AC, +2 on saves vs. undead.
+Virtue (Transmutation)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: 1 min.	Range: Touch	Components: V, S, DF
+SR: Yes (harmless)	Effect: With a touch, you infuse a creature with a tiny surge of life, granting the subject 1 temporary hit point.	Target: Creature touched
+DESC: With a touch, you infuse a creature with a tiny surge of life, granting the subject 1 temporary hit point.
+DESC 2:  With a touch, you infuse a creature with a tiny surge of life, granting the subject 1 temporary hit point.
+Wartrain Mount (Enchantment)
+Saves: None	DC: 	Casting: 1 minute
+Duration: 3 hours	Range: Close (30 ft.)	Components: V, S, M
+SR: Yes	Effect: Animal gains combat training.	Target: One indifferent or friendly animal
+DESC: Animal gains combat training.
+DESC 2:  Animal gains combat training.
+Word of Resolve (Abjuration)
+Saves: Will negates (harmless)	DC: 13	Casting: 1 immediate action
+Duration: Instantaneous	Range: Close (30 ft.)	Components: V, DF
+SR: Yes (harmless)	Effect: Ally rerolls a save against charm or fear.	Target: One ally
+DESC: Ally rerolls a save against charm or fear.
+DESC 2:  Ally rerolls a save against charm or fear.
+ 
+  
+  
+  
+ 
+           
+           
+
+SPELLBOOKNAME3
+  
+ 
+Level 1
+Compel Hostility (Enchantment) - 1 per day
+Restoration (Lesser) (Conjuration) - 1 per day
+ 
+  
+  
+  
+ 
+
+------------------------ Description -----------------------
+Height: 5' 10" Weight: 160 lbs. Gender: Male	
+Eyes:   Blue Hair: Black,Mid length hair and beard Skin: Tanned
+Dominant Hand: Right Quirks: , Well mannered	
+Speech style:  Quotable: 
+Full Description
+
+Background
+The Syrkov family have always been canny traders.  They have kept up with trends and got in early and out before interest waned. As result they hav built up quite some resources (and rivals).
+
+
+Campaign Logs

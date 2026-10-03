@@ -1,0 +1,11 @@
+# Local-only files for the revamp tooling
+.run/
+local/
+sidecar/build/
+ui/node_modules/
+ui/dist/
+harness/out/
+__pycache__/
+*.pyc
+# Snapshots made from a private character (revamp/local); the Pathfinder sample snapshots are tracked
+harness/baseline/clarent.*

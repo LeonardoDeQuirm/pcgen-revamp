@@ -1,0 +1,435 @@
+"""API test: drives every route group of the sidecar against a live engine and checks the
+results, including latency budgets (the point of the sidecar is to be fast once loaded).
+
+Usage: python harness/run_api_test.py
+Needs: `gradlew qbuild` in pcgen/ and `powershell sidecar/build.ps1` first.
+
+One sidecar is started on the Cleric's sources and shared by all checks, in order. Checks
+that change the character restore it, or work on a freshly created character.
+"""
+import json, os, shutil, subprocess, sys, tempfile, threading, time, urllib.error, urllib.parse, urllib.request
+from pathlib import Path
+
+from run_harness import CHAR_DIRS, DEFAULT_JDK, PCGEN, TEMPLATES, normalize
+
+PORT = 8899
+# Work on a copy: saving through the API writes to the character's own file, and the originals
+# are upstream test data that must never be modified.
+CHAR = Path(tempfile.mkdtemp(prefix="api-char-")) / "pf_Cleric.pcg"
+shutil.copyfile(CHAR_DIRS[0] / "pf_Cleric.pcg", CHAR)
+CID = "pf_Cleric"
+C = f"/characters/{CID}"
+
+# Latency budgets in ms, judged on the server-side X-Time-Ms header (no client/network noise).
+READ_BUDGET_MS = 150      # state reads, catalogs
+WRITE_BUDGET_MS = 1500    # engine writes (level-up, race change recompute the whole character)
+OPEN_BUDGET_MS = 5000     # first open pays one-time warm-up costs
+PDF_BUDGET_MS = 15000     # FOP rendering; the first PDF of a session is the slowest (3-8 s seen)
+
+results = []   # (name, ok, detail)
+timings = []   # (label, ms, budget)
+
+
+def call(method, route, body=None, budget=None, **query):
+    url = f"http://127.0.0.1:{PORT}{route}"
+    if query:
+        url += "?" + urllib.parse.urlencode(query)
+    data = json.dumps(body).encode() if body is not None else (b"" if method in ("POST", "PUT", "PATCH") else None)
+    req = urllib.request.Request(url, method=method, data=data, headers={"Content-Type": "application/json"})
+    try:
+        with urllib.request.urlopen(req, timeout=120) as r:
+            status, raw, ms, ctype = r.status, r.read(), r.headers.get("X-Time-Ms"), r.headers.get("Content-Type")
+    except urllib.error.HTTPError as e:
+        status, raw, ms, ctype = e.code, e.read(), e.headers.get("X-Time-Ms"), e.headers.get("Content-Type")
+    if ctype and not ctype.startswith("application/json"):
+        js = raw
+        if ctype.startswith("text/"):
+            js = raw.decode("utf-8", "replace").replace("\r\n", "\n")
+    else:
+        try:
+            js = json.loads(raw.decode("utf-8", "replace"))
+        except ValueError:
+            js = raw.decode("utf-8", "replace")
+    if budget is not None and ms is not None:
+        timings.append((f"{method} {route}", int(ms), budget))
+    return status, js
+
+
+def read(route, **q):
+    return call("GET", route, budget=READ_BUDGET_MS, **q)
+
+
+def write(method, route, body=None, **q):
+    return call(method, route, body, budget=WRITE_BUDGET_MS, **q)
+
+
+def settle(r, select=None):
+    """Answer any choosers raised by a call, taking the first N options (or `select`)."""
+    status, js = r
+    while status == 202:
+        if "pendingConfirm" in js:  # yes/no questions: always agree
+            status, js = call("POST", "/confirms/" + js["pendingConfirm"]["id"], {"ok": True})
+            continue
+        d = js["pendingChooser"]
+        n = max(d["choicesRequired"], 0)
+        status, js = call("POST", "/choosers/" + d["id"], {"select": list(range(n)) if select is None else select})
+    return status, js
+
+
+def check(name, cond, detail=""):
+    results.append((name, bool(cond), "" if cond else str(detail)[:300]))
+
+
+def snap():
+    return read(C)[1]
+
+
+def start_sidecar():
+    cmd = [str(DEFAULT_JDK / "bin" / "java.exe"), "-cp", "revamp/sidecar/build;build/libs/*", "pcgen.sidecar.Sidecar",
+           "--settings-dir", tempfile.mkdtemp(prefix="api-test-"), "--from-character", str(CHAR), "--port", str(PORT)]
+    proc = subprocess.Popen(cmd, cwd=PCGEN, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True)
+    ready = threading.Event()
+
+    def watch():
+        for line in proc.stdout:
+            if line.startswith("READY"):
+                ready.set()
+    threading.Thread(target=watch, daemon=True).start()
+    if not ready.wait(180):
+        proc.kill()
+        raise RuntimeError("sidecar never reported READY")
+    # The PDF warm-up occupies the engine for several seconds after READY; wait so timings are meaningful.
+    deadline = time.time() + 120
+    while time.time() < deadline:
+        try:
+            if call("GET", "/health")[1].get("pdfWarmup") in ("done", "disabled"):
+                break
+        except Exception:
+            pass
+        time.sleep(0.5)
+    return proc
+
+
+def run_checks():
+    # ---- dataset catalogs
+    st, d = read("/dataset")
+    check("dataset summary", st == 200 and d["counts"]["races"] > 50 and "FEAT" in d["abilityCategories"], d)
+    st, d = read("/dataset/races", q="human")
+    check("catalog search", st == 200 and any(i["key"] == "Human" for i in d["items"]), d)
+    check("catalog unknown kind -> 404", read("/dataset/nope")[0] == 404)
+    st, d = read("/dataset/abilities", category="FEAT", q="weapon focus")
+    check("feat catalog", st == 200 and d["total"] >= 1, d)
+    st, d = read("/dataset/equipment", q="dagger", limit=2)
+    check("equipment catalog limit", st == 200 and len(d["items"]) <= 2 and d["total"] >= 2, d)
+    check("campaigns list", read("/campaigns")[1]["total"] > 5)
+    check("routes list", "GET /characters/{id}" in read("/routes")[1])
+    check("405 on wrong method", call("PUT", "/characters")[0] == 405)
+    check("404 unknown route", call("GET", "/nothing/here")[0] == 404)
+
+    # ---- open + snapshot
+    st, d = call("POST", "/characters", budget=OPEN_BUDGET_MS, path=str(CHAR))
+    check("open", st == 200 and d["id"] == CID, d)
+    s0 = snap()
+    check("snapshot basics", s0["race"] == "Human" and s0["classes"] == [{"class": "Cleric", "level": 3}]
+          and len(s0["stats"]) == 6 and s0["hp"] == 25, {k: s0[k] for k in ("race", "classes", "hp")})
+    check("snapshot has abilities", any(c["key"] == "FEAT" and len(c["abilities"]) == 3 for c in s0["abilityCategories"]))
+
+    # ---- identity + stats
+    st, d = write("PATCH", C, {"name": "API Test", "addXp": 50, "playersName": "Tester"})
+    s1 = d["character"] if st == 200 else {}
+    check("patch name/xp", st == 200 and s1["name"] == "API Test" and s1["xp"] == s0["xp"] + 50
+          and s1["playersName"] == "Tester", d)
+    check("patch bad race -> 404", call("PATCH", C, {"race": "Not A Race"})[0] == 404)
+    st, d = write("PUT", C + "/stats/STR", {"base": 16})
+    strength = next((x for x in d["character"]["stats"] if x["key"] == "STR"), {}) if st == 200 else {}
+    check("set stat", strength.get("base") == 16 and strength.get("modifier") == 3, strength)
+    check("unknown stat -> 404", call("PUT", C + "/stats/ZZZ", {"base": 10})[0] == 404)
+
+    # ---- skills
+    st, d = read(C + "/skills")
+    check("skills list", st == 200 and any(x["key"] == "Heal" and x["ranks"] > 0 for x in d["skills"]), d)
+    # Regression: ranks were once summed across levels (a level-3 character showed 9 ranks).
+    check("no skill has more ranks than the character has levels", all(x["ranks"] <= 3 for x in d["skills"]),
+          [(x["key"], x["ranks"]) for x in d["skills"] if x["ranks"] > 3])
+    st, d = write("POST", C + "/skills", {"skill": "Heal", "points": 1})
+    check("skill with no points left is refused cleanly", st == 200 and d["applied"] is False and d["messages"], d)
+    check("skill unknown -> 404", call("POST", C + "/skills", {"skill": "Nope", "points": 1})[0] == 404)
+
+    # ---- equipment
+    st, d = read(C + "/equipment")
+    owned = {i["key"] for i in d["purchased"]}
+    check("equipment view", st == 200 and "Bedroll" in owned and d["slots"], d)
+    funds0 = float(d["funds"])
+    check("buy unknown item -> 404", call("POST", C + "/equipment/buy", {"item": "Zzz Not Real"})[0] == 404)
+    st, d = write("POST", C + "/equipment/buy", {"item": "Dagger", "quantity": 2})
+    check("buy", st == 200 and d["qualified"] in (True, False), d)
+    st, d = read(C + "/equipment")
+    check("buy reduces funds and adds item", float(d["funds"]) < funds0 and any(i["key"] == "Dagger" and i["quantity"] == 2 for i in d["purchased"]), d["funds"])
+    st, d = write("POST", C + "/equipment/equip", {"item": "Dagger"})
+    check("equip", st == 200, d)
+    st, d = read(C + "/equipment")
+    equipped = [x for x in d["slots"] if x["type"] == "EQUIPMENT" and x.get("equipment") == "Dagger"]
+    check("equipped item appears in slots", bool(equipped), d["slots"][:3])
+    if equipped:
+        st, d = write("POST", C + "/equipment/unequip", {"node": equipped[0]["node"]})
+        check("unequip", st == 200, d)
+    st, d = write("POST", C + "/equipment/sell", {"item": "Dagger", "quantity": 2})
+    check("sell", st == 200, d)
+    st, d = read(C + "/equipment")
+    check("sell returns the item to the shop", not any(i["key"] == "Dagger" for i in d["purchased"]), d["purchased"])
+    check("sell unowned -> 404", call("POST", C + "/equipment/sell", {"item": "Dagger"})[0] == 404)
+    st, d = write("POST", C + "/equipment-sets", {"name": "Travel"})
+    check("create equipment set", st == 200 and "Travel" in read(C + "/equipment")[1]["sets"], d)
+    check("select set", write("PUT", C + "/equipment-sets/current", {"name": "Travel"})[0] == 200)
+    check("delete set", write("DELETE", C + "/equipment-sets", None, name="Travel")[0] == 200)
+
+    # ---- custom equipment builder (enchantments, materials, renaming)
+    check("set funds", write("PATCH", C, {"funds": "2000"})[0] == 200)  # a masterwork sword costs 315 gp
+    st, d = write("POST", C + "/equipment/buy", {"item": "Longsword", "customize": True})
+    check("customize raises the builder", st == 202 and d["pendingBuilder"]["baseItem"] == "Longsword", d)
+    if st == 202:
+        check("engine calls are refused while the builder is open", call("GET", C)[0] == 409)
+        check("health shows the builder", read("/health")[1]["pendingBuilder"] == d["pendingBuilder"]["id"])
+        st, m = call("GET", "/builder/modifiers", None, q="masterwork")
+        check("builder offers masterwork", st == 200 and m["total"] == 1, m)
+        check("unknown modifier -> 404", call("POST", "/builder/modifiers", {"name": "Zzz"})[0] == 404)
+        st, m = call("POST", "/builder/modifiers", {"name": "Masterwork (Weapon)"})
+        check("apply masterwork", st == 200 and any("Masterwork" in x for x in m["heads"]["PRIMARY"]["applied"]), m)
+        st, m = call("PATCH", "/builder", {"name": "Fine Test Blade"})
+        check("rename item", st == 200 and m["name"] == "Fine Test Blade" and m["rejected"] == [], m)
+        st, d = call("POST", "/builder/commit", {"purchase": True})
+        check("commit buys the custom item", st == 200 and "character" in d and not d["messages"], d.get("messages"))
+        st, d = read(C + "/equipment")
+        check("custom item is owned", any(i["name"] == "Fine Test Blade" for i in d["purchased"]),
+              [i["name"] for i in d["purchased"] if "word" in i["name"] or "lade" in i["name"]])
+        check("builder closed after commit", call("GET", "/builder")[0] == 404 and call("GET", C)[0] == 200)
+    st, d = write("POST", C + "/equipment/buy", {"item": "Dagger", "customize": True})
+    check("second builder opens", st == 202, d)
+    if st == 202:
+        st, d = call("POST", "/builder/cancel")
+        check("cancel leaves nothing bought", st == 200 and not any(
+            i["key"] == "Dagger" for i in read(C + "/equipment")[1]["purchased"]), d)
+
+    # ---- spells
+    st, d = read(C + "/spells")
+    n_known = len(d["known"])
+    check("spells view", st == 200 and n_known > 0 and d["autoSpells"] is True, {k: d[k] for k in ("autoSpells",)})
+    st, d = write("DELETE", C + "/spells/known", {"class": "Cleric", "level": "1", "spell": "Bless"})
+    check("remove known spell", st == 200 and len(read(C + "/spells")[1]["known"]) == n_known - 1, d)
+    st, d = write("POST", C + "/spells/known", {"class": "Cleric", "level": "1", "spell": "Bless"})
+    check("add known spell", st == 200 and len(read(C + "/spells")[1]["known"]) == n_known, d)
+    check("unknown spell -> 404", call("POST", C + "/spells/known", {"class": "Cleric", "level": "1", "spell": "Zzz"})[0] == 404)
+    st, d = read(C + "/spells", available="true", limit=5)
+    check("available spells honour limit", st == 200 and 0 < len(d["available"]) <= 5, d)
+
+    # ---- levels (level-up raises an ability-score chooser)
+    st, d = write("POST", C + "/levels", {"class": "Cleric"})
+    check("level up raises a chooser", st == 202 and d["pendingChooser"]["choicesRequired"] == 1, d)
+    st, d = settle((st, d), select=[0])
+    check("level up completes", st == 200 and d["character"]["classes"] == [{"class": "Cleric", "level": 4}], d)
+    check("level up spent no skill points yet", any(x["tab"] == "Skills" for x in d["character"]["todo"]))
+    st, d = write("DELETE", C + "/levels")
+    check("remove level", st == 200 and d["character"]["classes"] == [{"class": "Cleric", "level": 3}], d)
+    check("remove too many levels -> 400", call("DELETE", C + "/levels", None, count=99)[0] == 400)
+    check("unqualified/unknown class", call("POST", C + "/levels", {"class": "Nope"})[0] == 404)
+
+    # ---- hit points per level: the die, the Constitution bonus, set and roll
+    write("PUT", C + "/stats/CON", {"base": 14})  # +2
+    lv = snap()["levels"]
+    check("levels report their hit die and bonus", all(x.get("hitDie") == 8 and x["hpBonus"] == 2 for x in lv), lv[:1])
+    check("gained = rolled + bonus (Constitution is included)", all(x["hpGained"] == x["hpRolled"] + x["hpBonus"] for x in lv))
+    st, d = write("PUT", C + "/levels/2/hp", {"rolled": 5})
+    row = d["character"]["levels"][1] if st == 200 else {}
+    check("setting a roll updates the level", st == 200 and row.get("hpRolled") == 5 and row.get("hpGained") == 7, row)
+    check("a d8 cannot roll 9", call("PUT", C + "/levels/2/hp", {"rolled": 9})[0] == 400)
+    check("a roll of 0 is refused", call("PUT", C + "/levels/2/hp", {"rolled": 0})[0] == 400)
+    check("an unknown level is 404", call("PUT", C + "/levels/9/hp", {"rolled": 3})[0] == 404)
+    rolls = {write("POST", C + "/levels/2/hp/roll")[1]["rolled"] for _ in range(12)}
+    check("rolling stays on the die and varies", rolls <= set(range(1, 9)) and len(rolls) > 1, sorted(rolls))
+    write("PUT", C + "/stats/CON", {"base": 11})
+
+    # ---- race / deity / alignment changes (restored afterwards)
+    st, d = write("PATCH", C, {"race": "Dwarf"})
+    st, d = settle((st, d))
+    check("change race", st == 200 and d["character"]["race"] == "Dwarf", d)
+    st, d = write("PATCH", C, {"race": "Human"})
+    st, d = settle((st, d))
+    check("restore race", st == 200 and d["character"]["race"] == "Human", d)
+    st, d = write("PATCH", C, {"deity": "Iomedae", "alignment": "Lawful Good"})
+    st, d = settle((st, d))
+    check("change deity + alignment", st == 200 and d["character"]["deity"] == "Iomedae"
+          and d["character"]["alignment"] == "Lawful Good", d)
+
+    # ---- biography, notes, chronicle
+    st, d = read(C + "/biography")
+    check("biography view", st == 200 and d["heightUnit"] == "inches" and "catchPhrase" in d and d["region"] is not None, d)
+    st, d = write("PATCH", C + "/biography", {"birthday": "4 Abadius", "catchPhrase": "Onward!", "eyeColor": "Green",
+                                              "weight": 180, "height": 72})
+    b = d.get("biography", {}) if st == 200 else {}
+    check("biography edit", b.get("birthday") == "4 Abadius" and b.get("catchPhrase") == "Onward!"
+          and b.get("eyeColor") == "Green" and b.get("weight") == 180 and b.get("height") == 72, b)
+    check("biography edit survives a reread", read(C + "/biography")[1]["catchPhrase"] == "Onward!")
+    st, notes = read(C + "/notes")
+    check("built-in notes present", st == 200 and [n["name"] for n in notes][:2] == ["Bio", "Description"]
+          and all(n["builtIn"] for n in notes), notes)
+    st, d = write("POST", C + "/notes", {"name": "Session 1", "text": "Met the party."})
+    mine = [n for n in d["notes"] if n["name"] == "Session 1"] if st == 200 else []
+    check("add note", len(mine) == 1 and mine[0]["text"] == "Met the party." and not mine[0]["builtIn"], d)
+    idx = mine[0]["index"] if mine else 0
+    st, d = write("PATCH", C + f"/notes/{idx}", {"text": "Met the party at the inn."})
+    check("edit note", st == 200 and d["notes"][idx]["text"] == "Met the party at the inn.", d)
+    check("built-in note cannot be renamed", call("PATCH", C + "/notes/0", {"name": "X"})[0] == 409)
+    check("built-in note cannot be deleted", call("DELETE", C + "/notes/0")[0] == 409)
+    check("note index out of range -> 404", call("DELETE", C + "/notes/99")[0] == 404)
+    st, d = write("PATCH", C + "/notes/0", {"text": "Bio text with unicode: caf\u00e9 \u2014 ok"})
+    check("built-in note text edits", st == 200 and "caf\u00e9" in d["notes"][0]["text"], d)
+    st, d = write("DELETE", C + f"/notes/{idx}")
+    check("delete note", st == 200 and not any(n["name"] == "Session 1" for n in d["notes"]), d)
+    st, d = write("POST", C + "/chronicle", {"campaign": "Kingmaker", "adventure": "Stolen Land", "xp": 300,
+                                              "chronicle": "Cleared the stag lord's fort."})
+    check("add chronicle entry", st == 200 and d["chronicle"][-1]["campaign"] == "Kingmaker"
+          and d["chronicle"][-1]["xp"] == 300, d)
+    st, d = write("PATCH", C + "/chronicle/0", {"date": "4711-03-02", "output": False})
+    check("edit chronicle entry", st == 200 and d["chronicle"][0]["date"] == "4711-03-02"
+          and d["chronicle"][0]["output"] is False, d)
+    st, d = write("DELETE", C + "/chronicle/0")
+    check("delete chronicle entry", st == 200 and d["chronicle"] == [], d)
+    check("chronicle index out of range -> 404", call("DELETE", C + "/chronicle/5")[0] == 404)
+
+    # ---- languages
+    st, d = read(C + "/languages")
+    check("languages view", st == 200 and any(x["name"] == "Common" for x in d["languages"]) and d["choosers"], d)
+    learned = [x["name"] for x in d["languages"] if x["removable"]]
+    check("languages have a removable learned one", bool(learned), d["languages"])
+    check("remove automatic language -> 409", call("DELETE", C + "/languages", None, name="Common")[0] == 409)
+    check("choosing with nothing left -> 409", call("POST", C + "/languages", {"chooser": 0, "add": ["Elven"]})[0] == 409)
+    check("choosing from a bad chooser index -> 400", call("POST", C + "/languages", {"chooser": 99, "add": ["Elven"]})[0] == 400)
+    check("choosing an unknown language -> 404", call("POST", C + "/languages", {"chooser": 0, "add": ["Klingon"]})[0] == 404)
+    # Removing the language learned through skill points frees a pick in the "via Skill points" chooser.
+    if learned:
+        st, d = write("DELETE", C + "/languages", None, name=learned[0])
+        check("remove learned language", st == 200
+              and learned[0] not in [x["name"] for x in d["languages"]["languages"]], d)
+        st, d = read(C + "/languages")
+        skill_ch = next((c for c in d["choosers"] if "Skill" in c["name"]), {})
+        check("removing frees a skill-language pick", skill_ch.get("remaining", 0) > 0, d["choosers"])
+        if skill_ch.get("remaining", 0) > 0:
+            pick = "Elven" if "Elven" in skill_ch["available"] else skill_ch["available"][0]
+            st, d2 = write("POST", C + "/languages", {"chooser": skill_ch["index"], "add": [pick]})
+            names = [x["name"] for x in d2["languages"]["languages"]] if st == 200 else []
+            check("choose a language", st == 200 and pick in names, d2)
+            check("no picks left afterwards -> 409", call("POST", C + "/languages",
+                  {"chooser": skill_ch["index"], "add": ["Dwarven"]})[0] == 409)
+            st, d3 = write("POST", C + "/languages", {"chooser": skill_ch["index"], "remove": [pick], "add": [learned[0]]})
+            check("swap it back", st == 200 and learned[0] in [x["name"] for x in d3["languages"]["languages"]], d3)
+
+    # ---- PDF export
+    st, d = read(C + "/templates", kind="pdf")
+    check("pdf templates listed", st == 200 and d["total"] > 5 and all(i["kind"] == "pdf" for i in d["items"]), d)
+    tpl = "d20/fantasy/pdf/csheet_fantasy_std_blue.xslt"
+    t0 = time.time()
+    st, d = call("POST", C + "/export", {"template": tpl}, budget=PDF_BUDGET_MS)
+    check("pdf export", st == 200 and isinstance(d, bytes) and d[:5] == b"%PDF-" and d.rstrip().endswith(b"%%EOF")
+          and len(d) > 20000, (st, d[:60] if isinstance(d, bytes) else d))
+    check("pdf export is fast enough (<15s)", time.time() - t0 < 15, f"{time.time() - t0:.1f}s")
+    check("pdf with no template -> 400", call("POST", C + "/export")[0] == 400)
+    check("unknown pdf template -> 404", call("POST", C + "/export", {"template": "nope/x.xslt"})[0] == 404)
+    st, d = call("POST", C + "/export", {"format": "pdf"})
+    check("default pdf sheet remembered after first export", st == 200 and d[:5] == b"%PDF-", (st, d[:80] if isinstance(d, bytes) else d))
+
+    # ---- export reflects edits (and still works after all of the above)
+    st, d = call("POST", C + "/export", None, template=str(PCGEN / TEMPLATES["plain"]))
+    check("export after edits", st == 200 and "API Test" in d, d[:100] if isinstance(d, str) else d)
+
+    # ---- new character, save, close, reopen
+    st, d = write("POST", "/characters/new", {"name": "Fresh Face"})
+    nid = d["character"]["id"] if st == 200 else None
+    check("create character", st == 200 and d["character"]["name"] == "Fresh Face"
+          and any(t["tab"] == "Summary" for t in d["character"]["todo"]), d)
+    path = os.path.join(tempfile.mkdtemp(prefix="api-save-"), "fresh.pcg")
+    st, d = write("POST", f"/characters/{nid}/save", None, path=path)
+    check("save", st == 200 and d.get("saved") is True and os.path.getsize(path) > 500, d)
+    st, d = write("POST", C + "/save")
+    check("save with no path writes the character's own (temp) file", st == 200 and d.get("saved") is True, d)
+    # Regression: funds used to be shared between all open characters (engine cached channels per variable, not per character).
+    cleric_funds = snap()["funds"]
+    write("PATCH", f"/characters/{nid}", {"funds": "777"})
+    check("funds are per character", snap()["funds"] == cleric_funds and read(f"/characters/{nid}")[1]["funds"] == "777",
+          (snap()["funds"], read(f"/characters/{nid}")[1]["funds"]))
+    check("close", write("DELETE", f"/characters/{nid}")[0] == 200)
+    st, d = write("POST", "/characters", path=path)
+    check("reopen saved character", st == 200 and d["name"] == "Fresh Face", d)
+    check("health lists open characters", set(read("/health")[1]["characters"]) >= {CID, "fresh"})
+
+    # ---- spell levels follow the class: a wizard gains levels as it levels up and reaches 9th-level spells
+    st, d = write("POST", "/characters/new", {"name": "Test Wizard", "id": "wiz"})
+    wid = d["character"]["id"] if st == 200 else "wiz"
+    W = f"/characters/{wid}"
+    settle(write("PATCH", W, {"race": "Human"}))
+    write("PUT", W + "/stats/INT", {"base": 20})
+
+    def wizard_levels():
+        info = read(W + "/spells")[1]["classes"]
+        cls = next((c for c in info if c["class"] == "Wizard"), None)
+        return cls, [x["level"] for x in cls["levels"] if x["usable"]] if cls else []
+
+    # The very first level asks "are your abilities set as you'd like them?"; declining changes nothing.
+    for k in ("STR", "DEX", "CON", "WIS", "CHA"):
+        write("PUT", W + f"/stats/{k}", {"base": 10})
+    st, d = write("POST", W + "/levels", {"class": "Wizard"})
+    check("the first level asks a yes/no question", st == 202 and "abilities" in d["pendingConfirm"]["message"].lower(), d)
+    check("other calls wait while it is open", call("GET", W)[0] == 409)
+    check("the question shows in /health", read("/health")[1]["pendingConfirm"] == d["pendingConfirm"]["id"])
+    st, d2 = call("POST", "/confirms/" + d["pendingConfirm"]["id"], {"ok": False})
+    check("answering no adds no level", st == 200 and d2["character"]["classes"] == [], d2)
+    settle(write("POST", W + "/levels", {"class": "Wizard"}))
+    cls, usable = wizard_levels()
+    check("a level-1 wizard can use spell levels 0 and 1 only", cls is not None and usable == [0, 1], usable)
+    # A spellbook caster has no "spells known" table, so it may hold spells it can't cast yet.
+    check("a wizard has no fixed spells-known table", cls is not None and all(x["known"] == 0 for x in cls["levels"]), cls)
+    st, d = write("POST", W + "/spells/known", {"class": "Wizard", "level": "3", "spell": "Fireball"})
+    held = [(x["spell"], x["level"]) for x in read(W + "/spells")[1]["known"]]
+    check("a level-1 wizard can scribe a 3rd-level spell", st == 200 and ("Fireball", "3") in held, (st, held))
+    write("DELETE", W + "/spells/known", {"class": "Wizard", "level": "3", "spell": "Fireball"})
+    for _ in range(16):
+        settle(write("POST", W + "/levels", {"class": "Wizard"}))
+    cls, usable = wizard_levels()
+    check("a level-17 wizard can use spell levels 0 to 9", usable == list(range(10)), usable)
+    st, d = read(W + "/spells", available="true", **{"class": "Wizard", "limit": 100000})
+    levels_in_list = sorted({int(r["level"]) for r in d.get("available", [])}) if st == 200 else []
+    check("the wizard's available spells include 9th level", 9 in levels_in_list and len(d["available"]) > 200, levels_in_list)
+    check("the engine's slots report per-day numbers", cls is not None and cls["levels"][9]["perDay"] > 0, cls and cls["levels"][9])
+    write("DELETE", W)
+
+    # ---- no operation left hanging
+    check("no chooser pending at the end", read("/health")[1]["pendingChooser"] is None)
+
+
+def main():
+    proc = start_sidecar()
+    try:
+        run_checks()
+    except Exception as e:
+        check("test run completed", False, repr(e))
+    finally:
+        try:
+            call("POST", "/shutdown")
+            proc.wait(30)
+        except Exception:
+            proc.kill()
+
+    bad = [r for r in results if not r[1]]
+    for name, ok, detail in results:
+        if not ok:
+            print(f"FAIL  {name}: {detail}")
+    over = [(l, ms, b) for l, ms, b in timings if ms > b]
+    slowest = sorted(timings, key=lambda t: -t[1])[:3]
+    print(f"{len(results) - len(bad)}/{len(results)} checks passed")
+    print("slowest requests: " + "; ".join(f"{l} {ms}ms" for l, ms, _ in slowest))
+    for l, ms, b in over:
+        print(f"SLOW  {l}: {ms}ms (budget {b}ms)")
+    return 1 if bad or over else 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
