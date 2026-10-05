@@ -26,7 +26,7 @@ Read `revamp/PROGRESS.md` next: current state, verified engine facts, API summar
 powershell .\revamp\start-dev.ps1 -Character path\to\a.pcg [-NoBrowser]   # engine + UI at http://127.0.0.1:5173
 powershell .\revamp\stop-dev.ps1
 ```
-The character you start with decides which game mode and source books the engine loads (one process = one source set). A 49-source character loads in ~13 s; the core set in ~5 s.
+The character you start with decides which game mode and source books the engine loads (one process = one source set). A 49-source character loads in ~9 s (was ~13 s before the AbilityCategory speed-up); the core set in ~5 s. Measure with `python revamp/harness/measure_load.py`.
 
 ## Tests (run all before calling something done; all passed at the last commit)
 ```
