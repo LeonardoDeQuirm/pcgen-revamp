@@ -18,6 +18,16 @@ final class Lookup
 	static <T> T find(Iterable<T> items, String wanted, String kind, Function<T, String> key,
 		Function<T, String> display)
 	{
+		return find(items, wanted, kind, key, display, null);
+	}
+
+	/**
+	 * As above. {@code twin}, when given, describes an item well enough that two items with the same description are
+	 * interchangeable (a book can define the same item twice): the first of them is taken instead of a 409.
+	 */
+	static <T> T find(Iterable<T> items, String wanted, String kind, Function<T, String> key,
+		Function<T, String> display, Function<T, String> twin)
+	{
 		List<T> exact = new ArrayList<>();
 		List<String> near = new ArrayList<>();
 		String w = wanted.trim();
@@ -46,6 +56,10 @@ final class Lookup
 			if (byKey.size() == 1)
 			{
 				return byKey.get(0);
+			}
+			if (twin != null && exact.stream().map(twin).distinct().count() == 1)
+			{
+				return exact.get(0);
 			}
 			throw new ApiException(409, "several " + kind + " items match '" + wanted + "'; use one of these keys: "
 					+ exact.stream().limit(8).map(key).collect(java.util.stream.Collectors.joining(", ")));

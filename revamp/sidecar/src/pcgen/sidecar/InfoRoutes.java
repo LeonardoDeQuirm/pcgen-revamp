@@ -126,7 +126,8 @@ final class InfoRoutes
 				EquipmentFacade o;
 				try
 				{
-					o = Lookup.find(data.getEquipment(), name, "equipment", EquipmentFacade::getKeyName, Object::toString);
+					o = Lookup.find(data.getEquipment(), name, "equipment", EquipmentFacade::getKeyName, Object::toString,
+						e -> e.getSource() + "|" + e.getType());
 				}
 				catch (ApiException notInShop)
 				{

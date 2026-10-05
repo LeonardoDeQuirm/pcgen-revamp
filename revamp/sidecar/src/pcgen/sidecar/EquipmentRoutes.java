@@ -263,8 +263,9 @@ final class EquipmentRoutes
 
 	private EquipmentFacade datasetItem(CharacterFacade c, String name)
 	{
+		// Some book sets define the same item twice (Wand of Acid Arrow); the copies are interchangeable.
 		return Lookup.find(c.getDataSet().getEquipment(), name, "equipment", EquipmentFacade::getKeyName,
-				Object::toString);
+				Object::toString, e -> e.getSource() + "|" + e.getType());
 	}
 
 	private EquipmentFacade ownedItem(CharacterFacade c, String name)
