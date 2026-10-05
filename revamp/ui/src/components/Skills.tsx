@@ -15,7 +15,7 @@ interface SkillRow {
 }
 
 export function Skills({ character }: { character: Character }) {
-  const { act, mutate } = useStore()
+  const { act, mutate, notify } = useStore()
   const detail = useDetail()
   const [rows, setRows] = useState<SkillRow[]>([])
   const [all, setAll] = useState(false)
@@ -34,8 +34,21 @@ export function Skills({ character }: { character: Character }) {
 
   const shown = useMemo(() => rows.filter((r) => r.name.toLowerCase().includes(q.toLowerCase())), [rows, q])
 
-  const spend = (skill: SkillRow, points: number) =>
-    mutate(() => api.post<Changed>(`/characters/${id}/skills`, { skill: skill.key, points }))
+  // Spending always goes on the newest level. Taking a rank back may mean going to an older level: the engine only
+  // refunds points at the level they were spent, so try each level from the newest down until one accepts it.
+  const spend = async (skill: SkillRow, points: number) => {
+    if (points > 0) {
+      const res = await mutate(() => api.post<Changed>(`/characters/${id}/skills`, { skill: skill.key, points }))
+      if (res && res.applied === false) notify('warn', `Could not add a rank of ${skill.name}: no skill points left, or the skill is not available.`)
+      return
+    }
+    for (let level = character.levels.length; level >= 1; level--) {
+      const res = await mutate(() => api.post<Changed>(`/characters/${id}/skills`, { skill: skill.key, points, level }))
+      if (!res) return
+      if (res.applied !== false) return
+    }
+    notify('warn', `Could not take a rank of ${skill.name} back.`)
+  }
 
   if (character.levels.length === 0) return <Empty title="No skills yet">Take a level first; skill points come with levels.</Empty>
 

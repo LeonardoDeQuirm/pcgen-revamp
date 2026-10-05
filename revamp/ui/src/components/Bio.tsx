@@ -27,7 +27,7 @@ const FIELDS: { key: string; label: string; wide?: boolean }[] = [
 ]
 
 function Biography({ character }: { character: Character }) {
-  const { act, notify } = useStore()
+  const { act, notify, markUnsaved } = useStore()
   const [bio, setBio] = useState<Biography | null>(null)
   const [draft, setDraft] = useState<Record<string, string>>({})
   const id = encodeURIComponent(character.id)
@@ -51,6 +51,7 @@ function Biography({ character }: { character: Character }) {
     if (draft[k] === undefined || draft[k] === String(bio[k] ?? '')) return
     const res = await act(() => api.patch<{ biography: Biography; messages: EngineMessage[] }>(`/characters/${id}/biography`, { [k]: draft[k] }))
     if (res) {
+      markUnsaved(character.id)
       setBio(res.biography)
       setDraft((d) => {
         const n = { ...d }
@@ -95,7 +96,7 @@ interface Note {
 }
 
 function Notes({ character }: { character: Character }) {
-  const { act } = useStore()
+  const { act, markUnsaved } = useStore()
   const [notes, setNotes] = useState<Note[]>([])
   const [selected, setSelected] = useState(0)
   const [text, setText] = useState('')
@@ -118,7 +119,10 @@ function Notes({ character }: { character: Character }) {
 
   const apply = async (call: () => Promise<{ notes: Note[] }>) => {
     const res = await act(call)
-    if (res) setNotes(res.notes)
+    if (res) {
+      setNotes(res.notes)
+      markUnsaved(character.id)
+    }
     return res
   }
 

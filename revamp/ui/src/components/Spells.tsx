@@ -78,15 +78,20 @@ export function Spells({ character }: { character: Character }) {
 
   const grouped = useMemo(() => groupByClassLevel(view?.known ?? []), [view])
   if (!view) return <div className="empty"><span className="spinner" /></div>
-  if (grouped.size === 0 && !adding)
-    return <Empty title="No spells">This character has no spellcasting classes, or none have spells yet.</Empty>
+  // Every class that can cast gets its card, even before it knows a single spell (a new wizard needs to add some).
+  const casters = (view.classes ?? []).filter((c) => c.levels.some((l) => l.usable)).map((c) => c.class)
+  const classNames = [...new Set([...casters, ...grouped.keys()])]
+  if (classNames.length === 0 && !adding)
+    return <Empty title="No spells">This character has no spellcasting classes.</Empty>
 
   const remove = (r: SpellRow) =>
     mutate(() => api.del<Changed>(`/characters/${id}/spells/known`, { class: r.class, level: r.level, spell: r.spell }))
 
   return (
     <div className="grid" style={{ gap: 18 }}>
-      {[...grouped.entries()].map(([cls, byLevel]) => (
+      {classNames.map((cls) => {
+        const byLevel = grouped.get(cls) ?? new Map<string, SpellRow[]>()
+        return (
         <Card
           key={cls}
           title={`${cls} spells`}
@@ -96,6 +101,7 @@ export function Spells({ character }: { character: Character }) {
             </button>
           }
         >
+          {byLevel.size === 0 && <div className="muted">No spells chosen yet. Use Add spell to pick some.</div>}
           {[...byLevel.entries()]
             .sort((a, b) => Number(a[0]) - Number(b[0]))
             .map(([level, rows]) => (
@@ -125,7 +131,8 @@ export function Spells({ character }: { character: Character }) {
               </div>
             ))}
         </Card>
-      ))}
+        )
+      })}
       {view.prepared.length > 0 && (
         <Card title="Prepared">
           <div className="badge-row">

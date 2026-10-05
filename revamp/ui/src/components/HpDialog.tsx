@@ -9,7 +9,7 @@ import { Modal, signed } from './ui'
  * The engine adds Constitution (and any other bonus) to the die result, so what you enter is just the die.
  */
 export function HpDialog({ character, level, onClose }: { character: Character; level: number; onClose: () => void }) {
-  const { mutate, act } = useStore()
+  const { mutate, act, markUnsaved } = useStore()
   const row = character.levels[level - 1]
   const die = row?.hitDie ?? 0
   const [text, setText] = useState(String(row?.hpRolled ?? ''))
@@ -33,6 +33,7 @@ export function HpDialog({ character, level, onClose }: { character: Character; 
   const roll = async () => {
     const res = await act(() => api.post<Changed & { rolled: number }>(`/characters/${id}/levels/${level}/hp/roll`, {}))
     if (res) {
+      markUnsaved(character.id)
       setText(String(res.rolled))
       setTouched(true)
     }

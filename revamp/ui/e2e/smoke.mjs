@@ -416,6 +416,12 @@ try {
   await page.waitForFunction(() => !document.querySelector('.modal'), { timeout: 20000 })
   check('the wizard finishes', (await page.$$('.level-row')).length === 1)
 
+  // A new wizard knows no spells yet but can add some.
+  await clickText('.tabs button', 'Spells')
+  await waitText('Add spell')
+  check('a new caster can add spells before knowing any', (await text()).includes('No spells chosen yet'))
+  await clickText('.tabs button', 'Overview')
+
   // Save for a never-saved character asks where, and writes the file.
   const saveDir = resolve('..', '.run')
   const outFile = resolve(saveDir, 'e2e-saveas.pcg')

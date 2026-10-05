@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import * as api from '../api'
 import { useStore } from '../store'
 import type { Character, TemplateList } from '../types'
@@ -19,6 +19,9 @@ export function Export({ character }: { character: Character }) {
   const [choice, setChoice] = useState('')
   const [pdfUrl, setPdfUrl] = useState<string | null>(null)
   const [working, setWorking] = useState(false)
+  // Which version of the character the shown sheet was made from (the object changes with every edit).
+  const madeFrom = useRef<Character | null>(null)
+  const outOfDate = !!pdfUrl && madeFrom.current !== character
   const id = encodeURIComponent(character.id)
 
   useEffect(() => {
@@ -48,13 +51,17 @@ export function Export({ character }: { character: Character }) {
   const generate = async () => {
     if (!choice) return
     setWorking(true)
+    const snapshot = character
     const blob = await act(() => api.exportFile(character.id, { template: choice }))
     setWorking(false)
-    if (blob) setPdfUrl(URL.createObjectURL(blob))
+    if (blob) {
+      madeFrom.current = snapshot
+      setPdfUrl(URL.createObjectURL(blob))
+    }
     else notify('error', 'The sheet could not be generated.')
   }
 
-  const fileName = `${(character.name ?? character.id).replace(/[^\w.-]+/g, '_')}.pdf`
+  const fileName = `${(character.name || character.id).replace(/[^\w.-]+/g, '_')}.pdf`
 
   return (
     <div className="grid" style={{ gap: 18 }}>
@@ -73,6 +80,7 @@ export function Export({ character }: { character: Character }) {
             {working ? <span className="spinner" style={{ width: 14, height: 14, borderWidth: 2 }} /> : null}
             {working ? 'Rendering…' : pdfUrl ? 'Refresh' : 'Generate'}
           </button>
+          {outOfDate && !working && <span className="chip warn">Changed since this sheet was made</span>}
           {pdfUrl && (
             <a className="btn" href={pdfUrl} download={fileName}>
               <Icon name="download" /> Download

@@ -44,6 +44,8 @@ interface Store {
   /** The engine reports every freshly opened character as modified, so we track real edits ourselves. */
   unsaved: boolean
   markSaved(id: string): void
+  /** For edits that do not go through mutate() (biography, notes...): the character now differs from its file. */
+  markUnsaved(id: string): void
   toasts: Toast[]
   chooserRequest: ChooserRequest | null
   builderRequest: BuilderRequest | null
@@ -94,6 +96,18 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const recoveredRef = useRef(false)
   activeRef.current = activeId
 
+  // Closing the window or tab with unsaved work asks first.
+  useEffect(() => {
+    if (unsavedIds.size === 0) return
+    const warn = (e: BeforeUnloadEvent) => {
+      e.preventDefault()
+      e.returnValue = ''
+    }
+    window.addEventListener('beforeunload', warn)
+    return () => window.removeEventListener('beforeunload', warn)
+  }, [unsavedIds])
+
+  const markUnsaved = useCallback((id: string) => setUnsavedIds((s) => new Set(s).add(id)), [])
   const markSaved = useCallback((id: string) => {
     setUnsavedIds((s) => {
       const n = new Set(s)
@@ -238,10 +252,11 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
   const closeCharacter = useCallback(
     async (id: string) => {
-      await act(() => api.del(`/characters/${encodeURIComponent(id)}`))
+      const done = await act(() => api.del(`/characters/${encodeURIComponent(id)}`).then(() => true))
+      if (done) markSaved(id) // a closed character has nothing left to lose
       await refresh()
     },
-    [act, refresh],
+    [act, refresh, markSaved],
   )
 
   const value = useMemo<Store>(
@@ -254,6 +269,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       busy: busyCount > 0,
       unsaved: activeId !== null && unsavedIds.has(activeId),
       markSaved,
+      markUnsaved,
       toasts,
       chooserRequest,
       builderRequest,
@@ -268,7 +284,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       act,
       refresh,
     }),
-    [health, connection, characters, activeId, character, busyCount, unsavedIds, markSaved, toasts, chooserRequest, builderRequest, confirmRequest, dismissToast, notify, select, openPath, createCharacter, closeCharacter, mutate, act, refresh],
+    [health, connection, characters, activeId, character, busyCount, unsavedIds, markSaved, markUnsaved, toasts, chooserRequest, builderRequest, confirmRequest, dismissToast, notify, select, openPath, createCharacter, closeCharacter, mutate, act, refresh],
   )
 
   // The dialogs resolve through these; exposed via the value so components stay dumb.
