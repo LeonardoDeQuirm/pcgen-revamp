@@ -111,23 +111,29 @@ public class DataSet implements DataSetFacade
 	private void initLists()
 	{
 		List<Race> raceList = new ArrayList<>(context.getReferenceContext().getConstructedCDOMObjects(Race.class));
+		// Hand the sorted views the whole list at once: adding one element at a time re-sorts the entire list
+		// for every element, which dominated the time spent loading large source sets.
+		List<Race> visibleRaces = new ArrayList<>();
 		for (Race race : raceList)
 		{
 			if (race.getSafe(ObjectKey.VISIBILITY).isVisibleTo(View.VISIBLE_DISPLAY))
 			{
-				unsortedRaces.addElement(race);
+				visibleRaces.add(race);
 			}
 		}
+		unsortedRaces.setContents(visibleRaces);
 
 		List<PCClass> classList =
 				new ArrayList<>(context.getReferenceContext().getConstructedCDOMObjects(PCClass.class));
+		List<PCClass> visibleClasses = new ArrayList<>();
 		for (PCClass pcClass : classList)
 		{
 			if (pcClass.getSafe(ObjectKey.VISIBILITY).isVisibleTo(View.VISIBLE_DISPLAY))
 			{
-				unsortedClasses.addElement(pcClass);
+				visibleClasses.add(pcClass);
 			}
 		}
+		unsortedClasses.setContents(visibleClasses);
 
 		for (Skill skill : context.getReferenceContext().getConstructedCDOMObjects(Skill.class))
 		{
@@ -437,6 +443,8 @@ public class DataSet implements DataSetFacade
 	 */
 	static class RaceComparator implements Comparator<Race>
 	{
+		// Creating a Collator is expensive and this runs for every comparison of a sort.
+		private final Collator collator = Collator.getInstance();
 
 		@Override
 		public int compare(Race r1, Race r2)
@@ -491,7 +499,6 @@ public class DataSet implements DataSetFacade
 			{
 				key2 = r2.getDisplayName();
 			}
-			final Collator collator = Collator.getInstance();
 			return collator.compare(key1, key2);
 		}
 
@@ -503,6 +510,7 @@ public class DataSet implements DataSetFacade
 	 */
 	static class PCClassComparator implements Comparator<PCClass>
 	{
+		private final Collator collator = Collator.getInstance();
 
 		@Override
 		public int compare(PCClass c1, PCClass c2)
@@ -556,7 +564,6 @@ public class DataSet implements DataSetFacade
 			{
 				key2 = c2.getDisplayName();
 			}
-			final Collator collator = Collator.getInstance();
 			return collator.compare(key1, key2);
 		}
 

@@ -18,9 +18,13 @@
 package pcgen.rules.context;
 
 import java.net.URI;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -45,6 +49,16 @@ public class ConsolidatedListCommitStrategy implements ListCommitStrategy, Maste
 
 	private final DoubleKeyMapToList<CDOMReference<? extends CDOMList<?>>,
 		CDOMObject, AssociatedPrereqObject> masterList = new DoubleKeyMapToList<>();
+
+	/**
+	 * Which (list, allowed object) pairs of the master list have an association owned by a given object. Clearing
+	 * an owner's entries used to scan the whole master list for every spell that said CLASSES:.CLEAR, which was
+	 * about a seventh of the time spent loading a large source set. Entries are only ever added through
+	 * addToMasterList, so every association owned by an object lives in one of its recorded pairs; a recorded pair
+	 * may since have been removed, which is why the master list is still consulted.
+	 */
+	private final Map<CDOMObject, Set<Map.Entry<CDOMReference<? extends CDOMList<?>>, CDOMObject>>> pairsByOwner =
+			new HashMap<>();
 
 	public URI getExtractURI()
 	{
@@ -76,6 +90,7 @@ public class ConsolidatedListCommitStrategy implements ListCommitStrategy, Maste
 		a.setAssociation(AssociationKey.OWNER, owner);
 		a.setAssociation(AssociationKey.TOKEN, tokenName);
 		masterList.addToListFor(list, allowed, a);
+		pairsByOwner.computeIfAbsent(owner, k -> new LinkedHashSet<>()).add(new AbstractMap.SimpleEntry<>(list, allowed));
 		return a;
 	}
 
@@ -118,17 +133,26 @@ public class ConsolidatedListCommitStrategy implements ListCommitStrategy, Maste
 	@Override
 	public void clearAllMasterLists(String tokenName, CDOMObject owner)
 	{
-		for (CDOMReference<? extends CDOMList<?>> ref : masterList.getKeySet())
+		Set<Map.Entry<CDOMReference<? extends CDOMList<?>>, CDOMObject>> pairs = pairsByOwner.get(owner);
+		if (pairs == null)
 		{
-			for (CDOMObject allowed : masterList.getSecondaryKeySet(ref))
+			return;
+		}
+		for (Map.Entry<CDOMReference<? extends CDOMList<?>>, CDOMObject> pair : pairs)
+		{
+			CDOMReference<? extends CDOMList<?>> ref = pair.getKey();
+			CDOMObject allowed = pair.getValue();
+			List<AssociatedPrereqObject> assocs = masterList.getListFor(ref, allowed);
+			if (assocs == null)
 			{
-				for (AssociatedPrereqObject assoc : masterList.getListFor(ref, allowed))
+				continue;
+			}
+			for (AssociatedPrereqObject assoc : assocs)
+			{
+				if (owner.equals(assoc.getAssociation(AssociationKey.OWNER))
+					&& tokenName.equals(assoc.getAssociation(AssociationKey.TOKEN)))
 				{
-					if (owner.equals(assoc.getAssociation(AssociationKey.OWNER))
-						&& tokenName.equals(assoc.getAssociation(AssociationKey.TOKEN)))
-					{
-						masterList.removeFromListFor(ref, allowed, assoc);
-					}
+					masterList.removeFromListFor(ref, allowed, assoc);
 				}
 			}
 		}
