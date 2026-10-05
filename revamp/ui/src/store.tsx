@@ -58,7 +58,7 @@ interface Store {
   createCharacter(): Promise<string | undefined>
   closeCharacter(id: string): Promise<void>
   /** Runs a change that returns the updated character, applies it, and surfaces engine messages. */
-  mutate(fn: () => Promise<Changed>): Promise<Changed | null>
+  mutate<T extends Changed>(fn: () => Promise<T>): Promise<T | null>
   /** Runs any engine call with busy/error handling; returns undefined on failure. */
   act<T>(fn: () => Promise<T>): Promise<T | undefined>
   refresh(): Promise<void>
@@ -147,13 +147,15 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       let h = await api.get<Health>('/health')
       // A previous page (closed or reloaded mid-question) can leave the engine waiting for an answer
       // nobody will give. Cancel it so this page isn't locked out.
-      if (!recoveredRef.current && (h.pendingBuilder || h.pendingChooser || h.pendingConfirm)) {
-        // Questions first: a builder edit can be stuck on one, and cancelling the builder would wait behind it.
-        if (h.pendingChooser) await api.request('POST', `/choosers/${h.pendingChooser}`, { cancel: true })
-        if (h.pendingConfirm) await api.request('POST', `/confirms/${h.pendingConfirm}`, { ok: false })
-        h = await api.get<Health>('/health')
-        if (h.pendingBuilder) await api.request('POST', '/builder/cancel')
-        h = await api.get<Health>('/health')
+      if (!recoveredRef.current) {
+        // Cancelling a question can make the engine ask the next one, so keep going until nothing is pending.
+        for (let i = 0; i < 25 && (h.pendingBuilder || h.pendingChooser || h.pendingConfirm); i++) {
+          // Questions first: a builder edit can be stuck on one, and cancelling the builder would wait behind it.
+          if (h.pendingChooser) await api.request('POST', `/choosers/${h.pendingChooser}`, { cancel: true })
+          else if (h.pendingConfirm) await api.request('POST', `/confirms/${h.pendingConfirm}`, { ok: false })
+          else if (h.pendingBuilder) await api.request('POST', '/builder/cancel')
+          h = await api.get<Health>('/health')
+        }
       }
       recoveredRef.current = true
       setHealth(h)
@@ -207,7 +209,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   )
 
   const mutate = useCallback(
-    async (fn: () => Promise<Changed>): Promise<Changed | null> => {
+    async <T extends Changed>(fn: () => Promise<T>): Promise<T | null> => {
       const res = await act(fn)
       if (!res) return null
       if (res.character) {

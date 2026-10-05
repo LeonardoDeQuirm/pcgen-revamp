@@ -35,9 +35,9 @@ powershell revamp/sidecar/build.ps1                                   # after an
 python revamp/harness/run_harness.py          # CLI exports vs baselines. --update rewrites baselines
 python revamp/harness/run_sidecar_test.py     # one sidecar per sample character, chooser bridge
 python revamp/harness/run_all_gates.py [revamp/local/fp_baseline.json]   # ALL of the below plus PCGen unit tests, in one go (~10 min)
-python revamp/harness/run_api_test.py         # every route group + latency budgets (225 checks)
+python revamp/harness/run_api_test.py         # every route group + latency budgets (227 checks)
 python revamp/harness/run_packaged_test.py    # sidecar serving the built UI, free port, token (needs npm run build in revamp/ui)
-cd revamp/ui; npm run typecheck; npm run e2e -- ..\.run\<copy>.pcg   # needs start-dev.ps1 running; 77 checks. Restart start-dev afterwards: the e2e edits the copy
+cd revamp/ui; npm run typecheck; npm run e2e -- ..\.run\<copy>.pcg   # needs start-dev.ps1 running; 79 checks. Restart start-dev afterwards: the e2e edits the copy
 ```
 The harness also compares `revamp/local/clarent.pcg` and `revamp/local/kaito.pcg` (a 14th-level Kitsune rogue with many added feats, 26 sources) when they exist; without them those cases are skipped. Their baselines are git-ignored.
 

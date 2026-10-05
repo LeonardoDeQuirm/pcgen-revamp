@@ -100,6 +100,8 @@ public final class SidecarAccess
 	{
 		PlayerCharacter pc = playerCharacter(c);
 		java.util.List<Object[]> grants = new java.util.ArrayList<>();
+		// Only grants made by this award's own selector: the same feat can also come from a race, class or a person's choice.
+		java.util.List<?> awardActors = award.getSafeListFor(pcgen.cdom.enumeration.ListKey.NEW_CHOOSE_ACTOR);
 		try
 		{
 			// The facet keeps every grant together with what granted it, but only lets subclasses look.
@@ -120,7 +122,7 @@ public final class SidecarAccess
 					Object source = fs.get(sourced);
 					if (cnas.getCNAbility().getAbility().getKeyName().equals(featKey)
 						&& cnas.getCNAbility().getAbilityCategory().equals(pcgen.core.AbilityCategory.FEAT)
-						&& !(source instanceof pcgen.cdom.base.UserSelection))
+						&& awardActors.contains(source))
 					{
 						grants.add(new Object[] {cnas, source});
 					}

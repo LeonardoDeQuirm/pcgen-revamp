@@ -78,6 +78,9 @@ public final class Sidecar
 		volatile RecordingUIDelegate.PendingChooser pending;
 		volatile RecordingUIDelegate.PendingBuilder builder;
 		volatile RecordingUIDelegate.PendingConfirm confirm;
+		/** The engine side is over (its result is queued). Normally the request that is waiting takes the result and frees the slot;
+		 * when nobody is (the question expired after the person walked away), the next request frees it. */
+		volatile boolean finished;
 
 		Operation(boolean silent)
 		{
@@ -584,6 +587,12 @@ public final class Sidecar
 		{
 			while (current != null)
 			{
+				if (current.finished && current.events.stream().allMatch(e -> e instanceof Done))
+				{
+					// Orphaned: its question expired and nobody came back for the result.
+					current = null;
+					break;
+				}
 				if (current.isParked())
 				{
 					RecordingUIDelegate.PendingChooser p = current.pending;
@@ -610,6 +619,11 @@ public final class Sidecar
 				error = t;
 			}
 			op.events.add(new Done(result, error));
+			op.finished = true;
+			synchronized (Sidecar.this)
+			{
+				Sidecar.this.notifyAll();
+			}
 		});
 		return awaitEvent(op);
 	}
@@ -660,7 +674,10 @@ public final class Sidecar
 		Done done = (Done) event;
 		synchronized (this)
 		{
-			current = null;
+			if (current == op)
+			{
+				current = null;
+			}
 			notifyAll();
 		}
 		if (done.error() instanceof Exception e)

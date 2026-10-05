@@ -38,7 +38,7 @@ public class RecordingUIDelegate implements UIDelegate
 	 * How long the engine waits for a person to answer a question before giving up on it. This is human think
 	 * time, not engine speed, so it is generous; a page that is closed mid-question cancels it on reload anyway.
 	 */
-	static final long CHOOSER_TIMEOUT_SECONDS = 3600;
+	static final long CHOOSER_TIMEOUT_SECONDS = Long.getLong("pcgen.sidecar.questionTimeoutSeconds", 3600L);
 
 	/** Indexes into the chooser's available list to add, and into its already-selected list to remove. */
 	record Answer(int[] add, int[] remove)
@@ -373,7 +373,24 @@ public class RecordingUIDelegate implements UIDelegate
 		}
 		Answer picks = null;
 		boolean repeated = false;
-		String repeatKey = chooser.getName();
+		// The same question is the same title AND the same options: kits reuse one title ("Choose equipment") for different
+		// questions, which must each be asked.
+		String repeatKey = null;
+		if (replay != null && chooser.getName() != null)
+		{
+			StringBuilder key = new StringBuilder(chooser.getName());
+			var offeredNow = chooser.getAvailableList();
+			for (int i = 0; i < offeredNow.getSize(); i++)
+			{
+				key.append('|').append(offeredNow.getElementAt(i));
+			}
+			var chosenNow = chooser.getSelectedList();
+			for (int i = 0; i < chosenNow.getSize(); i++)
+			{
+				key.append('#').append(chosenNow.getElementAt(i));
+			}
+			repeatKey = key.toString();
+		}
 		if (replay != null && repeatKey != null && replay.containsKey(repeatKey))
 		{
 			picks = replay.get(repeatKey);

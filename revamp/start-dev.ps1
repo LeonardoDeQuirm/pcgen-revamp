@@ -33,7 +33,7 @@ Write-Host "Working on a copy: $copy"
 # Engine. Loading the rules takes 5-15 seconds depending on how many source books the character uses.
 Push-Location $repo
 $engineArgs = @('-cp', 'revamp/sidecar/build;build/libs/*', 'pcgen.sidecar.Sidecar', '--settings-dir', 'revamp/.run/settings',
-                '--from-character', "revamp/.run/$(Split-Path $Character -Leaf)", '--port', $Port)
+                '--from-character', "`"revamp/.run/$(Split-Path $Character -Leaf)`"", '--port', $Port)
 if ($ExtraSources) { $engineArgs += @('--extra-sources', "`"$ExtraSources`"") }
 $engine = Start-Process "$jdk\bin\java.exe" -PassThru -NoNewWindow `
     -ArgumentList $engineArgs `

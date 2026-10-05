@@ -331,6 +331,17 @@ try {
   await page.waitForFunction(() => !document.querySelector('.modal'), { timeout: 20000 })
   const after = await page.evaluate(() => document.querySelector('.ability .ability-edit')?.value)
   check('the chosen ability score went up by one', Number(after) === Number(before) + 1, `${before} -> ${after}`)
+  // Rolling hit points applies at once; Cancel must put the old roll back, and the page must show what the engine has.
+  const hpText = () => page.$$eval('.level-row', (r) => r[r.length - 1].querySelector('button.small.num')?.innerText ?? '')
+  const hp0 = await hpText()
+  await page.evaluate(() => [...document.querySelectorAll('.level-row')].at(-1).querySelector('button.small.num').click())
+  await page.waitForFunction(() => /Hit points for level/.test(document.querySelector('.modal')?.innerText ?? ''), { timeout: 20000 })
+  await clickText('.modal button', 'Roll d')
+  await sleep(500)
+  await clickText('.modal button', 'Cancel')
+  await page.waitForFunction(() => !document.querySelector('.modal'), { timeout: 20000 })
+  await sleep(500)
+  check('cancelling after a roll puts the old hit points back', (await hpText()) === hp0, [hp0, await hpText()])
   await clickText('.modal button', 'Cancel').catch(() => {})
 
   // Details panels for skills, gear and classes, and the reading pane in the race picker.
@@ -419,6 +430,12 @@ try {
   await clickText('.modal button', 'Point buy')
   await clickText('.modal button', 'Next')
   await waitText('Choose a race')
+  await clickText('.modal button', 'Choose a race')
+  await page.waitForSelector('.modal .pick')
+  // Escape closes only the picker, not the wizard (and the half-built character) underneath it.
+  await page.keyboard.press('Escape')
+  await sleep(800)
+  check('Escape closes just the picker, not the wizard under it', !(await page.$('.modal .pick')) && (await page.evaluate(() => /New character/.test(document.querySelector('.modal')?.innerText ?? ''))))
   await clickText('.modal button', 'Choose a race')
   await page.waitForSelector('.modal .pick')
   await page.type('.modal input', 'Human')

@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 
 export function signed(n: number): string {
   return n >= 0 ? `+${n}` : `−${Math.abs(n)}`
@@ -57,6 +57,17 @@ export function Icon({ name, size = 16 }: { name: IconName; size?: number }) {
   )
 }
 
+/** Open dialogs, oldest first. */
+const openModals: { close?: () => void }[] = []
+
+// One listener for all dialogs, so Escape reaches exactly one of them: the topmost, whether or not that one can be closed.
+// (Separate listeners per dialog cannot do this: the one that closes first removes itself, and the next then thinks it is on top.)
+if (typeof window !== 'undefined') {
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') openModals[openModals.length - 1]?.close?.()
+  })
+}
+
 export function Modal({
   title,
   subtitle,
@@ -72,12 +83,16 @@ export function Modal({
   onClose?: () => void
   wide?: boolean
 }) {
+  const entry = useRef<{ close?: () => void }>({})
+  entry.current.close = onClose
   useEffect(() => {
-    if (!onClose) return
-    const h = (e: KeyboardEvent) => e.key === 'Escape' && onClose()
-    window.addEventListener('keydown', h)
-    return () => window.removeEventListener('keydown', h)
-  }, [onClose])
+    const mine = entry.current
+    openModals.push(mine)
+    return () => {
+      const at = openModals.indexOf(mine)
+      if (at >= 0) openModals.splice(at, 1)
+    }
+  }, [])
   return (
     <div className="scrim" onMouseDown={(e) => e.target === e.currentTarget && onClose?.()}>
       <div className={'modal' + (wide ? ' wide' : '')} role="dialog" aria-modal="true" aria-label={title}>

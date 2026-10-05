@@ -9,11 +9,14 @@ import { Modal, signed } from './ui'
  * The engine adds Constitution (and any other bonus) to the die result, so what you enter is just the die.
  */
 export function HpDialog({ character, level, onClose }: { character: Character; level: number; onClose: () => void }) {
-  const { mutate, act, markUnsaved } = useStore()
+  const { mutate } = useStore()
   const row = character.levels[level - 1]
   const die = row?.hitDie ?? 0
   const [text, setText] = useState(String(row?.hpRolled ?? ''))
   const [touched, setTouched] = useState(false)
+  // Rolling changes the engine at once (unlike typing, which only counts on Save), so Cancel has to put the old roll back.
+  const [rolledHere, setRolledHere] = useState(false)
+  const [original] = useState(row?.hpRolled) // the roll as it was when the dialog opened (row changes once we roll)
   const id = encodeURIComponent(character.id)
   if (!row || !die) return null
 
@@ -31,22 +34,26 @@ export function HpDialog({ character, level, onClose }: { character: Character; 
     onClose()
   }
   const roll = async () => {
-    const res = await act(() => api.post<Changed & { rolled: number }>(`/characters/${id}/levels/${level}/hp/roll`, {}))
+    const res = await mutate(() => api.post<Changed & { rolled: number }>(`/characters/${id}/levels/${level}/hp/roll`, {}))
     if (res) {
-      markUnsaved(character.id)
       setText(String(res.rolled))
       setTouched(true)
+      setRolledHere(true)
     }
+  }
+  const cancel = async () => {
+    if (rolledHere && original != null) await mutate(() => api.put<Changed>(`/characters/${id}/levels/${level}/hp`, { rolled: original }))
+    onClose()
   }
 
   return (
     <Modal
       title={`Hit points for level ${level}`}
       subtitle={`${row.class}${row.classLevel ? ` ${row.classLevel}` : ''} \u00b7 d${die}`}
-      onClose={onClose}
+      onClose={() => void cancel()}
       footer={
         <>
-          <button className="btn ghost" onClick={onClose}>
+          <button className="btn ghost" onClick={() => void cancel()}>
             {touched ? 'Cancel' : 'Keep as is'}
           </button>
           <button className="btn primary" disabled={!valid} onClick={() => void save()}>

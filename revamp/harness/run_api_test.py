@@ -86,7 +86,7 @@ def snap():
 
 
 def start_sidecar():
-    cmd = [str(DEFAULT_JDK / "bin" / "java.exe"), "-cp", "revamp/sidecar/build;build/libs/*", "pcgen.sidecar.Sidecar",
+    cmd = [str(DEFAULT_JDK / "bin" / "java.exe"), "-Dpcgen.sidecar.questionTimeoutSeconds=15", "-cp", "revamp/sidecar/build;build/libs/*", "pcgen.sidecar.Sidecar",
            "--settings-dir", tempfile.mkdtemp(prefix="api-test-"), "--from-character", str(CHAR), "--port", str(PORT)]
     proc = subprocess.Popen(cmd, cwd=PCGEN, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True)
     ready = threading.Event()
@@ -252,6 +252,15 @@ def run_checks():
         check("cancel leaves nothing bought", st == 200 and not any(
             i["key"] == "Dagger" for i in read(C + "/equipment")[1]["purchased"]), d)
 
+    # ---- a question nobody answers expires, and must not leave the engine blocked for everyone after it
+    st, d = write("POST", C + "/equipment/buy", {"item": "Dagger", "customize": True})
+    if st == 202:
+        time.sleep(20)  # the test sidecar gives up on unanswered questions after 15 s (an hour in real use)
+        st, d = call("GET", C)
+        check("after an unanswered question expires, later requests still work", st == 200, (st, str(d)[:120]))
+    else:
+        check("an unanswered question can be raised", False, (st, str(d)[:120]))
+
     # ---- customising an item the character already owns, with and without paying for it
     write("PATCH", C, {"funds": "5000"})
     write("POST", C + "/equipment/buy", {"item": "Dagger", "quantity": 4})
@@ -342,6 +351,11 @@ def run_checks():
     check("with the slot option it costs the character no slot (one bonus slot is added)",
           (after["total"], after["remaining"], after.get("gmBonusSlots")) == (before["total"] + 1, before["remaining"], (before.get("gmBonusSlots") or 0) + 1),
           (before["total"], before["remaining"], after["total"], after["remaining"], after.get("gmBonusSlots")))
+    st, d = write("POST", C + "/abilities", {"category": "FEAT", "name": "Whirlwind Attack", "gm": True, "slot": True})
+    again = feat_cat()
+    check("granting a feat the GM already gave adds nothing, and no extra slot",
+          st == 200 and d.get("added") == "" and again.get("gmBonusSlots") == after.get("gmBonusSlots") and again["total"] == after["total"],
+          (st, d.get("added"), again.get("gmBonusSlots"), after.get("gmBonusSlots")))
     notes = read(C + "/notes")[1]
     check("the GM note lists it for the sheet", any(n["name"] == "GM Granted Feats" and "Whirlwind Attack" in n["text"] for n in notes), notes)
     some_trait = read("/dataset/abilities", category="Traits", limit=1)[1]["items"][0]["key"]

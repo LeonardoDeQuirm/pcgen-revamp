@@ -274,10 +274,18 @@ final class AbilityRoutes
 			}
 			AbilityCategory awards = awards(c);
 			AbilityFacade award = award(c, awards, SidecarAccess.FEAT_AWARD);
+			// A feat that can be taken only once is not given twice (the engine would happily list it twice).
+			if (SidecarAccess.gmGranted(c).contains("FEAT|" + ability.getKeyName()) && ability instanceof pcgen.core.Ability once
+				&& !once.getSafe(pcgen.cdom.enumeration.ObjectKey.MULTIPLE_ALLOWED))
+			{
+				return characters.changed(id, c, Map.of("added", "", "gm", true));
+			}
+			int selectionsBefore = SidecarAccess.awardSelections(c, SidecarAccess.FEAT_AWARD).size();
 			// A feat with choices (Skill Focus) is asked about, but only its own choices ("Skill Focus (Acrobatics)").
 			s.ui.withScriptedChoice(List.of(ability.getKeyName()), List.of(), ability.getKeyName() + " (",
 					() -> c.addAbility(awards, award));
-			boolean there = SidecarAccess.gmGranted(c).contains("FEAT|" + ability.getKeyName());
+			// Did this call give something? (Not if the feat was already given, or the choice was cancelled.)
+			boolean there = SidecarAccess.awardSelections(c, SidecarAccess.FEAT_AWARD).size() > selectionsBefore;
 			if (there && q.bool("slot", false))
 			{
 				// the feat still takes a feat slot; "+1 Bonus Feat" gives the character one so it costs nothing

@@ -57,7 +57,7 @@ function AbilityTile({ stat, character }: { stat: Stat; character: Character }) 
 }
 
 function Levels({ character }: { character: Character }) {
-  const { mutate, act, notify, markUnsaved } = useStore()
+  const { mutate, notify } = useStore()
   const detail = useDetail()
   const [hpMode, setHpMode] = useHpMode()
   const [picking, setPicking] = useState(false)
@@ -67,8 +67,8 @@ function Levels({ character }: { character: Character }) {
   const applyHp = async (lvl: number, mode: HpMode, die: number) => {
     if (!die) return
     if (mode === 'roll') {
-      const res = await act(() => api.post<Changed & { rolled: number }>(`/characters/${id}/levels/${lvl}/hp/roll`, {}))
-      if (res) markUnsaved(character.id)
+      // mutate, not act: the roll is already in the engine, so the page has to show the character it returned.
+      const res = await mutate(() => api.post<Changed & { rolled: number }>(`/characters/${id}/levels/${lvl}/hp/roll`, {}))
       if (res) notify('info', `Level ${lvl}: rolled ${res.rolled} on the d${die}.`)
       return
     }
