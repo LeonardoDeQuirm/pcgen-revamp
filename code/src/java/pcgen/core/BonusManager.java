@@ -104,8 +104,6 @@ public class BonusManager
 		}
 
 		final List<String> aList = new ArrayList<>();
-		boolean found = false;
-
 		for (String fullyQualifedCurrentBonus : activeBonusMap.keySet())
 		{
 			// aKey is either of the form:
@@ -159,7 +157,6 @@ public class BonusManager
 
 			if (currentTypedBonusNameInfo.startsWith(fullyQualifiedBonusType))
 			{
-				found = true;
 				aList.add(currentTypedBonusNameInfo);
 				aList.add(currentTypedBonusNameInfo + ".STACK");
 				aList.add(currentTypedBonusNameInfo + ".REPLACE");
@@ -196,11 +193,11 @@ public class BonusManager
 			}
 		}
 
-		// cache value only if it has been positively found
-		if (found)
-		{
-			cachedActiveBonusSumsMap.put(fullyQualifiedBonusType, bonus);
-		}
+		// Cache the answer even when nothing matched (the sum is then 0). Asking about a bonus nobody has is by far
+		// the most common question (every skill, every stat, every save...), and each such miss used to scan the
+		// whole active bonus map again, which was over 40% of the time spent writing a character sheet. A bonus
+		// added later drops the cached entries it affects (see invalidateCachedSums), misses included.
+		cachedActiveBonusSumsMap.put(fullyQualifiedBonusType, bonus);
 		return bonus;
 	}
 
