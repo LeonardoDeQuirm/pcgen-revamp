@@ -20,6 +20,8 @@ DEFAULT_JDK = Path(r"C:\Program Files\Eclipse Adoptium\jdk-25.0.4.101-hotspot")
 
 CHAR_DIRS = [PCGEN / "code" / "testsuite" / "PCGfiles"]
 CHAR_GLOB = "pf_*.pcg"  # Pathfinder 1e only
+# Generated characters (see build_corpus.py): many classes and races on the 49-source data set. Committed.
+CORPUS_DIR = REVAMP / "harness" / "characters"
 # Real characters supplied by the user, kept in revamp/local (not in git). Only ever read, never saved.
 EXTRA_CHARS = [REVAMP / "local" / "clarent.pcg"]   # git-ignored; skipped when absent
 
@@ -31,16 +33,27 @@ EXTRA_CHARS = [REVAMP / "local" / "clarent.pcg"]   # git-ignored; skipped when a
 UNORDERED = {"clarent"}
 
 
+# Exports whose CONTENT differs from run to run on the unmodified upstream engine (measured: the Aberrant bloodline
+# sorcerer shows the level-3 power "Long Limbs" in 12 of 24 identical runs, with the original engine code and with
+# ours). Reported but not counted as failures until the engine bug is found.
+NONDETERMINISTIC = {"corpus_sorcerer3.xml"}
+
+
+def is_unordered(char_stem):
+    return char_stem in UNORDERED or char_stem.startswith("corpus_")
+
+
 def same(char_stem, a, b):
     """Exact comparison, or same-lines-in-any-order for UNORDERED characters."""
-    if char_stem in UNORDERED:
+    if is_unordered(char_stem):
         from collections import Counter
         return Counter(a.splitlines()) == Counter(b.splitlines())
     return a == b
 
 
 def all_chars():
-    return sorted([p for d in CHAR_DIRS for p in d.glob(CHAR_GLOB)] + [p for p in EXTRA_CHARS if p.exists()])
+    return sorted([p for d in CHAR_DIRS for p in d.glob(CHAR_GLOB)] + [p for p in EXTRA_CHARS if p.exists()]
+                  + sorted(CORPUS_DIR.glob("corpus_*.pcg")))
 TEMPLATES = {
     "plain": "outputsheets/d20/fantasy/text/csheet_plain.TXT",
     "xml": "outputsheets/d20/fantasy/htmlxml/csheet_fantasy_generic_export.xml.ftl",
@@ -106,6 +119,8 @@ def main():
             old = base.read_text(encoding="utf-8", errors="replace")
             if same(r["name"].split(".")[0], old, new):
                 print(f"PASS  {r['name']} ({r['secs']:.1f}s)")
+            elif r["name"] in NONDETERMINISTIC:
+                print(f"SKIP  {r['name']}: differs, but this export is known to vary between identical runs")
             else:
                 failed += 1
                 print(f"DIFF  {r['name']}")

@@ -1,0 +1,295 @@
+PCGVERSION:2.0
+
+# System Information
+CAMPAIGN:Ultimate Wilderness|CAMPAIGN:Elemental Master's Handbook|CAMPAIGN:Blood of the Beast|CAMPAIGN:Horror Adventures|CAMPAIGN:Magic Tactics Toolbox|CAMPAIGN:Spymaster's Handbook|CAMPAIGN:Inner Sea Intrigue|CAMPAIGN:Ultimate Intrigue|CAMPAIGN:Blood of Shadows|CAMPAIGN:Agents of Evil|CAMPAIGN:Inner Sea Races|CAMPAIGN:Monster Summoner's Handbook|CAMPAIGN:Occult Adventures|CAMPAIGN:Pathfinder Unchained|CAMPAIGN:Monster Codex|CAMPAIGN:Advanced Class Origins|CAMPAIGN:Ranged Tactics Toolbox|CAMPAIGN:Champions of Corruption|CAMPAIGN:Advanced Class Guide|CAMPAIGN:Blood of the Elements|CAMPAIGN:Undead Slayer's Handbook|CAMPAIGN:Champions of Balance|CAMPAIGN:Magical Marketplace|CAMPAIGN:Pathfinder RPG for Players|CAMPAIGN:Faiths and Philosophies|CAMPAIGN:Ultimate Campaign|CAMPAIGN:Blood of the Moon|CAMPAIGN:Champions of Purity|CAMPAIGN:Knights of the Inner Sea|CAMPAIGN:Ultimate Equipment|CAMPAIGN:Advanced Race Guide|CAMPAIGN:Blood of the Night|CAMPAIGN:Faiths of Corruption|CAMPAIGN:Dungeons of Golarion|CAMPAIGN:Faiths of Balance|CAMPAIGN:Inner Sea Magic|CAMPAIGN:Ultimate Magic|CAMPAIGN:Faiths of Purity|CAMPAIGN:Carrion Crown Player's Guide|CAMPAIGN:Inner Sea World Guide|CAMPAIGN:Ultimate Combat|CAMPAIGN:Orcs of Golarion|CAMPAIGN:Advanced Player's Guide|CAMPAIGN:Dwarves of Golarion|CAMPAIGN:Bestiary|CAMPAIGN:Taldor - Echoes of Glory (Conversion)|CAMPAIGN:Elves of Golarion|CAMPAIGN:Varisia - Birthplace of Legends|CAMPAIGN:Martial Arts Handbook
+VERSION:6.09.08.RC1
+ROLLMETHOD:0|EXPRESSION:0
+PURCHASEPOINTS:N
+CHARACTERTYPE:PC
+PREVIEWSHEET:Standard.htm.ftl
+POOLPOINTS:0
+POOLPOINTSAVAIL:-1
+GAMEMODE:Pathfinder_RPG
+AUTOSPELLS:Y
+USEHIGHERKNOWN:N
+USEHIGHERPREPPED:N
+LOADCOMPANIONS:N
+USETEMPMODS:Y
+SKILLSOUTPUTORDER:0
+SKILLFILTER:2
+IGNORECOST:N
+ALLOWDEBT:N
+AUTORESIZEGEAR:Y
+
+# Character Bio
+CHARACTERNAME:Corpus Barbarian7
+TABNAME:
+PLAYERNAME:
+HEIGHT:0
+WEIGHT:0
+AGE:0
+GENDER:Male
+HANDED:Right
+SKINCOLOR:
+EYECOLOR:
+HAIRCOLOR:
+HAIRSTYLE:
+LOCATION:
+CITY:
+BIRTHDAY:
+BIRTHPLACE:
+PERSONALITYTRAIT1:
+PERSONALITYTRAIT2:
+SPEECHPATTERN:
+PHOBIAS:
+INTERESTS:
+CATCHPHRASE:
+PORTRAIT:
+
+# Character Attributes
+STAT:STR|SCORE:19
+STAT:DEX|SCORE:14
+STAT:CON|SCORE:16
+STAT:INT|SCORE:8
+STAT:WIS|SCORE:10
+STAT:CHA|SCORE:8
+ALIGN:None
+RACE:Human
+
+# Character Class(es)
+CLASS:Barbarian|LEVEL:7|SKILLPOOL:0|SPELLBASE:None|CANCASTPERDAY:
+CLASSABILITIESLEVEL:Barbarian=1|HITPOINTS:12|SKILLSGAINED:4|SKILLSREMAINING:0
+CLASSABILITIESLEVEL:Barbarian=2|HITPOINTS:10|SKILLSGAINED:4|SKILLSREMAINING:0
+CLASSABILITIESLEVEL:Barbarian=3|HITPOINTS:4|SKILLSGAINED:4|SKILLSREMAINING:0
+CLASSABILITIESLEVEL:Barbarian=4|HITPOINTS:1|PRESTAT:STR=1|SKILLSGAINED:4|SKILLSREMAINING:0
+CLASSABILITIESLEVEL:Barbarian=5|HITPOINTS:4|SKILLSGAINED:4|SKILLSREMAINING:0
+CLASSABILITIESLEVEL:Barbarian=6|HITPOINTS:1|SKILLSGAINED:4|SKILLSREMAINING:0
+CLASSABILITIESLEVEL:Barbarian=7|HITPOINTS:11|SKILLSGAINED:4|SKILLSREMAINING:0
+
+# Character Experience
+EXPERIENCE:35000
+EXPERIENCETABLE:Medium
+
+# Character Templates
+TEMPLATESAPPLIED:[NAME:Creature with Class Levels]
+TEMPLATESAPPLIED:[NAME:REACH_5]
+TEMPLATESAPPLIED:[NAME:Human]
+TEMPLATESAPPLIED:[NAME:Human Ethnicity]
+TEMPLATESAPPLIED:[NAME:Race ~ Human|CHOSENTEMPLATE:[NAME:IsHuman]]
+TEMPLATESAPPLIED:[NAME:IsHuman]
+TEMPLATESAPPLIED:[NAME:Bonus Language ~ Any Spoken]
+TEMPLATESAPPLIED:[NAME:Human Ethnicity (Arcadian)]
+TEMPLATESAPPLIED:[NAME:Regional Affinity (Absalom)]
+
+# Character Region
+REGION:Absalom
+
+# Character Skills
+SKILL:Acrobatics|OUTPUTORDER:1|CLASSBOUGHT:[CLASS:Barbarian|RANKS:7.0|COST:1|CLASSSKILL:Y]
+SKILL:Acrobatics (Perform (Dance))|OUTPUTORDER:2|
+SKILL:Appraise|OUTPUTORDER:3|
+SKILL:Artistry|OUTPUTORDER:4|
+SKILL:Bluff|OUTPUTORDER:6|
+SKILL:Bluff (Perform (Act))|OUTPUTORDER:7|
+SKILL:Bluff (Perform (Comedy))|OUTPUTORDER:8|
+SKILL:Bluff (Perform (Dance))|OUTPUTORDER:9|
+SKILL:Bluff (Perform (Keyboard Instruments))|OUTPUTORDER:10|
+SKILL:Bluff (Perform (Oratory))|OUTPUTORDER:11|
+SKILL:Bluff (Perform (Percussion Instruments))|OUTPUTORDER:12|
+SKILL:Bluff (Perform (Sing))|OUTPUTORDER:13|
+SKILL:Bluff (Perform (String Instruments))|OUTPUTORDER:14|
+SKILL:Bluff (Perform (Wind Instruments))|OUTPUTORDER:15|
+SKILL:Climb|OUTPUTORDER:16|CLASSBOUGHT:[CLASS:Barbarian|RANKS:7.0|COST:1|CLASSSKILL:Y]
+SKILL:Consolidated Skill ~ Athletics|OUTPUTORDER:5|
+SKILL:Consolidated Skill ~ Influence|OUTPUTORDER:63|
+SKILL:Consolidated Skill ~ Performance|OUTPUTORDER:78|
+SKILL:Craft (Alchemy)|OUTPUTORDER:17|CLASSBOUGHT:[CLASS:Barbarian|RANKS:7.0|COST:1|CLASSSKILL:Y]
+SKILL:Craft (Armor)|CLASSBOUGHT:[CLASS:Barbarian|RANKS:7.0|COST:1|CLASSSKILL:Y]
+SKILL:Craft (Untrained)|OUTPUTORDER:18|
+SKILL:Diplomacy|OUTPUTORDER:19|
+SKILL:Diplomacy (Perform (Act))|OUTPUTORDER:20|
+SKILL:Diplomacy (Perform (Comedy))|OUTPUTORDER:21|
+SKILL:Diplomacy (Perform (Dance))|OUTPUTORDER:22|
+SKILL:Diplomacy (Perform (Keyboard Instruments))|OUTPUTORDER:23|
+SKILL:Diplomacy (Perform (Oratory))|OUTPUTORDER:24|
+SKILL:Diplomacy (Perform (Percussion Instruments))|OUTPUTORDER:25|
+SKILL:Diplomacy (Perform (Sing))|OUTPUTORDER:26|
+SKILL:Diplomacy (Perform (String Instruments))|OUTPUTORDER:27|
+SKILL:Diplomacy (Perform (Wind Instruments))|OUTPUTORDER:28|
+SKILL:Disguise|OUTPUTORDER:30|
+SKILL:Disguise (Perform (Act))|OUTPUTORDER:31|
+SKILL:Disguise (Perform (Comedy))|OUTPUTORDER:32|
+SKILL:Disguise (Perform (Dance))|OUTPUTORDER:33|
+SKILL:Disguise (Perform (Keyboard Instruments))|OUTPUTORDER:34|
+SKILL:Disguise (Perform (Oratory))|OUTPUTORDER:35|
+SKILL:Disguise (Perform (Percussion Instruments))|OUTPUTORDER:36|
+SKILL:Disguise (Perform (Sing))|OUTPUTORDER:37|
+SKILL:Disguise (Perform (String Instruments))|OUTPUTORDER:38|
+SKILL:Disguise (Perform (Wind Instruments))|OUTPUTORDER:39|
+SKILL:Escape Artist|OUTPUTORDER:40|
+SKILL:Escape Artist (Perform (Act))|OUTPUTORDER:41|
+SKILL:Escape Artist (Perform (Comedy))|OUTPUTORDER:42|
+SKILL:Escape Artist (Perform (Dance))|OUTPUTORDER:43|
+SKILL:Escape Artist (Perform (Keyboard Instruments))|OUTPUTORDER:44|
+SKILL:Escape Artist (Perform (Oratory))|OUTPUTORDER:45|
+SKILL:Escape Artist (Perform (Percussion Instruments))|OUTPUTORDER:46|
+SKILL:Escape Artist (Perform (Sing))|OUTPUTORDER:47|
+SKILL:Escape Artist (Perform (String Instruments))|OUTPUTORDER:48|
+SKILL:Escape Artist (Perform (Wind Instruments))|OUTPUTORDER:49|
+SKILL:Fly|OUTPUTORDER:50|
+SKILL:Fly (Perform (Dance))|OUTPUTORDER:51|
+SKILL:Handle Animal (Perform (Act))|OUTPUTORDER:53|
+SKILL:Handle Animal (Perform (Comedy))|OUTPUTORDER:54|
+SKILL:Handle Animal (Perform (Dance))|OUTPUTORDER:55|
+SKILL:Handle Animal (Perform (Keyboard Instruments))|OUTPUTORDER:56|
+SKILL:Handle Animal (Perform (Oratory))|OUTPUTORDER:57|
+SKILL:Handle Animal (Perform (Percussion Instruments))|OUTPUTORDER:58|
+SKILL:Handle Animal (Perform (Sing))|OUTPUTORDER:59|
+SKILL:Handle Animal (Perform (String Instruments))|OUTPUTORDER:60|
+SKILL:Handle Animal (Perform (Wind Instruments))|OUTPUTORDER:61|
+SKILL:Heal|OUTPUTORDER:62|
+SKILL:Intimidate|OUTPUTORDER:64|
+SKILL:Intimidate (Perform (Act))|OUTPUTORDER:65|
+SKILL:Intimidate (Perform (Comedy))|OUTPUTORDER:66|
+SKILL:Intimidate (Perform (Dance))|OUTPUTORDER:67|
+SKILL:Intimidate (Perform (Keyboard Instruments))|OUTPUTORDER:68|
+SKILL:Intimidate (Perform (Oratory))|OUTPUTORDER:69|
+SKILL:Intimidate (Perform (Percussion Instruments))|OUTPUTORDER:70|
+SKILL:Intimidate (Perform (Sing))|OUTPUTORDER:71|
+SKILL:Intimidate (Perform (String Instruments))|OUTPUTORDER:72|
+SKILL:Intimidate (Perform (Wind Instruments))|OUTPUTORDER:73|
+SKILL:Knowledge (Untrained)|OUTPUTORDER:74|
+SKILL:Perception|OUTPUTORDER:76|
+SKILL:Perform (Untrained)|OUTPUTORDER:77|
+SKILL:Profession (Untrained)|OUTPUTORDER:79|
+SKILL:Ride|OUTPUTORDER:80|
+SKILL:Samurai Mount|OUTPUTORDER:81|
+SKILL:Sense Motive|OUTPUTORDER:82|
+SKILL:Sense Motive (Perform (Act))|OUTPUTORDER:83|
+SKILL:Sense Motive (Perform (Comedy))|OUTPUTORDER:84|
+SKILL:Sense Motive (Perform (Dance))|OUTPUTORDER:85|
+SKILL:Sense Motive (Perform (Keyboard Instruments))|OUTPUTORDER:86|
+SKILL:Sense Motive (Perform (Oratory))|OUTPUTORDER:87|
+SKILL:Sense Motive (Perform (Percussion Instruments))|OUTPUTORDER:88|
+SKILL:Sense Motive (Perform (Sing))|OUTPUTORDER:89|
+SKILL:Sense Motive (Perform (String Instruments))|OUTPUTORDER:90|
+SKILL:Sense Motive (Perform (Wind Instruments))|OUTPUTORDER:91|
+SKILL:Stealth|OUTPUTORDER:94|
+SKILL:Survival|OUTPUTORDER:95|
+SKILL:Swim|OUTPUTORDER:96|
+SKILL:Untrained Charisma|OUTPUTORDER:97|
+SKILL:Untrained Dexterity|OUTPUTORDER:98|
+SKILL:Untrained Intelligence|OUTPUTORDER:99|
+SKILL:Untrained Strength|OUTPUTORDER:100|
+SKILL:Untrained Wisdom|OUTPUTORDER:101|
+SKILL:Untrained ~ Disable Device|OUTPUTORDER:29|
+SKILL:Untrained ~ Handle Animal|OUTPUTORDER:52|
+SKILL:Untrained ~ Linguistics|OUTPUTORDER:75|
+SKILL:Untrained ~ Sleight of Hand|OUTPUTORDER:92|
+SKILL:Untrained ~ Spellcraft|OUTPUTORDER:93|
+SKILL:Untrained ~ Use Magic Device|OUTPUTORDER:102|
+SKILL:Use Magic Device (Perform (Act))|OUTPUTORDER:103|
+SKILL:Use Magic Device (Perform (Comedy))|OUTPUTORDER:104|
+SKILL:Use Magic Device (Perform (Dance))|OUTPUTORDER:105|
+SKILL:Use Magic Device (Perform (Keyboard Instruments))|OUTPUTORDER:106|
+SKILL:Use Magic Device (Perform (Oratory))|OUTPUTORDER:107|
+SKILL:Use Magic Device (Perform (Percussion Instruments))|OUTPUTORDER:108|
+SKILL:Use Magic Device (Perform (Sing))|OUTPUTORDER:109|
+SKILL:Use Magic Device (Perform (String Instruments))|OUTPUTORDER:110|
+SKILL:Use Magic Device (Perform (Wind Instruments))|OUTPUTORDER:111|
+
+# Character Languages
+LANGUAGE:Common
+
+# Character Feats
+FEATPOOL:0.0
+
+# Character Abilities
+ABILITY:Ability Bonus|TYPE:NORMAL|CATEGORY:Special Ability|KEY:+2 Charisma|TYPE:AbilityBonus
+USERPOOL:Ability Bonus|POOLPOINTS:0.0
+ABILITY:Barbarian Class Selection|TYPE:NORMAL|CATEGORY:Class|KEY:Empty Selection ~ Standard Barbarian|TYPE:Barbarian Class Selection
+USERPOOL:Barbarian Class Selection|POOLPOINTS:0.0
+ABILITY:FEAT|TYPE:NORMAL|CATEGORY:FEAT|KEY:Absorb Spirit|TYPE:General|DESC:You absorb restless spirits into your body at the cost of your own life force and sanity.|DESC:Wisdom damage.&pipe;!PREABILITY&colon;1,CATEGORY=Internal,Rules ~ Use Sanity|DESC:sanity damage equal to 1/2 the spirit's CR (minimum 1).&pipe;PREABILITY&colon;1,CATEGORY=Internal,Rules ~ Use Sanity|DESC:If you succeed, you take 1 point of Constitution and|DESC:Wisdom damage.&pipe;!PREABILITY&colon;1,CATEGORY=Internal,Rules ~ Use Sanity|DESC:sanity damage equal to 1/4 the spirit's CR&pipe;PREABILITY&colon;1,CATEGORY=Internal,Rules ~ Use Sanity|DESC:No effect can prevent or reduce this damage, nor can the damage be healed or suppressed by any means until you release the spirit. You can release the spirit at any time as a standard action, at which point the spirit returns to its former location and begins rejuvenating or manifesting again as normal. If you die from the Constitution damage, the spirit is|DESC:released, and if you become comatose from the Wisdom damage, the spirit gains control of your body (and can release itself whenever it desires).&pipe;!PREABILITY&colon;1,CATEGORY=Internal,Rules ~ Use Sanity|DESC:released.&pipe;PREABILITY&colon;1,CATEGORY=Internal,Rules ~ Use Sanity
+ABILITY:FEAT|TYPE:NORMAL|CATEGORY:FEAT|KEY:Accursed|TYPE:Story|DESC:&lbracket;Not Implemented&rbracket; Your curse weighs down your soul like a millstone around your neck.
+ABILITY:FEAT|TYPE:NORMAL|CATEGORY:FEAT|KEY:Acrobatic|TYPE:General|DESC:You are skilled at leaping, jumping, and flying.
+ABILITY:FEAT|TYPE:NORMAL|CATEGORY:FEAT|KEY:Additional Traits|TYPE:General|DESC:You have more traits than normal
+ABILITY:FEAT|TYPE:NORMAL|CATEGORY:FEAT|KEY:Agile Maneuvers|TYPE:Combat|DESC:You learned to use your quickness in place of brute force when performing combat maneuvers.
+USERPOOL:FEAT|POOLPOINTS:0.0
+ABILITY:Favored Class|TYPE:NORMAL|CATEGORY:Special Ability|KEY:Adept|TYPE:FavoredClass
+USERPOOL:Favored Class|POOLPOINTS:0.0
+ABILITY:Human Ethnicity|TYPE:NORMAL|CATEGORY:Background|KEY:Arcadian|TYPE:HumanEthnicity
+USERPOOL:Human Ethnicity|POOLPOINTS:0.0
+ABILITY:Human Racial Subtype|TYPE:NORMAL|CATEGORY:Special Ability|KEY:Racial Subtype ~ None|TYPE:Universal Subtype|DESC:You have chosen no racial subtype.
+USERPOOL:Human Racial Subtype|POOLPOINTS:0.0
+ABILITY:Rage Power|TYPE:NORMAL|CATEGORY:Special Ability|KEY:Rage Power ~ Abyssal Blood|TYPE:RagePower.SpecialQuality.Supernatural.BloodRageMiddle|DESC:Once per day when the barbarian enters a rage, she can choose to grow one size category larger than her base size (as enlarge person, even if the barbarian isn't humanoid).
+ABILITY:Rage Power|TYPE:NORMAL|CATEGORY:Special Ability|KEY:Rage Power ~ Abyssal Blood (Lesser)|TYPE:RagePower.SpecialQuality.Supernatural.BloodRageLesser|DESC:While raging, the barbarian gains two claw attacks. These attacks are considered primary attacks and are made at the barbarian's full base attack bonus. They deal 1d6 points of slashing damage for Medium creatures (1d4 if Small) plus her Strength modifier.
+ABILITY:Rage Power|TYPE:NORMAL|CATEGORY:Special Ability|KEY:Rage Power ~ Animal Fury|TYPE:BarbarianClassFeatures.ClassFeatures.RagePower.SpecialAttack.Extraordinary|DESC:While raging, you gain a bite attack, If uses as a part of a full-attack action, the bite is made at your full base attack bonus-5. If the bite hits, it deals 1d%1+%2 points of damage. You can make a bite attack as part of the action to maintain or break free from a grapple. This attack is resolved before the grapple check is made. If the bite attack hits, any grapple checks you make against the target this round are at a +2 bonus.&pipe;if(SIZE==4,4,3)&pipe;floor(STR/2)
+USERPOOL:Rage Power|POOLPOINTS:0.0
+ABILITY:Region of Origin|TYPE:NORMAL|CATEGORY:Background|KEY:Absalom|TYPE:Region|DESC:City at the Center of the World
+USERPOOL:Region of Origin|POOLPOINTS:0.0
+ABILITY:Traits|TYPE:NORMAL|CATEGORY:Special Ability|KEY:Trait ~ Absalom Bouncer|TYPE:Trait.BasicTrait.CombatTrait|DESC:When you make an attack that deals nonlethal damage with an unarmed strike, you gain a +1 bonus on your damage roll.
+ABILITY:Traits|TYPE:NORMAL|CATEGORY:Special Ability|KEY:Trait ~ Acadamae Neophyte|TYPE:Trait.BasicTrait.MagicTrait|DESC:Whenever you succeed at a Knowledge (planes) check to identify a creature and its special powers or vulnerabilities, you gain one additional piece of useful information (as if your skill check result had been 5 higher).
+ABILITY:Traits|TYPE:NORMAL|CATEGORY:Special Ability|KEY:Trait ~ Acrobat|TYPE:Trait.BasicTrait.SocialTrait|DESC:Having trained from a young age, you're capable of amazing feats of daring. You gain a +1 bonus on Acrobatics checks, and you take only a -2 penalty instead of the normal -5 penalty when using the Climb skill to attempt an accelerated climb.
+ABILITY:Traits|TYPE:NORMAL|CATEGORY:Special Ability|KEY:Trait ~ Alabaster Outcast|APPLIEDTO:Abacus|TYPE:Trait.CampaignTrait|DESC:You are a member of one of Magnimar's wealthiest families... or rather, you used to be. A falling-out left you disowned and disinherited. Now you hope to get away from the city and find fortune enough to shame your former kinsfolk-goals which led you to the Pathfinder Society. Despite your exile, your name still carries considerable weight in Magnimar, and you gain a +1 trait bonus on Diplomacy and Intimidate checks made within the city. Additionally, you start play with a noble's outfit, a signet ring, and a single additional nonmagical item worth no more than 200 gp. Your last name is probably Derexhi, Kaddren, Mindurian, Niroden, Scarnetti, Valdemar, Vanderale, or Versade (but may be another of your choosing; see Magnimar, City of Monuments).
+USERPOOL:Traits|POOLPOINTS:0.0
+
+# Character Weapon proficiencies
+WEAPONPROF:[WEAPON:Aldori Dueling Sword|WEAPON:Amentum|WEAPON:Atlatl|WEAPON:Axe (Throwing)|WEAPON:Bardiche|WEAPON:Battle Aspergillum|WEAPON:Battleaxe|WEAPON:Bayonet|WEAPON:Bec de Corbin|WEAPON:Bill]
+WEAPONPROF:[WEAPON:Blowgun|WEAPON:Boar Spear|WEAPON:Brass Knuckles|WEAPON:Broadsword (Nine Ring)|WEAPON:Butterfly Sword|WEAPON:Cestus|WEAPON:Chakram|WEAPON:Club|WEAPON:Crossbow (Heavy)|WEAPON:Crossbow (Light)]
+WEAPONPROF:[WEAPON:Dagger|WEAPON:Dagger (Punching)|WEAPON:Dart|WEAPON:Dogslicer|WEAPON:Double Chicken Saber|WEAPON:Earth Breaker|WEAPON:Falchion|WEAPON:Flail|WEAPON:Flail (Heavy)|WEAPON:Gauntlet]
+WEAPONPROF:[WEAPON:Gauntlet (Spiked)|WEAPON:Gladius|WEAPON:Glaive|WEAPON:Glaive-Guisarme|WEAPON:Grapple|WEAPON:Greataxe|WEAPON:Greatclub|WEAPON:Greatsword|WEAPON:Guisarme|WEAPON:Halberd]
+WEAPONPROF:[WEAPON:Hammer (Light)|WEAPON:Handaxe|WEAPON:Hooked Lance|WEAPON:Horsechopper|WEAPON:Hunga Munga|WEAPON:Hurlbat|WEAPON:Iron Brush|WEAPON:Javelin|WEAPON:Jutte|WEAPON:Katana]
+WEAPONPROF:[WEAPON:Kerambit|WEAPON:Klar|WEAPON:Kukri|WEAPON:Kunai|WEAPON:Lance|WEAPON:Longbow|WEAPON:Longspear|WEAPON:Longsword|WEAPON:Lucerne Hammer|WEAPON:Lungchuan Tamo]
+WEAPONPROF:[WEAPON:Mace (Heavy)|WEAPON:Mace (Light)|WEAPON:Mattock|WEAPON:Mere Club|WEAPON:Monk's Spade|WEAPON:Morningstar|WEAPON:Naginata|WEAPON:Nodachi|WEAPON:Ogre Hook|WEAPON:Pick (Heavy)]
+WEAPONPROF:[WEAPON:Pick (Light)|WEAPON:Pilum|WEAPON:Poisoned Sand Tube|WEAPON:Quarterstaff|WEAPON:Ranseur|WEAPON:Rapier|WEAPON:Rhomphaia|WEAPON:Rock|WEAPON:Sansetsukon|WEAPON:Sap]
+WEAPONPROF:[WEAPON:Scimitar|WEAPON:Scizore|WEAPON:Scythe|WEAPON:Sea-Knife|WEAPON:Shang Gou|WEAPON:Shieldbash|WEAPON:Shortbow|WEAPON:Shortspear|WEAPON:Sibat|WEAPON:Sickle]
+WEAPONPROF:[WEAPON:Sling|WEAPON:Spear|WEAPON:Spear (Boar)|WEAPON:Spear-Sling|WEAPON:Spells (Ray)|WEAPON:Spells (Touch)|WEAPON:Spiked Armor|WEAPON:Splash Weapon|WEAPON:Stake|WEAPON:Starknife]
+WEAPONPROF:[WEAPON:Stonebow|WEAPON:Sword (Bastard)|WEAPON:Sword (Short)|WEAPON:Sword (Tri-Point Double-Edged)|WEAPON:Sword Cane|WEAPON:Tepoztopilli|WEAPON:Terbutje|WEAPON:Terbutje (Great)|WEAPON:Throwing Arrow Cord|WEAPON:Tiger Fork]
+WEAPONPROF:[WEAPON:Tonfa|WEAPON:Traveling Kettle|WEAPON:Trident|WEAPON:Tube Arrow Shooter|WEAPON:Unarmed Strike|WEAPON:Underwater Crossbow (Heavy)|WEAPON:Underwater Crossbow (Light)|WEAPON:War Razor|WEAPON:Waraxe (Dwarven)|WEAPON:Warhammer]
+WEAPONPROF:[WEAPON:Wushu Dart]
+
+# Character Equipment
+MONEY:4965.0000
+EQUIPNAME:Artisan's Outfit|OUTPUTORDER:0|COST:0|WT:4.0|QUANTITY:1.0|NOTE:|CUSTOMIZATION:[BASEITEM:Artisan_s Outfit|DATA:KEY=Artisan_s Outfit$COSTMOD=-1]
+EQUIPNAME:Greataxe|OUTPUTORDER:1|COST:20.0|WT:12.0|QUANTITY:1.0|NOTE:|CUSTOMIZATION:[BASEITEM:Greataxe (Base)|DATA:NAME=Greataxe$EQMOD=Material ~ Steel]
+EQUIPNAME:Hide Armor|OUTPUTORDER:2|COST:15.0|WT:25.0|QUANTITY:1.0|NOTE:|CUSTOMIZATION:[BASEITEM:Hide Armor (Base)|DATA:NAME=Hide Armor$KEY=Hide$EQMOD=Material ~ Leather]
+EQUIPNAME:Noble's Outfit|OUTPUTORDER:3|COST:75|WT:10.0|QUANTITY:1.0|NOTE:|CUSTOMIZATION:[BASEITEM:Outfit (Noble's)|DATA:NAME=Noble's Outfit$KEY=Outfit (Noble_s)]
+EQUIPNAME:Signet Ring|OUTPUTORDER:4|COST:5|WT:0.0|QUANTITY:1.0|NOTE:|CUSTOMIZATION:[BASEITEM:Signet Ring|DATA:NAME=Signet Ring]
+EQUIPSET:Default Set|ID:0.1|USETEMPMODS:Y
+EQUIPSET:Both Hands|ID:0.1.03|VALUE:Greataxe|QUANTITY:1.0|USETEMPMODS:Y
+EQUIPSET:Armor|ID:0.1.04|VALUE:Hide Armor|QUANTITY:1.0|USETEMPMODS:Y
+EQUIPSET:Carried|ID:0.1.1|VALUE:Noble's Outfit|QUANTITY:1.0|USETEMPMODS:Y
+EQUIPSET:Carried|ID:0.1.2|VALUE:Signet Ring|QUANTITY:1.0|USETEMPMODS:Y
+CALCEQUIPSET:0.1
+
+# Temporary Bonuses
+
+# EquipSet Temp Bonuses
+
+# Character Deity/Domain
+DEITY:None|DEITYDOMAINS:[DOMAIN:Aeon Subdomain|DOMAIN:Agathion Subdomain|DOMAIN:Air|DOMAIN:Ancestors Subdomain|DOMAIN:Animal|DOMAIN:Aquatic|DOMAIN:Arcane Subdomain|DOMAIN:Archon Subdomain (Good)|DOMAIN:Archon Subdomain (Law)|DOMAIN:Arctic|DOMAIN:Aristocracy Subdomain|DOMAIN:Artifice|DOMAIN:Ash Subdomain|DOMAIN:Azata Subdomain (Chaos)|DOMAIN:Azata Subdomain (Good)|DOMAIN:Badlands|DOMAIN:Battle (Spirit)|DOMAIN:Blood Subdomain|DOMAIN:Bones (Spirit)|DOMAIN:Cannibalism Subdomain|DOMAIN:Catastrophe Subdomain|DOMAIN:Cave|DOMAIN:Caves Subdomain|DOMAIN:Chaos|DOMAIN:Charm|DOMAIN:Cloud Subdomain|DOMAIN:Community|DOMAIN:Construct Subdomain|DOMAIN:Cooperation Subdomain|DOMAIN:Corruption Subdomain|DOMAIN:Crocodile|DOMAIN:Curse Subdomain|DOMAIN:Daemon Subdomain|DOMAIN:Dark Tapestry Subdomain|DOMAIN:Darkness|DOMAIN:Day Subdomain|DOMAIN:Death|DOMAIN:Death (Pharasma)|DOMAIN:Decay Subdomain|DOMAIN:Deception Subdomain|DOMAIN:Defense Subdomain|DOMAIN:Demodand Subdomain (Chaos)|DOMAIN:Demodand Subdomain (Evil)|DOMAIN:Demon Subdomain (Chaos)|DOMAIN:Demon Subdomain (Evil)|DOMAIN:Desert|DOMAIN:Destruction|DOMAIN:Devil Subdomain (Evil)|DOMAIN:Devil Subdomain (Law)|DOMAIN:Divine Subdomain|DOMAIN:Dragon Subdomain|DOMAIN:Eagle|DOMAIN:Earth|DOMAIN:Erosion|DOMAIN:Evil|DOMAIN:Exploration Subdomain|DOMAIN:Family Subdomain|DOMAIN:Fate Subdomain|DOMAIN:Feather Subdomain|DOMAIN:Ferocity Subdomain|DOMAIN:Fire|DOMAIN:Fist Subdomain|DOMAIN:Flame (Spirit)|DOMAIN:Flowing Subdomain|DOMAIN:Freedom Subdomain|DOMAIN:Frog|DOMAIN:Fur Subdomain|DOMAIN:Glory|DOMAIN:Good|DOMAIN:Greed Subdomain|DOMAIN:Growth Subdomain|DOMAIN:Hatred Subdomain|DOMAIN:Healing|DOMAIN:Heavens (Spirit)|DOMAIN:Heroism Subdomain|DOMAIN:Home Subdomain|DOMAIN:Honor Subdomain|DOMAIN:Ice Subdomain|DOMAIN:Imagination Subdomain|DOMAIN:Inevitable Subdomain|DOMAIN:Innuendo Subdomain|DOMAIN:Insanity Subdomain|DOMAIN:Isolation Subdomain|DOMAIN:Judgment Subdomain|DOMAIN:Jungle|DOMAIN:Knowledge|DOMAIN:Kyton Subdomain (Evil)|DOMAIN:Kyton Subdomain (Law)|DOMAIN:Language Subdomain|DOMAIN:Law|DOMAIN:Leadership Subdomain|DOMAIN:Leshy Subdomain|DOMAIN:Liberation|DOMAIN:Life (Spirit)|DOMAIN:Light Subdomain|DOMAIN:Lore (Spirit)|DOMAIN:Loss Subdomain|DOMAIN:Love Subdomain|DOMAIN:Luck|DOMAIN:Lust Subdomain|DOMAIN:Madness|DOMAIN:Magic|DOMAIN:Martyr Subdomain|DOMAIN:Memory Subdomain|DOMAIN:Metal Subdomain|DOMAIN:Monkey|DOMAIN:Mountain|DOMAIN:Murder Subdomain|DOMAIN:Nature (Spirit)|DOMAIN:Night Subdomain|DOMAIN:Nightmare Subdomain|DOMAIN:Nobility|DOMAIN:Oceans Subdomain|DOMAIN:Panther|DOMAIN:Plains|DOMAIN:Plant|DOMAIN:Protean Subdomain|DOMAIN:Protection|DOMAIN:Psychopomp Subdomain (Death)|DOMAIN:Psychopomp Subdomain (Repose)|DOMAIN:Purity Subdomain|DOMAIN:Rage Subdomain|DOMAIN:Redemption Subdomain|DOMAIN:Repose|DOMAIN:Resolve Subdomain|DOMAIN:Restoration Subdomain|DOMAIN:Resurrection Subdomain|DOMAIN:Revelation Subdomain|DOMAIN:Revelry Subdomain|DOMAIN:Revolution Subdomain|DOMAIN:Rune|DOMAIN:Saurian Subdomain|DOMAIN:Scalykind|DOMAIN:Seasons Subdomain|DOMAIN:Serpent|DOMAIN:Shadow Subdomain (Darkness)|DOMAIN:Shadow Subdomain (Death)|DOMAIN:Smoke Subdomain|DOMAIN:Solitude Subdomain|DOMAIN:Souls (Pharasma) Subdomain|DOMAIN:Souls Subdomain|DOMAIN:Stars Subdomain|DOMAIN:Stone (Spirit)|DOMAIN:Storms Subdomain|DOMAIN:Strength|DOMAIN:Sun|DOMAIN:Swamp|DOMAIN:Tactics Subdomain|DOMAIN:Thievery Subdomain|DOMAIN:Thought Subdomain|DOMAIN:Toil Subdomain|DOMAIN:Trade Subdomain|DOMAIN:Travel|DOMAIN:Trickery|DOMAIN:Undead Subdomain|DOMAIN:Venom Subdomain|DOMAIN:Vermin|DOMAIN:Void|DOMAIN:Vulture|DOMAIN:War|DOMAIN:Wards Subdomain|DOMAIN:Water|DOMAIN:Waves (Spirit)|DOMAIN:Weather|DOMAIN:Wind (Spirit)|DOMAIN:Wind Subdomain|DOMAIN:Wolf]|ALIGNALLOW:|DESC:None|DEITYFAVWEAP:[]|DEITYALIGN:
+
+# Character Spells Information
+
+# Character Description/Bio/History
+CHARACTERBIO:
+CHARACTERDESC:
+CHARACTERCOMP:
+CHARACTERASSET:
+CHARACTERMAGIC:
+CHARACTERDMNOTES:
+
+# Kits
+KIT:Alabaster Outcast
+
+# Character Master/Follower
+
+# Character Notes Tab
+
+# Age Set Selections
+AGESET:0:0:0:0:0:0:0:0:0:0
+
+# Campaign History
+
+# Preview Sheet Variables
+

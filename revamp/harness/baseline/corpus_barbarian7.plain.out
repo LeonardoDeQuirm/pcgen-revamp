@@ -1,0 +1,333 @@
+Name:       Corpus Barbarian7
+Race:       Human (Arcadian)
+Player:      
+Classes:    Barbarian7
+Hit Points: 64
+Experience: 35000 / 51000
+Alignment:  None
+Vision:     
+Speed:      Walk 30 ft.
+Languages:  Common
+Stat    Score   Mod
+STR  19 (+4)
+DEX  14 (+2)
+CON  16 (+3)
+INT  8 (-1)
+WIS  10 (+0)
+CHA  10 (+0)
+-------------------------- Skills --------------------------
+Skill                   Total   Rnk     Stat    Msc
+Acrobatics  12  7.0  2  3
+Appraise  -1  0.0  -1  0
+Bluff  0  0.0  0  0
+Climb  11  7.0  4  0
+Craft (Alchemy)  9  7.0  -1  3
+Craft (Armor)  9  7.0  -1  3
+Craft (Untrained)  -1  0.0  -1  0
+Diplomacy  0  0.0  0  0
+Diplomacy (In Magnimar)  1  0.0  0  1
+Disguise  0  0.0  0  0
+Escape Artist  -1  0.0  2  -3
+Fly  1  0.0  2  -1
+Heal  0  0.0  0  0
+Intimidate  0  0.0  0  0
+Intimidate (In Magnimar)  1  0.0  0  1
+Perception  0  0.0  0  0
+Perform (Untrained)  0  0.0  0  0
+Ride  -1  0.0  2  -3
+Sense Motive  0  0.0  0  0
+Stealth  -1  0.0  2  -3
+Survival  0  0.0  0  0
+Swim  1  0.0  4  -3
+-------------------------- Feats ---------------------------
+Absorb Spirit
+  You absorb restless spirits into your body at the cost of your own life force and sanity. Wisdom damage. If you succeed, you take 1 point of Constitution and Wisdom damage. No effect can prevent or reduce this damage, nor can the damage be healed or suppressed by any means until you release the spirit. You can release the spirit at any time as a standard action, at which point the spirit returns to its former location and begins rejuvenating or manifesting again as normal. If you die from the Constitution damage, the spirit is released, and if you become comatose from the Wisdom damage, the spirit gains control of your body (and can release itself whenever it desires).
+  
+Accursed
+  [Not Implemented] Your curse weighs down your soul like a millstone around your neck.
+  
+Acrobatic
+  You are skilled at leaping, jumping, and flying.
+  
+Additional Traits
+  You have more traits than normal
+  
+Agile Maneuvers
+-------------------- Special Abilities ---------------------
+
+			<name>No Racial Subtype</name>
+			<description>You have chosen no racial subtype.</description>
+			<type>UNIVERSAL SUBTYPE</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Race Guide</source>
+		</special_quality>
+			<name>Absalom Bouncer</name>
+			<description>When you make an attack that deals nonlethal damage with an unarmed strike, you gain a +1 bonus on your damage roll.</description>
+			<type>TRAIT.BASICTRAIT.COMBATTRAIT</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Pathfinder Player Companion: Advanced Class Origins, p.11</source>
+		</special_quality>
+			<name>Abyssal Blood (Su)</name>
+			<description>Once per day when the barbarian enters a rage, she can choose to grow one size category larger than her base size (as enlarge person, even if the barbarian isn't humanoid).</description>
+			<type>RAGEPOWER.SPECIALQUALITY.SUPERNATURAL.BLOODRAGEMIDDLE</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Class Guide, p.80</source>
+		</special_quality>
+			<name>Abyssal Blood, Lesser (Su)</name>
+			<description>While raging, the barbarian gains two claw attacks. These attacks are considered primary attacks and are made at the barbarian's full base attack bonus. They deal 1d6 points of slashing damage for Medium creatures (1d4 if Small) plus her Strength modifier.</description>
+			<type>RAGEPOWER.SPECIALQUALITY.SUPERNATURAL.BLOODRAGELESSER</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Class Guide, p.80</source>
+		</special_quality>
+			<name>Acadamae Neophyte</name>
+			<description>Whenever you succeed at a Knowledge (planes) check to identify a creature and its special powers or vulnerabilities, you gain one additional piece of useful information (as if your skill check result had been 5 higher).</description>
+			<type>TRAIT.BASICTRAIT.MAGICTRAIT</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Publishing - Pathfinder Player Companion: Monster Summoner's Handbook, p.10</source>
+		</special_quality>
+			<name>Acrobat</name>
+			<description>Having trained from a young age, you're capable of amazing feats of daring. You gain a +1 bonus on Acrobatics checks, and you take only a -2 penalty instead of the normal -5 penalty when using the Climb skill to attempt an accelerated climb.</description>
+			<type>TRAIT.BASICTRAIT.SOCIALTRAIT</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Publishing - Ultimate Campaign, p.59</source>
+		</special_quality>
+			<name>Alabaster Outcast (Abacus)</name>
+			<description>You are a member of one of Magnimar's wealthiest families... or rather, you used to be. A falling-out left you disowned and disinherited. Now you hope to get away from the city and find fortune enough to shame your former kinsfolk-goals which led you to the Pathfinder Society. Despite your exile, your name still carries considerable weight in Magnimar, and you gain a +1 trait bonus on Diplomacy and Intimidate checks made within the city. Additionally, you start play with a noble's outfit, a signet ring, and a single additional nonmagical item worth no more than 200 gp. Your last name is probably Derexhi, Kaddren, Mindurian, Niroden, Scarnetti, Valdemar, Vanderale, or Versade (but may be another of your choosing; see Magnimar, City of Monuments).</description>
+			<type>TRAIT.CAMPAIGNTRAIT</type>
+			<associated>Abacus</associated>
+			<count>1</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Pathfinder Player Companion: Varisia, Birthplace of Legends, p.30</source>
+		</special_quality>
+			<name>Animal Fury (Ex)</name>
+			<description>While raging, you gain a bite attack, If uses as a part of a full-attack action, the bite is made at your full base attack bonus-5. If the bite hits, it deals 1d4+2 points of damage. You can make a bite attack as part of the action to maintain or break free from a grapple. This attack is resolved before the grapple check is made. If the bite attack hits, any grapple checks you make against the target this round are at a +2 bonus.</description>
+			<type>BARBARIANCLASSFEATURES.CLASSFEATURES.RAGEPOWER.SPECIALATTACK.EXTRAORDINARY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>ChildAbility: Rage</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.32</source>
+		</special_quality>
+			<name>Barbarian ~ Uncanny Dodge Tracker</name>
+			<description></description>
+			<type>BARBARIANCLASSFEATURES</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook</source>
+		</special_quality>
+			<name>Bonus Feat</name>
+			<description>Humans select one extra feat at 1st level.</description>
+			<type>RACIALTRAITS.HUMAN RACIAL TRAIT.HUMAN RACIAL DEFAULT.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Race Guide, p.70</source>
+		</special_quality>
+			<name>Damage Reduction (Ex)</name>
+			<description>You gain damage reduction. Subtract 1 from the damage you take each time you are dealt damage from a weapon or natural attack. Damage reduction can reduce damage to 0 but not below 0.</description>
+			<type>BARBARIANCLASSFEATURES.CLASSFEATURES.SPECIALQUALITY.EXTRAORDINARY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.34</source>
+		</special_quality>
+			<name>Fast Movement (Ex)</name>
+			<description>Your land speed is faster than the norm for your race by +10 feet. This benefit applies only when you are wearing no armor, light armor, or medium armor, and not carrying a heavy load.</description>
+			<type>BARBARIANCLASSFEATURES.CLASSFEATURES.SPECIALQUALITY.EXTRAORDINARY.MODIFYMOVEMENT.FAST MOVEMENT</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.31</source>
+		</special_quality>
+			<name>Improved Uncanny Dodge (Ex)</name>
+			<description>You can no longer be flanked. This defense denies a rogue the ability to sneak attack you by flanking you, unless the attacker is a rogue of at least level 4.</description>
+			<type>SPECIALQUALITY.EXTRAORDINARY.DEFENSIVE</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook</source>
+		</special_quality>
+			<name>Rage</name>
+			<description>You can call upon inner reserves of strength and ferocity, granting you additional combat prowess. You can rage for 19 rounds per day. You can enter rage as a free action. The total number of rounds of rage per day is renewed after resting for 8 hours, although these hours do not need to be consecutive. While in rage, you gain a +4 morale bonus to your Strength and a +4 morale bonus to Constitution, as well as a +2 morale bonus on Will saves. In addition, you take a -2 penalty to Armor Class. The increase to Constitution grants you 14 hit points, but these disappear when the rage ends and are not lost first like temporary hit points. While in rage, you cannot use any Charisma-, Dexterity-, or Intelligence-based skills (except Acrobatics, Fly, Intimidate, and Ride) or any ability that requires patience or concentration. You can end your rage as a free action and are fatigued after rage for a number of rounds equal to 2 times the number of rounds spent in the rage. You cannot enter a new rage while fatigued or exhausted but can otherwise enter rage multiple times during a single encounter or combat. If you fall unconscious, your rage immediately ends, placing you in peril of death.</description>
+			<type>BARBARIANCLASSFEATURES.CLASSFEATURES.RAGE</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.32</source>
+		</special_quality>
+			<name>Rage (Ex)</name>
+			<description>You can call upon inner reserves of strength and ferocity, granting you additional combat prowess. You can rage for 19 rounds per day. You can enter rage as a free action. The total number of rounds of rage per day is renewed after resting for 8 hours, although these hours do not need to be consecutive. While in rage, you gain a +4 morale bonus to your Strength and a +4 morale bonus to Constitution, as well as a +2 morale bonus on Will saves. In addition, you take a -2 penalty to Armor Class. The increase to Constitution grants you 14 hit points, but these disappear when the rage ends and are not lost first like temporary hit points. While in rage, you cannot use any Charisma-, Dexterity-, or Intelligence-based skills (except Acrobatics, Fly, Intimidate, and Ride) or any ability that requires patience or concentration. You can end your rage as a free action and are fatigued after rage for a number of rounds equal to 2 times the number of rounds spent in the rage. You cannot enter a new rage while fatigued or exhausted but can otherwise enter rage multiple times during a single encounter or combat. If you fall unconscious, your rage immediately ends, placing you in peril of death.</description>
+			<type>BARBARIANCLASSFEATURES.CLASSFEATURES.SPECIALQUALITY.EXTRAORDINARY.RAGE.ATTACKOPTION</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>CheckCount: 19, CheckType: Rounds per Day, MasterAbility: Rage</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.32</source>
+		</special_quality>
+			<name>Skilled</name>
+			<description>Humans gain an additional skill rank at 1st level and one additional rank whenever they gain a level.</description>
+			<type>RACIALTRAITS.HUMAN RACIAL TRAIT.HUMAN RACIAL DEFAULT.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Race Guide, p.70</source>
+		</special_quality>
+			<name>Standard Rage</name>
+			<description></description>
+			<type>RAGESELECTION</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook</source>
+		</special_quality>
+			<name>Trap Sense (Ex)</name>
+			<description>You gain a +2 bonus on Reflex saves made to avoid traps, and a +2 dodge bonus to AC against attacks made by traps.</description>
+			<type>SPECIALQUALITY.EXTRAORDINARY.DEFENSIVE.BARBARIANCLASSFEATURES.CLASSFEATURES</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>Ability Benefit: +2, SaveBonus: +2 Reflex to avoid traps</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook</source>
+		</special_quality>
+			<name>Uncanny Dodge (Ex)</name>
+			<description>You can react to danger before your senses would normally allow you to do so. You cannot be caught flat-footed, nor do you lose your Dexterity bonus to AC if the attacker is invisible. You still lose your Dexterity bonus to AC if immobilized. You can still lose your Dexterity bonus to AC if an opponent successfully uses the feint action against you.</description>
+			<type>SPECIALQUALITY.EXTRAORDINARY.DEFENSIVE</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook</source>
+		</special_quality>
+	</special_qualities>
+------------------------ Templates -------------------------
+
+-------------------------- Combat --------------------------
+    Total / Touch / Flat Footed
+AC: 16 / 12 / 14
+Initiative:   +2
+BAB:          +7/+2
+Melee tohit:  +11/+6
+Ranged tohit: +9/+4
+Fortitude:    +8
+Reflex:       +4
+Will:         +2
+Unarmed attack:
+to hit:       +11/+6
+damage:       1d3+4
+critical:     20/x2
+Greataxe:
+to hit:       +11/+6
+damage:       1d12+6
+critical:     20/x3
+--------------------- Special Abilities --------------------
+ 
+------------------------- Equipment ------------------------
+Name                                            QTY	LBS
+Hide Armor  1	25lbs
+Noble's Outfit  1	10lbs
+Signet Ring  1	0lbs
+Total weight carried: 47 lbs.
+Current load:         Light
+Encumbrance
+Light:  116   
+Medium: 233   
+Heavy:  350
+--------------------------- Magic --------------------------
+
+      
+      
+------------------------ Description -----------------------
+Height: 0' 0" Weight: 0 lbs. Gender: Male	
+Eyes:    Hair: , Skin: 
+Dominant Hand: Right Quirks: , 	
+Speech style:  Quotable: 
+Full Description
+
+Background
+
+Campaign Logs

@@ -27,7 +27,12 @@ def run(label, cmd, ok, timeout=3600, **kw):
 
 run("engine builds", [str(ROOT / "gradlew.bat"), "qbuild", "-x", "test"], lambda rc, o: rc == 0 and "BUILD SUCCESSFUL" in o)
 run("sidecar builds", ["powershell", "-NoProfile", "-File", "revamp/sidecar/build.ps1"], lambda rc, o: rc == 0)
-run("export harness", [sys.executable, str(HARNESS / "run_harness.py")], lambda rc, o: "10/10 ok" in o)
+def all_ok(o):
+    m = re.search(r"(\d+)/(\d+) ok", o)
+    return bool(m) and m.group(1) == m.group(2)
+
+
+run("export harness", [sys.executable, str(HARNESS / "run_harness.py")], lambda rc, o: all_ok(o))
 run("sidecar test", [sys.executable, str(HARNESS / "run_sidecar_test.py")], lambda rc, o: "5/5 sidecars ok" in o)
 run("API test", [sys.executable, str(HARNESS / "run_api_test.py")],
     lambda rc, o: re.search(r"(\d+)/(\d+) checks passed", o) and re.search(r"(\d+)/(\d+) checks passed", o).group(1)

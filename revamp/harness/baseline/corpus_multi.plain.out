@@ -1,0 +1,419 @@
+Name:       Corpus Multi
+Race:       Human (Arcadian)
+Player:      
+Classes:    Fighter2 Abjurer2 Rogue2
+Hit Points: 46
+Experience: 23000 / 35000
+Alignment:  None
+Vision:     
+Speed:      Walk 30 ft.
+Languages:  Common
+Stat    Score   Mod
+STR  15 (+2)
+DEX  14 (+2)
+CON  12 (+1)
+INT  14 (+2)
+WIS  10 (+0)
+CHA  12 (+1)
+-------------------------- Skills --------------------------
+Skill                   Total   Rnk     Stat    Msc
+Acrobatics  10  2.0  2  6
+Appraise  9  4.0  2  3
+Bluff  6  2.0  1  3
+Climb  11  6.0  2  3
+Craft (Alchemy)  11  6.0  2  3
+Craft (Armor)  11  6.0  2  3
+Craft (Baskets)  11  6.0  2  3
+Craft (Blacksmithing)  9  4.0  2  3
+Craft (Books)  7  2.0  2  3
+Craft (Bows)  7  2.0  2  3
+Craft (Calligraphy)  7  2.0  2  3
+Craft (Untrained)  2  0.0  2  0
+Diplomacy  1  0.0  1  0
+Diplomacy (In Magnimar)  2  0.0  1  1
+Disguise  1  0.0  1  0
+Escape Artist  2  0.0  2  0
+Fly  4  0.0  2  2
+Heal  0  0.0  0  0
+Intimidate  1  0.0  1  0
+Intimidate (In Magnimar)  2  0.0  1  1
+Perception  0  0.0  0  0
+Perception (Trapfinding)  1  0.0  0  1
+Perform (Untrained)  1  0.0  1  0
+Ride  2  0.0  2  0
+Sense Motive  0  0.0  0  0
+Stealth  2  0.0  2  0
+Survival  0  0.0  0  0
+Swim  2  0.0  2  0
+-------------------------- Feats ---------------------------
+Accursed
+  [Not Implemented] Your curse weighs down your soul like a millstone around your neck.
+  
+Acrobatic
+  You are skilled at leaping, jumping, and flying.
+  
+Additional Traits
+  You have more traits than normal
+  
+Agile Maneuvers
+Scribe Scroll
+-------------------- Special Abilities ---------------------
+
+			<name>No Racial Subtype</name>
+			<description>You have chosen no racial subtype.</description>
+			<type>UNIVERSAL SUBTYPE</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Race Guide</source>
+		</special_quality>
+			<name>Abjuration School</name>
+			<description>You have chosen to specialize in abjuration spells.</description>
+			<type>WIZARDCLASSFEATURES.SPECIALQUALITY.CLASSSPECIALIZATION.ARCANESCHOOL</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.79</source>
+		</special_quality>
+			<name>Absalom Bouncer</name>
+			<description>When you make an attack that deals nonlethal damage with an unarmed strike, you gain a +1 bonus on your damage roll.</description>
+			<type>TRAIT.BASICTRAIT.COMBATTRAIT</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Pathfinder Player Companion: Advanced Class Origins, p.11</source>
+		</special_quality>
+			<name>Acadamae Neophyte</name>
+			<description>Whenever you succeed at a Knowledge (planes) check to identify a creature and its special powers or vulnerabilities, you gain one additional piece of useful information (as if your skill check result had been 5 higher).</description>
+			<type>TRAIT.BASICTRAIT.MAGICTRAIT</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Publishing - Pathfinder Player Companion: Monster Summoner's Handbook, p.10</source>
+		</special_quality>
+			<name>Acrobat</name>
+			<description>Having trained from a young age, you're capable of amazing feats of daring. You gain a +1 bonus on Acrobatics checks, and you take only a -2 penalty instead of the normal -5 penalty when using the Climb skill to attempt an accelerated climb.</description>
+			<type>TRAIT.BASICTRAIT.SOCIALTRAIT</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Publishing - Ultimate Campaign, p.59</source>
+		</special_quality>
+			<name>Air Opposition School</name>
+			<description>You have chosen air spells as an opposition school. Preparing an air spell takes up two spell slots of the same level. You take a -4 penalty on any skill checks made when crafting a magic item that has an air spell as a prerequisite.</description>
+			<type>WIZARDCLASSFEATURES.SPECIALQUALITY.CLASSSPECIALIZATION.ARCANEOPPOSITIONSCHOOL.ELEMENTALOPPOSITIONSCHOOL</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Player's Guide, p.142</source>
+		</special_quality>
+			<name>Alabaster Outcast (Abacus)</name>
+			<description>You are a member of one of Magnimar's wealthiest families... or rather, you used to be. A falling-out left you disowned and disinherited. Now you hope to get away from the city and find fortune enough to shame your former kinsfolk-goals which led you to the Pathfinder Society. Despite your exile, your name still carries considerable weight in Magnimar, and you gain a +1 trait bonus on Diplomacy and Intimidate checks made within the city. Additionally, you start play with a noble's outfit, a signet ring, and a single additional nonmagical item worth no more than 200 gp. Your last name is probably Derexhi, Kaddren, Mindurian, Niroden, Scarnetti, Valdemar, Vanderale, or Versade (but may be another of your choosing; see Magnimar, City of Monuments).</description>
+			<type>TRAIT.CAMPAIGNTRAIT</type>
+			<associated>Abacus</associated>
+			<count>1</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Pathfinder Player Companion: Varisia, Birthplace of Legends, p.30</source>
+		</special_quality>
+			<name>Arcane Bond (Ex)</name>
+			<description>(You have selected to establish a powerful arcane bond with an object.)</description>
+			<type>CLASS FEATURE.WIZARD CLASS FEATURE.SPECIALQUALITY.SUPERNATURAL OR EXTRAORDINARY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.78</source>
+		</special_quality>
+			<name>Arcane School</name>
+			<description>A wizard can choose to specialize in one school of magic, gaining additional spells and powers based on that school. This choice must be made at 1st level, and once made, it cannot be changed. A wizard that does not select a school receives the universalist school instead.
+A wizard that chooses to specialize in one school of magic must select two other schools as his opposition schools, representing knowledge sacrificed in one area of arcane lore to gain mastery in another. A wizard who prepares spells from his opposition schools must use two spell slots of that level to prepare the spell. In addition, a specialist takes a -4 penalty on any skill checks made when crafting a magic item that has a spell from one of his opposition schools as a prerequisite. A universalist wizard can prepare spells from any school without restriction.
+Each arcane school gives the wizard a number of school powers. In addition, specialist wizards receive an additional spell slot of each spell level he can cast, from 1st on up. Each day, a wizard can prepare a spell from his specialty school in that slot. This spell must be in the wizard's spellbook. A wizard can select a spell modified by a metamagic feat to prepare in his school slot, but it uses up a higher-level spell slot. Wizards with the universalist school do not receive a school slot.</description>
+			<type>CLASS FEATURE.WIZARD CLASS FEATURE.SPECIALQUALITY.ARCANE SCHOOL</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.78</source>
+		</special_quality>
+			<name>Assault Leader (Ex)</name>
+			<description>Once per day, when the rogue misses with an attack on a flanked opponent, she can designate a single ally who is also flanking the target that her attack missed. That ally can make a single melee attack against the opponent as an immediate action.</description>
+			<type>ROGUETALENT.SPECIALATTACK.EXTRAORDINARY.ATTACKOPTION.UNCHAINED ROGUE TALENT</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>CheckCount: 1, CheckType: Uses per Day</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Player's Guide, p.130</source>
+		</special_quality>
+			<name>Arcane Bond (Object)</name>
+			<description>Wizards who select a bonded object begin play with one at no cost. Objects that are the subject of an arcane bond must fall into one of the following categories: amulet, ring, staff, wand, or weapon. These objects are always masterwork quality. Weapons acquired at 1st level are not made of any special material. If the object is an amulet or ring, it must be worn to have effect, while staves, wands, and weapons must be held in one hand. If a wizard attempts to cast a spell without his bonded object worn or in hand, he must make a concentration check or lose the spell. The DC for this check is equal to 20 + the spell's level. If the object is a ring or amulet, it occupies the ring or neck slot accordingly.
+A bonded object can be used once per day to cast any one spell that the wizard has in his spellbook and is capable of casting, even if the spell is not prepared. This spell is treated like any other spell cast by the wizard, including casting time, duration, and other effects dependent on the wizard's level. This spell cannot be modified by metamagic feats or other abilities. The bonded object cannot be used to cast spells from the wizard's opposition schools (see arcane school).
+A wizard can add additional magic abilities to his bonded object as if he has the required item creation feats and if he meets the level prerequisites of the feat. If the bonded object is a wand, it loses its wand abilities when its last charge is consumed, but it is not destroyed and it retains all of its bonded object properties and can be used to craft a new wand. The magic properties of a bonded object, including any magic abilities added to the object, only function for the wizard who owns it. If a bonded object's owner dies, or the item is replaced, the object reverts to being an ordinary masterwork item of the appropriate type.
+If a bonded object is damaged, it is restored to full hit points the next time the wizard prepares his spells. If the object of an arcane bond is lost or destroyed, it can be replaced after 1 week in a special ritual that costs 200 gp per wizard level plus the cost of the masterwork item. This ritual takes 8 hours to complete. Items replaced in this way do not possess any of the additional enchantments of the previous bonded item. A wizard can designate an existing magic item as his bonded item. This functions in the same way as replacing a lost or destroyed item except that the new magic item retains its abilities while gaining the benefits and drawbacks of becoming a bonded item.</description>
+			<type>CLASS FEATURE.WIZARD CLASS FEATURE.ARCANEBOND.SPECIALQUALITY.SPECIAL QUALITY.UNDEADMASTERARCANEBOND</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.78</source>
+		</special_quality>
+			<name>Bonus Feat</name>
+			<description>Humans select one extra feat at 1st level.</description>
+			<type>RACIALTRAITS.HUMAN RACIAL TRAIT.HUMAN RACIAL DEFAULT.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Race Guide, p.70</source>
+		</special_quality>
+			<name>Bonus Feats</name>
+			<description>At 1st level, and at every even level thereafter, a fighter gains a bonus feat in addition to those gained from normal advancement (meaning that the fighter gains a feat at every level). These bonus feats must be selected from those listed as combat feats, sometimes also called "fighter bonus feats." Upon reaching 4th level, and every four levels thereafter (8th, 12th, and so on), a fighter can choose to learn a new bonus feat in place of a bonus feat he has already learned. In effect, the fighter loses the bonus feat in exchange for the new one. The old feat cannot be one that was used as a prerequisite for another feat, prestige class, or other ability. A fighter can only change one feat at any given level and must choose whether or not to swap the feat at the time he gains a new bonus feat for the level.</description>
+			<type>FIGHTERCLASSFEATURES.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook</source>
+		</special_quality>
+			<name>Bravery (Ex)</name>
+			<description>You gain a +1 bonus to Will saves against fear effects.</description>
+			<type>FIGHTERCLASSFEATURES.SPECIALQUALITY.EXTRAORDINARY.BRAVERY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>SaveBonus: +1 Will vs. fear</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.55</source>
+		</special_quality>
+			<name>Cantrips</name>
+			<description>Wizards can prepare a number of cantrips, or 0-level spells, each day. These spells are cast like any other spell, but they are not expended when cast and may be used again. A wizard can prepare a cantrip from an opposed school, but it uses up two of his available slots.</description>
+			<type>CLASS FEATURE.WIZARD CLASS FEATURE.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.79</source>
+		</special_quality>
+			<name>Conjuration Opposition School</name>
+			<description>You have chosen conjuration spells as an opposition school. Preparing an conjuration spell takes up two spell slots of the same level. You take a -4 penalty on any skill checks made when crafting a magic item that has an conjuration spell as a prerequisite.</description>
+			<type>WIZARDCLASSFEATURES.SPECIALQUALITY.CLASSSPECIALIZATION.ARCANEOPPOSITIONSCHOOL</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.78</source>
+		</special_quality>
+			<name>Evasion (Ex)</name>
+			<description>You can avoid damage from many area-effect attacks. If you make a successful Reflex saving throw against an attack that normally deals half damage on a successful save, you instead take no damage. Evasion can only be used if you are wearing light armor or no armor. If you are helpless, you do not gain the benefit of evasion.</description>
+			<type>SPECIALQUALITY.EXTRAORDINARY.DEFENSIVE</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook</source>
+		</special_quality>
+			<name>Evasion</name>
+			<description></description>
+			<type>ROGUECLASSFEATURES</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook</source>
+		</special_quality>
+			<name>Protective Ward (Su)</name>
+			<description>As a standard action, you can create a 10-foot-radius field of protective magic centered on you that lasts 2 rounds. All allies in this area (including you) receive a +1 deflection bonus to their AC. You can use this ability 5 times a day.</description>
+			<type>WIZARDCLASSFEATURES.SPECIALQUALITY.SUPERNATURAL.ARCANESCHOOLPOWER.ARCANESCHOOLPOWERLVL1.AURA</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>Ability Benefit: +1, CheckCount: 5, CheckType: Uses per day, </aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.80</source>
+		</special_quality>
+			<name>Resistance (Ex)</name>
+			<description>You gain resistance 5 to an energy type of your choice, chosen when you prepare spells. This resistance can be changed each day.</description>
+			<type>WIZARDCLASSFEATURES.SPECIALQUALITY.EXTRAORDINARY.ARCANESCHOOLPOWER.ARCANESCHOOLPOWERLVL1</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>Ability Benefit: 5, </aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.79</source>
+		</special_quality>
+			<name>Skilled</name>
+			<description>Humans gain an additional skill rank at 1st level and one additional rank whenever they gain a level.</description>
+			<type>RACIALTRAITS.HUMAN RACIAL TRAIT.HUMAN RACIAL DEFAULT.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Race Guide, p.70</source>
+		</special_quality>
+			<name>Sneak Attack (Ex)</name>
+			<description>If you can catch an opponent when he is unable to defend himself effectively from your attack, you can strike a vital spot for extra damage. Your attack deals 1d6 points of extra damage anytime your target would be denied a Dexterity bonus to AC, or when you flank your target. Should you score a critical hit with a sneak attack, this extra damage is not multiplied. Ranged attacks can count as sneak attacks only if the target is within 30 feet. With a weapon that deals nonlethal damage, you can make a sneak attack that deals nonlethal damage instead of lethal damage. You cannot use a weapon that deals lethal damage to deal nonlethal damage in a sneak attack, not even with the usual -4 penalty. You must be able to see the target well enough to pick out a vital spot and must be able to reach such a spot. You cannot sneak attack while striking a creature with concealment.</description>
+			<type>ROGUECLASSFEATURES.ALCHEMISTCLASSFEATURES.SPECIALATTACK.EXTRAORDINARY.ATTACKOPTION.UNCHAINED ROGUE CLASS FEATURE</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>Ability Benefit: 1d6</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.68</source>
+		</special_quality>
+			<name>Spells</name>
+			<description>A wizard casts arcane spells drawn from the sorcerer/wizard spell list presented in Chapter 10. A wizard must choose and prepare his spells ahead of time.
+To learn, prepare, or cast a spell, the wizard must have an Intelligence score equal to at least 10 + the spell level. The Difficulty Class for a saving throw against a wizard's spell is 10 + the spell level + the wizard's Intelligence modifier.
+A wizard can cast only a certain number of spells of each spell level per day. His base daily spell allotment is given on Table 3-16. In addition, he receives bonus spells per day if he has a high Intelligence score (see Table 1-3).
+A wizard may know any number of spells. He must choose and prepare his spells ahead of time by getting 8 hours of sleep and spending 1 hour studying his spellbook. While studying, the wizard decides which spells to prepare.</description>
+			<type>CLASS FEATURE.WIZARD CLASS FEATURE.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.78</source>
+		</special_quality>
+			<name>Trapfinding (Ex)</name>
+			<description>You add +1 to Perception skill checks made to locate traps and to Disable Device skill checks. You can use the Disable Device skill to disarm magical traps.</description>
+			<type>ROGUECLASSFEATURES.RANGERCLASSFEATURES.SPECIALQUALITY.EXTRAORDINARY.TRAPFINDING</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.68</source>
+		</special_quality>
+	</special_qualities>
+------------------------ Templates -------------------------
+
+-------------------------- Combat --------------------------
+    Total / Touch / Flat Footed
+AC: 12 / 12 / 10
+Initiative:   +2
+BAB:          +4
+Melee tohit:  +6
+Ranged tohit: +6
+Fortitude:    +4
+Reflex:       +5
+Will:         +3
+Unarmed attack:
+to hit:       +6
+damage:       1d3+2
+critical:     20/x2
+Longsword:
+to hit:       +2
+damage:       1d8+2
+critical:     19-20/x2
+Dagger:
+to hit:       -2
+damage:       1d4+1
+critical:     19-20/x2
+Dagger (Thrown):
+to hit:       +6
+damage:       1d4
+critical:     19-20/x2
+range:        10 ft.
+--------------------- Special Abilities --------------------
+ 
+------------------------- Equipment ------------------------
+Name                                            QTY	LBS
+Noble's Outfit  1	10lbs
+Signet Ring  1	0lbs
+Total weight carried: 15 lbs.
+Current load:         Light
+Encumbrance
+Light:  66   
+Medium: 133   
+Heavy:  200
+--------------------------- Magic --------------------------
+
+
+Wizard Spells
+                     
+                     
+
+      
+      
+      
+------------------------ Description -----------------------
+Height: 0' 0" Weight: 0 lbs. Gender: Male	
+Eyes:    Hair: , Skin: 
+Dominant Hand: Right Quirks: , 	
+Speech style:  Quotable: 
+Full Description
+
+Background
+
+Campaign Logs

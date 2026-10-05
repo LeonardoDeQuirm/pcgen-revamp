@@ -1,0 +1,289 @@
+Name:       Corpus Oracle3
+Race:       Human (Arcadian)
+Player:      
+Classes:    Oracle3
+Hit Points: 18
+Experience: 5000 / 9000
+Alignment:  None
+Vision:     Darkvision (30 ft.)
+Speed:      Walk 30 ft.
+Languages:  Common
+Stat    Score   Mod
+STR  10 (+0)
+DEX  12 (+1)
+CON  14 (+2)
+INT  8 (-1)
+WIS  10 (+0)
+CHA  20 (+5)
+-------------------------- Skills --------------------------
+Skill                   Total   Rnk     Stat    Msc
+Acrobatics  1  0.0  1  0
+Appraise  -1  0.0  -1  0
+Bluff  5  0.0  5  0
+Climb  0  0.0  0  0
+Craft (Alchemy)  5  3.0  -1  3
+Craft (Armor)  5  3.0  -1  3
+Craft (Baskets)  5  3.0  -1  3
+Craft (Blacksmithing)  5  3.0  -1  3
+Craft (Untrained)  -1  0.0  -1  0
+Diplomacy  5  0.0  5  0
+Disguise  5  0.0  5  0
+Escape Artist  1  0.0  1  0
+Fly  1  0.0  1  0
+Heal  0  0.0  0  0
+Intimidate  5  0.0  5  0
+Perception  0  0.0  0  0
+Perform (Untrained)  5  0.0  5  0
+Ride  1  0.0  1  0
+Sense Motive  0  0.0  0  0
+Stealth  1  0.0  1  0
+Survival  0  0.0  0  0
+Swim  0  0.0  0  0
+-------------------------- Feats ---------------------------
+Absorb Spirit
+  You absorb restless spirits into your body at the cost of your own life force and sanity. Wisdom damage. If you succeed, you take 1 point of Constitution and Wisdom damage. No effect can prevent or reduce this damage, nor can the damage be healed or suppressed by any means until you release the spirit. You can release the spirit at any time as a standard action, at which point the spirit returns to its former location and begins rejuvenating or manifesting again as normal. If you die from the Constitution damage, the spirit is released, and if you become comatose from the Wisdom damage, the spirit gains control of your body (and can release itself whenever it desires).
+  
+Abundant Revelations (USERINPUT)
+  You can plumb the depths of your mystery to use your revelations more often.
+  
+Accursed
+-------------------- Special Abilities ---------------------
+
+			<name>No Racial Subtype</name>
+			<description>You have chosen no racial subtype.</description>
+			<type>UNIVERSAL SUBTYPE</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Race Guide</source>
+		</special_quality>
+			<name>Absalom Bouncer</name>
+			<description>When you make an attack that deals nonlethal damage with an unarmed strike, you gain a +1 bonus on your damage roll.</description>
+			<type>TRAIT.BASICTRAIT.COMBATTRAIT</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Pathfinder Player Companion: Advanced Class Origins, p.11</source>
+		</special_quality>
+			<name>Acadamae Neophyte</name>
+			<description>Whenever you succeed at a Knowledge (planes) check to identify a creature and its special powers or vulnerabilities, you gain one additional piece of useful information (as if your skill check result had been 5 higher).</description>
+			<type>TRAIT.BASICTRAIT.MAGICTRAIT</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Publishing - Pathfinder Player Companion: Monster Summoner's Handbook, p.10</source>
+		</special_quality>
+			<name>Ancestor Mysteries</name>
+			<description>You draw upon the divine mystery of your Ancestors to grant your spells and powers.</description>
+			<type>SPECIALQUALITY.ORACLEMYSTERY.ORACLECLASSFEATURES</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Ultimate Magic, p.53</source>
+		</special_quality>
+			<name>Bonus Feat</name>
+			<description>Humans select one extra feat at 1st level.</description>
+			<type>RACIALTRAITS.HUMAN RACIAL TRAIT.HUMAN RACIAL DEFAULT.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Race Guide, p.70</source>
+		</special_quality>
+			<name>Clouded Vision</name>
+			<description>Your eyes are obscured, making it difficult for you to see. You cannot see anything beyond 30 feet, but you can see as if you had darkvision.</description>
+			<type>ORACLECLASSFEATURES.SPECIALQUALITY.ORACLECURSE.SENSE</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Player's Guide, p.43</source>
+		</special_quality>
+			<name>Darkvision (Ex)</name>
+			<description>Range 30 ft.; Darkvision is the extraordinary ability to see with no light source at all, out to a range specified for the creature. Darkvision is black and white only (colors cannot be discerned). It does not allow characters to see anything that they could not see otherwise-invisible objects are still invisible, and illusions are still visible as what they seem to be. Likewise, darkvision subjects a creature to gaze attacks normally. The presence of light does not spoil darkvision.</description>
+			<type>SPECIALQUALITY.EXTRAORDINARY.VISION</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>Vision: Darkvision 30 ft.</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - </source>
+		</special_quality>
+			<name>Orisons</name>
+			<description>You can prepare a number of orisons, or 0-level spells. These spells are cast like any other spells, but they are not expended when used and may be used again.</description>
+			<type>ORACLECLASSFEATURES.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Player's Guide, p.45</source>
+		</special_quality>
+			<name>Skilled</name>
+			<description>Humans gain an additional skill rank at 1st level and one additional rank whenever they gain a level.</description>
+			<type>RACIALTRAITS.HUMAN RACIAL TRAIT.HUMAN RACIAL DEFAULT.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Race Guide, p.70</source>
+		</special_quality>
+	</special_qualities>
+------------------------ Templates -------------------------
+
+-------------------------- Combat --------------------------
+    Total / Touch / Flat Footed
+AC: 11 / 11 / 10
+Initiative:   +1
+BAB:          +2
+Melee tohit:  +2
+Ranged tohit: +3
+Fortitude:    +3
+Reflex:       +2
+Will:         +3
+Unarmed attack:
+to hit:       +2
+damage:       1d3
+critical:     20/x2
+Dagger:
+to hit:       +2
+damage:       1d4
+critical:     19-20/x2
+Dagger (Thrown):
+to hit:       +3
+damage:       1d4
+critical:     19-20/x2
+range:        10 ft.
+--------------------- Special Abilities --------------------
+ 
+------------------------- Equipment ------------------------
+Name                                            QTY	LBS
+Total weight carried: 1 lbs.
+Current load:         Light
+Encumbrance
+Light:  33   
+Medium: 66   
+Heavy:  100
+--------------------------- Magic --------------------------
+
+
+Oracle Spells
+
+SPELLBOOKNAME0
+ 
+Level 0
+Bleed (Necromancy)
+Saves: Will negates	DC: 15	Casting: 1 standard action
+Duration: Instantaneous	Range: Close (30 ft.)	Components: V, S
+SR: Yes	Effect: You cause a living creature that is below 0 hit points but stabilized to resume dying.	Target: One living creature
+DESC: You cause a living creature that is below 0 hit points but stabilized to resume dying.
+DESC 2:  You cause a living creature that is below 0 hit points but stabilized to resume dying.
+Create Water (Conjuration)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: Instantaneous	Range: Close (30 ft.)	Components: V, S
+SR: No	Effect: This spell generates wholesome, drinkable water, just like clean rain water.	Target: Up to 6 gallons of water
+DESC: This spell generates wholesome, drinkable water, just like clean rain water.
+DESC 2:  This spell generates wholesome, drinkable water, just like clean rain water.
+Detect Poison (Divination)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: Instantaneous	Range: Close (30 ft.)	Components: V, S
+SR: No	Effect: You determine whether a creature, object, or area has been poisoned or is poisonous.	Target: Or Area one creature, one object, or a 5-ft. cube
+DESC: You determine whether a creature, object, or area has been poisoned or is poisonous.
+DESC 2:  You determine whether a creature, object, or area has been poisoned or is poisonous.
+Enhanced Diplomacy (Divination)
+Saves: Will negates (harmless)	DC: 15	Casting: 1 standard action
+Duration: 1 minute or until discharged	Range: Touch	Components: V, S
+SR: yes (harmless)	Effect: You imbue the subject with divine diplomacy skills. The creature gets a +2 competence bonus on a single Diplomacy or Intimidate check. It must choose to use the bonus before making the roll to which it applies.	Target: creature touched
+DESC: You imbue the subject with divine diplomacy skills. The creature gets a +2 competence bonus on a single Diplomacy or Intimidate check. It must choose to use the bonus before making the roll to which it applies.
+DESC 2:  You imbue the subject with divine diplomacy skills. The creature gets a +2 competence bonus on a single Diplomacy or Intimidate check. It must choose to use the bonus before making the roll to which it applies.
+Stabilize (Conjuration)
+Saves: Will negates (harmless)	DC: 15	Casting: 1 standard action
+Duration: Instantaneous	Range: Close (30 ft.)	Components: V, S
+SR: Yes (harmless)	Effect: Upon casting this spell, you target a living creature that has -1 or fewer hit points.	Target: One living creature
+DESC: Upon casting this spell, you target a living creature that has -1 or fewer hit points.
+DESC 2:  Upon casting this spell, you target a living creature that has -1 or fewer hit points.
+ 
+ 
+Level 1
+Bane (Enchantment)
+Saves: Will negates	DC: 16	Casting: 1 standard action
+Duration: 3 minutes	Range: 50 ft.	Components: V, S, DF
+SR: Yes	Effect: Bane fills your enemies with fear and doubt.	Target: 50-ft.-radius burst, centered on you
+DESC: Bane fills your enemies with fear and doubt.
+DESC 2:  Bane fills your enemies with fear and doubt.
+Sanctuary (Abjuration)
+Saves: Will negates	DC: 16	Casting: 1 standard action
+Duration: 3 rounds	Range: Touch	Components: V, S, DF
+SR: No	Effect: Any opponent attempting to directly attack the warded creature, even with a targeted spell, must attempt a Will save.	Target: Creature touched
+DESC: Any opponent attempting to directly attack the warded creature, even with a targeted spell, must attempt a Will save.
+DESC 2:  Any opponent attempting to directly attack the warded creature, even with a targeted spell, must attempt a Will save.
+Touch of Blindness (Necromancy)
+Saves: Fortitude negates	DC: 16	Casting: 1 standard action
+Duration: 3 rounds [see text]	Range: Touch	Components: V
+SR: Yes	Effect: A touch from your hand, which is engulfed in darkness, disrupts a creature's vision by coating its eyes in supernatural darkness. Each touch causes the target to become blinded for 1 round unless it makes a successful Fortitude saving throw. You can use this melee touch attack up to 3 times. Any touch attack not used after 3 rounds is lost.	Target: Creature or creatures touched
+DESC: A touch from your hand, which is engulfed in darkness, disrupts a creature's vision by coating its eyes in supernatural darkness. Each touch causes the target to become blinded for 1 round unless it makes a successful Fortitude saving throw. You can use this melee touch attack up to 3 times. Any touch attack not used after 3 rounds is lost.
+DESC 2:  A touch from your hand, which is engulfed in darkness, disrupts a creature's vision by coating its eyes in supernatural darkness. Each touch causes the target to become blinded for 1 round unless it makes a successful Fortitude saving throw. You can use this melee touch attack up to 3 times. Any touch attack not used after 3 rounds is lost.
+Unseen Servant (Conjuration, AetherSchool)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: 3 hours	Range: Close (30 ft.)	Components: V, S, M
+SR: No	Effect: An unseen servant is an invisible, mindless, shapeless force that performs simple tasks at your command.	Target: One invisible, mindless, shapeless servant
+DESC: An unseen servant is an invisible, mindless, shapeless force that performs simple tasks at your command.
+DESC 2:  An unseen servant is an invisible, mindless, shapeless force that performs simple tasks at your command.
+Cure Light Wounds (Conjuration)
+Saves: Will half (harmless); see text	DC: 16	Casting: 1 standard action
+Duration: Instantaneous	Range: Touch	Components: V, S
+SR: Yes (harmless); see text	Effect: When laying your hand upon a living creature, you channel positive energy that cures 1d8+3 points of damage.	Target: Creature touched
+DESC: When laying your hand upon a living creature, you channel positive energy that cures 1d8+(min(5,CASTERLEVEL)) points of damage.
+DESC 2:  When laying your hand upon a living creature, you channel positive energy that cures 1d8+3 points of damage.
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+                     
+
+      
+------------------------ Description -----------------------
+Height: 0' 0" Weight: 0 lbs. Gender: Male	
+Eyes:    Hair: , Skin: 
+Dominant Hand: Right Quirks: , 	
+Speech style:  Quotable: 
+Full Description
+
+Background
+
+Campaign Logs

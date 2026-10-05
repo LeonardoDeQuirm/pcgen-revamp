@@ -1,0 +1,368 @@
+Name:       Corpus Sorcerer3
+Race:       Halfling
+Player:      
+Classes:    Sorcerer3
+Hit Points: 16
+Experience: 5000 / 9000
+Alignment:  None
+Vision:     
+Speed:      Walk 20 ft.
+Languages:  Common, Halfling
+Stat    Score   Mod
+STR  6 (-2)
+DEX  16 (+3)
+CON  12 (+1)
+INT  10 (+0)
+WIS  10 (+0)
+CHA  20 (+5)
+-------------------------- Skills --------------------------
+Skill                   Total   Rnk     Stat    Msc
+Acrobatics  7  0.0  3  4
+Acrobatics (When Jumping)  3  0.0  3  0
+Appraise  6  3.0  0  3
+Bluff  11  3.0  5  3
+Climb  0  0.0  -2  2
+Craft (Untrained)  0  0.0  0  0
+Diplomacy  5  0.0  5  0
+Disguise  5  0.0  5  0
+Escape Artist  3  0.0  3  0
+Fly  7  0.0  3  4
+Heal  0  0.0  0  0
+Intimidate  5  0.0  5  0
+Perception  2  0.0  0  2
+Perform (Untrained)  5  0.0  5  0
+Ride  3  0.0  3  0
+Sense Motive  0  0.0  0  0
+Stealth  7  0.0  3  4
+Survival  0  0.0  0  0
+Swim  -2  0.0  -2  0
+-------------------------- Feats ---------------------------
+Accursed
+  [Not Implemented] Your curse weighs down your soul like a millstone around your neck.
+  
+Acrobatic
+Eschew Materials
+-------------------- Special Abilities ---------------------
+
+			<name>No Racial Subtype</name>
+			<description>You have chosen no racial subtype.</description>
+			<type>UNIVERSAL SUBTYPE</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Race Guide</source>
+		</special_quality>
+			<name>Aberrant Bloodline</name>
+			<description>There is a taint in your blood, one that is alien and bizarre. You tend to think in odd ways, approaching problems from an angle that most would not expect. Over time, this taint manifests itself in your physical form.</description>
+			<type>CLASS FEATURE.SORCERER CLASS FEATURE.SPECIALQUALITY.CLASSSPECIALIZATION.SORCERER BLOODLINE</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>Bloodline: Aberrant, </aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.72</source>
+		</special_quality>
+			<name>Absalom Bouncer</name>
+			<description>When you make an attack that deals nonlethal damage with an unarmed strike, you gain a +1 bonus on your damage roll.</description>
+			<type>TRAIT.BASICTRAIT.COMBATTRAIT</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Pathfinder Player Companion: Advanced Class Origins, p.11</source>
+		</special_quality>
+			<name>Acadamae Neophyte</name>
+			<description>Whenever you succeed at a Knowledge (planes) check to identify a creature and its special powers or vulnerabilities, you gain one additional piece of useful information (as if your skill check result had been 5 higher).</description>
+			<type>TRAIT.BASICTRAIT.MAGICTRAIT</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Publishing - Pathfinder Player Companion: Monster Summoner's Handbook, p.10</source>
+		</special_quality>
+			<name>Acidic Ray (Sp)</name>
+			<description>You can fire an acidic ray as a standard action, targeting any foe within 30 feet as a ranged touch attack. The acidic ray deals 1d6 + 1 points of acid damage. You can use this ability 8 times per day.</description>
+			<type>CLASS FEATURE.SORCERER CLASS FEATURE.ABERRANT BLOODLINE ~ POWER LVL 01.SORCERER BLOODLINE POWER.SPECIALATTACK.SPELLLIKE</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>Ability Benefit: 8/day (1d6+1 acid), CheckCount: 8, CheckType: Uses per Day, ChildAbility: AberrantBloodlinePowers</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.72</source>
+		</special_quality>
+			<name>Bloodline</name>
+			<description>Each sorcerer has a source of magic somewhere in her heritage that grants her spells, bonus feats, an additional class skill, and other special abilities. This source can represent a blood relation or an extreme event involving a creature somewhere in the family's past. For example, a sorcerer might have a dragon as a distant relative or her grandfather might have signed a terrible contract with a devil. Regardless of the source, this influence manifests in a number of ways as the sorcerer gains levels. A sorcerer must pick one bloodline upon taking her first level of sorcerer. Once made, this choice cannot be changed.</description>
+			<type>CLASS FEATURE.SORCERER CLASS FEATURE.BLOODLINE</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.71</source>
+		</special_quality>
+			<name>Bloodline Arcana</name>
+			<description>Whenever you cast a spell of the polymorph subschool, increase the duration of the spell by 50% (minimum 1 round). This bonus does not stack with the increase granted by the Extend Spell feat.</description>
+			<type>SORCERER BLOODLINE ARCANA.SORCERER CLASS FEATURE.SPECIALQUALITY.SPECIAL QUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>Ability Benefit: (+50% duration on polymorph spells)</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.72</source>
+		</special_quality>
+			<name>Bloodline Powers</name>
+			<description>Aberrant sorcerers show increasing signs of their tainted heritage as they increase in level, although they are only visible when used.</description>
+			<type>CLASS FEATURE.SORCERER CLASS FEATURE</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>MasterAbility: AberrantBloodlinePowers</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.72</source>
+		</special_quality>
+			<name>Cantrips</name>
+			<description>Sorcerers learn a number of cantrips, or 0-level spells. These spells are cast like any other spell, but they do not consume any slots and may be used again.</description>
+			<type>CLASS FEATURE.SORCERER CLASS FEATURE.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.71</source>
+		</special_quality>
+			<name>Eschew Materials</name>
+			<description>A sorcerer gains Eschew Materials as a bonus feat at 1st level.</description>
+			<type>CLASS FEATURE.SORCERER CLASS FEATURE.INTERNAL</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.71</source>
+		</special_quality>
+			<name>Fearless</name>
+			<description>Halflings receive a +2 racial bonus on all saving throws against fear. This bonus stacks with the bonus granted by halfling luck.</description>
+			<type>RACIALTRAITS.HALFLING RACIAL TRAIT.HALFLING RACIAL DEFAULT.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>SaveBonus: +2 racial bonus on all saving throws against fear. This bonus stacks with the bonus granted by halfling luck.</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Race Guide, p.60</source>
+		</special_quality>
+			<name>Halfling Luck</name>
+			<description>Halflings receive a +1 racial bonus on all saving throws.</description>
+			<type>RACIALTRAITS.HALFLING RACIAL TRAIT.HALFLING RACIAL DEFAULT.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Race Guide, p.60</source>
+		</special_quality>
+			<name>Keen Senses</name>
+			<description>Halflings receive a +2 racial bonus on Perception skill checks.</description>
+			<type>RACIALTRAITS.HALFLING RACIAL TRAIT.HALFLING RACIAL DEFAULT.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Race Guide, p.60</source>
+		</special_quality>
+			<name>Spells</name>
+			<description>A sorcerer casts arcane spells drawn primarily from the sorcerer/wizard spell list. She can cast any spell she knows without preparing it ahead of time. To learn or cast a spell, a sorcerer must have a Charisma score equal to at least 10 + the spell level. The Difficulty Class for a saving throw against a sorcerer's spell is 15 + the spell level.</description>
+			<type>CLASS FEATURE.SORCERER CLASS FEATURE.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.70</source>
+		</special_quality>
+			<name>Sure-Footed</name>
+			<description>Halflings receive a +2 racial bonus on Acrobatics and Climb skill checks.</description>
+			<type>RACIALTRAITS.HALFLING RACIAL TRAIT.HALFLING RACIAL DEFAULT.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Race Guide, p.60</source>
+		</special_quality>
+			<name>Weapon and Armor Proficiency</name>
+			<description>Sorcerers are proficient with all simple weapons. They are not proficient with any type of armor or shield. Armor interferes with a sorcerer's gestures, which can cause her spells with somatic components to fail.</description>
+			<type>CLASS FEATURE.SORCERER CLASS FEATURE.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.70</source>
+		</special_quality>
+			<name>Weapon Familiarity</name>
+			<description>Halflings are proficient with slings and treat any weapon with the word "halfling" in its name as a martial weapon.</description>
+			<type>RACIALTRAITS.HALFLING RACIAL TRAIT.HALFLING RACIAL DEFAULT.SPECIALQUALITY.WEAPON FAMILIARITY.RACIALWEAPONFAMILIARITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Race Guide, p.60</source>
+		</special_quality>
+	</special_qualities>
+------------------------ Templates -------------------------
+
+-------------------------- Combat --------------------------
+    Total / Touch / Flat Footed
+AC: 14 / 14 / 11
+Initiative:   +3
+BAB:          +1
+Melee tohit:  +0
+Ranged tohit: +5
+Fortitude:    +3
+Reflex:       +5
+Will:         +4
+Unarmed attack:
+to hit:       +0
+damage:       1d2-2
+critical:     20/x2
+Dagger:
+to hit:       -2
+damage:       1d4-2
+critical:     19-20/x2
+Dagger (Thrown):
+to hit:       +3
+damage:       1d4
+critical:     19-20/x2
+range:        10 ft.
+--------------------- Special Abilities --------------------
+ 
+------------------------- Equipment ------------------------
+Name                                            QTY	LBS
+Total weight carried: 1 lbs.
+Current load:         Light
+Encumbrance
+Light:  15   
+Medium: 30   
+Heavy:  45
+--------------------------- Magic --------------------------
+
+
+Sorcerer Spells
+
+SPELLBOOKNAME0
+ 
+Level 0
+Acid Splash (Conjuration, EarthSchool)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: Instantaneous	Range: Close (30 ft.)	Components: V, S
+SR: No	Effect: You fire a small orb of acid at the target dealing 1d3 points of acid damage.	Target: One missile of acid
+DESC: You fire a small orb of acid at the target dealing 1d3 points of acid damage.
+DESC 2:  You fire a small orb of acid at the target dealing 1d3 points of acid damage.
+Bleed (Necromancy)
+Saves: Will negates	DC: 15	Casting: 1 standard action
+Duration: Instantaneous	Range: Close (30 ft.)	Components: V, S
+SR: Yes	Effect: You cause a living creature that is below 0 hit points but stabilized to resume dying.	Target: One living creature
+DESC: You cause a living creature that is below 0 hit points but stabilized to resume dying.
+DESC 2:  You cause a living creature that is below 0 hit points but stabilized to resume dying.
+Flare (Evocation)
+Saves: Fortitude negates	DC: 15	Casting: 1 standard action
+Duration: Instantaneous	Range: Close (30 ft.)	Components: V
+SR: Yes	Effect: This cantrip creates a burst of light.	Target: Burst of light
+DESC: This cantrip creates a burst of light.
+DESC 2:  This cantrip creates a burst of light.
+Oath of Anonymity (Illusion)
+Saves: 	DC: 	Casting: 1 standard action
+Duration: 30 minutes	Range: Personal	Components: V
+SR: 	Effect: You swear an oath not to reveal your identity, magically preventing anyone from discovering it so long as you avoid revealing your face or other easily identifiable features. The spell distorts your voice and subtly alters your body language and the appearance of your gear and any animals you use, whether as companions, mounts, or otherwise. This spell does not make you appear to be a different creature type, nor does it change your apparent height or body type. This spell provides you with a +10 bonus on Disguise checks to conceal your identity, but not on checks to impersonate anyone in particular. This spell distorts the appearance of your voice, gear, and animals in the same way each time, essentially creating an alternate persona that can be recognized by those who have observed it before.	Target: You
+DESC: You swear an oath not to reveal your identity, magically preventing anyone from discovering it so long as you avoid revealing your face or other easily identifiable features. The spell distorts your voice and subtly alters your body language and the appearance of your gear and any animals you use, whether as companions, mounts, or otherwise. This spell does not make you appear to be a different creature type, nor does it change your apparent height or body type. This spell provides you with a +10 bonus on Disguise checks to conceal your identity, but not on checks to impersonate anyone in particular. This spell distorts the appearance of your voice, gear, and animals in the same way each time, essentially creating an alternate persona that can be recognized by those who have observed it before.
+DESC 2:  You swear an oath not to reveal your identity, magically preventing anyone from discovering it so long as you avoid revealing your face or other easily identifiable features. The spell distorts your voice and subtly alters your body language and the appearance of your gear and any animals you use, whether as companions, mounts, or otherwise. This spell does not make you appear to be a different creature type, nor does it change your apparent height or body type. This spell provides you with a +10 bonus on Disguise checks to conceal your identity, but not on checks to impersonate anyone in particular. This spell distorts the appearance of your voice, gear, and animals in the same way each time, essentially creating an alternate persona that can be recognized by those who have observed it before.
+Resistance (Abjuration)
+Saves: Will negates (harmless)	DC: 15	Casting: 1 standard action
+Duration: 1 minute	Range: Touch	Components: V, S, M/DF
+SR: Yes (harmless)	Effect: You imbue the subject with magical energy that protects it from harm, granting it a +1 resistance bonus on saves.	Target: Creature touched
+DESC: You imbue the subject with magical energy that protects it from harm, granting it a +1 resistance bonus on saves.
+DESC 2:  You imbue the subject with magical energy that protects it from harm, granting it a +1 resistance bonus on saves.
+ 
+ 
+Level 1
+Bouncy Body (Transmutation)
+Saves: 	DC: 	Casting: 1 standard action
+Duration: 30 minutes	Range: Touch	Components: V,S
+SR: 	Effect: The target's flesh becomes flexible and rubbery. It gains a +2 circumstance bonus on grapple combat maneuver checks and Escape Artist checks, as well as to its CMD against combat maneuver checks to grapple. Anytime the target would take falling damage, it treats falls as 20 feet shorter [minimum 0] for the purpose of determining damage. In addition, if the target falls against a hard surface, it can attempt an Acrobatics check [DC = the distance fallen] to attempt to bounce upward; success means the creature bounces upward half the distance fallen.	Target: Creature touched
+DESC: The target's flesh becomes flexible and rubbery. It gains a +2 circumstance bonus on grapple combat maneuver checks and Escape Artist checks, as well as to its CMD against combat maneuver checks to grapple. Anytime the target would take falling damage, it treats falls as 20 feet shorter (minimum 0) for the purpose of determining damage. In addition, if the target falls against a hard surface, it can attempt an Acrobatics check (DC = the distance fallen) to attempt to bounce upward; success means the creature bounces upward half the distance fallen.
+DESC 2:  The target's flesh becomes flexible and rubbery. It gains a +2 circumstance bonus on grapple combat maneuver checks and Escape Artist checks, as well as to its CMD against combat maneuver checks to grapple. Anytime the target would take falling damage, it treats falls as 20 feet shorter [minimum 0] for the purpose of determining damage. In addition, if the target falls against a hard surface, it can attempt an Acrobatics check [DC = the distance fallen] to attempt to bounce upward; success means the creature bounces upward half the distance fallen.
+Touch of the Sea (Transmutation, WaterSchool)
+Saves: Fortitude negates (harmless)	DC: 16	Casting: 1 standard action
+Duration: 3 minutes	Range: Touch	Components: V, S, M
+SR: Yes (harmless)	Effect: Swim speed becomes 30 ft.	Target: creature touched
+DESC: Swim speed becomes 30 ft.
+DESC 2:  Swim speed becomes 30 ft.
+Enlarge Person (Transmutation)
+Saves: Fortitude negates	DC: 16	Casting: 1 round
+Duration: 3 minutes [D]	Range: Close (30 ft.)	Components: V, S, M
+SR: Yes	Effect: This spell causes instant growth of a humanoid creature, doubling its height and multiplying its weight by 8.	Target: One humanoid creature
+DESC: This spell causes instant growth of a humanoid creature, doubling its height and multiplying its weight by 8.
+DESC 2:  This spell causes instant growth of a humanoid creature, doubling its height and multiplying its weight by 8.
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+                     
+
+      
+------------------------ Description -----------------------
+Height: 0' 0" Weight: 0 lbs. Gender: Male	
+Eyes:    Hair: , Skin: 
+Dominant Hand: Right Quirks: , 	
+Speech style:  Quotable: 
+Full Description
+
+Background
+
+Campaign Logs

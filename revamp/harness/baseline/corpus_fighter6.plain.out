@@ -1,0 +1,287 @@
+Name:       Corpus Fighter6
+Race:       Dwarf
+Player:      
+Classes:    Fighter6
+Hit Points: 61
+Experience: 23000 / 35000
+Alignment:  None
+Vision:     Darkvision (60 ft.)
+Speed:      Walk 20 ft.
+Languages:  Common, Dwarven
+Stat    Score   Mod
+STR  18 (+4)
+DEX  12 (+1)
+CON  18 (+4)
+INT  10 (+0)
+WIS  14 (+2)
+CHA  6 (-2)
+-------------------------- Skills --------------------------
+Skill                   Total   Rnk     Stat    Msc
+Acrobatics  -3  0.0  1  -4
+Acrobatics (When Jumping)  -7  0.0  1  -8
+Appraise  0  0.0  0  0
+Appraise (to assess nonmagical metals or gemstones)  2  0.0  0  2
+Bluff  -2  0.0  -2  0
+Climb  7  6.0  4  -3
+Craft (Alchemy)  9  6.0  0  3
+Craft (Untrained)  0  0.0  0  0
+Diplomacy  -2  0.0  -2  0
+Disguise  -2  0.0  -2  0
+Escape Artist  -5  0.0  1  -6
+Fly  -3  0.0  1  -4
+Heal  2  0.0  2  0
+Intimidate  -2  0.0  -2  0
+Perception  2  0.0  2  0
+Perception (to notice unusual stonework)  4  0.0  2  2
+Perform (Untrained)  -2  0.0  -2  0
+Ride  -5  0.0  1  -6
+Sense Motive  2  0.0  2  0
+Stealth  -5  0.0  1  -6
+Survival  2  0.0  2  0
+Swim  -2  0.0  4  -6
+-------------------------- Feats ---------------------------
+Absorb Spirit
+  You absorb restless spirits into your body at the cost of your own life force and sanity. Wisdom damage. If you succeed, you take 1 point of Constitution and Wisdom damage. No effect can prevent or reduce this damage, nor can the damage be healed or suppressed by any means until you release the spirit. You can release the spirit at any time as a standard action, at which point the spirit returns to its former location and begins rejuvenating or manifesting again as normal. If you die from the Constitution damage, the spirit is released, and if you become comatose from the Wisdom damage, the spirit gains control of your body (and can release itself whenever it desires).
+  
+Accursed
+  [Not Implemented] Your curse weighs down your soul like a millstone around your neck.
+  
+Acrobatic
+  You are skilled at leaping, jumping, and flying.
+  
+Agile Maneuvers
+  You learned to use your quickness in place of brute force when performing combat maneuvers.
+  
+Alchemical Strike
+  By focusing all your attention into a single attack, you vastly increase the effectiveness of thrown alchemical items.
+  
+Amateur Gunslinger (Deadeye)
+  Although you are not a gunslinger, you have and can use grit.
+  
+Amateur Swashbuckler
+-------------------- Special Abilities ---------------------
+
+			<name>No Racial Subtype</name>
+			<description>You have chosen no racial subtype.</description>
+			<type>UNIVERSAL SUBTYPE</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Race Guide</source>
+		</special_quality>
+			<name>Absalom Bouncer</name>
+			<description>When you make an attack that deals nonlethal damage with an unarmed strike, you gain a +1 bonus on your damage roll.</description>
+			<type>TRAIT.BASICTRAIT.COMBATTRAIT</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Pathfinder Player Companion: Advanced Class Origins, p.11</source>
+		</special_quality>
+			<name>Acadamae Neophyte</name>
+			<description>Whenever you succeed at a Knowledge (planes) check to identify a creature and its special powers or vulnerabilities, you gain one additional piece of useful information (as if your skill check result had been 5 higher).</description>
+			<type>TRAIT.BASICTRAIT.MAGICTRAIT</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Publishing - Pathfinder Player Companion: Monster Summoner's Handbook, p.10</source>
+		</special_quality>
+			<name>Armor Training (Ex)</name>
+			<description>You are more maneuverable while wearing armor. Whenever you are wearing armor, you reduce the armor check penalty by 1 and increase the maximum Dexterity bonus allowed by your armor by +1</description>
+			<type>FIGHTERCLASSFEATURES.SPECIALQUALITY.EXTRAORDINARY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.55</source>
+		</special_quality>
+			<name>Bonus Feats</name>
+			<description>At 1st level, and at every even level thereafter, a fighter gains a bonus feat in addition to those gained from normal advancement (meaning that the fighter gains a feat at every level). These bonus feats must be selected from those listed as combat feats, sometimes also called "fighter bonus feats." Upon reaching 4th level, and every four levels thereafter (8th, 12th, and so on), a fighter can choose to learn a new bonus feat in place of a bonus feat he has already learned. In effect, the fighter loses the bonus feat in exchange for the new one. The old feat cannot be one that was used as a prerequisite for another feat, prestige class, or other ability. A fighter can only change one feat at any given level and must choose whether or not to swap the feat at the time he gains a new bonus feat for the level.</description>
+			<type>FIGHTERCLASSFEATURES.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook</source>
+		</special_quality>
+			<name>Bravery (Ex)</name>
+			<description>You gain a +2 bonus to Will saves against fear effects.</description>
+			<type>FIGHTERCLASSFEATURES.SPECIALQUALITY.EXTRAORDINARY.BRAVERY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>SaveBonus: +2 Will vs. fear</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.55</source>
+		</special_quality>
+			<name>Defensive Training</name>
+			<description>Dwarves get a +4 dodge bonus to AC against monsters of the giant subtype.</description>
+			<type>RACIALTRAITS.DWARF RACIAL TRAIT.DWARF RACIAL DEFAULT.SPECIALQUALITY.DEFENSIVE.RACIALDEFENSIVETRAINING</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>Ability Benefit: (+4 dodge bonus to AC vs. giants), CombatBonus: +4 dodge bonus to AC against monsters of the giant subtype.</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Pathfinder Companion: Dwarves of Golarion, Front Inside Cover</source>
+		</special_quality>
+			<name>Greed</name>
+			<description>Dwarves receive a +2 racial bonus on Appraise skill checks made to determine the price of nonmagical goods that contain precious metals or gemstones.</description>
+			<type>RACIALTRAITS.DWARF RACIAL TRAIT.DWARF RACIAL DEFAULT.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Pathfinder Companion: Dwarves of Golarion, Front Inside Cover</source>
+		</special_quality>
+			<name>Hardy</name>
+			<description>Dwarves receive a +2 racial bonus on saving throws against poison, spells, and spell-like abilities.</description>
+			<type>RACIALTRAITS.DWARF RACIAL TRAIT.DWARF RACIAL DEFAULT.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>SaveBonus: +2 racial bonus on saving throws against poison, spells, and spell-like abilities.</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Pathfinder Companion: Dwarves of Golarion, Front Inside Cover</source>
+		</special_quality>
+			<name>Hatred</name>
+			<description>Dwarves receive a +1 bonus on attack rolls against humanoid creatures of the orc and goblinoid subtypes due to special training against these hated foes.</description>
+			<type>RACIALTRAITS.DWARF RACIAL TRAIT.DWARF RACIAL DEFAULT.SPECIALATTACK.SPECIAL ATTACK.RACIALHATRED</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>CombatBonus: +1 bonus on attack rolls against humanoid creatures of the orc and goblinoid subtypes due to special training against these hated foes., StatBlockName: +1 on attack rolls against goblinoid and orc humanoids</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Pathfinder Companion: Dwarves of Golarion, Front Inside Cover</source>
+		</special_quality>
+			<name>Stability</name>
+			<description>Dwarves receive a +4 racial bonus to their Combat Maneuver Defense when resisting a bull rush or trip attempt while standing on the ground.</description>
+			<type>RACIALTRAITS.DWARF RACIAL TRAIT.DWARF RACIAL DEFAULT.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>CombatBonus: +4 bonus to their Combat Maneuver Defense when resisting a bull rush or trip attempt while standing on the ground.</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Pathfinder Companion: Dwarves of Golarion, Front Inside Cover</source>
+		</special_quality>
+			<name>Stonecunning</name>
+			<description>Dwarves receive a +2 bonus on Perception checks to potentially notice unusual stonework, such as traps and hidden doors located in stone walls or floors. They receive a check to notice such features whenever they pass within 10 feet of them, whether or not they are actively looking.</description>
+			<type>RACIALTRAITS.DWARF RACIAL TRAIT.DWARF RACIAL DEFAULT.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>SkillBonus: +2 bonus on Perception skill checks to notice unusual stonework, such as traps and hidden doors located in stone walls or floors.</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Pathfinder Companion: Dwarves of Golarion, Front Inside Cover</source>
+		</special_quality>
+			<name>Weapon Familiarity</name>
+			<description>Dwarves are proficient with battleaxes, heavy picks, and warhammers, and treat any weapon with the word "dwarven" in its name as a martial weapon.</description>
+			<type>RACIALTRAITS.DWARF RACIAL TRAIT.DWARF RACIAL DEFAULT.SPECIALQUALITY.WEAPON FAMILIARITY.RACIALWEAPONFAMILIARITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Pathfinder Companion: Dwarves of Golarion, Front Inside Cover</source>
+		</special_quality>
+			<name>Weapon Training (Ex)</name>
+			<description>Attacks with a weapon from listed groups, gain a bonus on attack and damage rolls. (Included in weapon blocks) Axes +1</description>
+			<type>FIGHTERCLASSFEATURES.SPECIALQUALITY.EXTRAORDINARY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.56</source>
+		</special_quality>
+	</special_qualities>
+------------------------ Templates -------------------------
+
+-------------------------- Combat --------------------------
+    Total / Touch / Flat Footed
+AC: 19 / 13 / 18
+Initiative:   +1
+BAB:          +6/+1
+Melee tohit:  +10/+5
+Ranged tohit: +7/+2
+Fortitude:    +9
+Reflex:       +3
+Will:         +4
+Unarmed attack:
+to hit:       +10/+5
+damage:       1d3+4
+critical:     20/x2
+Longsword:
+to hit:       +4/-1
+damage:       1d8+4
+critical:     19-20/x2
+Shield, Heavy Steel:
+to hit:       +0
+damage:       1d4+2
+critical:     20/x2
+Longbow:
+to hit:       +7/+2
+damage:       1d8
+critical:     20/x3
+range:        100 ft.
+--------------------- Special Abilities --------------------
+ 
+------------------------- Equipment ------------------------
+Name                                            QTY	LBS
+Shield, Heavy Steel  1	15lbs
+Longbow (3 lbs.)
+Total weight carried: 62 lbs.
+Current load:         Light
+Encumbrance
+Light:  100   
+Medium: 200   
+Heavy:  300
+--------------------------- Magic --------------------------
+
+      
+      
+------------------------ Description -----------------------
+Height: 0' 0" Weight: 0 lbs. Gender: Male	
+Eyes:    Hair: , Skin: 
+Dominant Hand: Right Quirks: , 	
+Speech style:  Quotable: 
+Full Description
+
+Background
+
+Campaign Logs

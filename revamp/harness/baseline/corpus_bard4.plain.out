@@ -1,0 +1,443 @@
+Name:       Corpus Bard4
+Race:       Gnome
+Player:      
+Classes:    Bard4
+Hit Points: 24
+Experience: 9000 / 15000
+Alignment:  None
+Vision:     Low-Light Vision
+Speed:      Walk 20 ft.
+Languages:  Common, Gnome, Sylvan
+Stat    Score   Mod
+STR  7 (-2)
+DEX  14 (+2)
+CON  14 (+2)
+INT  12 (+1)
+WIS  10 (+0)
+CHA  20 (+5)
+-------------------------- Skills --------------------------
+Skill                   Total   Rnk     Stat    Msc
+Acrobatics  9  4.0  2  3
+Acrobatics (When Jumping)  5  4.0  2  -1
+Appraise  8  4.0  1  3
+Bluff  12  4.0  5  3
+Climb  5  4.0  -2  3
+Craft (Alchemy)  10  4.0  1  5
+Craft (Armor)  8  4.0  1  3
+Craft (Baskets)  8  4.0  1  3
+Craft (Untrained)  1  0.0  1  0
+Diplomacy  5  0.0  5  0
+Disguise  5  0.0  5  0
+Escape Artist  2  0.0  2  0
+Fly  4  0.0  2  2
+Heal  0  0.0  0  0
+Intimidate  5  0.0  5  0
+Knowledge (Untrained)  3  0.0  1  2
+Perception  2  0.0  0  2
+Perform (Untrained)  5  0.0  5  0
+Ride  2  0.0  2  0
+Sense Motive  0  0.0  0  0
+Stealth  6  0.0  2  4
+Survival  0  0.0  0  0
+Swim  -2  0.0  -2  0
+-------------------------- Feats ---------------------------
+Absorb Spirit
+  You absorb restless spirits into your body at the cost of your own life force and sanity. Wisdom damage. If you succeed, you take 1 point of Constitution and Wisdom damage. No effect can prevent or reduce this damage, nor can the damage be healed or suppressed by any means until you release the spirit. You can release the spirit at any time as a standard action, at which point the spirit returns to its former location and begins rejuvenating or manifesting again as normal. If you die from the Constitution damage, the spirit is released, and if you become comatose from the Wisdom damage, the spirit gains control of your body (and can release itself whenever it desires).
+  
+Accursed
+-------------------- Special Abilities ---------------------
+
+			<name>No Racial Subtype</name>
+			<description>You have chosen no racial subtype.</description>
+			<type>UNIVERSAL SUBTYPE</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Race Guide</source>
+		</special_quality>
+			<name>Absalom Bouncer</name>
+			<description>When you make an attack that deals nonlethal damage with an unarmed strike, you gain a +1 bonus on your damage roll.</description>
+			<type>TRAIT.BASICTRAIT.COMBATTRAIT</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Pathfinder Player Companion: Advanced Class Origins, p.11</source>
+		</special_quality>
+			<name>Acadamae Neophyte</name>
+			<description>Whenever you succeed at a Knowledge (planes) check to identify a creature and its special powers or vulnerabilities, you gain one additional piece of useful information (as if your skill check result had been 5 higher).</description>
+			<type>TRAIT.BASICTRAIT.MAGICTRAIT</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Publishing - Pathfinder Player Companion: Monster Summoner's Handbook, p.10</source>
+		</special_quality>
+			<name>Armored Casting (Ex)</name>
+			<description>You can cast bard spells while wearing light armor and use a shield without incurring the normal arcane spell failure chance.</description>
+			<type>BARDCLASSFEATURES.SPECIALQUALITY.EXTRAORDINARY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.35</source>
+		</special_quality>
+			<name>Bardic Knowledge (Ex)</name>
+			<description>You add +2 to all Knowledge checks and may make all Knowledge skill checks untrained.</description>
+			<type>BARDCLASSFEATURES.SPECIALQUALITY.EXTRAORDINARY.BARDIC KNOWLEDGE.BARDKNOWLEDGE</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.35</source>
+		</special_quality>
+			<name>Bardic Performance</name>
+			<description>You are trained to use the Perform skill to create magical effects on those around you, including yourself if desired. You are trained to use the Perform skill to create magical effects on those around you, including yourself if desired. You can use this ability for 15 rounds per day. Each round, you can produce any one of the types of bardic performance that you have mastered. Starting a bardic performance is a standard action, but it can be maintained each round as a free action. Changing a bardic performance from one effect to another requires the bard to stop the previous performance and start a new one as a standard action. A bardic performance cannot be disrupted, but it ends immediately if you are killed, paralyzed, stunned, knocked unconscious, or otherwise prevented from taking a free action to maintain it each round. You cannot have more than one bardic performance in effect at one time.</description>
+			<type>BARDCLASSFEATURES.SPECIALQUALITY.BARDICPERFORMANCE.BARDIC PERFORMANCE</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>CheckCount: 15, CheckType: Rounds per days, MasterAbility: Bardic Performance</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.35</source>
+		</special_quality>
+			<name>Cantrips</name>
+			<description>You have learned a number of cantrips, or 0-level spells. These spells are cast like any other spells, but they do not consume any slots and may be used again.</description>
+			<type>BARDCLASSFEATURES.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.38</source>
+		</special_quality>
+			<name>Countersong (Su)</name>
+			<description>You can counter magic effects that depend on sound (but not spells that have verbal components). Each round of the countersong you make a Perform (keyboard, percussion, wind, string, or sing) skill check. Any creature within 30 feet (including yourself) that is affected by a sonic or language-dependent magical attack may use your Perform check result in place of its saving throw if, after the saving throw is rolled, the Perform check result proves to be higher. If a creature within range of the countersong is already under the effect of a noninstantaneous sonic or language-dependent magical attack, it gains another saving throw against the effect each round it hears the countersong, but it must use your Perform skill check result for the save. Countersong does not work on effects that don't allow saves. Countersong relies on audible components.</description>
+			<type>BARDCLASSFEATURES.SPECIALQUALITY.SUPERNATURAL.BARDICPERFORMANCE.BARDIC PERFORMANCE.BARDCOUNTERSONG</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>ChildAbility: Bardic Performance</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.36</source>
+		</special_quality>
+			<name>Defensive Training</name>
+			<description>Gnomes get a +4 dodge bonus to AC against monsters of the giant subtype.</description>
+			<type>RACIALTRAITS.GNOME RACIAL TRAIT.GNOME RACIAL DEFAULT.SPECIALQUALITY.DEFENSIVE.RACIALDEFENSIVETRAINING</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>Ability Benefit: (+4 dodge bonus to AC vs. giants), CombatBonus: +4 dodge bonus to AC against monsters of the giant subtype.</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Race Guide, p.30</source>
+		</special_quality>
+			<name>Distraction (Su)</name>
+			<description>You can use your performance to counter magic effects that depend on sight. Each round of the distraction, make a Perform (act, comedy, dance, or oratory) skill check. Any creature within 30 feet (including yourself) that is affected by an illusion (pattern) or illusion (figment) magical attack may use your Perform check result in place of its saving throw if, after the saving throw is rolled, the Perform skill check proves to be higher. If a creature within range of the distraction is already under the effect of a noninstantaneous illusion (pattern) or illusion (figment) magical attack, it gains another saving throw against the effect each round it sees the distraction, but it must use your Perform skill check result for the save. Distraction does not work on effects that don't allow saves. Distraction relies on visual components.</description>
+			<type>BARDCLASSFEATURES.SPECIALATTACK.SUPERNATURAL.BARDICPERFORMANCE.BARDIC PERFORMANCE</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>ChildAbility: Bardic Performance</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.36</source>
+		</special_quality>
+			<name>Fascinate (Su)</name>
+			<description>You can use your performance to cause up to 2 creatures to become fascinated with you. Each creature to be fascinated must be within 90 feet, able to see and hear you, and capable of paying attention to you. You must also be able to see the creatures affected. The distraction of a nearby combat or other dangers prevents this ability from working. Each creature within range receives a Will save (DC 17) to negate the effect. If a creature's saving throw succeeds, you cannot attempt to fascinate that creature again for 24 hours. If its saving throw fails, the creature sits quietly and observes your performance for as long as you continue to maintain it. While fascinated, a target takes a -4 penalty on all skill checks made as reactions, such as Perception checks. Any potential threat to the target allows the target to make a new saving throw against the effect. Any obvious threat, such as someone drawing a weapon, casting a spell, or aiming a weapon at the target, automatically breaks the effect. Fascinate is an enchantment (compulsion), mind-affecting ability. Fascinate relies on audible and visual components in order to function.</description>
+			<type>BARDCLASSFEATURES.SPECIALATTACK.SUPERNATURAL.BARDICPERFORMANCE.BARDIC PERFORMANCE</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>ChildAbility: Bardic Performance</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.37</source>
+		</special_quality>
+			<name>Gnome Magic</name>
+			<description>Gnomes add +1 to the DC of any saving throws against illusion spells that they cast. Gnomes with a Charisma of 11 or higher also gain the following spell-like abilities: 1/day--dancing lights, ghost sound, prestidigitation, and speak with animals. The caster level for these effects is equal to the gnome's level. The DC for these spells is equal to 10 + the spell's level + the gnome's Charisma modifier.</description>
+			<type>RACIALTRAITS.GNOME RACIAL TRAIT.GNOME RACIAL DEFAULT.SPECIALQUALITY.SPECIAL QUALITY.APPLIED BONUS</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Race Guide, p.30</source>
+		</special_quality>
+			<name>Hatred</name>
+			<description>Gnomes receive a +1 bonus on attack rolls against humanoid creatures of the reptilian and goblinoid subtypes due to special training against these hated foes.</description>
+			<type>RACIALTRAITS.GNOME RACIAL TRAIT.GNOME RACIAL DEFAULT.SPECIALATTACK.SPECIAL ATTACK.RACIALHATRED</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>CombatBonus: +1 bonus on attack rolls against humanoid creatures of the reptilian and goblinoid subtypes due to special training against these hated foes., StatBlockName: +1 on attack rolls against goblinoid and reptilian humanoids</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Race Guide, p.30</source>
+		</special_quality>
+			<name>Illusion Resistance</name>
+			<description>Gnomes get a +2 racial saving throw bonus against illusion spells and effects.</description>
+			<type>RACIALTRAITS.GNOME RACIAL TRAIT.GNOME RACIAL DEFAULT.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>SaveBonus: +2 racial saving throw bonus against illusion spells and effects.</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Race Guide, p.30</source>
+		</special_quality>
+			<name>Inspire Competence (Su)</name>
+			<description>You can use your performance to help an ally succeed at a task. That ally must be within 30 feet and be able to hear you. The ally gets a +2 competence bonus on skill checks with a particular skill as long as she continues to hear your performance. Certain uses of this ability are infeasible, such as Stealth, and may be disallowed at the GM's discretion. A bard can't inspire competence in himself. Inspire competence relies on audible components.</description>
+			<type>BARDCLASSFEATURES.SPECIALQUALITY.SUPERNATURAL.BARDICPERFORMANCE.BARDIC PERFORMANCE</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>ChildAbility: Bardic Performance</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.37</source>
+		</special_quality>
+			<name>Inspire Courage (Su)</name>
+			<description>You can use your performance to inspire courage in your allies (including yourself), bolstering them against fear and improving their combat abilities. To be affected, an ally must be able to perceive your performance. An affected ally receives a +1 morale bonus on saving throws against charm and fear effects and a +1 competence bonus on attack and weapon damage rolls. Inspire courage is a mind-affecting ability. Inspire courage can use audible or visual components. The bard must choose which component to use when starting his performance.</description>
+			<type>BARDCLASSFEATURES.SPECIALQUALITY.SUPERNATURAL.BARDICPERFORMANCE.BARDIC PERFORMANCE</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>ChildAbility: Bardic Performance</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.37</source>
+		</special_quality>
+			<name>Keen Senses</name>
+			<description>Gnomes receive a +2 racial bonus on Perception skill checks.</description>
+			<type>RACIALTRAITS.GNOME RACIAL TRAIT.GNOME RACIAL DEFAULT.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Race Guide, p.30</source>
+		</special_quality>
+			<name>Low-Light Vision (Ex)</name>
+			<description>Gnomes can see twice as far as humans in conditions of dim light.</description>
+			<type>RACIALTRAITS.GNOME RACIAL TRAIT.GNOME RACIAL DEFAULT.SPECIALQUALITY.EXTRAORDINARY.RACIAL VISION</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Race Guide, p.30</source>
+		</special_quality>
+			<name>Obsessive</name>
+			<description>Gnomes receive a +2 racial bonus on a Craft or Profession skill of their choice.</description>
+			<type>RACIALTRAITS.GNOME RACIAL TRAIT.GNOME RACIAL DEFAULT.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Race Guide, p.30</source>
+		</special_quality>
+			<name>Versatile Masterpiece</name>
+			<description>[NOT IMPLEMENTED] The bard gains a bardic masterpiece, as if he were giving up a feat to learn it. He must meet the masterpiece's prerequisites, and the masterpiece must list ranks in a Perform skill that the bard has chosen with versatile performance as a prerequisite. This option can be selected multiple times.</description>
+			<type>VERSATILEPERFORMANCE</type>
+			<associated></associated>
+			<count>1</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Pathfinder Player Companion: Blood of the Beast, p.12</source>
+		</special_quality>
+			<name>Weapon Familiarity</name>
+			<description>Gnomes treat any weapon with the word "gnome" in its name as a martial weapon.</description>
+			<type>RACIALTRAITS.GNOME RACIAL TRAIT.GNOME RACIAL DEFAULT.SPECIALQUALITY.WEAPON FAMILIARITY.RACIALWEAPONFAMILIARITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Race Guide, p.30</source>
+		</special_quality>
+			<name>Well-Versed (Ex)</name>
+			<description>You have becomes resistant to the Bardic Performance of others, and to sonic effects in general. You gain a +4 bonus on saving throws made against Bardic Performance, sonic, and language-dependent effects.</description>
+			<type>BARDCLASSFEATURES.SPECIALQUALITY.EXTRAORDINARY.BARDWELLVERSED</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>SaveBonus: +4 vs. Bardic Performance, sonic, and language-dependent effects</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.38</source>
+		</special_quality>
+	</special_qualities>
+------------------------ Templates -------------------------
+
+-------------------------- Combat --------------------------
+    Total / Touch / Flat Footed
+AC: 13 / 13 / 11
+Initiative:   +2
+BAB:          +3
+Melee tohit:  +2
+Ranged tohit: +6
+Fortitude:    +3
+Reflex:       +6
+Will:         +4
+Unarmed attack:
+to hit:       +2
+damage:       1d2-2
+critical:     20/x2
+Rapier:
+to hit:       +0
+damage:       1d6-2
+critical:     18-20/x2
+--------------------- Special Abilities --------------------
+ 
+------------------------- Equipment ------------------------
+Name                                            QTY	LBS
+Total weight carried: 2 lbs.
+Current load:         Light
+Encumbrance
+Light:  17   
+Medium: 35   
+Heavy:  52
+--------------------------- Magic --------------------------
+
+
+Bard Spells
+
+SPELLBOOKNAME0
+ 
+Level 0
+Daze (Enchantment)
+Saves: Will negates	DC: 15	Casting: 1 standard action
+Duration: 1 round	Range: Close (35 ft.)	Components: V, S, M
+SR: Yes	Effect: This spell clouds the mind of a humanoid creature with 4 or fewer Hit Dice so that it takes no actions.	Target: One humanoid creature of 4 HD or less
+DESC: This spell clouds the mind of a humanoid creature with 4 or fewer Hit Dice so that it takes no actions.
+DESC 2:  This spell clouds the mind of a humanoid creature with 4 or fewer Hit Dice so that it takes no actions.
+Flare (Evocation)
+Saves: Fortitude negates	DC: 15	Casting: 1 standard action
+Duration: Instantaneous	Range: Close (35 ft.)	Components: V
+SR: Yes	Effect: This cantrip creates a burst of light.	Target: Burst of light
+DESC: This cantrip creates a burst of light.
+DESC 2:  This cantrip creates a burst of light.
+Oath of Anonymity (Illusion)
+Saves: 	DC: 	Casting: 1 standard action
+Duration: 40 minutes	Range: Personal	Components: V
+SR: 	Effect: You swear an oath not to reveal your identity, magically preventing anyone from discovering it so long as you avoid revealing your face or other easily identifiable features. The spell distorts your voice and subtly alters your body language and the appearance of your gear and any animals you use, whether as companions, mounts, or otherwise. This spell does not make you appear to be a different creature type, nor does it change your apparent height or body type. This spell provides you with a +10 bonus on Disguise checks to conceal your identity, but not on checks to impersonate anyone in particular. This spell distorts the appearance of your voice, gear, and animals in the same way each time, essentially creating an alternate persona that can be recognized by those who have observed it before.	Target: You
+DESC: You swear an oath not to reveal your identity, magically preventing anyone from discovering it so long as you avoid revealing your face or other easily identifiable features. The spell distorts your voice and subtly alters your body language and the appearance of your gear and any animals you use, whether as companions, mounts, or otherwise. This spell does not make you appear to be a different creature type, nor does it change your apparent height or body type. This spell provides you with a +10 bonus on Disguise checks to conceal your identity, but not on checks to impersonate anyone in particular. This spell distorts the appearance of your voice, gear, and animals in the same way each time, essentially creating an alternate persona that can be recognized by those who have observed it before.
+DESC 2:  You swear an oath not to reveal your identity, magically preventing anyone from discovering it so long as you avoid revealing your face or other easily identifiable features. The spell distorts your voice and subtly alters your body language and the appearance of your gear and any animals you use, whether as companions, mounts, or otherwise. This spell does not make you appear to be a different creature type, nor does it change your apparent height or body type. This spell provides you with a +10 bonus on Disguise checks to conceal your identity, but not on checks to impersonate anyone in particular. This spell distorts the appearance of your voice, gear, and animals in the same way each time, essentially creating an alternate persona that can be recognized by those who have observed it before.
+Resistance (Abjuration)
+Saves: Will negates (harmless)	DC: 15	Casting: 1 standard action
+Duration: 1 minute	Range: Touch	Components: V, S, M/DF
+SR: Yes (harmless)	Effect: You imbue the subject with magical energy that protects it from harm, granting it a +1 resistance bonus on saves.	Target: Creature touched
+DESC: You imbue the subject with magical energy that protects it from harm, granting it a +1 resistance bonus on saves.
+DESC 2:  You imbue the subject with magical energy that protects it from harm, granting it a +1 resistance bonus on saves.
+Sift (Divination)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: Instantaneous	Range: 30 ft.	Components: V, S
+SR: No	Effect: See area as though examining it.	Target: one 10-ft. cube
+DESC: See area as though examining it.
+DESC 2:  See area as though examining it.
+Unwitting Ally (Enchantment)
+Saves: Will negates	DC: 15	Casting: 1 standard action
+Duration: 1 round	Range: Close (35 ft.)	Components: V, S
+SR: Yes	Effect: Subject is considered ally for 1 round.	Target: one living creature
+DESC: Subject is considered ally for 1 round.
+DESC 2:  Subject is considered ally for 1 round.
+ 
+ 
+Level 1
+Expeditious Retreat (Transmutation)
+Saves: 	DC: 	Casting: 1 standard action
+Duration: 4 minutes [D]	Range: Personal	Components: V, S
+SR: 	Effect: This spell increases your base land speed by 30 feet.	Target: You
+DESC: This spell increases your base land speed by 30 feet.
+DESC 2:  This spell increases your base land speed by 30 feet.
+Hideous Laughter (Enchantment)
+Saves: Will negates	DC: 16	Casting: 1 standard action
+Duration: 4 rounds	Range: Close (35 ft.)	Components: V, S, M
+SR: Yes	Effect: This spell afflicts the subject with uncontrollable laughter.	Target: One creature; see text
+DESC: This spell afflicts the subject with uncontrollable laughter.
+DESC 2:  This spell afflicts the subject with uncontrollable laughter.
+True Skill (Divination)
+Saves: 	DC: 	Casting: 1 standard action
+Duration: 4 minutes	Range: Personal	Components: S,V
+SR: 	Effect: When faced with an important situation, you grant yourself a magical edge to ensure your success. When casting this spell, select one skill for which you can attempt a skill check. The next time you attempt a skill check using the selected skill [before the spell's duration ends], you gain a +2 insight bonus on the check.	Target: You
+DESC: When faced with an important situation, you grant yourself a magical edge to ensure your success. When casting this spell, select one skill for which you can attempt a skill check. The next time you attempt a skill check using the selected skill (before the spell's duration ends), you gain a +(max(1,CASTERLEVEL/2)) insight bonus on the check.
+DESC 2:  When faced with an important situation, you grant yourself a magical edge to ensure your success. When casting this spell, select one skill for which you can attempt a skill check. The next time you attempt a skill check using the selected skill [before the spell's duration ends], you gain a +2 insight bonus on the check.
+ 
+ 
+Level 2
+Aversion (Enchantment)
+Saves: Will partial	DC: 17	Casting: 1 standard action
+Duration: 4 days	Range: Close (35 ft.)	Components: V, S
+SR: Yes	Effect: Cause the target to avoid an object or location.	Target: One creature
+DESC: Cause the target to avoid an object or location.
+DESC 2:  Cause the target to avoid an object or location.
+Create Treasure Map (Divination)
+Saves: None	DC: 	Casting: 1 hour
+Duration: Instantaneous	Range: Touch	Components: V, S, M
+SR: No	Effect: Creates treasure map out of a creature's corpse.	Target: one dead creature
+DESC: Creates treasure map out of a creature's corpse.
+DESC 2:  Creates treasure map out of a creature's corpse.
+ 
+  
+  
+  
+  
+ 
+               
+               
+
+------------------------ Description -----------------------
+Height: 0' 0" Weight: 0 lbs. Gender: Male	
+Eyes:    Hair: , Skin: 
+Dominant Hand: Right Quirks: , 	
+Speech style:  Quotable: 
+Full Description
+
+Background
+
+Campaign Logs

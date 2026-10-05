@@ -1,0 +1,295 @@
+Name:       Corpus Monk3
+Race:       Human (Arcadian)
+Player:      
+Classes:    Monk3
+Hit Points: 19
+Experience: 5000 / 9000
+Alignment:  Lawful Good
+Vision:     
+Speed:      Walk 40 ft.
+Languages:  Common
+Stat    Score   Mod
+STR  14 (+2)
+DEX  16 (+3)
+CON  12 (+1)
+INT  10 (+0)
+WIS  16 (+3)
+CHA  10 (+0)
+-------------------------- Skills --------------------------
+Skill                   Total   Rnk     Stat    Msc
+Acrobatics  11  3.0  3  5
+Acrobatics (When Jumping)  15  3.0  3  9
+Appraise  0  0.0  0  0
+Bluff  0  0.0  0  0
+Climb  8  3.0  2  3
+Craft (Alchemy)  6  3.0  0  3
+Craft (Armor)  6  3.0  0  3
+Craft (Baskets)  6  3.0  0  3
+Craft (Untrained)  0  0.0  0  0
+Diplomacy  0  0.0  0  0
+Disguise  0  0.0  0  0
+Escape Artist  3  0.0  3  0
+Fly  5  0.0  3  2
+Heal  3  0.0  3  0
+Intimidate  0  0.0  0  0
+Perception  3  0.0  3  0
+Perform (Untrained)  0  0.0  0  0
+Ride  3  0.0  3  0
+Sense Motive  3  0.0  3  0
+Stealth  3  0.0  3  0
+Survival  3  0.0  3  0
+Swim  2  0.0  2  0
+-------------------------- Feats ---------------------------
+Ability Focus (Stunning Fist)
+  One of this creature's special attacks is particularly difficult to resist.
+  
+Accursed
+  [Not Implemented] Your curse weighs down your soul like a millstone around your neck.
+  
+Acrobatic
+Improved Unarmed Strike
+Catch Off-Guard
+  Foes are surprised by your skilled use of unorthodox and improvised weapons.
+  
+Combat Reflexes
+  You can make additional attacks of opportunity.
+  
+Stunning Fist
+-------------------- Special Abilities ---------------------
+
+			<name>No Racial Subtype</name>
+			<description>You have chosen no racial subtype.</description>
+			<type>UNIVERSAL SUBTYPE</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Race Guide</source>
+		</special_quality>
+			<name>Absalom Bouncer</name>
+			<description>When you make an attack that deals nonlethal damage with an unarmed strike, you gain a +1 bonus on your damage roll.</description>
+			<type>TRAIT.BASICTRAIT.COMBATTRAIT</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Pathfinder Player Companion: Advanced Class Origins, p.11</source>
+		</special_quality>
+			<name>Acadamae Neophyte</name>
+			<description>Whenever you succeed at a Knowledge (planes) check to identify a creature and its special powers or vulnerabilities, you gain one additional piece of useful information (as if your skill check result had been 5 higher).</description>
+			<type>TRAIT.BASICTRAIT.MAGICTRAIT</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Publishing - Pathfinder Player Companion: Monster Summoner's Handbook, p.10</source>
+		</special_quality>
+			<name>AC Bonus (Ex)</name>
+			<description>When unarmored and unencumbered, you add +3 to your AC and your CMD. These bonuses apply even against touch attacks or when you are flat-footed. You lose these bonuses when you are immobilized or helpless, when you wear any armor, when you carry a shield, or when you carry a medium or heavy load.</description>
+			<type>MONKCLASSFEATURES.SPECIALQUALITY.EXTRAORDINARY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook</source>
+		</special_quality>
+			<name>Bonus Feat</name>
+			<description>Humans select one extra feat at 1st level.</description>
+			<type>RACIALTRAITS.HUMAN RACIAL TRAIT.HUMAN RACIAL DEFAULT.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Race Guide, p.70</source>
+		</special_quality>
+			<name>Evasion (Ex)</name>
+			<description>You can avoid damage from many area-effect attacks. If you make a successful Reflex saving throw against an attack that normally deals half damage on a successful save, you instead take no damage. Evasion can only be used if you are wearing light armor or no armor. If you are helpless, you do not gain the benefit of evasion.</description>
+			<type>SPECIALQUALITY.EXTRAORDINARY.DEFENSIVE</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook</source>
+		</special_quality>
+			<name>Evasion</name>
+			<description></description>
+			<type>MONKCLASSFEATURES.EVASION</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook</source>
+		</special_quality>
+			<name>Fast Movement (Ex)</name>
+			<description>You gain a +10 feet enhancement bonus to your land speed. If you wear armor or carry a medium or heavy load, you lose this extra speed.</description>
+			<type>MONKCLASSFEATURES.SPECIALQUALITY.EXTRAORDINARY.MODIFYMOVEMENT</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.59</source>
+		</special_quality>
+			<name>Flurry of Blows (Ex)</name>
+			<description>You can make a flurry of blows as a full-attack action. You can make a flurry of blows as a full-attack action. When doing so, you may make one additional attack, taking a -2 penalty on all of your attacks, as if using the Two-Weapon Fighting feat. These attacks can be any combination of unarmed strikes and attacks with a monk speciak weapon (you do not need to use two weapons to utlilize this ability). For the purpose of these attacks, your base attack bonus is equal to your monk level. For all other purposes, such as qualifying for a feat or a prestige class, you use your normal base attack bonus.</description>
+			<type>MONKCLASSFEATURES.SPECIALATTACK.EXTRAORDINARY.FLURRY OF BLOWS</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.57</source>
+		</special_quality>
+			<name>Maneuver Training (Ex)</name>
+			<description>A monk uses his monk level in place of his base attack bonus when calculating his combat maneuver bonus. Base attack bonuses granted from other classes are unaffected and are added normally.</description>
+			<type>MONKCLASSFEATURES.SPECIALQUALITY.EXTRAORDINARY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.59</source>
+		</special_quality>
+			<name>Monk Bonus Feat</name>
+			<description></description>
+			<type>MONKCLASSFEATURES.INTERNAL.CLASSFEATURES</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Publishing - Core Rulebook</source>
+		</special_quality>
+			<name>Skilled</name>
+			<description>Humans gain an additional skill rank at 1st level and one additional rank whenever they gain a level.</description>
+			<type>RACIALTRAITS.HUMAN RACIAL TRAIT.HUMAN RACIAL DEFAULT.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Race Guide, p.70</source>
+		</special_quality>
+			<name>Still Mind (Ex)</name>
+			<description>You gain a +2 bonus on saving throws against enchantment spells and effects.</description>
+			<type>MONKCLASSFEATURES.SPECIALQUALITY.EXTRAORDINARY.DEFENSIVE.STILL MIND</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>SaveBonus: +2 vs. enchantment spells and effects</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.59</source>
+		</special_quality>
+			<name>Stunning Fist (Ex)</name>
+			<description>You gain Stunning Fist as a bonus feat.</description>
+			<type>MONKCLASSFEATURES.SPECIALATTACK.EXTRAORDINARY.STUNNING FIST</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.59</source>
+		</special_quality>
+			<name>Unarmed Strike</name>
+			<description>At 1st level, a monk gains Improved Unarmed Strike as a bonus feat. A monk's attacks may be with fist, elbows, knees, and feet. This means that a monk may make unarmed strikes with his hands full. There is no such thing as an off-hand attack for a monk striking unarmed. A monk may thus apply his full Strength bonus on damage rolls for all his unarmed strikes. Usually a monk's unarmed strikes deal lethal damage, but he can choose to deal nonlethal damage instead with no penalty on his attack roll. He has the same choice to deal lethal or nonlethal damage while grappling. A monk's unarmed strike is treated as both a manufactured weapon and a natural weapon for the purpose of spells and effects that enhance or improve either manufactured weapons or natural weapons. A monk also deals more damage with his unarmed strikes than a normal person would, as shown above on Table 3-10. The unarmed damage values listed on Table 3-10 is for Medium monks. A Small monk deals less damage than the amount given there with his unarmed attacks, while a Large monk deals more damage; see Small or Large Monk Unarmed Damage on the table given below.</description>
+			<type>MONKCLASSFEATURES.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.58</source>
+		</special_quality>
+	</special_qualities>
+------------------------ Templates -------------------------
+
+-------------------------- Combat --------------------------
+    Total / Touch / Flat Footed
+AC: 16 / 16 / 13
+Initiative:   +3
+BAB:          +2
+Melee tohit:  +4
+Ranged tohit: +5
+Fortitude:    +4
+Reflex:       +6
+Will:         +6
+Unarmed attack:
+to hit:       +4
+damage:       1d6+2
+critical:     20/x2
+Quarterstaff:
+to hit:       -4;-4
+damage:       1d6+2/1d6+1
+critical:     20/x2/2
+special properties: Head1: double, monk, Head2: double, monk
+Quarterstaff (Head 1 only):
+to hit:       +4
+damage:       1d6+3
+critical:     20/x2
+special properties: double, monk
+Quarterstaff (Head 2 only):
+to hit:       +4
+damage:       1d6+3
+critical:     20/x2
+special properties: double, monk
+--------------------- Special Abilities --------------------
+ 
+------------------------- Equipment ------------------------
+Name                                            QTY	LBS
+Total weight carried: 4 lbs.
+Current load:         Light
+Encumbrance
+Light:  58   
+Medium: 116   
+Heavy:  175
+--------------------------- Magic --------------------------
+
+      
+      
+------------------------ Description -----------------------
+Height: 0' 0" Weight: 0 lbs. Gender: Male	
+Eyes:    Hair: , Skin: 
+Dominant Hand: Right Quirks: , 	
+Speech style:  Quotable: 
+Full Description
+
+Background
+
+Campaign Logs

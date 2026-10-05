@@ -1,0 +1,402 @@
+Name:       Corpus Magus4
+Race:       Elf
+Player:      
+Classes:    Magus4
+Hit Points: 26
+Experience: 9000 / 15000
+Alignment:  None
+Vision:     Low-Light Vision
+Speed:      Walk 30 ft.
+Languages:  Common, Elven
+Stat    Score   Mod
+STR  13 (+1)
+DEX  16 (+3)
+CON  10 (+0)
+INT  18 (+4)
+WIS  10 (+0)
+CHA  8 (-1)
+-------------------------- Skills --------------------------
+Skill                   Total   Rnk     Stat    Msc
+Acrobatics  3  0.0  3  0
+Appraise  4  0.0  4  0
+Bluff  -1  0.0  -1  0
+Climb  6  4.0  1  1
+Craft (Alchemy)  11  4.0  4  3
+Craft (Armor)  11  4.0  4  3
+Craft (Baskets)  11  4.0  4  3
+Craft (Blacksmithing)  11  4.0  4  3
+Craft (Books)  11  4.0  4  3
+Craft (Untrained)  4  0.0  4  0
+Diplomacy  -1  0.0  -1  0
+Disguise  -1  0.0  -1  0
+Escape Artist  1  0.0  3  -2
+Fly  3  0.0  3  0
+Heal  0  0.0  0  0
+Intimidate  -1  0.0  -1  0
+Perception  2  0.0  0  2
+Perform (Untrained)  -1  0.0  -1  0
+Ride  1  0.0  3  -2
+Sense Motive  0  0.0  0  0
+Stealth  1  0.0  3  -2
+Survival  0  0.0  0  0
+Swim  -1  0.0  1  -2
+-------------------------- Feats ---------------------------
+Accursed
+  [Not Implemented] Your curse weighs down your soul like a millstone around your neck.
+  
+Acrobatic
+-------------------- Special Abilities ---------------------
+
+			<name>No Racial Subtype</name>
+			<description>You have chosen no racial subtype.</description>
+			<type>UNIVERSAL SUBTYPE</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Race Guide</source>
+		</special_quality>
+			<name>Absalom Bouncer</name>
+			<description>When you make an attack that deals nonlethal damage with an unarmed strike, you gain a +1 bonus on your damage roll.</description>
+			<type>TRAIT.BASICTRAIT.COMBATTRAIT</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Pathfinder Player Companion: Advanced Class Origins, p.11</source>
+		</special_quality>
+			<name>Acadamae Neophyte</name>
+			<description>Whenever you succeed at a Knowledge (planes) check to identify a creature and its special powers or vulnerabilities, you gain one additional piece of useful information (as if your skill check result had been 5 higher).</description>
+			<type>TRAIT.BASICTRAIT.MAGICTRAIT</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Publishing - Pathfinder Player Companion: Monster Summoner's Handbook, p.10</source>
+		</special_quality>
+			<name>Arcane Accuracy (Su)</name>
+			<description>You can expend 1 point from your arcane pool as a swift action to grant yourself a +4 insight bonus on all attack rolls until the end of your turn.</description>
+			<type>SPECIALQUALITY.SUPERNATURAL.MAGUSARCANA</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Ultimate Magic, p.11</source>
+		</special_quality>
+			<name>Arcane Pool (Su)</name>
+			<description>You have a reservoir of mystical arcane energy that you draw upon to fuel your powers and enhance your weapon. This arcane pool has 6 points. The pool refreshes once per day when you prepare your spells. You can expend 1 point from your arcane pool as a swift action to grant any weapon you are holding a +1 enhancement bonus for 1 minute. These bonuses can be added to the weapon, stacking with existing weapon enhancement to a maximum of +5. Multiple uses of this ability do not stack with themselves.</description>
+			<type>MAGUSCLASSFEATURES.SPECIALQUALITY.SUPERNATURAL.MAGUS ARCANE POOL</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>Ability Benefit: (6/day), CheckCount: 6, CheckType: Uses per Day</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Ultimate Magic, p.9</source>
+		</special_quality>
+			<name>Armor Proficiency (Ex)</name>
+			<description>You can cast magus spells while wearing light armor without incurring the normal arcane spell failure chance. Like any other arcane spellcaster, a magus wearing medium armor, heavy armor, or a shield incurs a chance of arcane spell failure if the spell in question has a somatic component. A multiclass magus still incurs the normal arcane spell failure chance for arcane spells received from other classes.</description>
+			<type>MAGUSCLASSFEATURES.SPECIALQUALITY.EXTRAORDINARY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Ultimate Magic</source>
+		</special_quality>
+			<name>Cantrips</name>
+			<description>You can prepare a number of cantrips, or 0-level spells, each day. These spells are cast like any other spell, but they are not expended when cast and may be used again.</description>
+			<type>MAGUSCLASSFEATURES.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Ultimate Magic, p.10</source>
+		</special_quality>
+			<name>Elven Immunities</name>
+			<description>Elves are immune to magic sleep effects and get a +2 racial saving throw bonus against enchantment spells and effects.</description>
+			<type>RACIALTRAITS.ELF RACIAL TRAIT.ELF RACIAL DEFAULT.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>SaveBonus: +2 racial saving throw bonus against enchantment spells and effects.</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Race Guide, p.20</source>
+		</special_quality>
+			<name>Elven Magic</name>
+			<description>Elves receive a +2 racial bonus on caster level checks made to overcome spell resistance. In addition, elves receive a +2 racial bonus on Spellcraft skill checks made to identify the properties of magic items.</description>
+			<type>RACIALTRAITS.ELF RACIAL TRAIT.ELF RACIAL DEFAULT.SPECIALQUALITY.SPECIAL QUALITY.ELVEN MAGIC</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Race Guide, p.20</source>
+		</special_quality>
+			<name>Immunity to Sleep (Ex)</name>
+			<description>You are never subject to sleep effects.</description>
+			<type>SPECIALQUALITY.EXTRAORDINARY.IMMUNITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>Immunity: Sleep</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Bestiary, p.301</source>
+		</special_quality>
+			<name>Keen Senses</name>
+			<description>Elves receive a +2 racial bonus on Perception skill checks.</description>
+			<type>RACIALTRAITS.ELF RACIAL TRAIT.ELF RACIAL DEFAULT.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Race Guide, p.20</source>
+		</special_quality>
+			<name>Low-Light Vision (Ex)</name>
+			<description>Elves can see twice as far as humans in conditions of dim light.</description>
+			<type>RACIALTRAITS.ELF RACIAL TRAIT.ELF RACIAL DEFAULT.SPECIALQUALITY.EXTRAORDINARY.RACIAL VISION</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Race Guide, p.20</source>
+		</special_quality>
+			<name>Magus Arcana</name>
+			<description>As he gains levels, a magus learns arcane secrets tailored to his specific way of blending martial puissance and magical skill. Starting at 3rd level, a magus gains one magus arcana. He gains an additional magus arcana for every three levels of magus attained after 3rd level. Unless specifically noted in a magus arcana's description, a magus cannot select a particular magus arcana more than once. Magus arcana that affect spells can only be used to modify spells from the magus spell list unless otherwise noted.</description>
+			<type>MAGUSCLASSFEATURES.INTERNAL.CLASSFEATURES.MAGUS ARCANA</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Ultimate Magic</source>
+		</special_quality>
+			<name>Spell Combat (Ex)</name>
+			<description>You can cast spells and wield your weapons at the same time. This functions much like two-weapon fighting, but the offhand weapon is a spell that is being cast. To use this ability, you must have one hand free (even if the spell being cast does not have somatic components), while wielding a light or one-handed melee weapon in the other hand. As a full-round action, you can make all of your attacks with your melee weapon at a -2 penalty and can also cast any spell from the magus spell list with a casting time of 1 standard action  (any attack roll made as part of this spell also takes this penalty). If you cast this spell defensively, you can decide to take an additional penalty on your attack rolls, up to your Intelligence bonus, and add the same amount as a circumstance bonus on your concentration check. If the check fails, the spell is wasted, but the attacks still take the penalty. You can choose to cast the spell first or make the weapon attacks first, but if you have more than one attack, you cannot cast the spell between weapon attacks.</description>
+			<type>MAGUSCLASSFEATURES.SPECIALATTACK.EXTRAORDINARY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Ultimate Magic, p.10</source>
+		</special_quality>
+			<name>Spell Recall (Su)</name>
+			<description>You can use your arcane pool to recall spells he has already cast. With a swift action, you can recall any single magus spell that you have already prepared and cast that day by expending a number of points from your arcane pool equal to the spell's level (minimum 1). The spell is prepared again, just as if it had not been cast.</description>
+			<type>MAGUSCLASSFEATURES.SPECIALQUALITY.SUPERNATURAL</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Ultimate Magic, p.12</source>
+		</special_quality>
+			<name>Spellstrike (Ex)</name>
+			<description>Whenever you cast a spell with a range of "touch" from the magus spell list, you can deliver the spell through any weapon you are wielding as part of a melee attack. Instead of the free melee touch attack normally allowed to deliver the spell, a magus can make one free melee attack with his weapon (at his highest base attack bonus) as part of casting this spell. If successful, this melee attack deals its normal damage as well as the effects of the spell. If you make this attack in concert with spell combat, this melee attack takes all the penalties accrued by spell combat melee attacks. This attack uses the weapon's critical range (20, 19-20, or 18-20 and modified by the keen weapon property or similar effects), but the spell effect only deals x2 damage on a successful critical hit, while the weapon damage uses its own critical modifier.</description>
+			<type>MAGUSCLASSFEATURES.SPECIALATTACK.EXTRAORDINARY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Ultimate Magic, p.10</source>
+		</special_quality>
+			<name>Weapon Familiarity</name>
+			<description>Elves are proficient with longbows (including composite longbows), longswords, rapiers, and shortbows (including composite shortbows), and treat any weapon with the word "elven" in its name as a martial weapon.</description>
+			<type>RACIALTRAITS.ELF RACIAL TRAIT.ELF RACIAL DEFAULT.SPECIALQUALITY.SPECIAL QUALITY.WEAPON FAMILIARITY.RACIALWEAPONFAMILIARITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Race Guide, p.20</source>
+		</special_quality>
+	</special_qualities>
+------------------------ Templates -------------------------
+
+-------------------------- Combat --------------------------
+    Total / Touch / Flat Footed
+AC: 17 / 13 / 14
+Initiative:   +3
+BAB:          +3
+Melee tohit:  +4
+Ranged tohit: +6
+Fortitude:    +4
+Reflex:       +4
+Will:         +4
+Unarmed attack:
+to hit:       +4
+damage:       1d3+1
+critical:     20/x2
+Longsword:
+to hit:       +4
+damage:       1d8+1
+critical:     19-20/x2
+--------------------- Special Abilities --------------------
+ 
+------------------------- Equipment ------------------------
+Name                                            QTY	LBS
+Chain Shirt  1	25lbs
+Total weight carried: 32 lbs.
+Current load:         Light
+Encumbrance
+Light:  50   
+Medium: 100   
+Heavy:  150
+--------------------------- Magic --------------------------
+
+
+Magus Spells
+ 
+Level 0
+Acid Splash (Conjuration, EarthSchool)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: Instantaneous	Range: Close (35 ft.)	Components: V, S
+SR: No	Effect: You fire a small orb of acid at the target dealing 1d3 points of acid damage.	Target: One missile of acid
+DESC: You fire a small orb of acid at the target dealing 1d3 points of acid damage.
+DESC 2:  You fire a small orb of acid at the target dealing 1d3 points of acid damage.
+Arcane Mark (Universal)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: Permanent	Range: Touch	Components: V, S
+SR: No	Effect: This spell allows you to inscribe your personal rune or mark.	Target: One personal rune or mark, all of which must fit within 1 sq. ft.
+DESC: This spell allows you to inscribe your personal rune or mark.
+DESC 2:  This spell allows you to inscribe your personal rune or mark.
+Dancing Lights (Evocation)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: 1 minute [D]	Range: Medium (140 ft.)	Components: V, S
+SR: No	Effect: You create up to four lights that resemble lanterns or torches.	Target: Up to four lights, all within a 10-ft.-radius area
+DESC: You create up to four lights that resemble lanterns or torches.
+DESC 2:  You create up to four lights that resemble lanterns or torches.
+Daze (Enchantment)
+Saves: Will negates	DC: 14	Casting: 1 standard action
+Duration: 1 round	Range: Close (35 ft.)	Components: V, S, M
+SR: Yes	Effect: This spell clouds the mind of a humanoid creature with 4 or fewer Hit Dice so that it takes no actions.	Target: One humanoid creature of 4 HD or less
+DESC: This spell clouds the mind of a humanoid creature with 4 or fewer Hit Dice so that it takes no actions.
+DESC 2:  This spell clouds the mind of a humanoid creature with 4 or fewer Hit Dice so that it takes no actions.
+Detect Fiendish Presence (Divination)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: Concentration, up to 40 minutes [D]	Range: 60 ft.	Components: V,S
+SR: No	Effect: This spell functions like detect evil, except that it detects only outsiders with the evil subtype, as well as the lingering effects caused by their gifts, presence, and spells. It can also detect clerics and paladins of fiendish deities, including Asmodeus, archdevils, daemonic harbingers, and demon lords.	Target: Cone-shaped emanation
+DESC: This spell functions like detect evil, except that it detects only outsiders with the evil subtype, as well as the lingering effects caused by their gifts, presence, and spells. It can also detect clerics and paladins of fiendish deities, including Asmodeus, archdevils, daemonic harbingers, and demon lords.
+DESC 2:  This spell functions like detect evil, except that it detects only outsiders with the evil subtype, as well as the lingering effects caused by their gifts, presence, and spells. It can also detect clerics and paladins of fiendish deities, including Asmodeus, archdevils, daemonic harbingers, and demon lords.
+Detect Magic (Divination)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: Concentration, up to 4 minutes [D]	Range: 60 ft.	Components: V, S
+SR: No	Effect: You detect magical auras.	Target: Cone-shaped emanation
+DESC: You detect magical auras.
+DESC 2:  You detect magical auras.
+Disrupt Undead (Necromancy)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: Instantaneous	Range: Close (35 ft.)	Components: V, S
+SR: Yes	Effect: You direct a ray of positive energy dealing 1d6 points of damage to Undead.	Target: Ray
+DESC: You direct a ray of positive energy dealing 1d6 points of damage to Undead.
+DESC 2:  You direct a ray of positive energy dealing 1d6 points of damage to Undead.
+Flare (Evocation)
+Saves: Fortitude negates	DC: 14	Casting: 1 standard action
+Duration: Instantaneous	Range: Close (35 ft.)	Components: V
+SR: Yes	Effect: This cantrip creates a burst of light.	Target: Burst of light
+DESC: This cantrip creates a burst of light.
+DESC 2:  This cantrip creates a burst of light.
+Ghost Sound (Illusion)
+Saves: Will disbelief	DC: 14	Casting: 1 standard action
+Duration: 4 rounds [D]	Range: Close (35 ft.)	Components: V, S, M
+SR: No	Effect: Ghost sound allows you to create a volume of sound that rises, recedes, approaches, or remains at a fixed place.	Target: Illusory sounds
+DESC: Ghost sound allows you to create a volume of sound that rises, recedes, approaches, or remains at a fixed place.
+DESC 2:  Ghost sound allows you to create a volume of sound that rises, recedes, approaches, or remains at a fixed place.
+Light (Evocation)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: 40 minutes	Range: Touch	Components: V, M/DF
+SR: No	Effect: This spell causes a touched object to glow like a torch.	Target: Object touched
+DESC: This spell causes a touched object to glow like a torch.
+DESC 2:  This spell causes a touched object to glow like a torch.
+Mage Hand (Transmutation)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: Concentration	Range: Close (35 ft.)	Components: V, S
+SR: No	Effect: You point your finger at an object and can lift it and move it at will from a distance.	Target: One nonmagical, unattended object weighing up to 5 lbs.
+DESC: You point your finger at an object and can lift it and move it at will from a distance.
+DESC 2:  You point your finger at an object and can lift it and move it at will from a distance.
+Open/Close (Transmutation)
+Saves: Will negates (object)	DC: 14	Casting: 1 standard action
+Duration: Instantaneous	Range: Close (35 ft.)	Components: V, S, F
+SR: Yes (object)	Effect: You can open or close [your choice] a door, chest, box, window, bag, pouch, bottle, barrel, or other container.	Target: Object weighing up to 30 lbs. or portal that can be opened or closed
+DESC: You can open or close (your choice) a door, chest, box, window, bag, pouch, bottle, barrel, or other container.
+DESC 2:  You can open or close [your choice] a door, chest, box, window, bag, pouch, bottle, barrel, or other container.
+Prestidigitation (Universal)
+Saves: See text	DC: 14	Casting: 1 standard action
+Duration: 1 hour	Range: 10 ft.	Components: V, S
+SR: No	Effect: Prestidigitations are minor tricks that novice spellcasters use for practice.	Target: See text
+DESC: Prestidigitations are minor tricks that novice spellcasters use for practice.
+DESC 2:  Prestidigitations are minor tricks that novice spellcasters use for practice.
+Ray of Frost (Evocation, WaterSchool)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: Instantaneous	Range: Close (35 ft.)	Components: V, S
+SR: Yes	Effect: A ray of freezing air and ice projects from your pointing finger dealing 1d3 points of cold damage.	Target: Ray
+DESC: A ray of freezing air and ice projects from your pointing finger dealing 1d3 points of cold damage.
+DESC 2:  A ray of freezing air and ice projects from your pointing finger dealing 1d3 points of cold damage.
+Read Magic (Divination)
+Saves: 	DC: 	Casting: 1 standard action
+Duration: 40 minutes	Range: Personal	Components: V, S, F
+SR: 	Effect: You can decipher magical inscriptions on objects--books, scrolls, weapons, and the like--that would otherwise be unintelligible.	Target: You
+DESC: You can decipher magical inscriptions on objects--books, scrolls, weapons, and the like--that would otherwise be unintelligible.
+DESC 2:  You can decipher magical inscriptions on objects--books, scrolls, weapons, and the like--that would otherwise be unintelligible.
+Spark (Evocation, FireSchool)
+Saves: Fortitude negates (object)	DC: 14	Casting: 1 standard action
+Duration: Instantaneous	Range: Close (35 ft.)	Components: V or S
+SR: Yes (object)	Effect: Ignites flammable objects.	Target: one Fine object
+DESC: Ignites flammable objects.
+DESC 2:  Ignites flammable objects.
+              
+               
+               
+
+         
+------------------------ Description -----------------------
+Height: 0' 0" Weight: 0 lbs. Gender: Male	
+Eyes:    Hair: , Skin: 
+Dominant Hand: Right Quirks: , 	
+Speech style:  Quotable: 
+Full Description
+
+Background
+
+Campaign Logs

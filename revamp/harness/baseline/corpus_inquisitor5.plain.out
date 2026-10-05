@@ -1,0 +1,606 @@
+Name:       Corpus Inquisitor5
+Race:       Dwarf
+Player:      
+Classes:    Inquisitor5
+Hit Points: 48
+Experience: 15000 / 23000
+Alignment:  None
+Vision:     Darkvision (60 ft.)
+Speed:      Walk 20 ft.
+Languages:  Common, Dwarven
+Stat    Score   Mod
+STR  15 (+2)
+DEX  10 (+0)
+CON  16 (+3)
+INT  10 (+0)
+WIS  20 (+5)
+CHA  8 (-1)
+-------------------------- Skills --------------------------
+Skill                   Total   Rnk     Stat    Msc
+Acrobatics  0  0.0  0  0
+Acrobatics (When Jumping)  -4  0.0  0  -4
+Appraise  0  0.0  0  0
+Appraise (to assess nonmagical metals or gemstones)  2  0.0  0  2
+Bluff  7  5.0  -1  3
+Climb  8  5.0  2  1
+Craft (Alchemy)  8  5.0  0  3
+Craft (Armor)  8  5.0  0  3
+Craft (Baskets)  8  5.0  0  3
+Craft (Blacksmithing)  8  5.0  0  3
+Craft (Untrained)  0  0.0  0  0
+Diplomacy  -1  0.0  -1  0
+Disguise  -1  0.0  -1  0
+Escape Artist  -2  0.0  0  -2
+Fly  0  0.0  0  0
+Heal  5  0.0  5  0
+Intimidate  1  0.0  -1  2
+Perception  5  0.0  5  0
+Perception (to notice unusual stonework)  7  0.0  5  2
+Perform (Untrained)  -1  0.0  -1  0
+Ride  -2  0.0  0  -2
+Sense Motive  7  0.0  5  2
+Stealth  -2  0.0  0  -2
+Survival  5  0.0  5  0
+Survival (Follow or identify tracks)  7  0.0  5  2
+Swim  0  0.0  2  -2
+-------------------------- Feats ---------------------------
+Absorb Spirit
+  You absorb restless spirits into your body at the cost of your own life force and sanity. Wisdom damage. If you succeed, you take 1 point of Constitution and Wisdom damage. No effect can prevent or reduce this damage, nor can the damage be healed or suppressed by any means until you release the spirit. You can release the spirit at any time as a standard action, at which point the spirit returns to its former location and begins rejuvenating or manifesting again as normal. If you die from the Constitution damage, the spirit is released, and if you become comatose from the Wisdom damage, the spirit gains control of your body (and can release itself whenever it desires).
+  
+Accursed
+  [Not Implemented] Your curse weighs down your soul like a millstone around your neck.
+  
+Acrobatic
+-------------------- Special Abilities ---------------------
+
+			<name>No Racial Subtype</name>
+			<description>You have chosen no racial subtype.</description>
+			<type>UNIVERSAL SUBTYPE</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Race Guide</source>
+		</special_quality>
+			<name>Absalom Bouncer</name>
+			<description>When you make an attack that deals nonlethal damage with an unarmed strike, you gain a +1 bonus on your damage roll.</description>
+			<type>TRAIT.BASICTRAIT.COMBATTRAIT</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Pathfinder Player Companion: Advanced Class Origins, p.11</source>
+		</special_quality>
+			<name>Acadamae Neophyte</name>
+			<description>Whenever you succeed at a Knowledge (planes) check to identify a creature and its special powers or vulnerabilities, you gain one additional piece of useful information (as if your skill check result had been 5 higher).</description>
+			<type>TRAIT.BASICTRAIT.MAGICTRAIT</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Publishing - Pathfinder Player Companion: Monster Summoner's Handbook, p.10</source>
+		</special_quality>
+			<name>Anger Inquisition</name>
+			<description></description>
+			<type>INQUISITORDOMAIN.INQUISITION</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Ultimate Magic</source>
+		</special_quality>
+			<name>Bane (Su)</name>
+			<description>An inquisitor can imbue one of her weapons with the undead-bane weapon special ability as a swift action. This ability lasts for 5 rounds per day. These rounds do not need to be consecutive.</description>
+			<type>INQUISITORCLASSFEATURES.SPECIALATTACK.SUPERNATURAL</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>CheckCount: 5, CheckType: Rounds per Day</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Publishing - Advanced Player's Guide, p.40</source>
+		</special_quality>
+			<name>Cunning Initiative (Ex)</name>
+			<description>An inquisitor adds her Wisdom modifier on initiative checks, in addition to her Dexterity modifier.</description>
+			<type>INQUISITORCLASSFEATURES.SPECIALQUALITY.EXTRAORDINARY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Player's Guide, p.40</source>
+		</special_quality>
+			<name>Defensive Training</name>
+			<description>Dwarves get a +4 dodge bonus to AC against monsters of the giant subtype.</description>
+			<type>RACIALTRAITS.DWARF RACIAL TRAIT.DWARF RACIAL DEFAULT.SPECIALQUALITY.DEFENSIVE.RACIALDEFENSIVETRAINING</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>Ability Benefit: (+4 dodge bonus to AC vs. giants), CombatBonus: +4 dodge bonus to AC against monsters of the giant subtype.</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Pathfinder Companion: Dwarves of Golarion, Front Inside Cover</source>
+		</special_quality>
+			<name>Detect Alignment (Sp)</name>
+			<description>At will, an inquisitor can use detect chaos, detect evil, detect good, or detect law. She can only use one of these at any given time.</description>
+			<type>INQUISITORCLASSFEATURES.SPECIALQUALITY.SPELLLIKE</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Player's Guide, p.40</source>
+		</special_quality>
+			<name>Discern Lies (Sp)</name>
+			<description>An inquisitor can discern lies, as per the spell, for 5 rounds per day. These rounds do not need to be consecutive. Activating this ability is an immediate action.</description>
+			<type>INQUISITORCLASSFEATURES.SPECIALQUALITY.SPELLLIKE</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Player's Guide, p.41</source>
+		</special_quality>
+			<name>Domains</name>
+			<description></description>
+			<type>INTERNAL.CF_DOMAIN</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook</source>
+		</special_quality>
+			<name>Greed</name>
+			<description>Dwarves receive a +2 racial bonus on Appraise skill checks made to determine the price of nonmagical goods that contain precious metals or gemstones.</description>
+			<type>RACIALTRAITS.DWARF RACIAL TRAIT.DWARF RACIAL DEFAULT.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Pathfinder Companion: Dwarves of Golarion, Front Inside Cover</source>
+		</special_quality>
+			<name>Hardy</name>
+			<description>Dwarves receive a +2 racial bonus on saving throws against poison, spells, and spell-like abilities.</description>
+			<type>RACIALTRAITS.DWARF RACIAL TRAIT.DWARF RACIAL DEFAULT.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>SaveBonus: +2 racial bonus on saving throws against poison, spells, and spell-like abilities.</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Pathfinder Companion: Dwarves of Golarion, Front Inside Cover</source>
+		</special_quality>
+			<name>Hateful Retort (Ex)</name>
+			<description>Once per day, as an immediate action after you have been hit with a melee attack, you can make a melee attack against the creature that hit you. This melee attack is at your highest attack bonus, even if you've already attacked in the round.</description>
+			<type>SPECIALATTACK.EXTRAORDINARY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Ultimate Magic, p.41</source>
+		</special_quality>
+			<name>Hatred</name>
+			<description>Dwarves receive a +1 bonus on attack rolls against humanoid creatures of the orc and goblinoid subtypes due to special training against these hated foes.</description>
+			<type>RACIALTRAITS.DWARF RACIAL TRAIT.DWARF RACIAL DEFAULT.SPECIALATTACK.SPECIAL ATTACK.RACIALHATRED</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>CombatBonus: +1 bonus on attack rolls against humanoid creatures of the orc and goblinoid subtypes due to special training against these hated foes., StatBlockName: +1 on attack rolls against goblinoid and orc humanoids</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Pathfinder Companion: Dwarves of Golarion, Front Inside Cover</source>
+		</special_quality>
+			<name>Inquisitor ~ Domains</name>
+			<description></description>
+			<type>INQUISITORCLASSFEATURES.CF_DOMAIN</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>Notes: Must use Same Domain if becoming a Cleric., NotesSection: Inquisitor & Cleric Domain</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Player's Guide</source>
+		</special_quality>
+			<name>Inquisitor ~ Judgment</name>
+			<description></description>
+			<type>INQUISITORCLASSFEATURES</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Player's Guide</source>
+		</special_quality>
+			<name>Inquisitor ~ Teamwork Feat</name>
+			<description></description>
+			<type>INQUISITORCLASSFEATURES</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Player's Guide</source>
+		</special_quality>
+			<name>Judgment / Destruction</name>
+			<description>The inquisitor is filled with divine wrath, gaining a +2 profane bonus on all weapon damage rolls.</description>
+			<type>INQUISITORCLASSFEATURES.INQUISITORJUDGMENTPROFANE.SPECIALATTACK</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Player's Guide, p.39</source>
+		</special_quality>
+			<name>Judgment / Healing</name>
+			<description>The inquisitor is surrounded by a healing light, gaining fast healing 2. This causes the inquisitor to heal 2 point of damage each round as long as the inquisitor is alive and the judgment lasts.</description>
+			<type>INQUISITORCLASSFEATURES.INQUISITORJUDGMENTNEITHER.SPECIALATTACK</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Player's Guide, p.39</source>
+		</special_quality>
+			<name>Judgment / Justice</name>
+			<description>This judgment spurs the inquisitor to seek justice, granting a +2 profane bonus on all attack rolls.</description>
+			<type>INQUISITORCLASSFEATURES.INQUISITORJUDGMENTPROFANE.SPECIALATTACK</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Player's Guide, p.39</source>
+		</special_quality>
+			<name>Judgment / Piercing</name>
+			<description>This judgment gives the inquisitor great focus and makes her spells more potent. This benefit grants a +2 profane bonus on concentration checks and caster level checks made to overcome a target's spell resistance.</description>
+			<type>INQUISITORCLASSFEATURES.INQUISITORJUDGMENTPROFANE.SPECIALATTACK</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Player's Guide, p.39</source>
+		</special_quality>
+			<name>Judgment / Protection</name>
+			<description>The inquisitor is surrounded by a protective aura, granting a +2 profane bonus to Armor Class.</description>
+			<type>INQUISITORCLASSFEATURES.INQUISITORJUDGMENTPROFANE.SPECIALATTACK</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Player's Guide, p.39</source>
+		</special_quality>
+			<name>Judgment / Purity</name>
+			<description>The inquisitor is protected from the vile taint of her foes, gaining a +2 profane bonus on all saving throws.</description>
+			<type>INQUISITORCLASSFEATURES.INQUISITORJUDGMENTPROFANE.SPECIALATTACK</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Publishing - Advanced Player's Guide, p.39</source>
+		</special_quality>
+			<name>Judgment / Resiliency</name>
+			<description>This judgment makes the inquisitor resistant to harm, granting DR 2/magic.</description>
+			<type>INQUISITORCLASSFEATURES.INQUISITORJUDGMENTNEITHER.SPECIALATTACK</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Player's Guide, p.39</source>
+		</special_quality>
+			<name>Judgment / Resistance</name>
+			<description>The inquisitor is shielded by a flickering aura, gaining 4 points of energy resistance against one energy type (acid, cold, electricity, fire, or sonic) chosen when the judgment is declared.</description>
+			<type>INQUISITORCLASSFEATURES.INQUISITORJUDGMENTNEITHER.SPECIALATTACK</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Player's Guide, p.39</source>
+		</special_quality>
+			<name>Judgment / Smiting</name>
+			<description>This judgment bathes the inquisitor's weapons in a divine light. The inquisitor's weapons count as magic for the purposes of bypassing damage reduction.</description>
+			<type>INQUISITORCLASSFEATURES.INQUISITORJUDGMENTNEITHER.SPECIALATTACK</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Publishing - Advanced Player's Guide, p.39</source>
+		</special_quality>
+			<name>Judgment (Profane) (Su)</name>
+			<description>An inquisitor can pronounce judgment upon her foes as a swift action. Starting when the judgment is made, the inquisitor receives a bonus or special ability based on the type of judgment made. An inquisitor can use this ability 2 times per day. Once activated, this ability lasts until the combat ends, at which point all of the bonuses immediately end. The inquisitor must participate in the combat to gain these bonuses. If she is frightened, panicked, paralyzed, stunned, unconscious, or otherwise prevented from participating in the combat, the ability does not end, but the bonuses do not resume until she can participate in the combat again. When the inquisitor uses this ability, she must select one type of judgment to make. As a swift action, she can change this judgment to another type.</description>
+			<type>INQUISITORCLASSFEATURES.SPECIALQUALITY.SUPERNATURAL.INQUISITORJUDGMENT</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Player's Guide, p.38</source>
+		</special_quality>
+			<name>Monster Lore (Ex)</name>
+			<description>The inquisitor adds her Wisdom modifier on Knowledge skill checks in addition to her Intelligence modifier, when making skill checks to identify the abilities and weaknesses of creatures.</description>
+			<type>INQUISITORCLASSFEATURES.SPECIALQUALITY.EXTRAORDINARY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Player's Guide, p.40</source>
+		</special_quality>
+			<name>Solo Tactics (Ex)</name>
+			<description>All of the inquisitor's allies are treated as if they possessed the same teamwork feats as the inquisitor for the purpose of determining whether the inquisitor receives a bonus from her teamwork feats. Her allies do not receive any bonuses from these feats unless they actually possess the feats themselves. The allies' positioning and actions must still meet the prerequisites listed in the teamwork feat for the inquisitor to receive the listed bonus.</description>
+			<type>INQUISITORCLASSFEATURES.SPECIALQUALITY.EXTRAORDINARY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Player's Guide, p.40</source>
+		</special_quality>
+			<name>Stability</name>
+			<description>Dwarves receive a +4 racial bonus to their Combat Maneuver Defense when resisting a bull rush or trip attempt while standing on the ground.</description>
+			<type>RACIALTRAITS.DWARF RACIAL TRAIT.DWARF RACIAL DEFAULT.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>CombatBonus: +4 bonus to their Combat Maneuver Defense when resisting a bull rush or trip attempt while standing on the ground.</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Pathfinder Companion: Dwarves of Golarion, Front Inside Cover</source>
+		</special_quality>
+			<name>Stern Gaze (Ex)</name>
+			<description>Inquisitors are skilled at sensing deception and intimidating their foes. An inquisitor receives a +2 morale bonus on all Intimidate and Sense Motive checks.</description>
+			<type>INQUISITORCLASSFEATURES.SPECIALATTACK.EXTRAORDINARY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Player's Guide, p.40</source>
+		</special_quality>
+			<name>Stonecunning</name>
+			<description>Dwarves receive a +2 bonus on Perception checks to potentially notice unusual stonework, such as traps and hidden doors located in stone walls or floors. They receive a check to notice such features whenever they pass within 10 feet of them, whether or not they are actively looking.</description>
+			<type>RACIALTRAITS.DWARF RACIAL TRAIT.DWARF RACIAL DEFAULT.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>SkillBonus: +2 bonus on Perception skill checks to notice unusual stonework, such as traps and hidden doors located in stone walls or floors.</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Pathfinder Companion: Dwarves of Golarion, Front Inside Cover</source>
+		</special_quality>
+			<name>Track (Ex)</name>
+			<description>An inquisitor adds half her level on Survival skill checks made to follow or identify tracks.</description>
+			<type>INQUISITORCLASSFEATURES.SPECIALQUALITY.EXTRAORDINARY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Player's Guide, p.40</source>
+		</special_quality>
+			<name>Weapon Familiarity</name>
+			<description>Dwarves are proficient with battleaxes, heavy picks, and warhammers, and treat any weapon with the word "dwarven" in its name as a martial weapon.</description>
+			<type>RACIALTRAITS.DWARF RACIAL TRAIT.DWARF RACIAL DEFAULT.SPECIALQUALITY.WEAPON FAMILIARITY.RACIALWEAPONFAMILIARITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Pathfinder Companion: Dwarves of Golarion, Front Inside Cover</source>
+		</special_quality>
+	</special_qualities>
+------------------------ Templates -------------------------
+
+-------------------------- Combat --------------------------
+    Total / Touch / Flat Footed
+AC: 14 / 10 / 14
+Initiative:   +5
+BAB:          +3
+Melee tohit:  +5
+Ranged tohit: +3
+Fortitude:    +7
+Reflex:       +1
+Will:         +9
+Unarmed attack:
+to hit:       +5
+damage:       1d3+2
+critical:     20/x2
+Longsword:
+to hit:       +1
+damage:       1d8+2
+critical:     19-20/x2
+--------------------- Special Abilities --------------------
+ 
+------------------------- Equipment ------------------------
+Name                                            QTY	LBS
+Chain Shirt  1	25lbs
+Total weight carried: 29 lbs.
+Current load:         Light
+Encumbrance
+Light:  66   
+Medium: 133   
+Heavy:  200
+--------------------------- Magic --------------------------
+
+
+Inquisitor Spells
+
+SPELLBOOKNAME0
+ 
+Level 0
+Acid Splash (Conjuration, EarthSchool)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: Instantaneous	Range: Close (35 ft.)	Components: V, S
+SR: No	Effect: You fire a small orb of acid at the target dealing 1d3 points of acid damage.	Target: One missile of acid
+DESC: You fire a small orb of acid at the target dealing 1d3 points of acid damage.
+DESC 2:  You fire a small orb of acid at the target dealing 1d3 points of acid damage.
+Bleed (Necromancy)
+Saves: Will negates	DC: 15	Casting: 1 standard action
+Duration: Instantaneous	Range: Close (35 ft.)	Components: V, S
+SR: Yes	Effect: You cause a living creature that is below 0 hit points but stabilized to resume dying.	Target: One living creature
+DESC: You cause a living creature that is below 0 hit points but stabilized to resume dying.
+DESC 2:  You cause a living creature that is below 0 hit points but stabilized to resume dying.
+Create Water (Conjuration)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: Instantaneous	Range: Close (35 ft.)	Components: V, S
+SR: No	Effect: This spell generates wholesome, drinkable water, just like clean rain water.	Target: Up to 10 gallons of water
+DESC: This spell generates wholesome, drinkable water, just like clean rain water.
+DESC 2:  This spell generates wholesome, drinkable water, just like clean rain water.
+Disrupt Undead (Necromancy)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: Instantaneous	Range: Close (35 ft.)	Components: V, S
+SR: Yes	Effect: You direct a ray of positive energy dealing 1d6 points of damage to Undead.	Target: Ray
+DESC: You direct a ray of positive energy dealing 1d6 points of damage to Undead.
+DESC 2:  You direct a ray of positive energy dealing 1d6 points of damage to Undead.
+Oath of Anonymity (Illusion)
+Saves: 	DC: 	Casting: 1 standard action
+Duration: 50 minutes	Range: Personal	Components: V
+SR: 	Effect: You swear an oath not to reveal your identity, magically preventing anyone from discovering it so long as you avoid revealing your face or other easily identifiable features. The spell distorts your voice and subtly alters your body language and the appearance of your gear and any animals you use, whether as companions, mounts, or otherwise. This spell does not make you appear to be a different creature type, nor does it change your apparent height or body type. This spell provides you with a +10 bonus on Disguise checks to conceal your identity, but not on checks to impersonate anyone in particular. This spell distorts the appearance of your voice, gear, and animals in the same way each time, essentially creating an alternate persona that can be recognized by those who have observed it before.	Target: You
+DESC: You swear an oath not to reveal your identity, magically preventing anyone from discovering it so long as you avoid revealing your face or other easily identifiable features. The spell distorts your voice and subtly alters your body language and the appearance of your gear and any animals you use, whether as companions, mounts, or otherwise. This spell does not make you appear to be a different creature type, nor does it change your apparent height or body type. This spell provides you with a +10 bonus on Disguise checks to conceal your identity, but not on checks to impersonate anyone in particular. This spell distorts the appearance of your voice, gear, and animals in the same way each time, essentially creating an alternate persona that can be recognized by those who have observed it before.
+DESC 2:  You swear an oath not to reveal your identity, magically preventing anyone from discovering it so long as you avoid revealing your face or other easily identifiable features. The spell distorts your voice and subtly alters your body language and the appearance of your gear and any animals you use, whether as companions, mounts, or otherwise. This spell does not make you appear to be a different creature type, nor does it change your apparent height or body type. This spell provides you with a +10 bonus on Disguise checks to conceal your identity, but not on checks to impersonate anyone in particular. This spell distorts the appearance of your voice, gear, and animals in the same way each time, essentially creating an alternate persona that can be recognized by those who have observed it before.
+Stabilize (Conjuration)
+Saves: Will negates (harmless)	DC: 15	Casting: 1 standard action
+Duration: Instantaneous	Range: Close (35 ft.)	Components: V, S
+SR: Yes (harmless)	Effect: Upon casting this spell, you target a living creature that has -1 or fewer hit points.	Target: One living creature
+DESC: Upon casting this spell, you target a living creature that has -1 or fewer hit points.
+DESC 2:  Upon casting this spell, you target a living creature that has -1 or fewer hit points.
+ 
+ 
+Level 1
+Bane (Enchantment)
+Saves: Will negates	DC: 16	Casting: 1 standard action
+Duration: 5 minutes	Range: 50 ft.	Components: V, S, DF
+SR: Yes	Effect: Bane fills your enemies with fear and doubt.	Target: 50-ft.-radius burst, centered on you
+DESC: Bane fills your enemies with fear and doubt.
+DESC 2:  Bane fills your enemies with fear and doubt.
+Forbid Action (Enchantment)
+Saves: Will negates	DC: 16	Casting: 1 standard action
+Duration: 1 round	Range: Close (35 ft.)	Components: V
+SR: Yes	Effect: Target obeys your command to not do something.	Target: One creature
+DESC: Target obeys your command to not do something.
+DESC 2:  Target obeys your command to not do something.
+Sanctuary (Abjuration)
+Saves: Will negates	DC: 16	Casting: 1 standard action
+Duration: 5 rounds	Range: Touch	Components: V, S, DF
+SR: No	Effect: Any opponent attempting to directly attack the warded creature, even with a targeted spell, must attempt a Will save.	Target: Creature touched
+DESC: Any opponent attempting to directly attack the warded creature, even with a targeted spell, must attempt a Will save.
+DESC 2:  Any opponent attempting to directly attack the warded creature, even with a targeted spell, must attempt a Will save.
+Tireless Pursuit (Transmutation)
+Saves: 	DC: 	Casting: 1 standard action
+Duration: 5 hours [D]	Range: Personal	Components: V, S, M
+SR: 	Effect: Ignore fatigue while hustling.	Target: You
+DESC: Ignore fatigue while hustling.
+DESC 2:  Ignore fatigue while hustling.
+ 
+ 
+Level 2
+Bloodhound (Transmutation)
+Saves: 	DC: 	Casting: 1 standard action
+Duration: 5 hours	Range: Personal	Components: V, S, M
+SR: 	Effect: Gives caster the scent special ability.	Target: You
+DESC: Gives caster the scent special ability.
+DESC 2:  Gives caster the scent special ability.
+Ghost Whip (Evocation)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: 5 rounds [D]	Range: 0 ft.	Components: V, S
+SR: Yes	Effect: Create a ghost touch whip that passes through objects.	Target: Whip of flexible ectoplasm
+DESC: Create a ghost touch whip that passes through objects.
+DESC 2:  Create a ghost touch whip that passes through objects.
+Shamefully Overdressed (Enchantment)
+Saves: Will negates	DC: 17	Casting: 1 standard action
+Duration: 5 rounds [D]	Range: Close (35 ft.)	Components: V,S
+SR: Yes	Effect: Force target to remove equipment.	Target: Creature touched
+DESC: Force target to remove equipment.
+DESC 2:  Force target to remove equipment.
+ 
+  
+  
+  
+  
+ 
+               
+               
+
+------------------------ Description -----------------------
+Height: 0' 0" Weight: 0 lbs. Gender: Male	
+Eyes:    Hair: , Skin: 
+Dominant Hand: Right Quirks: , 	
+Speech style:  Quotable: 
+Full Description
+
+Background
+
+Campaign Logs

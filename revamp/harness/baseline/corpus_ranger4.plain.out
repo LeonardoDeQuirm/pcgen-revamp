@@ -1,0 +1,751 @@
+Name:       Corpus Ranger4
+Race:       Half-Orc (Arcadian)
+Player:      
+Classes:    Ranger4
+Hit Points: 28
+Experience: 9000 / 15000
+Alignment:  None
+Vision:     Darkvision (60 ft.)
+Speed:      Walk 30 ft.
+Languages:  Common, Orc
+Stat    Score   Mod
+STR  15 (+2)
+DEX  16 (+3)
+CON  12 (+1)
+INT  10 (+0)
+WIS  14 (+2)
+CHA  10 (+0)
+-------------------------- Skills --------------------------
+Skill                   Total   Rnk     Stat    Msc
+Acrobatics  4  0.0  3  1
+Appraise  0  0.0  0  0
+Bluff  0  0.0  0  0
+Climb  8  4.0  2  2
+Craft (Alchemy)  7  4.0  0  3
+Craft (Armor)  7  4.0  0  3
+Craft (Baskets)  7  4.0  0  3
+Craft (Blacksmithing)  7  4.0  0  3
+Craft (Books)  7  4.0  0  3
+Craft (Untrained)  0  0.0  0  0
+Diplomacy  0  0.0  0  0
+Disguise  0  0.0  0  0
+Escape Artist  2  0.0  3  -1
+Fly  4  0.0  3  1
+Heal  2  0.0  2  0
+Intimidate  2  0.0  0  2
+Perception  2  0.0  2  0
+Perform (Untrained)  0  0.0  0  0
+Ride  2  0.0  3  -1
+Sense Motive  2  0.0  2  0
+Stealth  2  0.0  3  -1
+Survival  2  0.0  2  0
+Survival (Follow or identify tracks)  4  0.0  2  2
+Swim  1  0.0  2  -1
+-------------------------- Feats ---------------------------
+Accursed
+  [Not Implemented] Your curse weighs down your soul like a millstone around your neck.
+  
+Acrobatic
+Endurance
+Far Shot
+-------------------- Special Abilities ---------------------
+
+			<name>No Racial Subtype</name>
+			<description>You have chosen no racial subtype.</description>
+			<type>UNIVERSAL SUBTYPE</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Race Guide</source>
+		</special_quality>
+			<name>Aberration (Ex)</name>
+			<description>You gain a +2 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks when using these skills against aberrations. Likewise, you get a +2 bonus on weapon attack and damage rolls against such creatures. You may make Knowledge Skill checks untrained to identify such creatures.</description>
+			<type>RANGERCLASSFEATURES.FAVOREDENEMY.SPECIALATTACK.EXTRAORDINARY.ATTACKOPTION</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>Ability Benefit: +2, CombatBonus: You gain a +2 bonus on Attack rolls and Damage rolls against aberrations., SkillBonus: You gain a +2 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks against aberrations.</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.64</source>
+		</special_quality>
+			<name>Absalom Bouncer</name>
+			<description>When you make an attack that deals nonlethal damage with an unarmed strike, you gain a +1 bonus on your damage roll.</description>
+			<type>TRAIT.BASICTRAIT.COMBATTRAIT</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Pathfinder Player Companion: Advanced Class Origins, p.11</source>
+		</special_quality>
+			<name>Acadamae Neophyte</name>
+			<description>Whenever you succeed at a Knowledge (planes) check to identify a creature and its special powers or vulnerabilities, you gain one additional piece of useful information (as if your skill check result had been 5 higher).</description>
+			<type>TRAIT.BASICTRAIT.MAGICTRAIT</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Publishing - Pathfinder Player Companion: Monster Summoner's Handbook, p.10</source>
+		</special_quality>
+			<name>Animal Companion (Ex)</name>
+			<description></description>
+			<type>RANGERCLASSFEATURES.SPECIALQUALITY.EXTRAORDINARY.HUNTERSBOND.ANIMAL COMPANION</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.51</source>
+		</special_quality>
+			<name>Combat Style Feat (Ex)</name>
+			<description>At 2nd level, a ranger must select one of two combat styles to pursue: archery or two weapon combat. The ranger's expertise manifests in the form of bonus feats at 2nd, 6th, 10th, 14th, and 18th level. He can choose feats from his selected combat style, even if he does not have the normal prerequisites. If the ranger selects archery, he can choose from the following list whenever he gains a combat style feat: Far Shot, Point-Blank Shot, Precise Shot, and Rapid Shot. At 6th level, he adds Improved Precise Shot and Manyshot to the list. At 10th level, he adds Pinpoint Targeting and Shot on the Run to the list. If the ranger selects two-weapon combat, he can choose from the following list whenever he gains a combat style feat: Double Slice, Improved Shield Bash, Quick Draw, and Two-Weapon Fighting. At 6th level, he adds Improved Two-Weapon Fighting and Two-Weapon Defense to the list. At 10th level, he adds Greater Two-Weapon Fighting and Two- Weapon Rend to the list. The benefits of the ranger's chosen style feats apply only when he wears light, medium, or no armor. He loses all benefits of his combat style feats when wearing heavy armor. Once a ranger selects a combat style, it cannot be changed.</description>
+			<type>RANGERCLASSFEATURES.SPECIALQUALITY.EXTRAORDINARY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.65</source>
+		</special_quality>
+			<name>Favored Terrain (Aligned Plane) (Ex)</name>
+			<description>You gain a +0 bonus on Knowledge (Geography), Perception, Stealth, and Survival checks, Initiative checks and cannot be tracked on any one chosen aligned Plane You gain a +0 bonus on Knowledge (Geography), Perception, Stealth, and Survival checks when using these skills on any one chosen aligned Plane. Likewise, you get a +0 bonus on initiative checks when on this plane. If you desire, you leave no trail on this plane and cannot be tracked.</description>
+			<type>SPECIALQUALITY.EXTRAORDINARY.FAVOREDTERRAIN</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>Ability Benefit: +0</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Player's Guide, p.65</source>
+		</special_quality>
+			<name>Intimidating</name>
+			<description>Half-orcs receive a +2 racial bonus on Intimidate skill checks due to their fearsome nature.</description>
+			<type>RACIALTRAITS.HALF-ORC RACIAL TRAIT.HALF-ORC RACIAL DEFAULT.SPECIALQUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Race Guide, p.50</source>
+		</special_quality>
+			<name>Orc Blood</name>
+			<description>Half-orcs count as both humans and orcs for any effect related to race.</description>
+			<type>RACIALTRAITS.HALF-ORC RACIAL TRAIT.HALF-ORC RACIAL DEFAULT.SPECIALQUALITY.SPECIAL QUALITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Race Guide, p.50</source>
+		</special_quality>
+			<name>Orc Ferocity</name>
+			<description>Once per day, when a half-orc is brought below 0 hit points but not killed, he can fight on for one more round as if disabled. At the end of his next turn, unless brought to above 0 hit points, he immediately falls unconscious and begins dying.</description>
+			<type>RACIALTRAITS.HALF-ORC RACIAL TRAIT.HALF-ORC RACIAL DEFAULT.SPECIALQUALITY.DEFENSIVE</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Race Guide, p.50</source>
+		</special_quality>
+			<name>Track (Ex)</name>
+			<description>You gain +2 to Survival checks made to follow tracks.</description>
+			<type>RANGERCLASSFEATURES.SPECIALQUALITY.EXTRAORDINARY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>Ability Benefit: +2</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.64</source>
+		</special_quality>
+			<name>Weapon Familiarity</name>
+			<description>Half-orcs are proficient with greataxes and falchions and treat any weapon with the word "orc" in its name as a martial weapon.</description>
+			<type>RACIALTRAITS.HALF-ORC RACIAL TRAIT.HALF-ORC RACIAL DEFAULT.SPECIALQUALITY.SPECIAL QUALITY.WEAPON FAMILIARITY.RACIALWEAPONFAMILIARITY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Advanced Race Guide, p.50</source>
+		</special_quality>
+			<name>Wild Empathy</name>
+			<description></description>
+			<type>RANGERCLASSFEATURES.WILD EMPATHY</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect></aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook</source>
+		</special_quality>
+			<name>Wild Empathy (Ex)</name>
+			<description>You can improve the attitude of an animal. This ability functions just like Diplomacy check made to improve the attitude of a person. You roll 1d20+4 to determine the Wild Empathy check result. The typical domestic animal has a starting attitude of indifferent, while wild animals are usually unfriendly. To use Wild Empathy, you and the animal must be within 30 feet of one another under normal circumstances. Generally, influencing an animal in this way takes 1 minute, but as with influencing people, it might take more or less time. You can use this ability to influence a magical beast with an Intelligence score of 1 or 2, but you take a -4 penalty on the check.</description>
+			<type>SPECIALQUALITY.EXTRAORDINARY.DRUIDCLASSFEATURES.RANGERCLASSFEATURES</type>
+			<associated></associated>
+			<count>0</count>
+			<aspect>Ability Benefit: +4</aspect>
+			<auto>F</auto>
+			<hidden>F</hidden>
+			<virtual>F</virtual>
+			<category>Special Ability</category>
+			<source>Paizo Inc. - Core Rulebook, p.50/64</source>
+		</special_quality>
+	</special_qualities>
+------------------------ Templates -------------------------
+
+-------------------------- Combat --------------------------
+    Total / Touch / Flat Footed
+AC: 16 / 13 / 13
+Initiative:   +3
+BAB:          +4
+Melee tohit:  +6
+Ranged tohit: +7
+Fortitude:    +5
+Reflex:       +7
+Will:         +3
+Unarmed attack:
+to hit:       +6
+damage:       1d3+2
+critical:     20/x2
+Longbow:
+to hit:       +7
+damage:       1d8
+critical:     20/x3
+range:        100 ft.
+Sword, Short:
+to hit:       +6
+damage:       1d6+2
+critical:     19-20/x2
+--------------------- Special Abilities --------------------
+ 
+------------------------- Equipment ------------------------
+Name                                            QTY	LBS
+Studded Leather Armor  1	20lbs
+Sword, Short  1	2lbs
+Longbow (3 lbs.)
+Total weight carried: 25 lbs.
+Current load:         Light
+Encumbrance
+Light:  66   
+Medium: 133   
+Heavy:  200
+--------------------------- Magic --------------------------
+
+
+Ranger Spells
+
+SPELLBOOKNAME0
+  
+ 
+Level 1
+Abundant Ammunition (Conjuration)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: 1 minutes	Range: 	Components: V, S, M/DF
+SR: No	Effect: Replaces nonmagical ammunition every round.	Target: one container touched
+DESC: Replaces nonmagical ammunition every round.
+DESC 2:  Replaces nonmagical ammunition every round.
+Acid Maw (Transmutation)
+Saves: Will negates (harmless)	DC: 13	Casting: 1 standard action
+Duration: 1 minutes	Range: Close (25 ft.)	Components: V,S,DF
+SR: Yes	Effect: Your animal companion's bite attack deals an additional 1d4 points of acid damage, and the acid deals another 1d4 points of acid damage to the target on the next round. The acid continues to deal damage for 0 additional rounds. This ongoing acid damage doesn't stack from multiple attacks, but the duration resets if a newer bite would cause the ongoing damage to last longer than the duration remaining from a previous one. The acid does not harm the animal companion.	Target: Your animal companion
+DESC: Your animal companion's bite attack deals an additional 1d4 points of acid damage, and the acid deals another 1d4 points of acid damage to the target on the next round. The acid continues to deal damage for 0 additional rounds. This ongoing acid damage doesn't stack from multiple attacks, but the duration resets if a newer bite would cause the ongoing damage to last longer than the duration remaining from a previous one. The acid does not harm the animal companion.
+DESC 2:  Your animal companion's bite attack deals an additional 1d4 points of acid damage, and the acid deals another 1d4 points of acid damage to the target on the next round. The acid continues to deal damage for 0 additional rounds. This ongoing acid damage doesn't stack from multiple attacks, but the duration resets if a newer bite would cause the ongoing damage to last longer than the duration remaining from a previous one. The acid does not harm the animal companion.
+Air Bubble (Conjuration)
+Saves: Will negates (harmless)	DC: 13	Casting: 1 standard action
+Duration: 1 minutes	Range: Touch	Components: S, M/DF
+SR: Yes (harmless)	Effect: Creates a small pocket of air around your head or an object.	Target: one creature or one object no larger than a Large twohanded weapon
+DESC: Creates a small pocket of air around your head or an object.
+DESC 2:  Creates a small pocket of air around your head or an object.
+Alarm (Abjuration)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: 2 hours [D]	Range: Close (25 ft.)	Components: V, S, F/DF
+SR: No	Effect: Alarm creates a subtle ward on an area you select.	Target: 20-ft.-radius emanation centered on a point in space
+DESC: Alarm creates a subtle ward on an area you select.
+DESC 2:  Alarm creates a subtle ward on an area you select.
+Animal Messenger (Enchantment)
+Saves: None; see text	DC: 13	Casting: 1 minute
+Duration: 1 days	Range: Close (25 ft.)	Components: V, S, M
+SR: Yes	Effect: You compel a Tiny animal to go to a spot you designate.	Target: One Tiny animal
+DESC: You compel a Tiny animal to go to a spot you designate.
+DESC 2:  You compel a Tiny animal to go to a spot you designate.
+Animal Purpose Training (Enchantment)
+Saves: none	DC: 13	Casting: 1 minute
+Duration: 1 hours	Range: Close (25 ft.)	Components: V, S, M
+SR: yes	Effect: Animal gains a new general purpose.	Target: one indifferent or friendly animal
+DESC: Animal gains a new general purpose.
+DESC 2:  Animal gains a new general purpose.
+Ant Haul (Transmutation)
+Saves: Fortitude negates (harmless)	DC: 13	Casting: 1 standard action
+Duration: 2 hours	Range: Touch	Components: V, S, M/DF
+SR: Yes (harmless)	Effect: Triples carrying capacity of a creature.	Target: creature touched
+DESC: Triples carrying capacity of a creature.
+DESC 2:  Triples carrying capacity of a creature.
+Anticipate Peril (Divination)
+Saves: Will negates	DC: 13	Casting: 1 standard action
+Duration: 1 minutes or until activated	Range: Touch	Components: V, S
+SR: Yes	Effect: Target gains a +1 bonus on one initiative check.	Target: Creature touched
+DESC: Target gains a +(min(CASTERLEVEL,5)) bonus on one initiative check.
+DESC 2:  Target gains a +1 bonus on one initiative check.
+Aspect of the Falcon (Transmutation)
+Saves: 	DC: 	Casting: 1 standard action
+Duration: 1 minutes	Range: Personal	Components: V, S, DF
+SR: 	Effect: Gives bonuses on Perception checks and ranged attacks.	Target: You
+DESC: Gives bonuses on Perception checks and ranged attacks.
+DESC 2:  Gives bonuses on Perception checks and ranged attacks.
+Batrachian Surge (Transmutation)
+Saves: None	DC: 	Casting: 1 swift action
+Duration: 1 rounds [D]	Range: Personal	Components: V,S
+SR: Yes (harmless)	Effect: You tap into your latent amphibian strengths, unlocking a short-lived physical talent. Armor or gear you are wearing adjusts to your new shape for the duration of the spell. When you cast batrachian surge, choose one of the following features to gain its associated benefits. You can have only one batrachian surge spell active on you at a time. Gills- Your throat expands, and gill slits appear along your neck. You can breathe underwater; Leaping- Your legs elongate and become especially muscular. You are always treated as having a running start when attempting Acrobatics checks to jump, and you gain a +1 competence bonus on Acrobatics checks to jump; Swimming- You grow a large tadpole tail, and your other limbs shrink slightly. You gain a swim speed equal to your base land speed; Tongue- Your tongue extends to the length of your body. Increase your reach by 5 feet when delivering touch spells. This increased reach doesn't stack with any other spells or abilities that affect your reach;	Target: You
+DESC: You tap into your latent amphibian strengths, unlocking a short-lived physical talent. Armor or gear you are wearing adjusts to your new shape for the duration of the spell. When you cast batrachian surge, choose one of the following features to gain its associated benefits. You can have only one batrachian surge spell active on you at a time. Gills- Your throat expands, and gill slits appear along your neck. You can breathe underwater; Leaping- Your legs elongate and become especially muscular. You are always treated as having a running start when attempting Acrobatics checks to jump, and you gain a +(CASTERLEVEL) competence bonus on Acrobatics checks to jump; Swimming- You grow a large tadpole tail, and your other limbs shrink slightly. You gain a swim speed equal to your base land speed; Tongue- Your tongue extends to the length of your body. Increase your reach by 5 feet when delivering touch spells. This increased reach doesn't stack with any other spells or abilities that affect your reach;
+DESC 2:  You tap into your latent amphibian strengths, unlocking a short-lived physical talent. Armor or gear you are wearing adjusts to your new shape for the duration of the spell. When you cast batrachian surge, choose one of the following features to gain its associated benefits. You can have only one batrachian surge spell active on you at a time. Gills- Your throat expands, and gill slits appear along your neck. You can breathe underwater; Leaping- Your legs elongate and become especially muscular. You are always treated as having a running start when attempting Acrobatics checks to jump, and you gain a +1 competence bonus on Acrobatics checks to jump; Swimming- You grow a large tadpole tail, and your other limbs shrink slightly. You gain a swim speed equal to your base land speed; Tongue- Your tongue extends to the length of your body. Increase your reach by 5 feet when delivering touch spells. This increased reach doesn't stack with any other spells or abilities that affect your reach;
+Bowstaff (Transmutation)
+Saves: Will negates (harmless, object)	DC: 13	Casting: 1 swift action
+Duration: 1 rounds [D]	Range: Personal	Components: V
+SR: Yes (harmless, object)	Effect: A shortbow may double as a club, or a longbow as a quarterstaff.	Target: one weapon [bow]
+DESC: A shortbow may double as a club, or a longbow as a quarterstaff.
+DESC 2:  A shortbow may double as a club, or a longbow as a quarterstaff.
+Call Animal (Enchantment)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: 1 hours [D]	Range: see description	Components: V, S, DF
+SR: None	Effect: Makes an animal come to you.	Target: one animal whose CR is equal or less than 1
+DESC: Makes an animal come to you.
+DESC 2:  Makes an animal come to you.
+Call Weapon (Transmutation)
+Saves: 	DC: 	Casting: 1 swift action
+Duration: Instantaneous	Range: 30 feet	Components: V, S
+SR: 	Effect: This spell first rose to prominence among the elves of Kyonin in the war to retake their ancestral land from the demon lord Treerazer and his minions. Elite units of elven magi entered battle with this spell prepared to shield fallen comrades or stand firm against fell foes. As the elven presence returned to the world, this spell spread throughout the Inner Sea and beyond. 
+When you cast this spell, you cause a weapon wielded by an ally within 30 feet to telekinetically fly across the space between you and into your open hand. This extra energy persists in the weapon for the rest of the round, granting you a +2 circumstance bonus on attack rolls and weapon damage rolls made during the same round you cast this spell. If the ally targeted for this spell is unwilling to give up her weapon, the spell fails. An unconscious or dying ally is considered a "willing" target so long as the weapon to be called is still in contact with the ally's body.	Target: One melee weapon wielded by an ally
+DESC: This spell first rose to prominence among the elves of Kyonin in the war to retake their ancestral land from the demon lord Treerazer and his minions. Elite units of elven magi entered battle with this spell prepared to shield fallen comrades or stand firm against fell foes. As the elven presence returned to the world, this spell spread throughout the Inner Sea and beyond. 
+When you cast this spell, you cause a weapon wielded by an ally within 30 feet to telekinetically fly across the space between you and into your open hand. This extra energy persists in the weapon for the rest of the round, granting you a +2 circumstance bonus on attack rolls and weapon damage rolls made during the same round you cast this spell. If the ally targeted for this spell is unwilling to give up her weapon, the spell fails. An unconscious or dying ally is considered a "willing" target so long as the weapon to be called is still in contact with the ally's body.
+DESC 2:  This spell first rose to prominence among the elves of Kyonin in the war to retake their ancestral land from the demon lord Treerazer and his minions. Elite units of elven magi entered battle with this spell prepared to shield fallen comrades or stand firm against fell foes. As the elven presence returned to the world, this spell spread throughout the Inner Sea and beyond. 
+When you cast this spell, you cause a weapon wielded by an ally within 30 feet to telekinetically fly across the space between you and into your open hand. This extra energy persists in the weapon for the rest of the round, granting you a +2 circumstance bonus on attack rolls and weapon damage rolls made during the same round you cast this spell. If the ally targeted for this spell is unwilling to give up her weapon, the spell fails. An unconscious or dying ally is considered a "willing" target so long as the weapon to be called is still in contact with the ally's body.
+Calm Animals (Enchantment)
+Saves: Will negates	DC: 13	Casting: 1 standard action
+Duration: 1 minutes	Range: Close (25 ft.)	Components: V, S
+SR: Yes	Effect: This spell soothes and quiets animals, rendering them docile and harmless.	Target: Animals within 30 ft. of each other
+DESC: This spell soothes and quiets animals, rendering them docile and harmless.
+DESC 2:  This spell soothes and quiets animals, rendering them docile and harmless.
+Carrion Compass (Divination)
+Saves: Will negates	DC: 13	Casting: 1 standard action
+Duration: 10 minutes	Range: Close (25 ft.)	Components: V,S
+SR: No	Effect: You animate one of the target's fetid organs so that it leads you to the undead creature's most recent controller or the cause of the creature's undeath. The organ floats in front of you at chest level and slowly leads you to the undead creature's most recent controller [if none, creator, or, failing that, place of creation] at a rate of 30 feet per round, always staying within your range of vision. If the creature was self­created, or if the it's most recent controller no longer exists, the spell fails. Once the organ is within 10 feet of its intended destination, the spell ends, and the organ falls to the ground. If the undead creature to which the organ belonged is destroyed, the spell ends and the organ falls to the ground.	Target: One undead creature
+DESC: You animate one of the target's fetid organs so that it leads you to the undead creature's most recent controller or the cause of the creature's undeath. The organ floats in front of you at chest level and slowly leads you to the undead creature's most recent controller (if none, creator, or, failing that, place of creation) at a rate of 30 feet per round, always staying within your range of vision. If the creature was self­created, or if the it's most recent controller no longer exists, the spell fails. Once the organ is within 10 feet of its intended destination, the spell ends, and the organ falls to the ground. If the undead creature to which the organ belonged is destroyed, the spell ends and the organ falls to the ground.
+DESC 2:  You animate one of the target's fetid organs so that it leads you to the undead creature's most recent controller or the cause of the creature's undeath. The organ floats in front of you at chest level and slowly leads you to the undead creature's most recent controller [if none, creator, or, failing that, place of creation] at a rate of 30 feet per round, always staying within your range of vision. If the creature was self­created, or if the it's most recent controller no longer exists, the spell fails. Once the organ is within 10 feet of its intended destination, the spell ends, and the organ falls to the ground. If the undead creature to which the organ belonged is destroyed, the spell ends and the organ falls to the ground.
+Charm Animal (Enchantment)
+Saves: Will negates	DC: 13	Casting: 1 standard action
+Duration: 1 hours	Range: Close (25 ft.)	Components: V, S
+SR: Yes	Effect: This spell functions like charm person, except that it affects a creature of the animal type.	Target: One animal
+DESC: This spell functions like charm person, except that it affects a creature of the animal type.
+DESC 2:  This spell functions like charm person, except that it affects a creature of the animal type.
+Charm Animal (caster's own kind only) (Enchantment)
+Saves: Will negates	DC: 13	Casting: 1 standard action
+Duration: 1 hours	Range: Close (25 ft.)	Components: V, S
+SR: Yes	Effect: This spell functions like charm person, except that it affects a creature of the animal type.	Target: One animal
+DESC: This spell functions like charm person, except that it affects a creature of the animal type.
+DESC 2:  This spell functions like charm person, except that it affects a creature of the animal type.
+Cloak of Shade (Abjuration)
+Saves: Will negates (harmless)	DC: 13	Casting: 1 standard action
+Duration: 1 hours [D]	Range: Touch	Components: V, S, M
+SR: Yes (harmless)	Effect: Reduces effects of sun exposure and heat.	Target: one creature per level
+DESC: Reduces effects of sun exposure and heat.
+DESC 2:  Reduces effects of sun exposure and heat.
+Compel Hostility (Enchantment)
+Saves: see text	DC: 13	Casting: 1 standard action
+Duration: 1 rounds	Range: Personal	Components: V, S, M
+SR: see text	Effect: Compels opponents to attack you instead of your allies.	Target: You
+DESC: Compels opponents to attack you instead of your allies.
+DESC 2:  Compels opponents to attack you instead of your allies.
+Dancing Lantern (Transmutation, FireSchool)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: 1 hours [D]	Range: Touch	Components: V, S, F
+SR: No	Effect: Animates a lantern that follows you.	Target: Animates one lantern
+DESC: Animates a lantern that follows you.
+DESC 2:  Animates a lantern that follows you.
+Deadeye's Lore (Divination)
+Saves: 	DC: 	Casting: 1 round
+Duration: 1 hours	Range: Personal	Components: V, S
+SR: 	Effect: Gain a +4 bonus on Survival and move full speed while tracking.	Target: You
+DESC: Gain a +4 bonus on Survival and move full speed while tracking.
+DESC 2:  Gain a +4 bonus on Survival and move full speed while tracking.
+Delay Poison (Conjuration)
+Saves: Fortitude negates (harmless)	DC: 13	Casting: 1 standard action
+Duration: 1 hours	Range: Touch	Components: V, S, DF
+SR: Yes (harmless)	Effect: The subject becomes temporarily immune to poison.	Target: Creature touched
+DESC: The subject becomes temporarily immune to poison.
+DESC 2:  The subject becomes temporarily immune to poison.
+Desperate Weapon (Conjuration)
+Saves: None	DC: 	Casting: 1 swift action
+Duration: 1 minutes	Range: Personal	Components: V
+SR: No	Effect: Create an improvised weapon.	Target: One-handed improvised weapon
+DESC: Create an improvised weapon.
+DESC 2:  Create an improvised weapon.
+Detect Aberration (Divination)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: concentration, up to 10 minutes [D]	Range: Long (440 ft.)	Components: V, S
+SR: No	Effect: Reveals presence of aberrations.	Target: cone-shaped emanation
+DESC: Reveals presence of aberrations.
+DESC 2:  Reveals presence of aberrations.
+Detect Animals or Plants (Divination)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: Concentration, up to 10 minutes [D]	Range: Long (440 ft.)	Components: V, S
+SR: No	Effect: You can detect a particular kind of animal or plant in a cone emanating out from you in whatever direction you face.	Target: Cone-shaped emanation
+DESC: You can detect a particular kind of animal or plant in a cone emanating out from you in whatever direction you face.
+DESC 2:  You can detect a particular kind of animal or plant in a cone emanating out from you in whatever direction you face.
+Detect Poison (Divination)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: Instantaneous	Range: Close (25 ft.)	Components: V, S
+SR: No	Effect: You determine whether a creature, object, or area has been poisoned or is poisonous.	Target: Or Area one creature, one object, or a 5-ft. cube
+DESC: You determine whether a creature, object, or area has been poisoned or is poisonous.
+DESC 2:  You determine whether a creature, object, or area has been poisoned or is poisonous.
+Detect Snares and Pits (Divination)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: Concentration, up to 10 minutes [D]	Range: 60 ft.	Components: V, S
+SR: No	Effect: You can detect simple pits, deadfalls, and snares as well as mechanical traps constructed of natural materials.	Target: Cone-shaped emanation
+DESC: You can detect simple pits, deadfalls, and snares as well as mechanical traps constructed of natural materials.
+DESC 2:  You can detect simple pits, deadfalls, and snares as well as mechanical traps constructed of natural materials.
+Detect the Faithful (Divination)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: Concentration, up to 1 minutes [D]	Range: 60 ft.	Components: V,S,DF
+SR: No	Effect: Find others of the same faith.	Target: Cone-shaped emanation
+DESC: Find others of the same faith.
+DESC 2:  Find others of the same faith.
+Diagnose Disease (Divination)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: Instantaneous	Range: Close (25 ft.)	Components: V, S
+SR: No	Effect: Detect and identify diseases.	Target: One creature, one object, or a 5-ft. cube
+DESC: Detect and identify diseases.
+DESC 2:  Detect and identify diseases.
+Echo (Illusion)
+Saves: Will disbelief (if interacted with)	DC: 13	Casting: 1 standard action
+Duration: 1 rounds [D]	Range: Close or Long; see text	Components: S,F
+SR: Yes	Effect: Cause a sound to repeat itself.	Target: 1 10-ft. cubes [S]
+DESC: Cause a sound to repeat itself.
+DESC 2:  Cause a sound to repeat itself.
+Endure Elements (Abjuration)
+Saves: Will negates (harmless)	DC: 13	Casting: 1 standard action
+Duration: 24 hours	Range: Touch	Components: V, S
+SR: Yes (harmless)	Effect: A creature protected by endure elements suffers no harm from being in a hot or cold environment.	Target: Creature touched
+DESC: A creature protected by endure elements suffers no harm from being in a hot or cold environment.
+DESC 2:  A creature protected by endure elements suffers no harm from being in a hot or cold environment.
+Endure Elements (Cold Environment) (Abjuration)
+Saves: Will negates (harmless)	DC: 13	Casting: 1 standard action
+Duration: 24 hours	Range: Touch	Components: V, S
+SR: Yes (harmless)	Effect: A creature protected by endure elements suffers no harm from being in a hot or cold environment.	Target: Creature touched
+DESC: A creature protected by endure elements suffers no harm from being in a hot or cold environment.
+DESC 2:  A creature protected by endure elements suffers no harm from being in a hot or cold environment.
+Entangle (Transmutation)
+Saves: Reflex partial; see text	DC: 13	Casting: 1 standard action
+Duration: 1 minutes [D]	Range: Long (440 ft.)	Components: V, S, DF
+SR: No	Effect: This spell causes tall grass, weeds, and other plants to wrap around foes in the area of effect or those that enter the area.	Target: Plants in a 40-ft.-radius spread
+DESC: This spell causes tall grass, weeds, and other plants to wrap around foes in the area of effect or those that enter the area.
+DESC 2:  This spell causes tall grass, weeds, and other plants to wrap around foes in the area of effect or those that enter the area.
+Entangle (in water only) (Transmutation)
+Saves: Reflex partial; see text	DC: 13	Casting: 1 standard action
+Duration: 1 minutes [D]	Range: Long (440 ft.)	Components: V, S, DF
+SR: No	Effect: This spell causes tall grass, weeds, and other plants to wrap around foes in the area of effect or those that enter the area.	Target: Plants in a 40-ft.-radius spread
+DESC: This spell causes tall grass, weeds, and other plants to wrap around foes in the area of effect or those that enter the area.
+DESC 2:  This spell causes tall grass, weeds, and other plants to wrap around foes in the area of effect or those that enter the area.
+Feather Step (Transmutation)
+Saves: Fortitude negates (harmless)	DC: 13	Casting: 1 standard action
+Duration: 10 minutes	Range: Close (25 ft.)	Components: V, S
+SR: Yes	Effect: Ignore movement penalty in difficult terrain.	Target: one creature
+DESC: Ignore movement penalty in difficult terrain.
+DESC 2:  Ignore movement penalty in difficult terrain.
+Glide (Transmutation, AirSchool)
+Saves: 	DC: 	Casting: 1 standard action
+Duration: until landing or 1 minutes [D]	Range: Personal	Components: V, S, M/DF
+SR: 	Effect: You take no falling damage, move 60 ft./round while falling.	Target: You
+DESC: You take no falling damage, move 60 ft./round while falling.
+DESC 2:  You take no falling damage, move 60 ft./round while falling.
+Gravity Bow (Transmutation)
+Saves: 	DC: 	Casting: 1 standard action
+Duration: 1 minutes [D]	Range: Personal	Components: V, S
+SR: 	Effect: Arrows do damage as though one size category bigger.	Target: You
+DESC: Arrows do damage as though one size category bigger.
+DESC 2:  Arrows do damage as though one size category bigger.
+Handy Grapnel (Transmutation)
+Saves: Fortitude negates (object)	DC: 13	Casting: 1 standard action
+Duration: 1 minutes [D]	Range: Touch	Components: V,S,M
+SR: No	Effect: Transform a ropelike object into a retracting grapple.	Target: One ropelike object, length up to 55 ft.
+DESC: Transform a ropelike object into a retracting grapple.
+DESC 2:  Transform a ropelike object into a retracting grapple.
+Heightened Awareness (Divination)
+Saves: 	DC: 	Casting: 1 standard action
+Duration: 10 minutes [D]	Range: Personal	Components: V, M/DF
+SR: 	Effect: Your recall and ability to process information improve.	Target: you
+DESC: Your recall and ability to process information improve.
+DESC 2:  Your recall and ability to process information improve.
+Hidden Spring (Transmutation)
+Saves: None	DC: 	Casting: 1 hour
+Duration: 1 hours	Range: Touch	Components: V,S,F
+SR: No	Effect: Discover a temporary spring of fresh, flowing water.	Target: A spring of fresh water
+DESC: Discover a temporary spring of fresh, flowing water.
+DESC 2:  Discover a temporary spring of fresh, flowing water.
+Hide from Animals (Abjuration)
+Saves: Will negates (harmless)	DC: 13	Casting: 1 standard action
+Duration: 10 minutes [D]	Range: Touch	Components: S, DF
+SR: Yes	Effect: Animals cannot sense the warded creatures.	Target: 1 creatures touched
+DESC: Animals cannot sense the warded creatures.
+DESC 2:  Animals cannot sense the warded creatures.
+Horn of Pursuit (Evocation)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: 1 round	Range: Personal	Components: S
+SR: No	Effect: Create three notes heard miles away.	Target: 3 peals of a horn
+DESC: Create three notes heard miles away.
+DESC 2:  Create three notes heard miles away.
+Hunter's Howl (Necromancy)
+Saves: Will negates Spell Resistance none	DC: 13	Casting: 1 standard action
+Duration: 1 rounds	Range: 20 ft.	Components: V, S
+SR: 	Effect: Treat enemies as favored for 1 rounds.	Target: 20-ft.-radius burst
+DESC: Treat enemies as favored for (CASTERLEVEL) rounds.
+DESC 2:  Treat enemies as favored for 1 rounds.
+Invisibility Alarm (Abjuration)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: 10 minutes	Range: Close (25 ft.)	Components: V, S, F/DF
+SR: No	Effect: As alarm, but reacting only to invisible creatures.	Target: 20-ft.-radius emanation centered on a point in space
+DESC: As alarm, but reacting only to invisible creatures.
+DESC 2:  As alarm, but reacting only to invisible creatures.
+Jump (Transmutation)
+Saves: Will negates (harmless)	DC: 13	Casting: 1 standard action
+Duration: 1 minutes [D]	Range: Touch	Components: V, S, M
+SR: Yes	Effect: The subject gets a +10 enhancement bonus on Acrobatics checks made to attempt high jumps or long jumps.	Target: Creature touched
+DESC: The subject gets a +10 enhancement bonus on Acrobatics checks made to attempt high jumps or long jumps.
+DESC 2:  The subject gets a +10 enhancement bonus on Acrobatics checks made to attempt high jumps or long jumps.
+Keen Senses (Transmutation)
+Saves: Will negates (harmless)	DC: 13	Casting: 1 standard action
+Duration: 1 minutes [D]	Range: Touch	Components: V, M/DF
+SR: Yes (harmless)	Effect: Subject gains +2 Perception, low-light vision.	Target: creature touched
+DESC: Subject gains +2 Perception, low-light vision.
+DESC 2:  Subject gains +2 Perception, low-light vision.
+Keep Watch (Enchantment)
+Saves: Will negates (harmless)	DC: 13	Casting: 1 standard action
+Duration: 8 hours or less; see text	Range: Touch	Components: V, S
+SR: Yes (harmless)	Effect: Targets can keep vigil during the night and gain the benefit of a full night's sleep.	Target: 1 creatures touched
+DESC: Targets can keep vigil during the night and gain the benefit of a full night's sleep.
+DESC 2:  Targets can keep vigil during the night and gain the benefit of a full night's sleep.
+Know the Enemy (Divination)
+Saves: None	DC: 	Casting: 1 minute
+Duration: Instantaneous	Range: Personal	Components: V, S, DF
+SR: No	Effect: Gain +10 on a monster Knowledge check.	Target: You
+DESC: Gain +10 on a monster Knowledge check.
+DESC 2:  Gain +10 on a monster Knowledge check.
+Lead Blades (Transmutation)
+Saves: 	DC: 	Casting: 1 standard action
+Duration: 1 minutes [D]	Range: Personal	Components: V, S
+SR: 	Effect: Melee weapons damage as if one size bigger.	Target: touch
+DESC: Melee weapons damage as if one size bigger.
+DESC 2:  Melee weapons damage as if one size bigger.
+Liberating Command (Transmutation)
+Saves: Will negates (harmless)	DC: 13	Casting: 1 immediate action
+Duration: instantaneous	Range: Close (25 ft.)	Components: V
+SR: Yes (harmless)	Effect: Target makes an Escape Artist check as an immediate action and gains a bonus on it.	Target: one creature
+DESC: Target makes an Escape Artist check as an immediate action and gains a bonus on it.
+DESC 2:  Target makes an Escape Artist check as an immediate action and gains a bonus on it.
+Linebreaker (Transmutation)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: 1 minutes	Range: Personal	Components: V, S
+SR: No	Effect: You gain a +20 foot bonus to your base speed when charging and a +2 bonus on combat maneuver checks made to bull rush or overrun.	Target: You
+DESC: You gain a +20 foot bonus to your base speed when charging and a +2 bonus on combat maneuver checks made to bull rush or overrun.
+DESC 2:  You gain a +20 foot bonus to your base speed when charging and a +2 bonus on combat maneuver checks made to bull rush or overrun.
+Longshot (Transmutation)
+Saves: 	DC: 	Casting: 1 standard action
+Duration: 1 minutes	Range: Personal	Components: V, S, M/DF
+SR: 	Effect: Grants a +10 foot bonus to the range increment for any ranged weapon fired.	Target: You
+DESC: Grants a +10 foot bonus to the range increment for any ranged weapon fired.
+DESC 2:  Grants a +10 foot bonus to the range increment for any ranged weapon fired.
+Longstrider (Transmutation)
+Saves: 	DC: 	Casting: 1 standard action
+Duration: 1 hours [D]	Range: Personal	Components: V, S, M
+SR: 	Effect: This spell gives you a +10 foot enhancement bonus to your base speed.	Target: You
+DESC: This spell gives you a +10 foot enhancement bonus to your base speed.
+DESC 2:  This spell gives you a +10 foot enhancement bonus to your base speed.
+Lose the Trail (Illusion)
+Saves: Will negates (harmless)	DC: 13	Casting: 1 standard action
+Duration: 1 hours[D]	Range: Close (25 ft.)	Components: V, S
+SR: Yes	Effect: Obscure your tracks when fleeing from a pursuer.	Target: 1 creatures
+DESC: Obscure your tracks when fleeing from a pursuer.
+DESC 2:  Obscure your tracks when fleeing from a pursuer.
+Magic Fang (Transmutation)
+Saves: Will negates (harmless)	DC: 13	Casting: 1 standard action
+Duration: 1 minutes	Range: Touch	Components: V, S, DF
+SR: Yes (harmless)	Effect: Magic fang gives one natural weapon or unarmed strike of the subject a +1 enhancement bonus on attack and damage rolls.	Target: Living creature touched
+DESC: Magic fang gives one natural weapon or unarmed strike of the subject a +1 enhancement bonus on attack and damage rolls.
+DESC 2:  Magic fang gives one natural weapon or unarmed strike of the subject a +1 enhancement bonus on attack and damage rolls.
+Negate Aroma (Transmutation)
+Saves: Fortitude negates	DC: 13	Casting: 1 standard action
+Duration: 1 hours [D]	Range: Close (25 ft.)	Components: V, S, M/DF
+SR: Yes	Effect: Subject cannot be tracked by scent.	Target: 1 creatures or objects touched
+DESC: Subject cannot be tracked by scent.
+DESC 2:  Subject cannot be tracked by scent.
+Pass without Trace (Transmutation)
+Saves: Will negates (harmless)	DC: 13	Casting: 1 standard action
+Duration: 1 hours [D]	Range: Touch	Components: V, S, DF
+SR: Yes (harmless)	Effect: The subject or subjects of this spell do not leave footprints or a scent trail while moving.	Target: 1 creatures touched
+DESC: The subject or subjects of this spell do not leave footprints or a scent trail while moving.
+DESC 2:  The subject or subjects of this spell do not leave footprints or a scent trail while moving.
+Read Magic (Divination)
+Saves: 	DC: 	Casting: 1 standard action
+Duration: 10 minutes	Range: Personal	Components: V, S, F
+SR: 	Effect: You can decipher magical inscriptions on objects--books, scrolls, weapons, and the like--that would otherwise be unintelligible.	Target: You
+DESC: You can decipher magical inscriptions on objects--books, scrolls, weapons, and the like--that would otherwise be unintelligible.
+DESC 2:  You can decipher magical inscriptions on objects--books, scrolls, weapons, and the like--that would otherwise be unintelligible.
+Read Weather (Divination)
+Saves: 	DC: 	Casting: 1 minute
+Duration: Instantaneous	Range: Personal	Components: V, S, F
+SR: 	Effect: Forecast the weather at your location for the next 48 hours.	Target: You
+DESC: Forecast the weather at your location for the next 48 hours.
+DESC 2:  Forecast the weather at your location for the next 48 hours.
+Refine Improvised Weapon (Transmutation)
+Saves: Will negates (harmless, object)	DC: 13	Casting: 1 standard action
+Duration: 1 hours [D]	Range: Touch	Components: V, S, DF
+SR: yes (harmless, object)	Effect: Transform improvised weapon into a masterwork simple or martial weapon.	Target: one improvised weapon
+DESC: Transform improvised weapon into a masterwork simple or martial weapon.
+DESC 2:  Transform improvised weapon into a masterwork simple or martial weapon.
+Residual Tracking (Divination)
+Saves: None	DC: 	Casting: 1 minute
+Duration: Instantaneous	Range: Touch	Components: V, S, M
+SR: No	Effect: Tell creature's appearance by footprint.	Target: footprint touched
+DESC: Tell creature's appearance by footprint.
+DESC 2:  Tell creature's appearance by footprint.
+Resist Energy (Abjuration, AirSchool, EarthSchool, FireSchool, WaterSchool)
+Saves: Fortitude negates (harmless)	DC: 13	Casting: 1 standard action
+Duration: 10 minutes	Range: Touch	Components: V, S, DF
+SR: Yes (harmless)	Effect: This abjuration grants a creature limited protection from damage of whichever one of five energy types you select.	Target: Creature touched
+DESC: This abjuration grants a creature limited protection from damage of whichever one of five energy types you select.
+DESC 2:  This abjuration grants a creature limited protection from damage of whichever one of five energy types you select.
+Returning Weapon (Conjuration)
+Saves: Will negates (harmless, object)	DC: 13	Casting: 1 standard action
+Duration: 1 minutes	Range: Close (25 ft.)	Components: V, S
+SR: Yes (harmless, object)	Effect: Grants a weapon the returning special weapon quality.	Target: one weapon that can be thrown
+DESC: Grants a weapon the returning special weapon quality.
+DESC 2:  Grants a weapon the returning special weapon quality.
+Savage Maw (Transmutation)
+Saves: None	DC: 	Casting: 1 standard action
+Duration: 1 minutes	Range: Personal	Components: V, S
+SR: No	Effect: Your teeth extend and sharpen, transforming your mouth into a maw of razor-sharp fangs. You gain a bite attack that deals 1d4 points of damage plus your Strength modifier. If you confirm a critical hit with this attack, it also deals 1 point of bleed damage. If you already have a bite attack, your bite deals 2 points of bleed damage on a critical hit. You are considered proficient with this attack. If used as part of a full-attack action, the bite is considered a secondary attack, is made at your full base attack bonus -5, and adds half your Strength modifier to its damage. You can end this spell before its normal duration by making a bestial roar as a swift action. When you do, you can make an Intimidate check to demoralize all foes within a 30-foot radius that can hear the roar.	Target: You
+DESC: Your teeth extend and sharpen, transforming your mouth into a maw of razor-sharp fangs. You gain a bite attack that deals 1d4 points of damage plus your Strength modifier. If you confirm a critical hit with this attack, it also deals 1 point of bleed damage. If you already have a bite attack, your bite deals 2 points of bleed damage on a critical hit. You are considered proficient with this attack. If used as part of a full-attack action, the bite is considered a secondary attack, is made at your full base attack bonus -5, and adds half your Strength modifier to its damage. You can end this spell before its normal duration by making a bestial roar as a swift action. When you do, you can make an Intimidate check to demoralize all foes within a 30-foot radius that can hear the roar.
+DESC 2:  Your teeth extend and sharpen, transforming your mouth into a maw of razor-sharp fangs. You gain a bite attack that deals 1d4 points of damage plus your Strength modifier. If you confirm a critical hit with this attack, it also deals 1 point of bleed damage. If you already have a bite attack, your bite deals 2 points of bleed damage on a critical hit. You are considered proficient with this attack. If used as part of a full-attack action, the bite is considered a secondary attack, is made at your full base attack bonus -5, and adds half your Strength modifier to its damage. You can end this spell before its normal duration by making a bestial roar as a swift action. When you do, you can make an Intimidate check to demoralize all foes within a 30-foot radius that can hear the roar.
+Speak with Animals (Divination)
+Saves: 	DC: 	Casting: 1 standard action
+Duration: 1 minutes	Range: Personal	Components: V, S
+SR: 	Effect: You can ask questions of and receive answers from animals, but the spell doesn't make them any more friendly than normal.	Target: You
+DESC: You can ask questions of and receive answers from animals, but the spell doesn't make them any more friendly than normal.
+DESC 2:  You can ask questions of and receive answers from animals, but the spell doesn't make them any more friendly than normal.
+Spindrift Spritz (Conjuration, WaterSchool)
+Saves: Will negates (harmless)	DC: 13	Casting: 1 immediate action
+Duration: Instantaneous	Range: Close (25 ft.)	Components: V,S
+SR: Yes (harmless)	Effect: Target takes the better of two rolls when attempting a saving throw against an effect that would cause the fatigued, shaken, sickened, or staggered conditions	Target: One creature
+DESC: Target takes the better of two rolls when attempting a saving throw against an effect that would cause the fatigued, shaken, sickened, or staggered conditions
+DESC 2:  Target takes the better of two rolls when attempting a saving throw against an effect that would cause the fatigued, shaken, sickened, or staggered conditions
+Summon Minor Ally (Conjuration)
+Saves: None	DC: 	Casting: 1 round
+Duration: 1 rounds [D]	Range: Close (25 ft.)	Components: V, S, DF
+SR: No	Effect: Summon 1d3 Tiny animals.	Target: 1d3 summoned creatures
+DESC: Summon 1d3 Tiny animals.
+DESC 2:  Summon 1d3 Tiny animals.
+Summon Nature's Ally I (Conjuration)
+Saves: None	DC: 	Casting: 1 round
+Duration: 1 rounds [D]	Range: Close (25 ft.)	Components: V, S, DF
+SR: No	Effect: This spell summons to your side a natural creature [typically an animal, fey, magical beast, outsider with the elemental subtype, or a giant].	Target: One summoned creature
+DESC: This spell summons to your side a natural creature (typically an animal, fey, magical beast, outsider with the elemental subtype, or a giant).
+DESC 2:  This spell summons to your side a natural creature [typically an animal, fey, magical beast, outsider with the elemental subtype, or a giant].
+Sun Metal (Transmutation)
+Saves: Fortitude negates (object)	DC: 13	Casting: 1 standard action
+Duration: 1 rounds [see text]	Range: Touch	Components: V, S
+SR: Yes (object)	Effect: 	Target: one melee weapon
+DESC: 
+DESC 2:  
+Tamer's Lash (Evocation)
+Saves: Will partial (see text)	DC: 13	Casting: 1 standard action
+Duration: 1 rounds [D]	Range: 0 ft.	Components: V,S
+SR: Yes	Effect: Create a whip made of sound that damages foes and can frighten animals.	Target: A whip of magical sound
+DESC: Create a whip made of sound that damages foes and can frighten animals.
+DESC 2:  Create a whip made of sound that damages foes and can frighten animals.
+Thorn Javelin (Conjuration)
+Saves: none	DC: 13	Casting: 1 standard action
+Duration: 1 minutes [D]	Range: 0 Ft.	Components: V, S
+SR: no	Effect: Wield a javelin that sickens opponents when it strikes.	Target: javelin-like thorn
+DESC: Wield a javelin that sickens opponents when it strikes.
+DESC 2:  Wield a javelin that sickens opponents when it strikes.
+Thunderstomp (Evocation)
+Saves: none	DC: 13	Casting: 1 standard action
+Duration: instantaneous	Range: Close (25 ft.)	Components: V, S
+SR: yes	Effect: Trip one creature within range.	Target: one creature
+DESC: Trip one creature within range.
+DESC 2:  Trip one creature within range.
+Tireless Pursuit (Transmutation)
+Saves: 	DC: 	Casting: 1 standard action
+Duration: 1 hours [D]	Range: Personal	Components: V, S, M
+SR: 	Effect: Ignore fatigue while hustling.	Target: You
+DESC: Ignore fatigue while hustling.
+DESC 2:  Ignore fatigue while hustling.
+Unbreakable Heart (Enchantment)
+Saves: Will negates (harmless)	DC: 13	Casting: 1 standard action
+Duration: 1 rounds	Range: Close (25 ft.)	Components: V, S
+SR: Yes (harmless)	Effect: Creature gains +4 morale bonus on saves against mind-affecting effects that rely on negative emotions or that would force him to harm an ally. Supresses such effects already in place.	Target: One creature
+DESC: Creature gains +4 morale bonus on saves against mind-affecting effects that rely on negative emotions or that would force him to harm an ally. Supresses such effects already in place.
+DESC 2:  Creature gains +4 morale bonus on saves against mind-affecting effects that rely on negative emotions or that would force him to harm an ally. Supresses such effects already in place.
+Underbrush Decoy (Transmutation)
+Saves: Will negates (object)	DC: 13	Casting: 1 swift action
+Duration: 1 round	Range: Close (25 ft.)	Components: S
+SR: Yes (object)	Effect: Create a rustling distraction to hide.	Target: One non-creature plant of size Tiny, Small, or Medium
+DESC: Create a rustling distraction to hide.
+DESC 2:  Create a rustling distraction to hide.
+Wartrain Mount (Enchantment)
+Saves: None	DC: 	Casting: 1 minute
+Duration: 1 hours	Range: Close (25 ft.)	Components: V, S, M
+SR: Yes	Effect: Animal gains combat training.	Target: One indifferent or friendly animal
+DESC: Animal gains combat training.
+DESC 2:  Animal gains combat training.
+Waterproof (Abjuration, WaterSchool)
+Saves: Will negates (harmless)	DC: 13	Casting: 1 standard action
+Duration: 24 hours	Range: Touch	Components: V,S
+SR: Yes (harmless)	Effect: This spell renders a touched object-or the equipment of a touched creature-waterproof for the duration of the spell.	Target: One touched creature, or one touched object of up to 10 lbs
+DESC: This spell renders a touched object-or the equipment of a touched creature-waterproof for the duration of the spell.
+DESC 2:  This spell renders a touched object-or the equipment of a touched creature-waterproof for the duration of the spell.
+ 
+  
+  
+  
+ 
+           
+
+      
+------------------------ Description -----------------------
+Height: 0' 0" Weight: 0 lbs. Gender: Male	
+Eyes:    Hair: , Skin: 
+Dominant Hand: Right Quirks: , 	
+Speech style:  Quotable: 
+Full Description
+
+Background
+
+Campaign Logs
