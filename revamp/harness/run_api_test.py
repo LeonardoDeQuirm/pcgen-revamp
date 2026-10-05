@@ -252,6 +252,59 @@ def run_checks():
         check("cancel leaves nothing bought", st == 200 and not any(
             i["key"] == "Dagger" for i in read(C + "/equipment")[1]["purchased"]), d)
 
+    # ---- customising an item the character already owns, with and without paying for it
+    write("PATCH", C, {"funds": "5000"})
+    write("POST", C + "/equipment/buy", {"item": "Dagger", "quantity": 4})
+
+    def funds():
+        return float(read(C)[1]["funds"])
+
+    def upgrade(charge):
+        st, d = write("POST", C + "/equipment/customize", {"item": "Dagger", "quantity": 1, "charge": charge})
+        if st != 202:
+            return st, d
+        call("POST", "/builder/modifiers", {"name": "Masterwork (Weapon)"})
+        return call("POST", "/builder/commit", {"purchase": True})
+
+    f0 = funds()
+    st, d = upgrade(False)
+    owned = {i["key"]: i for i in read(C + "/equipment")[1]["purchased"]}
+    check("a free upgrade swaps one dagger for the better one", st == 200 and d.get("customized") is True and owned["Dagger"]["quantity"] == 3
+          and any("Masterwork" in k or "Masterwork" in i["name"] for k, i in owned.items() if k != "Dagger"), (st, str(d)[:200], list(owned)))
+    check("a free upgrade costs nothing", abs(funds() - f0) < 0.001 and d.get("charged") == "0", (f0, funds(), d.get("charged")))
+    f1 = funds()
+    st, d = upgrade(True)
+    check("a paid upgrade charges the price difference", st == 200 and float(d.get("charged", "0")) > 0 and abs((f1 - funds()) - float(d["charged"])) < 0.01, (f1, funds(), d.get("charged")))
+    write("PATCH", C, {"funds": "1"})
+    st, d = write("POST", C + "/equipment/customize", {"item": "Dagger", "quantity": 1, "charge": True})
+    if st == 202:
+        call("POST", "/builder/modifiers", {"name": "Masterwork (Weapon)"})
+        st, d = call("POST", "/builder/commit", {"purchase": True})
+    check("an upgrade the character cannot afford is refused (409) and nothing changes", st == 409 and "gp" in str(d), (st, str(d)[:150]))
+    st, d = write("POST", C + "/equipment/customize", {"item": "Dagger", "quantity": 1})
+    if st == 202:
+        st, d = call("POST", "/builder/cancel")
+    check("cancelling an upgrade changes nothing", st == 200 and d.get("customized") is False, (st, d if st != 200 else d.get("customized")))
+    check("customizing more than owned is 400", write("POST", C + "/equipment/customize", {"item": "Dagger", "quantity": 99})[0] == 400)
+
+    # ---- notes and charges on owned items (wands)
+    write("PATCH", C, {"funds": "5000"})
+    write("POST", C + "/equipment/buy", {"item": "Wand of Acid Arrow", "quantity": 1})
+    wand = next((i for i in read(C + "/equipment")[1]["purchased"] if i["key"] == "Wand of Acid Arrow"), None)
+    check("a wand reports its charges", wand is not None and wand.get("charges", {}).get("max", 0) > 0 and wand["charges"]["remaining"] == wand["charges"]["max"], wand)
+    st, d = write("PATCH", C + "/equipment/item", {"item": "Wand of Acid Arrow", "charges": 47, "note": "Found in the crypt | cursed?"})
+    wand = next(i for i in read(C + "/equipment")[1]["purchased"] if i["key"].startswith("Wand of Acid Arrow"))
+    check("charges can be set", st == 200 and wand["charges"]["remaining"] == 47, (st, wand))
+    check("a note can be kept (pipes made safe for the file)", wand["note"] == "Found in the crypt / cursed?", wand.get("note"))
+    check("more charges than the wand holds is refused", write("PATCH", C + "/equipment/item", {"item": wand["key"], "charges": 999})[0] == 400)
+    check("charges on an item without charges is 409", write("PATCH", C + "/equipment/item", {"item": "Dagger", "charges": 1})[0] == 409)
+    check("a patch with nothing to change is 400", write("PATCH", C + "/equipment/item", {"item": wand["key"]})[0] == 400)
+    write("POST", C + "/save")
+    text = open(read(C)[1]["file"], encoding="utf-8", errors="replace").read()
+    check("note and charges are saved in the character file", "Found in the crypt / cursed?" in text and "47" in text.split("Wand of Acid Arrow", 1)[1][:600], "")
+    write("POST", C + "/equipment/sell", {"item": wand["key"], "quantity": 1, "free": True})
+    write("PATCH", C, {"funds": "5000"})
+
     # ---- spells
     st, d = read(C + "/spells")
     n_known = len(d["known"])

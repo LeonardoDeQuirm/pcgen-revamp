@@ -16,6 +16,10 @@ interface Owned {
   cost?: number
   /** How many are in the current set (worn, wielded or carried). */
   inSet?: number
+  /** The player's own note on this item. */
+  note?: string | null
+  /** For wands and the like. */
+  charges?: { remaining: number; max: number }
 }
 
 interface Slot {
@@ -92,8 +96,93 @@ function LoadBar({ info, load }: { info: LoadInfo; load: string }) {
   )
 }
 
+const CHARGE_KEY = 'pcgen.ui.chargeForUpgrades'
+
+/** Asks how many to upgrade and whether the character pays for it, then hands over to the item builder. */
+function UpgradeDialog({ item, funds, onClose, onGo }: { item: Owned; funds: string; onClose: () => void; onGo: (quantity: number, charge: boolean) => void }) {
+  const [qty, setQty] = useState('1')
+  const [charge, setCharge] = useState(() => {
+    try {
+      return window.localStorage.getItem(CHARGE_KEY) !== 'no'
+    } catch {
+      return true
+    }
+  })
+  const n = Math.max(1, Math.min(item.quantity, Math.floor(Number(qty)) || 1))
+  const remember = (v: boolean) => {
+    setCharge(v)
+    try {
+      window.localStorage.setItem(CHARGE_KEY, v ? 'yes' : 'no')
+    } catch {
+      /* ignore */
+    }
+  }
+  return (
+    <Modal
+      title={`Customize ${item.name}`}
+      subtitle="Enchant it, change its material, rename it. The next screen is the item builder."
+      onClose={onClose}
+      footer={
+        <>
+          <button className="btn ghost" onClick={onClose}>
+            Cancel
+          </button>
+          <button className="btn primary" onClick={() => onGo(n, charge)}>
+            Open the item builder
+          </button>
+        </>
+      }
+    >
+      {item.quantity > 1 && (
+        <label className="field" style={{ width: 160, paddingBottom: 14 }}>
+          <span>How many (of {item.quantity})</span>
+          <input className="input num" inputMode="numeric" value={qty} onFocus={(e) => e.currentTarget.select()} onChange={(e) => setQty(e.target.value)} />
+        </label>
+      )}
+      <label className="check-row">
+        <input type="checkbox" checked={charge} onChange={(e) => remember(e.target.checked)} />
+        The character pays for the upgrade (the price difference; the character has {funds} gp)
+      </label>
+      <p className="muted" style={{ lineHeight: 1.5, paddingTop: 8 }}>
+        {charge
+          ? 'When you finish in the builder, the extra cost is taken from the character. If it cannot be afforded, nothing changes.'
+          : 'The upgrade is free: a gift, a find or a ruling by the GM. Nothing is taken from the character.'}
+      </p>
+    </Modal>
+  )
+}
+
+/** A short note on one item (where it was found, who made it, a curse...). Kept on a single line in the file. */
+function NoteDialog({ item, onClose, onSave }: { item: Owned; onClose: () => void; onSave: (note: string) => void }) {
+  const [text, setText] = useState(item.note ?? '')
+  return (
+    <Modal
+      title={`Note for ${item.name}`}
+      onClose={onClose}
+      footer={
+        <>
+          <button className="btn ghost" onClick={onClose}>
+            Cancel
+          </button>
+          <button className="btn primary" onClick={() => onSave(text)}>
+            Save
+          </button>
+        </>
+      }
+    >
+      <label className="field">
+        <span>Note</span>
+        <input className="input" autoFocus value={text} onChange={(e) => setText(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && onSave(text)} placeholder="Found in the crypt; glows near undead" />
+      </label>
+      <p className="muted" style={{ paddingTop: 8 }}>
+        Kept with the item when you save, on one line. Leave it empty to remove the note.
+      </p>
+    </Modal>
+  )
+}
+
 export function Gear({ character }: { character: Character }) {
-  const { act, mutate } = useStore()
+  const { act, mutate, notify } = useStore()
   const detail = useDetail()
   const [view, setView] = useState<GearView | null>(null)
   const [q, setQ] = useState('')
@@ -102,6 +191,8 @@ export function Gear({ character }: { character: Character }) {
   const [schemes, setSchemes] = useState<string[]>([])
   const [qty, setQty] = useState('1')
   const [placing, setPlacing] = useState<{ item: Owned; places: Place[] } | null>(null)
+  const [upgrading, setUpgrading] = useState<Owned | null>(null)
+  const [noting, setNoting] = useState<Owned | null>(null)
   const id = encodeURIComponent(character.id)
 
   useEffect(() => {
@@ -157,6 +248,9 @@ export function Gear({ character }: { character: Character }) {
     setPlacing({ item, places: [...res.places].sort((a, b) => Number(b.preferred) - Number(a.preferred)) })
   }
 
+  const setCharges = (item: Owned, remaining: number) =>
+    mutate(() => api.patch<Changed>(`/characters/${id}/equipment/item`, { item: item.key, charges: remaining }))
+
   const newSet = () => {
     const name = window.prompt('Name for the new equipment set (for example Travel or Dungeon)? It starts as a copy of the current one.', '')?.trim()
     if (name) void mutate(() => api.post<Changed>(`/characters/${id}/equipment-sets`, { name }))
@@ -193,6 +287,24 @@ export function Gear({ character }: { character: Character }) {
                     {g.cost != null && g.cost > 0 && <span className="num"> &middot; worth {fmt(g.cost * g.quantity)} gp</span>}
                     {g.types.length > 0 && <span> &middot; {g.types.slice(0, 3).join(' · ')}</span>}
                   </div>
+                  {g.note && (
+                    <div className="row-sub" style={{ fontStyle: 'italic' }} title="Your note on this item">
+                      {g.note}
+                    </div>
+                  )}
+                  <div className="row-sub" style={{ display: 'flex', gap: 12 }}>
+                    <button className="link-btn" title="Enchant it, change its material..." onClick={() => setUpgrading(g)}>
+                      Customize
+                    </button>
+                    <button className="link-btn" title="Your own note on this item" onClick={() => setNoting(g)}>
+                      {g.note ? 'Edit note' : 'Add note'}
+                    </button>
+                    {g.quantity > 1 && (
+                      <button className="link-btn" title={`Sell all ${g.quantity}`} onClick={() => void sell(g.key, g.quantity)}>
+                        Sell all
+                      </button>
+                    )}
+                  </div>
                 </div>
                 <span style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
                   {(g.inSet ?? 0) > 0 && (
@@ -200,13 +312,23 @@ export function Gear({ character }: { character: Character }) {
                       in use{(g.inSet ?? 0) > 1 ? ` ×${g.inSet}` : ''}
                     </span>
                   )}
-                  <button className="btn small" onClick={() => void equip(g)}>Equip</button>
-                  <button className="btn small ghost danger" onClick={() => void sell(g.key, 1)}>Sell</button>
-                  {g.quantity > 1 && (
-                    <button className="btn small ghost danger" title={`Sell all ${g.quantity}`} onClick={() => void sell(g.key, g.quantity)}>
-                      Sell all
-                    </button>
+                  {g.charges && (
+                    <span className="stepper" title="Charges left">
+                      <button className="btn small icon" aria-label={`Use a charge of ${g.name}`} disabled={g.charges.remaining <= 0} onClick={() => void setCharges(g, g.charges!.remaining - 1)}>
+                        <Icon name="minus" size={14} />
+                      </button>
+                      <b className="num">
+                        {g.charges.remaining}
+                        {g.charges.max > 0 ? `/${g.charges.max}` : ''}
+                      </b>
+                      <button className="btn small icon" aria-label={`Add a charge to ${g.name}`} disabled={g.charges.max > 0 && g.charges.remaining >= g.charges.max} onClick={() => void setCharges(g, g.charges!.remaining + 1)}>
+                        <Icon name="plus" size={14} />
+                      </button>
+                    </span>
                   )}
+                  <button className="btn small" onClick={() => void equip(g)}>Equip</button>
+
+                  <button className="btn small ghost danger" onClick={() => void sell(g.key, 1)}>Sell</button>
                 </span>
               </div>
             ))}
@@ -325,6 +447,34 @@ export function Gear({ character }: { character: Character }) {
           ))}
         </Card>
       </div>
+      {upgrading && (
+        <UpgradeDialog
+          item={upgrading}
+          funds={view.funds}
+          onClose={() => setUpgrading(null)}
+          onGo={(quantity, charge) => {
+            const item = upgrading
+            setUpgrading(null)
+            void mutate(() => api.post<Changed>(`/characters/${id}/equipment/customize`, { item: item.key, quantity, charge })).then((r) => {
+              if (r && r.customized === true) {
+                const paid = Number(r.charged)
+                notify('info', `${item.name} is now ${String(r.newName)}${charge ? (paid > 0 ? ` (paid ${r.charged} gp)` : ' (no extra cost)') : ' (free)'}.`)
+              }
+            })
+          }}
+        />
+      )}
+      {noting && (
+        <NoteDialog
+          item={noting}
+          onClose={() => setNoting(null)}
+          onSave={(note) => {
+            const item = noting
+            setNoting(null)
+            void mutate(() => api.patch<Changed>(`/characters/${id}/equipment/item`, { item: item.key, note }))
+          }}
+        />
+      )}
       {placing && (
         <Modal title={`Equip ${placing.item.name}`} subtitle="Where should it go?" onClose={() => setPlacing(null)} footer={<button className="btn ghost" onClick={() => setPlacing(null)}>Cancel</button>}>
           <div className="choice-list">

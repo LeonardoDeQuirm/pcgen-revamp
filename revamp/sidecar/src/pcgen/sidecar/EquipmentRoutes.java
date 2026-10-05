@@ -32,6 +32,8 @@ final class EquipmentRoutes
 		r.get("/characters/{id}/equipment", this::view);
 		r.put("/characters/{id}/equipment/scheme", this::setScheme);
 		r.get("/characters/{id}/equipment/where", this::where);
+		r.post("/characters/{id}/equipment/customize", this::customize);
+		r.patch("/characters/{id}/equipment/item", this::patchItem);
 		r.get("/characters/{id}/kits", this::kits);
 		r.post("/characters/{id}/kits", this::applyKit);
 		r.post("/characters/{id}/equipment/buy", this::buy);
@@ -46,6 +48,12 @@ final class EquipmentRoutes
 	private Map<String, Object> item(CharacterFacade c, EquipmentFacade e, int quantity)
 	{
 		Map<String, Object> m = new LinkedHashMap<>();
+		m.put("note", pcgen.gui2.facade.SidecarAccess.equipmentNote(e));
+		int[] charges = pcgen.gui2.facade.SidecarAccess.charges(e);
+		if (charges != null)
+		{
+			m.put("charges", Map.of("remaining", charges[0], "max", charges[1]));
+		}
 		m.put("weight", c.getInfoFactory().getWeight(e)); // each, in the game's weight unit (pounds)
 		m.put("cost", c.getInfoFactory().getCost(e)); // each, in gold
 		m.put("key", e.getKeyName());
@@ -123,6 +131,77 @@ final class EquipmentRoutes
 		}
 		m.put("bands", bands);
 		return m;
+	}
+
+	/**
+	 * Customise an item the character already owns (enchant it, change its material...). Opens the item builder (202,
+	 * see BuilderRoutes); when it is finished quantity of the old item are swapped for the new one. With charge=true
+	 * the character pays the price difference at the buy rate; with charge=false (the default) it is free (a gift, a
+	 * found upgrade, a GM ruling).
+	 */
+	private Object customize(Request q)
+	{
+		String id = q.param("id");
+		CharacterFacade c = s.character(id);
+		EquipmentFacade e = ownedItem(c, q.requireStr("item"));
+		int quantity = q.integer("quantity") == null ? 1 : q.requireInt("quantity");
+		int have = c.getPurchasedEquipment().getQuantity(e);
+		if (quantity < 1 || quantity > have)
+		{
+			throw new ApiException(400, "quantity must be between 1 and " + have);
+		}
+		boolean charge = q.bool("charge", false);
+		pcgen.gui2.facade.SidecarAccess.Upgrade result;
+		try
+		{
+			result = pcgen.gui2.facade.SidecarAccess.customizeOwned(c, e, quantity, charge);
+		}
+		catch (IllegalStateException cannotPay)
+		{
+			throw new ApiException(409, cannotPay.getMessage());
+		}
+		Map<String, Object> extra = new LinkedHashMap<>();
+		extra.put("customized", result != null);
+		if (result != null)
+		{
+			extra.put("newName", result.newName());
+			extra.put("charged", result.charged().stripTrailingZeros().toPlainString());
+		}
+		return characters.changed(id, c, extra);
+	}
+
+	/** Notes and charges on an owned item: item, then note and/or charges (the number left). */
+	private Object patchItem(Request q)
+	{
+		String id = q.param("id");
+		CharacterFacade c = s.character(id);
+		EquipmentFacade e = ownedItem(c, q.requireStr("item"));
+		Integer charges = q.integer("charges") == null ? null : q.requireInt("charges");
+		if (charges != null)
+		{
+			int[] now = pcgen.gui2.facade.SidecarAccess.charges(e);
+			if (now == null)
+			{
+				throw new ApiException(409, e + " does not use charges");
+			}
+			if (charges < 0 || (now[1] > 0 && charges > now[1]))
+			{
+				throw new ApiException(400, "charges must be between 0 and " + now[1]);
+			}
+		}
+		if (!q.has("note") && charges == null)
+		{
+			throw new ApiException(400, "give a note and/or charges");
+		}
+		if (q.has("note"))
+		{
+			pcgen.gui2.facade.SidecarAccess.setEquipmentNote(c, e, q.str("note"));
+		}
+		if (charges != null)
+		{
+			pcgen.gui2.facade.SidecarAccess.setCharges(c, e, charges);
+		}
+		return characters.changed(id, c, Map.of());
 	}
 
 	/** Where an owned item could be put in the current set: one entry per place (hand, body slot, container...). */

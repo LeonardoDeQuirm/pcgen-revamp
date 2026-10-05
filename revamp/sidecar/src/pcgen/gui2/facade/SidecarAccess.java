@@ -134,6 +134,110 @@ public final class SidecarAccess
 		}
 	}
 
+	// ---- equipment: notes, charges and customising what the character already owns ----
+
+	/** The player's own note on an owned item (null if none). */
+	public static String equipmentNote(pcgen.facade.core.EquipmentFacade e)
+	{
+		return e instanceof pcgen.core.Equipment eq ? eq.getNote() : null;
+	}
+
+	/** Sets the note on an owned item. The engine writes it into the character file unescaped, so keep it one plain line. */
+	public static void setEquipmentNote(CharacterFacade c, pcgen.facade.core.EquipmentFacade e, String note)
+	{
+		if (e instanceof pcgen.core.Equipment eq)
+		{
+			String clean = note == null ? "" : note.replace('|', '/').replace('\r', ' ').replace('\n', ' ').trim();
+			eq.setNote(clean.isEmpty() ? null : clean);
+			playerCharacter(c).setDirty(true);
+		}
+	}
+
+	/** {remaining, max} charges of an owned item (a wand), or null when it does not use charges. */
+	public static int[] charges(pcgen.facade.core.EquipmentFacade e)
+	{
+		if (e instanceof pcgen.core.Equipment eq)
+		{
+			int max = eq.getMaxCharges();
+			int remaining = eq.getRemainingCharges();
+			if (max > 0 || remaining >= 0)
+			{
+				return new int[] {Math.max(remaining, 0), max};
+			}
+		}
+		return null;
+	}
+
+	public static void setCharges(CharacterFacade c, pcgen.facade.core.EquipmentFacade e, int remaining)
+	{
+		if (e instanceof pcgen.core.Equipment eq)
+		{
+			eq.setRemainingCharges(remaining);
+			playerCharacter(c).setDirty(true);
+			playerCharacter(c).setCalcEquipmentList();
+		}
+	}
+
+	/** What an upgrade to an owned item came to. */
+	public record Upgrade(String newName, java.math.BigDecimal perItem, java.math.BigDecimal charged)
+	{
+	}
+
+	/**
+	 * Customises items the character already owns: opens the item builder on a copy, and when it is finished swaps
+	 * quantity of the old item for the new one (the note carries over). With charge the character pays the price
+	 * difference at the current buy rate (nothing if the new item is not worth more); without it the upgrade is free.
+	 * Returns null when the builder was cancelled; throws when the character cannot afford the upgrade.
+	 */
+	public static Upgrade customizeOwned(CharacterFacade c, pcgen.facade.core.EquipmentFacade owned, int quantity,
+		boolean charge)
+	{
+		PlayerCharacter pc = playerCharacter(c);
+		pcgen.core.Equipment old = (pcgen.core.Equipment) owned;
+		pcgen.core.Equipment fresh = old.clone();
+		if (!fresh.containsKey(pcgen.cdom.enumeration.ObjectKey.BASE_ITEM))
+		{
+			fresh.put(pcgen.cdom.enumeration.ObjectKey.BASE_ITEM, pcgen.cdom.reference.CDOMDirectSingleRef.getRef(old));
+		}
+		pcgen.facade.core.UIDelegate ui = c.getUIDelegate();
+		EquipmentBuilderFacadeImpl builder = new EquipmentBuilderFacadeImpl(fresh, pc, ui);
+		if (ui.showCustomEquipDialog(c, builder) == pcgen.facade.core.UIDelegate.CustomEquipResult.CANCELLED)
+		{
+			return null;
+		}
+		java.math.BigDecimal perItem = fresh.getCost(pc).subtract(old.getCost(pc)).max(java.math.BigDecimal.ZERO);
+		java.math.BigDecimal charged = java.math.BigDecimal.ZERO;
+		if (charge && perItem.signum() > 0)
+		{
+			java.math.BigDecimal rate = ((pcgen.core.GearBuySellScheme) c.getGearBuySellRef().get()).getBuyRate();
+			charged = perItem.multiply(java.math.BigDecimal.valueOf(quantity)).multiply(rate)
+				.multiply(new java.math.BigDecimal("0.01"));
+			java.math.BigDecimal funds = new java.math.BigDecimal(String.valueOf(c.getFundsRef().get()));
+			if (!c.isAllowDebt() && charged.compareTo(funds) > 0)
+			{
+				throw new IllegalStateException("the upgrade costs " + charged.stripTrailingZeros().toPlainString()
+					+ " gp and the character has " + funds.stripTrailingZeros().toPlainString() + " gp");
+			}
+		}
+		String note = old.getNote();
+		c.getDataSet().addEquipment(fresh);
+		c.removePurchasedEquipment(old, quantity, true);
+		c.addPurchasedEquipment(fresh, quantity, false, true);
+		pcgen.core.Equipment now = pc.getEquipmentNamed(fresh.getName());
+		if (now != null && note != null && now.getNote() == null)
+		{
+			now.setNote(note);
+		}
+		if (charged.signum() > 0)
+		{
+			// setFunds (not adjustFunds): a brand-new character's funds are held as a whole number, which adjustFunds
+			// cannot add to.
+			c.setFunds(new java.math.BigDecimal(String.valueOf(c.getFundsRef().get())).subtract(charged));
+		}
+		pc.setDirty(true);
+		return new Upgrade(fresh.getName(), perItem, charged);
+	}
+
 	/** The engine's own spell behind a spell facade (null if it is some other kind). */
 	public static pcgen.core.spell.Spell spellOf(pcgen.facade.core.SpellFacade f)
 	{
