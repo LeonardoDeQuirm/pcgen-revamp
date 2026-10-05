@@ -271,7 +271,7 @@ export function SaveAsDialog({ characterId, suggestedName, onClose, onSaved }: {
 
 /** Customise an item: enchantments, materials, size, name. Edits go straight to the engine; commit or cancel ends it. */
 export function BuilderDialog() {
-  const { builderRequest, act } = useStore()
+  const { builderRequest, act, notify } = useStore()
   const { resolveBuilder } = useDialogBridge()
   const initial = builderRequest?.builder
   const [state, setState] = useState<BuilderState | null>(initial ?? null)
@@ -280,12 +280,14 @@ export function BuilderDialog() {
   const [found, setFound] = useState<Catalog | null>(null)
   const [name, setName] = useState('')
   const [head, setHead] = useState('PRIMARY')
+  const [refused, setRefused] = useState<Set<string>>(new Set())
 
   useEffect(() => {
     setState(initial ?? null)
     setName(initial?.name ?? '')
     setQ('')
     setHead('PRIMARY')
+    setRefused(new Set())
   }, [initial?.id, initial])
 
   useEffect(() => {
@@ -309,7 +311,17 @@ export function BuilderDialog() {
   }
   const edit = async (method: string, path: string, body?: unknown) => {
     const res = await act(() => api.request(method, path, body).then(api.answerQuestions))
-    if (res && res.status < 400) setState(res.data as BuilderState)
+    if (!res) return
+    if (res.status < 400) {
+      setState(res.data as BuilderState)
+    } else if (res.status === 409 && method === 'POST') {
+      // The engine refuses an enchantment the item already has, or one that clashes with what is on it.
+      const key = String((body as { name?: string } | undefined)?.name ?? '')
+      setRefused((r) => new Set(r).add(key))
+      notify('error', 'That cannot be added: the item already has it, or it does not go with what is on the item.')
+    } else {
+      notify('error', res.data && typeof res.data === 'object' && 'error' in res.data ? String(res.data.error) : `Request failed (${res.status})`)
+    }
   }
 
   const applied = state.heads[head]?.applied ?? []
@@ -372,7 +384,7 @@ export function BuilderDialog() {
         <input className="input" placeholder="Search enchantments and materials" value={q} onChange={(e) => setQ(e.target.value)} />
       </div>
       <div className="result-list" style={{ marginBottom: 16 }}>
-        {found?.items.map((m) => (
+        {found?.items.filter((m) => !refused.has(m.key ?? m.name)).map((m) => (
           <button key={m.key ?? m.name} className="result" onClick={() => void edit('POST', '/builder/modifiers', { name: m.key ?? m.name, head })}>
             <span>{m.name}</span>
             <Icon name="plus" />

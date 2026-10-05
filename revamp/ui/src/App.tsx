@@ -265,7 +265,7 @@ export default function App() {
 
   return (
     <div className="app">
-      {busy && <div className="busy-bar" />}
+      {busy && !builderRequest && <div className="busy-bar" />}
       <Sidebar onOpen={() => setOpening(true)} onNew={() => void startNew()} />
       <main className={'main' + (detail ? ' has-detail' : '')}>{body}</main>
       <DetailPanel />
