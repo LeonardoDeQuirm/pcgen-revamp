@@ -1483,10 +1483,26 @@
 	  ====================================
 	  ====================================-->
 	<feats>
+		<#-- Feats a GM handed out (PCGen's "GM Awards", kept by the PCGen revamp app) are listed one per line in the note
+		     "GM Granted Feats"; the sheet says "(GM)" for those. -->
+		<#assign gmFeatNames = []>
+		<@loop from=0 to=pcvar('COUNT[NOTES]-1') ; gmnote , gmnote_has_next>
+		<#if (pcstring("NOTE.${gmnote}.NAME") = "GM Granted Feats")>
+		<#-- the sheet engine wraps each line of a note in <para>...</para> -->
+		<#assign gmFeatNames = pcstring('NOTE.${gmnote}.VALUE.')?replace("<para>", "")?replace("</para>", "\n")?replace("&amp;", "&")?split("\n")>
+		</#if>
+		</@loop>
 		<!-- Visible standard feats (not including the auto feats) -->
 		<@loop from=0 to=pcvar('COUNT[FEATS.VISIBLE]-1') ; feat , feat_has_next>
+		<#assign featName = pcstring('FEAT.VISIBLE.${feat}')>
+		<#assign featIsGm = false>
+		<#list gmFeatNames as gmName>
+		<#if (gmName?trim?length > 0) && (featName = gmName?trim || featName?starts_with(gmName?trim + " ("))>
+		<#assign featIsGm = true>
+		</#if>
+		</#list>
 		<feat>
-			<name>${pcstring('FEAT.VISIBLE.${feat}')}</name>
+			<name>${featName}<#if featIsGm> (GM)</#if></name>
 			<description>${pcstring('FEAT.VISIBLE.${feat}.DESC')}</description>
 			<benefit>${pcstring('FEAT.VISIBLE.${feat}.BENEFIT')}</benefit>
 			<type>${pcstring('FEAT.VISIBLE.${feat}.TYPE')}</type>
