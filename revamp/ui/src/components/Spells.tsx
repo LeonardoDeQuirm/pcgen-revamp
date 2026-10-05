@@ -21,7 +21,9 @@ interface ClassSlots {
   classLevel: number
   casterType: string
   highestLevel: number
-  levels: { level: number; perDay: number; known: number; knownNow: number; usable: boolean }[]
+  /** Prepared casters (wizard, cleric, druid...) choose their spells each day; the others know them and just cast. */
+  prepares?: boolean
+  levels: { level: number; perDay: number; known: number; knownNow: number; prepared?: number; bonus?: string; usable: boolean }[]
 }
 
 interface SpellView {
@@ -30,6 +32,7 @@ interface SpellView {
   prepared: SpellRow[]
   book: SpellRow[]
   spellbooks: string[]
+  defaultSpellbook?: string
   autoSpells: boolean
   available?: SpellRow[]
 }
@@ -58,6 +61,7 @@ function allowance(slots: ClassSlots | undefined, level: string, have: number): 
   if (!lv) return `${have}`
   const parts = [lv.known > 0 ? `${have} of ${lv.known} known` : `${have} known`]
   if (lv.perDay > 0) parts.push(`${lv.perDay} per day`)
+  else if (lv.level === 0 && lv.known > 0) parts.push('at will')
   return parts.join(' \u00b7 ')
 }
 
@@ -65,7 +69,8 @@ export function Spells({ character }: { character: Character }) {
   const { act, mutate } = useStore()
   const detail = useDetail()
   const [view, setView] = useState<SpellView | null>(null)
-  const [adding, setAdding] = useState<string | null>(null)
+  const [adding, setAdding] = useState<{ cls: string; mode: 'learn' | 'prepare' } | null>(null)
+  const [listName, setListName] = useState<string | null>(null)
   const id = encodeURIComponent(character.id)
 
   useEffect(() => {
@@ -87,75 +92,296 @@ export function Spells({ character }: { character: Character }) {
   const remove = (r: SpellRow) =>
     mutate(() => api.del<Changed>(`/characters/${id}/spells/known`, { class: r.class, level: r.level, spell: r.spell }))
 
+  // Prepared spells live in a named list. People rarely want more than one, so use the character's own (or make
+  // "Prepared" the first time one is needed) and only show a chooser when there are several.
+  const lists = view.spellbooks
+  const activeList = listName && lists.includes(listName) ? listName : view.defaultSpellbook && lists.includes(view.defaultSpellbook) ? view.defaultSpellbook : lists[0] ?? 'Prepared'
+  const unprepare = (r: SpellRow) =>
+    mutate(() => api.del<Changed>(`/characters/${id}/spells/prepared`, { class: r.class, level: r.level, spell: r.spell, list: r.list ?? activeList }))
+  const prepareOne = async (r: SpellRow) => {
+    if (!lists.includes(activeList)) {
+      if (!(await mutate(() => api.post<Changed>(`/characters/${id}/spellbooks`, { name: activeList })))) return
+    }
+    await mutate(() => api.post<Changed>(`/characters/${id}/spells/prepared`, { class: r.class, level: r.level, spell: r.spell, list: activeList }))
+  }
+  const newList = () => {
+    const name = window.prompt('Name for the new list of prepared spells?', 'Prepared')?.trim()
+    if (!name) return
+    void mutate(() => api.post<Changed>(`/characters/${id}/spellbooks`, { name })).then((r) => r && setListName(name))
+  }
+
   return (
     <div className="grid" style={{ gap: 18 }}>
+      <Domains character={character} />
+      {lists.length > 1 && (
+        <div className="badge-row" role="group" aria-label="Prepared spell list">
+          <span className="muted">Prepared list</span>
+          {lists.map((l) => (
+            <button key={l} className={'btn small ' + (l === activeList ? 'primary' : '')} aria-pressed={l === activeList} onClick={() => setListName(l)}>
+              {l}
+            </button>
+          ))}
+          <button className="btn small ghost" onClick={newList}>
+            New list
+          </button>
+        </div>
+      )}
       {classNames.map((cls) => {
         const byLevel = grouped.get(cls) ?? new Map<string, SpellRow[]>()
+        const slots = view.classes?.find((c) => c.class === cls)
+        const prepares = !!slots?.prepares
+        const knownCount = (view.known ?? []).filter((r) => r.class === cls).length
+        // A class that knows its whole list (cleric, druid...) has hundreds of "known" spells: don't list them all.
+        const wholeList = prepares && !!slots && slots.levels.every((l) => l.known === 0) && knownCount > 60
+        const preparedRows = view.prepared.filter((r) => r.class === cls && (r.list ?? activeList) === activeList)
+        const preparedByLevel = groupByClassLevel(preparedRows).get(cls) ?? new Map<string, SpellRow[]>()
         return (
-        <Card
-          key={cls}
-          title={`${cls} spells`}
-          action={
-            <button className="btn small primary" onClick={() => setAdding(cls)}>
-              Add spell
-            </button>
-          }
-        >
-          {byLevel.size === 0 && <div className="muted">No spells chosen yet. Use Add spell to pick some.</div>}
-          {[...byLevel.entries()]
-            .sort((a, b) => Number(a[0]) - Number(b[0]))
-            .map(([level, rows]) => (
-              <div key={level} style={{ paddingBottom: 10 }}>
+          <Card
+            key={cls}
+            title={`${cls} spells`}
+            action={
+              <span style={{ display: 'flex', gap: 8 }}>
+                {prepares && (
+                  <button className="btn small primary" onClick={() => setAdding({ cls, mode: 'prepare' })}>
+                    Prepare spell
+                  </button>
+                )}
+                {!wholeList && (
+                  <button className={'btn small ' + (prepares ? '' : 'primary')} onClick={() => setAdding({ cls, mode: 'learn' })}>
+                    {prepares ? 'Add to spellbook' : 'Add spell'}
+                  </button>
+                )}
+              </span>
+            }
+          >
+            {slots && <SlotSummary slots={slots} />}
+            {prepares && (
+              <div style={{ paddingBottom: 12 }}>
                 <div className="muted" style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', padding: '4px 0' }}>
-                  Level {level} <span className="num">&middot; {allowance(view.classes?.find((c) => c.class === cls), level, rows.length)}</span>
-                  {uncastable(view.classes?.find((c) => c.class === cls), level) && (
-                    <span className="chip bad" style={{ marginLeft: 8, textTransform: 'none', letterSpacing: 0 }}>can&rsquo;t cast yet</span>
-                  )}
+                  Prepared today{lists.length > 1 ? ` \u00b7 ${activeList}` : ''}
                 </div>
-                <div className="badge-row">
-                  {rows.map((r) => {
-                    const cant = uncastable(view.classes?.find((c) => c.class === cls), level)
-                    const ref: DetailRef = { kind: 'spell', characterId: character.id, className: r.class, level: r.level, name: r.spell, removable: true, uncastable: cant }
-                    return (
-                      <span key={r.spell} className={'chip' + (cant ? ' bad' : detail.isOpen(ref) ? ' accent' : '')} title={cant ? `${r.class} can't cast level ${level} spells yet` : undefined}>
-                        <button className="chip-link" onClick={() => detail.open(ref)} title="Show what this does">
-                          {r.spell}
-                        </button>
-                        <button className="btn ghost small" style={{ padding: '0 2px' }} title="Remove" onClick={() => void remove(r)}>
-                          &times;
-                        </button>
-                      </span>
-                    )
-                  })}
-                </div>
+                {preparedByLevel.size === 0 ? (
+                  <div className="muted">Nothing prepared yet. Use Prepare spell to choose what to memorise.</div>
+                ) : (
+                  [...preparedByLevel.entries()]
+                    .sort((a, b) => Number(a[0]) - Number(b[0]))
+                    .map(([level, rows]) => (
+                      <div key={level} className="badge-row" style={{ padding: '2px 0' }}>
+                        <span className="chip num">Level {level}</span>
+                        {rows.map((r) => {
+                          const ref: DetailRef = { kind: 'spell', characterId: character.id, className: r.class, level: r.level, name: r.spell, removable: false }
+                          return (
+                            <span key={r.spell + (r.list ?? '')} className={'chip accent' + (detail.isOpen(ref) ? ' on' : '')}>
+                              <button className="chip-link" onClick={() => detail.open(ref)} title="Show what this does">
+                                {r.spell}
+                              </button>
+                              {r.count > 1 && <span className="num"> &times;{r.count}</span>}
+                              <button className="btn ghost small" style={{ padding: '0 2px' }} title="Prepare one more" aria-label={`Prepare another ${r.spell}`} onClick={() => void prepareOne(r)}>
+                                +
+                              </button>
+                              <button className="btn ghost small" style={{ padding: '0 2px' }} title="Un-prepare one" aria-label={`Un-prepare ${r.spell}`} onClick={() => void unprepare(r)}>
+                                &minus;
+                              </button>
+                            </span>
+                          )
+                        })}
+                      </div>
+                    ))
+                )}
               </div>
-            ))}
-        </Card>
+            )}
+            {wholeList && (
+              <div className="muted" style={{ paddingBottom: 8 }}>
+                {cls}s know every spell on their list ({knownCount} spells), so there is nothing to add: prepare the ones you want each day.
+              </div>
+            )}
+            {!wholeList && prepares && byLevel.size > 0 && (
+              <div className="muted" style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', padding: '4px 0' }}>
+                In the spellbook
+              </div>
+            )}
+            {!wholeList && byLevel.size === 0 && <div className="muted">No spells chosen yet. Use {prepares ? 'Add to spellbook' : 'Add spell'} to pick some.</div>}
+            {!wholeList &&
+              [...byLevel.entries()]
+                .sort((a, b) => Number(a[0]) - Number(b[0]))
+                .map(([level, rows]) => (
+                  <div key={level} style={{ paddingBottom: 10 }}>
+                    <div className="muted" style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', padding: '4px 0' }}>
+                      Level {level} <span className="num">&middot; {allowance(slots, level, rows.length)}</span>
+                      {uncastable(slots, level) && (
+                        <span className="chip bad" style={{ marginLeft: 8, textTransform: 'none', letterSpacing: 0 }}>can&rsquo;t cast yet</span>
+                      )}
+                    </div>
+                    <div className="badge-row">
+                      {rows.map((r) => {
+                        const cant = uncastable(slots, level)
+                        const ref: DetailRef = { kind: 'spell', characterId: character.id, className: r.class, level: r.level, name: r.spell, removable: true, uncastable: cant }
+                        return (
+                          <span key={r.spell} className={'chip' + (cant ? ' bad' : detail.isOpen(ref) ? ' accent' : '')} title={cant ? `${r.class} can't cast level ${level} spells yet` : undefined}>
+                            <button className="chip-link" onClick={() => detail.open(ref)} title="Show what this does">
+                              {r.spell}
+                            </button>
+                            {prepares && !cant && (
+                              <button className="btn ghost small" style={{ padding: '0 2px' }} title="Prepare this spell" aria-label={`Prepare ${r.spell}`} onClick={() => void prepareOne(r)}>
+                                +
+                              </button>
+                            )}
+                            <button className="btn ghost small" style={{ padding: '0 2px' }} title="Remove" onClick={() => void remove(r)}>
+                              &times;
+                            </button>
+                          </span>
+                        )
+                      })}
+                    </div>
+                  </div>
+                ))}
+          </Card>
         )
       })}
-      {view.prepared.length > 0 && (
-        <Card title="Prepared">
-          <div className="badge-row">
-            {view.prepared.map((r, i) => (
-              <span key={r.spell + i} className="chip accent">
-                <button
-                  className="chip-link"
-                  onClick={() => detail.open({ kind: 'spell', characterId: character.id, className: r.class, level: r.level, name: r.spell, removable: false })}
-                >
-                  {r.spell}
-                </button>{' '}
-                <span className="num muted">{r.class} {r.level}</span>
-              </span>
-            ))}
-          </div>
-        </Card>
+      {adding && (
+        <AddSpell
+          character={character}
+          className={adding.cls}
+          mode={adding.mode}
+          listName={activeList}
+          listExists={lists.includes(activeList)}
+          onClose={() => setAdding(null)}
+        />
       )}
-      {adding && <AddSpell character={character} className={adding} onClose={() => setAdding(null)} />}
     </div>
   )
 }
 
-function AddSpell({ character, className, onClose }: { character: Character; className: string; onClose: () => void }) {
+interface DomainView {
+  selected: { key: string; name: string; qualified: boolean }[]
+  remaining: number
+  available: { key: string; name: string; qualified: boolean; source?: string | null }[]
+}
+
+/** A cleric's (or similar) domains: the ones taken, how many are still to choose, and a picker with descriptions. */
+function Domains({ character }: { character: Character }) {
+  const { act, mutate } = useStore()
+  const [view, setView] = useState<DomainView | null>(null)
+  const [adding, setAdding] = useState(false)
+  const [q, setQ] = useState('')
+  const id = encodeURIComponent(character.id)
+
+  useEffect(() => {
+    let live = true
+    void act(() => api.get<DomainView>(`/characters/${id}/domains`)).then((v) => live && v && setView(v))
+    return () => {
+      live = false
+    }
+  }, [id, character, act])
+
+  if (!view || (view.selected.length === 0 && view.remaining === 0)) return null
+  const have = new Set(view.selected.map((d) => d.key))
+  const options: PickOption[] = view.available
+    .filter((d) => !have.has(d.key) && d.name.toLowerCase().includes(q.toLowerCase()))
+    .map((d) => ({ id: d.key, title: d.name, subtitle: d.source ?? undefined, unavailable: d.qualified === false, unavailableTag: 'requirements not met' }))
+  return (
+    <Card
+      title={`Domains · ${view.selected.length}`}
+      action={
+        view.remaining > 0 ? (
+          <button className="btn small primary" onClick={() => setAdding(true)}>
+            Add domain
+          </button>
+        ) : undefined
+      }
+    >
+      <div className="badge-row">
+        {view.selected.map((d) => (
+          <span key={d.key} className="chip accent">
+            {d.name}
+            <button
+              className="btn ghost small"
+              style={{ padding: '0 2px' }}
+              title="Remove this domain"
+              aria-label={`Remove ${d.name}`}
+              onClick={() => void mutate(() => api.del<Changed>(`/characters/${id}/domains`, { name: d.key }))}
+            >
+              &times;
+            </button>
+          </span>
+        ))}
+        {view.selected.length === 0 && <span className="muted">None chosen yet.</span>}
+      </div>
+      {view.remaining > 0 && (
+        <p className="muted" style={{ paddingTop: 8 }}>
+          {view.remaining} more to choose. Each domain adds an extra spell slot every spell level and its own spells.
+        </p>
+      )}
+      {adding && (
+        <PreviewPicker
+          title="Add a domain"
+          options={options}
+          query={q}
+          onQuery={setQ}
+          addLabel="Choose"
+          loadInfo={(key) => act(() => api.get<InfoLike>(`/characters/${id}/domains/info`, { name: key }))}
+          onAdd={(key) => void mutate(() => api.post<Changed>(`/characters/${id}/domains`, { name: key }))}
+          onClose={() => setAdding(false)}
+        />
+      )}
+    </Card>
+  )
+}
+
+/** Orisons (level 0) of a class that knows some but gets no daily count can be cast at will. */
+function perDayText(l: { level: number; perDay: number; known: number }): string {
+  return l.level === 0 && l.perDay === 0 && l.known > 0 ? 'at will' : `${l.perDay}/day`
+}
+
+/** A line per usable spell level: how many per day, how many known, and for prepared casters how many are prepared. */
+function SlotSummary({ slots }: { slots: ClassSlots }) {
+  const levels = slots.levels.filter((l) => l.usable)
+  if (levels.length === 0) return null
+  return (
+    <div className="badge-row" style={{ paddingBottom: 12 }} aria-label="Spells per day">
+      {levels.map((l) => {
+        if (slots.prepares) {
+          const used = l.prepared ?? 0
+          const tone = l.perDay === 0 ? '' : used > l.perDay ? ' bad' : used === l.perDay ? ' good' : ' warn'
+          const note = used > l.perDay ? `${used - l.perDay} too many` : used < l.perDay ? `${l.perDay - used} free` : 'full'
+          return (
+            <span
+              key={l.level}
+              className={'chip num' + tone}
+              title={`Level ${l.level}: ${used} prepared of ${l.perDay} per day (${note})${l.bonus ? `, plus ${l.bonus.replace('+', '')} extra slot from a domain or school (not counted above)` : ''}`}
+            >
+              Level {l.level}: {used}/{l.perDay} prepared{l.bonus ? ` ${l.bonus}` : ''}
+            </span>
+          )
+        }
+        const over = l.known > 0 && l.knownNow > l.known
+        return (
+          <span key={l.level} className={'chip num' + (over ? ' bad' : '')} title={`Level ${l.level}: ${l.knownNow}${l.known > 0 ? ` of ${l.known}` : ''} known, ${l.perDay} per day`}>
+            Level {l.level}: {l.knownNow}
+            {l.known > 0 ? `/${l.known}` : ''} known &middot; {perDayText(l)}
+          </span>
+        )
+      })}
+    </div>
+  )
+}
+
+function AddSpell({
+  character,
+  className,
+  mode,
+  listName,
+  listExists,
+  onClose,
+}: {
+  character: Character
+  className: string
+  mode: 'learn' | 'prepare'
+  listName: string
+  listExists: boolean
+  onClose: () => void
+}) {
+  const preparing = mode === 'prepare'
   const { act, mutate } = useStore()
   const [rows, setRows] = useState<SpellRow[] | null>(null)
   const [slots, setSlots] = useState<ClassSlots | undefined>(undefined)
@@ -168,24 +394,26 @@ function AddSpell({ character, className, onClose }: { character: Character; cla
   useEffect(() => {
     let live = true
     // No practical limit: a wizard's list across many books is well over a thousand spells.
-    void act(() => api.get<SpellView>(`/characters/${id}/spells`, { available: true, class: className, limit: 100000 })).then((v) => {
+    const query = preparing ? { class: className } : { available: true, class: className, limit: 100000 }
+    void act(() => api.get<SpellView>(`/characters/${id}/spells`, query)).then((v) => {
       if (!live || !v) return
-      setRows(v.available ?? [])
+      setRows(preparing ? v.known : (v.available ?? []))
       setSlots(v.classes?.find((c) => c.class === className))
     })
     return () => {
       live = false
     }
-  }, [id, className, act])
+  }, [id, className, preparing, act])
 
   // The engine lists every spell on the class list, up to its highest level (9 for a wizard). Offer the levels
   // the class can actually use right now; the rest are behind a switch so nothing is out of reach.
   const unique = [...new Map((rows ?? []).map((r) => [`${r.level}|${r.spell}`, r])).values()]
-  const usable = new Set((slots?.levels ?? []).filter((l) => l.usable).map((l) => String(l.level)))
+  // To prepare a spell the class needs a slot for its level; to learn one it only needs the level to be usable.
+  const usable = new Set((slots?.levels ?? []).filter((l) => (preparing ? l.perDay > 0 : l.usable)).map((l) => String(l.level)))
   // If the engine reports nothing usable (odd data), don't hide everything.
   const restrict = usable.size > 0
   // A class with a known-spells table (not a spellbook caster) can't take spells beyond its slots.
-  const limited = !!slots && slots.levels.some((l) => l.known > 0)
+  const limited = !preparing && !!slots && slots.levels.some((l) => l.known > 0)
   const inScope = (r: SpellRow) => higher || !restrict || usable.has(r.level)
   const allLevels = [...new Set(unique.map((r) => r.level))].sort((a, b) => Number(a) - Number(b))
   const lockedLevels = restrict ? allLevels.filter((l) => !usable.has(l)) : []
@@ -209,10 +437,12 @@ function AddSpell({ character, className, onClose }: { character: Character; cla
           subtitle: `Level ${r.level}`,
           // Classes with a fixed "spells known" table (inquisitor, sorcerer...) are refused by the engine above their
           // slots; spellbook classes (wizard) may hold spells they can't cast yet.
-          unavailable: tooHigh && limited,
-          unavailableTag: 'no slot yet',
-          tag: tooHigh && !limited ? "can't cast yet" : undefined,
-          note: tooHigh
+          unavailable: tooHigh && (limited || preparing),
+          unavailableTag: 'no slot at this level',
+          tag: tooHigh && !limited && !preparing ? "can't cast yet" : undefined,
+          note: tooHigh && preparing
+            ? `${className} has no spell slots of level ${r.level} yet, so this can't be prepared.`
+            : tooHigh
             ? limited
               ? `${className} learns a fixed number of spells at each level and has none to learn at level ${r.level} yet. You can read about it; it unlocks as the class levels up.`
               : `${className} can't cast level ${r.level} spells yet. You can still add it to the spellbook; it will be marked in red on the Spells tab until the class can cast it.`
@@ -231,7 +461,7 @@ function AddSpell({ character, className, onClose }: { character: Character; cla
 
   return (
     <PreviewPicker
-      title={`Add a ${className} spell`}
+      title={preparing ? `Prepare a ${className} spell` : `Add a ${className} spell`}
       subtitle={slots ? `${className} level ${slots.classLevel}${restrict ? ` \u00b7 can use spell levels ${[...usable].sort((a, b) => Number(a) - Number(b)).join(', ')}` : ''}` : undefined}
       options={options}
       total={rows ? matches.length : undefined}
@@ -265,8 +495,16 @@ function AddSpell({ character, className, onClose }: { character: Character; cla
       }}
       onAdd={(key) => {
         const { level: lv, spell } = split(key)
-        void mutate(() => api.post<Changed>(`/characters/${id}/spells/known`, { class: className, level: lv, spell }))
+        if (!preparing) {
+          void mutate(() => api.post<Changed>(`/characters/${id}/spells/known`, { class: className, level: lv, spell }))
+          return
+        }
+        void (async () => {
+          if (!listExists && !(await mutate(() => api.post<Changed>(`/characters/${id}/spellbooks`, { name: listName })))) return
+          await mutate(() => api.post<Changed>(`/characters/${id}/spells/prepared`, { class: className, level: lv, spell, list: listName }))
+        })()
       }}
+      addLabel={preparing ? 'Prepare' : 'Add'}
       onClose={onClose}
     />
   )

@@ -66,7 +66,7 @@ final class SpellRoutes
 		java.util.Set<String> seen = new java.util.HashSet<>();
 		for (SpellSupportFacade.SuperNode sn : list)
 		{
-			if (sn instanceof SpellNode n
+			if (sn instanceof SpellNode n && n.getSpell() != null
 					&& (className == null || (n.getSpellcastingClass() != null
 							&& className.equalsIgnoreCase(n.getSpellcastingClass().getKeyName()))))
 			{
@@ -96,7 +96,18 @@ final class SpellRoutes
 		m.put("prepared", nodes(sp.getPreparedSpellNodes(), cls, Integer.MAX_VALUE));
 		m.put("book", nodes(sp.getBookSpellNodes(), cls, Integer.MAX_VALUE));
 		m.put("classes", classes(c));
-		m.put("spellbooks", CharacterView.names(sp.getSpellbooks()));
+		// A prepared list or spell book exists once it has been created, even while it holds nothing; the engine
+		// shows an empty one as a header entry without a spell.
+		java.util.Set<String> lists = new java.util.LinkedHashSet<>(CharacterView.names(sp.getSpellbooks()));
+		// Every list that has a prepared spell in it, plus the empty ones (shown as a header without a spell).
+		for (SpellSupportFacade.SuperNode sn : sp.getPreparedSpellNodes())
+		{
+			if (sn instanceof SpellNode n && n.getRootNode() != null)
+			{
+				lists.add(n.getRootNode().getName());
+			}
+		}
+		m.put("spellbooks", new ArrayList<>(lists));
 		m.put("defaultSpellbook", sp.getDefaultSpellBookRef().get());
 		m.put("autoSpells", sp.isAutoSpells());
 		m.put("useHigherKnownSlots", sp.isUseHigherKnownSlots());
@@ -131,6 +142,15 @@ final class SpellRoutes
 				continue;
 			}
 			int highest = ss.getHighestLevelSpell(pc);
+			Map<String, Integer> preparedNow = new java.util.HashMap<>();
+			for (SpellSupportFacade.SuperNode sn : sp.getPreparedSpellNodes())
+			{
+				if (sn instanceof SpellNode n && n.getSpell() != null && n.getSpellcastingClass() != null
+						&& n.getSpellcastingClass().equals(cls))
+				{
+					preparedNow.merge(n.getSpellLevel(), n.getCount(), Integer::sum);
+				}
+			}
 			Map<String, Integer> knownNow = new java.util.HashMap<>();
 			for (SpellSupportFacade.SuperNode sn : sp.getKnownSpellNodes())
 			{
@@ -149,6 +169,10 @@ final class SpellRoutes
 				lv.put("perDay", cast);
 				lv.put("known", known);
 				lv.put("knownNow", knownNow.getOrDefault(String.valueOf(i), 0));
+				// An extra slot that is kept apart from the daily total: a cleric's domain slot or a specialist
+				// wizard's school slot. The engine says it as "+1".
+				lv.put("bonus", ss.getBonusCastForLevelString(i, Globals.getDefaultSpellBook(), pc));
+				lv.put("prepared", preparedNow.getOrDefault(String.valueOf(i), 0));
 				lv.put("usable", cast > 0 || known > 0);
 				levels.add(lv);
 			}
@@ -156,6 +180,9 @@ final class SpellRoutes
 			m.put("class", cls.getKeyName());
 			m.put("classLevel", pc.getLevel(cls));
 			m.put("casterType", cls.getSpellType());
+			// Prepared casters (wizard, cleric, druid...) choose their spells each day; the others (sorcerer,
+			// bard, inquisitor...) simply know them and cast any number up to their daily total.
+			m.put("prepares", cls.getSafe(pcgen.cdom.enumeration.ObjectKey.MEMORIZE_SPELLS));
 			m.put("highestLevel", highest);
 			m.put("levels", levels);
 			out.add(m);
@@ -165,10 +192,16 @@ final class SpellRoutes
 
 	private SpellNode find(ListFacade<? extends SpellSupportFacade.SuperNode> list, Request q, String what)
 	{
+		return find(list, q, what, q.str("list"));
+	}
+
+	/** @param listName only match entries in the spell list / book of this name (null: any) */
+	private SpellNode find(ListFacade<? extends SpellSupportFacade.SuperNode> list, Request q, String what,
+		String listName)
+	{
 		String cls = q.requireStr("class");
 		String level = q.requireStr("level");
 		String spell = q.requireStr("spell");
-		String listName = q.str("list");
 		List<String> near = new ArrayList<>();
 		for (SpellSupportFacade.SuperNode sn : list)
 		{
@@ -252,7 +285,9 @@ final class SpellRoutes
 	private Object addPrepared(Request q)
 	{
 		SpellSupportFacade sp = s.character(q.param("id")).getSpellSupport();
-		SpellNode n = find(sp.getAllKnownSpellNodes(), q, "known");
+		// "list" is the book to prepare INTO; the spell itself is found among the known spells (optionally narrowed
+		// with "from", the list it is known in).
+		SpellNode n = find(sp.getAllKnownSpellNodes(), q, "known", q.str("from"));
 		sp.addPreparedSpell(n, q.requireStr("list"), q.bool("metamagic", false));
 		return done(q);
 	}
@@ -260,7 +295,7 @@ final class SpellRoutes
 	private Object removePrepared(Request q)
 	{
 		SpellSupportFacade sp = s.character(q.param("id")).getSpellSupport();
-		SpellNode n = find(sp.getPreparedSpellNodes(), q, "prepared");
+		SpellNode n = find(sp.getPreparedSpellNodes(), q, "prepared", q.requireStr("list"));
 		sp.removePreparedSpell(n, q.requireStr("list"));
 		return done(q);
 	}
@@ -268,7 +303,7 @@ final class SpellRoutes
 	private Object addToBook(Request q)
 	{
 		SpellSupportFacade sp = s.character(q.param("id")).getSpellSupport();
-		SpellNode n = find(sp.getAllKnownSpellNodes(), q, "known");
+		SpellNode n = find(sp.getAllKnownSpellNodes(), q, "known", q.str("from"));
 		sp.addToSpellBook(n, q.requireStr("book"));
 		return done(q);
 	}
@@ -276,7 +311,7 @@ final class SpellRoutes
 	private Object removeFromBook(Request q)
 	{
 		SpellSupportFacade sp = s.character(q.param("id")).getSpellSupport();
-		SpellNode n = find(sp.getBookSpellNodes(), q, "spell book");
+		SpellNode n = find(sp.getBookSpellNodes(), q, "spell book", q.requireStr("book"));
 		sp.removeFromSpellBook(n, q.requireStr("book"));
 		return done(q);
 	}

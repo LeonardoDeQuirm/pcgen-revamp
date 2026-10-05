@@ -231,6 +231,18 @@ def run_checks():
     st, d = read(C + "/spells", available="true", limit=5)
     check("available spells honour limit", st == 200 and 0 < len(d["available"]) <= 5, d)
 
+    # ---- domains and the extra domain slot
+    st, d = read(C + "/domains")
+    check("domains route lists taken, remaining and available", st == 200 and set(d) >= {"selected", "remaining", "available"}, d)
+    check("the cleric has domains and the data offers more", st == 200 and len(d["selected"]) >= 1 and len(d["available"]) > 5, (st, str(d)[:200]))
+    if st == 200 and d["available"]:
+        st2, inf = read(C + "/domains/info", name=d["available"][0]["key"])
+        check("a domain has a description with sections", st2 == 200 and inf["sections"], (st2, str(inf)[:200]))
+    check("unknown domain is 404", read(C + "/domains/info", name="No Such Domain")[0] == 404)
+    sp = read(C + "/spells")[1]
+    check("spell levels carry the bonus (domain/school) slot", all("bonus" in x for x in sp["classes"][0]["levels"]), sp["classes"][0]["levels"][:2])
+    check("a cleric gets a +1 domain slot at spell level 1", next(x for x in sp["classes"][0]["levels"] if x["level"] == 1)["bonus"] == "+1", sp["classes"][0]["levels"][:3])
+
     # ---- levels (level-up raises an ability-score chooser)
     st, d = write("POST", C + "/levels", {"class": "Cleric"})
     check("level up raises a chooser", st == 202 and d["pendingChooser"]["choicesRequired"] == 1, d)
@@ -425,6 +437,27 @@ def run_checks():
     held = [(x["spell"], x["level"]) for x in read(W + "/spells")[1]["known"]]
     check("a level-1 wizard can scribe a 3rd-level spell", st == 200 and ("Fireball", "3") in held, (st, held))
     write("DELETE", W + "/spells/known", {"class": "Wizard", "level": "3", "spell": "Fireball"})
+    # Preparing spells: a wizard prepares from what it knows into a named list, and the day's slots count them.
+    check("a wizard is a prepared caster", cls is not None and cls.get("prepares") is True, cls)
+    check("a spontaneous caster would not be (class flag present)", "prepares" in (cls or {}))
+    cantrip = next((r["spell"] for r in read(W + "/spells", available="true", **{"class": "Wizard", "limit": 100000})[1]["available"]
+                    if r["level"] == "0"), None)
+    write("POST", W + "/spells/known", {"class": "Wizard", "level": "0", "spell": cantrip})
+    check("a new list can be made", write("POST", W + "/spellbooks", {"name": "Prepared"})[0] == 200)
+    check("an empty list shows up in the list names", "Prepared" in read(W + "/spells")[1]["spellbooks"])
+    st, d = write("POST", W + "/spells/prepared", {"class": "Wizard", "level": "0", "spell": cantrip, "list": "Prepared"})
+    sp = read(W + "/spells")[1]
+    check("a known spell can be prepared into a list", st == 200 and any(r["spell"] == cantrip and r["list"] == "Prepared" and r["count"] == 1 for r in sp["prepared"]), (st, sp["prepared"]))
+    check("the list header is not mistaken for a spell", all(r["spell"] for r in sp["prepared"]), sp["prepared"])
+    lv0 = next(x for x in next(c for c in sp["classes"] if c["class"] == "Wizard")["levels"] if x["level"] == 0)
+    check("the day's slots count what is prepared", lv0["prepared"] == 1 and lv0["perDay"] >= 1, lv0)
+    write("POST", W + "/spells/prepared", {"class": "Wizard", "level": "0", "spell": cantrip, "list": "Prepared"})
+    check("preparing it again adds a copy", read(W + "/spells")[1]["prepared"][0]["count"] == 2)
+    write("DELETE", W + "/spells/prepared", {"class": "Wizard", "level": "0", "spell": cantrip, "list": "Prepared"})
+    write("DELETE", W + "/spells/prepared", {"class": "Wizard", "level": "0", "spell": cantrip, "list": "Prepared"})
+    check("un-preparing removes the copies", not [r for r in read(W + "/spells")[1]["prepared"] if r["spell"]], read(W + "/spells")[1]["prepared"])
+    check("a spell that is not known cannot be prepared", write("POST", W + "/spells/prepared", {"class": "Wizard", "level": "0", "spell": "Not A Spell", "list": "Prepared"})[0] == 404)
+    write("DELETE", W + "/spells/known", {"class": "Wizard", "level": "0", "spell": cantrip})
     for _ in range(16):
         settle(write("POST", W + "/levels", {"class": "Wizard"}))
     cls, usable = wizard_levels()

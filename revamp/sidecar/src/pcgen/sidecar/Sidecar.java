@@ -216,6 +216,7 @@ public final class Sidecar
 		new ExportRoutes(session).register(router);
 		new DatasetRoutes(session).register(router);
 		new InfoRoutes(session).register(router);
+		new DomainRoutes(session).register(router);
 		new FileRoutes().register(router);
 		router.get("/messages", q -> ui.drain());
 		router.get("/routes", q -> router.describe());

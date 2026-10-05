@@ -418,8 +418,25 @@ try {
 
   // A new wizard knows no spells yet but can add some.
   await clickText('.tabs button', 'Spells')
-  await waitText('Add spell')
+  await waitText('Add to spellbook')
   check('a new caster can add spells before knowing any', (await text()).includes('No spells chosen yet'))
+  // Learn a cantrip, prepare it, and see the daily count change.
+  const pickFirstAndConfirm = async (verb) => {
+    await page.waitForSelector('.modal .pick')
+    await page.click('.modal .pick')
+    await page.waitForFunction((v) => [...document.querySelectorAll('.modal button')].some((b) => b.innerText.trim().startsWith(v + ' ') && !b.disabled), { timeout: 20000 }, verb)
+    await clickText('.modal button', verb + ' ')
+    await page.waitForFunction(() => !document.querySelector('.modal'), { timeout: 20000 })
+  }
+  await clickText('button', 'Add to spellbook')
+  await pickFirstAndConfirm('Add')
+  await page.waitForFunction(() => /in the spellbook/i.test(document.body.innerText), { timeout: 20000 }) // headings are shown in capitals
+  check('a spell can be added to a spellbook', true)
+  await clickText('button', 'Prepare spell')
+  await pickFirstAndConfirm('Prepare')
+  await page.waitForFunction(() => /Level 0: 1\/\d+ prepared/.test(document.body.innerText), { timeout: 20000 })
+  check('preparing a spell shows how many slots are used', true)
+  await shot('spells-prepared')
   await clickText('.tabs button', 'Overview')
 
   // Save for a never-saved character asks where, and writes the file.
