@@ -13,7 +13,7 @@ function Section({ id, title, count, action, children }: { id: string; title: st
   const { isCollapsed, toggle } = useCollapsed()
   const closed = isCollapsed(id)
   return (
-    <section className="card collapsible" data-collapsed={closed}>
+    <section className="card collapsible" data-collapsed={closed} data-section={id}>
       <div className="card-title" style={{ marginBottom: closed ? 0 : 12 }}>
         <button className="card-toggle" aria-expanded={!closed} onClick={() => toggle(id)}>
           <span className="chev" data-open={!closed}>
@@ -59,7 +59,7 @@ export function Category({ character, category }: { character: Character; catego
       ) : (
         <div className="rows">
           {category.abilities.map((a) => {
-            const removable = category.total > 0 && (!a.nature || a.nature === 'NORMAL')
+            const removable = category.total > 0 && (!!a.gm || !a.nature || a.nature === 'NORMAL')
             const ref: DetailRef = { kind: 'ability', characterId: character.id, categoryKey: category.key, categoryName: category.name, key: a.key, name: a.name, removable }
             const selected = detail.isOpen(ref)
             return (
@@ -77,7 +77,8 @@ export function Category({ character, category }: { character: Character; catego
                   <div className="row-title">{a.name}</div>
                 </div>
                 <span style={{ display: 'flex', gap: 8, alignItems: 'center' }} onClick={(e) => e.stopPropagation()}>
-                  {category.total > 0 && a.nature && a.nature !== 'NORMAL' && <span className="chip">granted</span>}
+                  {a.gm && <span className="chip accent" title="Handed out by the GM: ignores prerequisites and uses no feat slot">GM</span>}
+                  {!a.gm && category.total > 0 && a.nature && a.nature !== 'NORMAL' && <span className="chip">granted</span>}
                   {removable && (
                     <button
                       className="btn small ghost danger"

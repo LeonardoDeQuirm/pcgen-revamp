@@ -35,6 +35,8 @@ export interface AbilityRow {
   key: string
   name: string
   nature: string | null
+  /** Handed out by the GM: no prerequisites, no slot used, marked (GM) on the sheet. */
+  gm?: boolean
 }
 
 export interface AbilityCategory {

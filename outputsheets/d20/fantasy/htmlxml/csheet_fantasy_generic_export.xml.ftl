@@ -1433,9 +1433,24 @@
 		</@loop>
 
 		<!-- Virtual Feats -->
+		<#-- Feats a GM handed out are listed one per line in the note "GM Granted Feats" (kept by the PCGen revamp app);
+		     the sheet says "(GM)" for those and "(Granted)" for feats a class or race grants. -->
+		<#assign gmFeatNames = []>
+		<@loop from=0 to=pcvar('COUNT[NOTES]-1') ; gmnote , gmnote_has_next>
+		<#if (pcstring("NOTE.${gmnote}.NAME") = "GM Granted Feats")>
+		<#assign gmFeatNames = pcstring('NOTE.${gmnote}.VALUE.')?split("\n")>
+		</#if>
+		</@loop>
 		<@loop from=0 to=pcvar('COUNT[VFEATS.VISIBLE]-1') ; feat , feat_has_next>
+		<#assign vfeatName = pcstring('VFEAT.VISIBLE.${feat}')>
+		<#assign vfeatIsGm = false>
+		<#list gmFeatNames as gmName>
+		<#if (gmName?trim?length > 0) && (vfeatName = gmName?trim || vfeatName?starts_with(gmName?trim + " ("))>
+		<#assign vfeatIsGm = true>
+		</#if>
+		</#list>
 		<feat>
-			<name>${pcstring('VFEAT.VISIBLE.${feat}')} (Granted)</name>
+			<name>${vfeatName} <#if vfeatIsGm>(GM)<#else>(Granted)</#if></name>
 			<description>${pcstring('VFEAT.VISIBLE.${feat}.DESC')}</description>
 			<benefit>${pcstring('VFEAT.VISIBLE.${feat}.BENEFIT')}</benefit>
 			<type>${pcstring('VFEAT.VISIBLE.${feat}.TYPE')}</type>

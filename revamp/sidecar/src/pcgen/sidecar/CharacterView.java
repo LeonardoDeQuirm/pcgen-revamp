@@ -159,6 +159,7 @@ final class CharacterView
 	static List<Map<String, Object>> abilityCategories(CharacterFacade c)
 	{
 		List<Map<String, Object>> out = new ArrayList<>();
+		java.util.Set<String> gm = pcgen.gui2.facade.SidecarAccess.gmGranted(c);
 		for (AbilityCategory cat : c.getActiveAbilityCategories())
 		{
 			Map<String, Object> m = new LinkedHashMap<>();
@@ -173,6 +174,10 @@ final class CharacterView
 				am.put("key", a.getKeyName());
 				am.put("name", text(a));
 				am.put("nature", text(c.getAbilityNature(a)));
+				if (gm.contains(cat.getKeyName() + "|" + a.getKeyName()))
+				{
+					am.put("gm", true); // handed out by the GM: no prerequisites, no slot, marked on the sheet
+				}
 				abilities.add(am);
 			}
 			m.put("abilities", abilities);

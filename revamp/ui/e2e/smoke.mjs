@@ -493,6 +493,25 @@ try {
   check('the metamagic spell is prepared in a level 2 slot', true)
   rmSync(wizCopy, { force: true })
 
+  // GM-granted feat: ticking the box lifts the prerequisite check; the feat is marked GM and can be taken back.
+  await clickText('.tabs button', 'Feats')
+  await page.waitForFunction(() => !!document.querySelector('section[data-section="FEAT"]'), { timeout: 20000 })
+  await page.evaluate(() => [...document.querySelectorAll('section[data-section="FEAT"] button')].find((b) => b.innerText.trim() === 'Add')?.click())
+  await page.waitForSelector('.modal .pick')
+  await page.evaluate(() => [...document.querySelectorAll('.modal .check-row')].find((l) => /GM/.test(l.innerText))?.querySelector('input')?.click())
+  await page.type('.modal input[placeholder="Search"]', 'Whirlwind')
+  await sleep(1200)
+  await page.evaluate(() => [...document.querySelectorAll('.modal .pick')].find((p) => p.innerText.includes('Whirlwind Attack'))?.click())
+  await page.waitForFunction(() => [...document.querySelectorAll('.modal button')].some((b) => b.innerText.trim().startsWith('Grant ') && !b.disabled), { timeout: 20000 })
+  check('a GM grant can be added even though the feat has unmet prerequisites', true)
+  await clickText('.modal button', 'Grant ')
+  await page.waitForFunction(() => !document.querySelector('.modal'), { timeout: 20000 })
+  await page.waitForFunction(() => [...document.querySelectorAll('section[data-section="FEAT"] .row')].some((r) => r.innerText.includes('Whirlwind Attack') && /GM/.test(r.innerText)), { timeout: 20000 })
+  check('the granted feat is marked GM in the list', true)
+  await page.evaluate(() => [...document.querySelectorAll('section[data-section="FEAT"] .row')].find((r) => r.innerText.includes('Whirlwind Attack'))?.querySelector('button.danger')?.click())
+  await page.waitForFunction(() => ![...document.querySelectorAll('section[data-section="FEAT"] .row')].some((r) => r.innerText.includes('Whirlwind Attack')), { timeout: 20000 })
+  check('and it can be taken back', true)
+
   // Deity picker: searching by domain finds gods, and choosing one changes the character's deity.
   await clickText('.tabs button', 'Overview')
   await page.waitForFunction(() => [...document.querySelectorAll('.vital')].some((v) => v.innerText.startsWith('Deity')), { timeout: 20000 })

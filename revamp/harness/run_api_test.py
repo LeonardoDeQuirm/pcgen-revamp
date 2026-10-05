@@ -231,6 +231,30 @@ def run_checks():
     st, d = read(C + "/spells", available="true", limit=5)
     check("available spells honour limit", st == 200 and 0 < len(d["available"]) <= 5, d)
 
+    # ---- GM-granted feats: bypass prerequisites and slots, saved, marked, removable
+    def feat_cat():
+        return next(x for x in snap()["abilityCategories"] if x["key"] == "FEAT")
+    before = feat_cat()
+    write("POST", C + "/abilities", {"category": "FEAT", "name": "Whirlwind Attack"})
+    check("an ordinary add of a feat the character can't take does nothing", not any(a["key"] == "Whirlwind Attack" for a in feat_cat()["abilities"]))
+    st, d = write("POST", C + "/abilities", {"category": "FEAT", "name": "Whirlwind Attack", "gm": True})
+    after = feat_cat()
+    gm_row = next((a for a in after["abilities"] if a["key"] == "Whirlwind Attack"), None)
+    check("a GM-granted feat is added despite its prerequisites", st == 200 and gm_row is not None and gm_row.get("gm") is True, (st, str(d)[:150]))
+    check("a GM-granted feat uses no feat slot", (after["total"], after["remaining"]) == (before["total"], before["remaining"]), (before["total"], before["remaining"], after["total"], after["remaining"]))
+    notes = read(C + "/notes")[1]
+    check("the GM note lists it for the sheet", any(n["name"] == "GM Granted Feats" and "Whirlwind Attack" in n["text"] for n in notes), notes)
+    some_trait = read("/dataset/abilities", category="Traits", limit=1)[1]["items"][0]["key"]
+    st, d = write("POST", C + "/abilities", {"category": "Traits", "name": some_trait, "gm": True})
+    check("only feats can be flagged as GM-granted", st == 400, (st, d))
+    st, sv = write("POST", C + "/save")
+    saved_text = open(read(C)[1]["file"], encoding="utf-8", errors="replace").read()
+    check("it is saved in the character file as a virtual ability", "VIRTUAL" in saved_text and "Whirlwind Attack" in saved_text)
+    st, x = write("DELETE", C + "/abilities", {"category": "FEAT", "name": "Whirlwind Attack"})
+    check("a GM-granted feat can be taken back", st == 200 and not any(a["key"] == "Whirlwind Attack" for a in feat_cat()["abilities"]), (st, str(x)[:120]))
+    check("taking it back clears the GM note", not any(n["name"] == "GM Granted Feats" for n in read(C + "/notes")[1]))
+    write("POST", C + "/save")
+
     # ---- deities: catalog with alignment, search by domain, may-follow flag
     st, d = read("/dataset/deities", character=CID, limit=500)
     check("deity catalog carries alignment and whether the character may follow", st == 200 and d["total"] > 20 and all("alignment" in i and "qualified" in i for i in d["items"]), (st, str(d)[:200]))

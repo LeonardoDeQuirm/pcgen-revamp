@@ -38,6 +38,7 @@ export function PreviewPicker({
   extra,
   blocked,
   onSelect,
+  override,
 }: {
   title: string
   subtitle?: string
@@ -58,6 +59,8 @@ export function PreviewPicker({
   /** A reason the selected entry cannot be added with the current extra choices (disables Add and says why). */
   blocked?(selectedId: string): string | null
   onSelect?(id: string | null): void
+  /** Allow adding even what the engine says the character cannot take (a GM's gift); the reason is shown as a note. */
+  override?: boolean
 }) {
   const [selected, setSelected] = useState<string | null>(null)
   const [info, setInfo] = useState<InfoLike | null>(null)
@@ -86,7 +89,7 @@ export function PreviewPicker({
   }, [settled])
 
   const blockedReason = selected && blocked ? blocked(selected) : null
-  const canAdd = !!chosen && !chosen.unavailable && info?.qualified !== false && !loading && info !== null && !blockedReason
+  const canAdd = !!chosen && (override || (!chosen.unavailable && info?.qualified !== false)) && !loading && info !== null && !blockedReason
 
   return (
     <Modal
@@ -126,13 +129,13 @@ export function PreviewPicker({
                 key={o.id}
                 role="option"
                 aria-selected={o.id === selected}
-                className={'pick' + (o.unavailable ? ' dim' : '')}
+                className={'pick' + (o.unavailable && !override ? ' dim' : '')}
                 onClick={() => {
                   setSelected(o.id)
                   onSelect?.(o.id)
                 }}
                 onDoubleClick={() => {
-                  if (!o.unavailable) {
+                  if (!o.unavailable || override) {
                     onClose()
                     onAdd(o.id)
                   }
@@ -170,9 +173,10 @@ export function PreviewPicker({
             <>
               <h3 className="preview-title">{info.name}</h3>
               {chosen?.note && <div className="notice warn">{chosen.note}</div>}
+              {override && info.reason && <div className="notice warn">Normally {info.reason.charAt(0).toLowerCase() + info.reason.slice(1)} As a GM gift it ignores that.</div>}
               {extra?.(selected)}
               {blockedReason && <div className="notice bad">{blockedReason}</div>}
-              <InfoBody key={selected} info={info} />
+              <InfoBody key={selected} info={override ? { ...info, reason: null } : info} />
             </>
           )}
         </div>
@@ -199,6 +203,10 @@ export function AbilityPicker({
   // show just the ones that apply. Everywhere else the full list is useful for planning, so it stays the default.
   const qualifiedByDefault = /favou?red class bonus/i.test(categoryName)
   const [onlyQualified, setOnlyQualified] = useState(qualifiedByDefault)
+  // A GM can hand a character any feat: no prerequisites, no feat slot. It is saved with the character and the sheet
+  // marks it "(GM)". Only feats can be given this way.
+  const [gm, setGm] = useState(false)
+  const canGm = categoryKey === 'FEAT'
   const { act, mutate } = useStore()
   const [q, setQ] = useState('')
   const dq = useDebounced(q)
@@ -207,13 +215,13 @@ export function AbilityPicker({
 
   useEffect(() => {
     let live = true
-    void act(() => api.get<Catalog & { items: (Catalog['items'][number] & { qualified?: boolean })[] }>('/dataset/abilities', { category: categoryKey, q: dq, limit: 80, character: character.id, qualified: onlyQualified })).then(
+    void act(() => api.get<Catalog & { items: (Catalog['items'][number] & { qualified?: boolean })[] }>('/dataset/abilities', { category: categoryKey, q: dq, limit: 80, character: character.id, qualified: onlyQualified && !gm })).then(
       (r) => live && r && setResult(r),
     )
     return () => {
       live = false
     }
-  }, [categoryKey, dq, character.id, onlyQualified, act])
+  }, [categoryKey, dq, character.id, onlyQualified, gm, act])
 
   const options: PickOption[] | null = result
     ? result.items.map((it) => ({
@@ -226,20 +234,32 @@ export function AbilityPicker({
 
   return (
     <PreviewPicker
-      title={`Add to ${categoryName}`}
+      title={gm ? `Add a GM-granted ${categoryName.toLowerCase()}` : `Add to ${categoryName}`}
+      override={gm}
+      addLabel={gm ? 'Grant' : 'Add'}
       options={options}
       total={result?.total}
       query={q}
       onQuery={setQ}
       filters={
-        <label className="check-row">
-          <input type="checkbox" checked={onlyQualified} onChange={(e) => setOnlyQualified(e.target.checked)} />
-          Only show what {character.name || 'this character'} qualifies for
-        </label>
+        <>
+          {canGm && (
+            <label className="check-row" title="Handed out by the GM: ignores prerequisites, uses no feat slot, and the sheet marks it (GM)">
+              <input type="checkbox" checked={gm} onChange={(e) => setGm(e.target.checked)} />
+              Granted by the GM (ignores prerequisites and uses no feat slot)
+            </label>
+          )}
+          {!gm && (
+            <label className="check-row">
+              <input type="checkbox" checked={onlyQualified} onChange={(e) => setOnlyQualified(e.target.checked)} />
+              Only show what {character.name || 'this character'} qualifies for
+            </label>
+          )}
+        </>
       }
       loadInfo={(key) => act(() => api.get<InfoLike>(`/characters/${id}/abilities/info`, { category: categoryKey, name: key }))}
       onAdd={(key) => {
-        void mutate(() => api.post<Changed>(`/characters/${id}/abilities`, { category: categoryKey, name: key })).then(() => onAdded?.())
+        void mutate(() => api.post<Changed>(`/characters/${id}/abilities`, { category: categoryKey, name: key, ...(gm ? { gm: true } : {}) })).then(() => onAdded?.())
       }}
       onClose={onClose}
     />

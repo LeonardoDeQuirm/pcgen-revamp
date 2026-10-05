@@ -134,11 +134,17 @@ def test_character(idx, char, others):
         if char.stem == "pf_Cleric":
             check_choosers(port, cid, PCGEN / TEMPLATES["plain"], check)
 
+        # A character that needs a book this sidecar did not load is refused (409); one whose books are all loaded
+        # opens (the sidecar may load extra books), so close those again.
+        refused = False
         for other in others:
             st, body = call(port, "POST", "/characters", path=str(other))
             if st == 409:
+                refused = True
                 break
-        else:
+            if st == 200:
+                call(port, "DELETE", f"/characters/{json.loads(body)['id']}")
+        if not refused:
             problems.append("no other sample character produced a 409 for mismatched sources")
 
         st, _ = call(port, "DELETE", f"/characters/{cid}")
@@ -158,7 +164,8 @@ def test_character(idx, char, others):
 
 
 def main():
-    chars = all_chars()
+    # The generated corpus is for the export harness; these sidecar checks use the sample characters (and Clarent).
+    chars = [c for c in all_chars() if not c.stem.startswith("corpus_")]
     with ThreadPoolExecutor(len(chars)) as ex:
         results = list(ex.map(lambda a: test_character(a[0], a[1], [c for c in chars if c != a[1]]),
                               enumerate(chars)))

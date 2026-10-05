@@ -8,6 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import pcgen.core.AbilityCategory;
+import pcgen.gui2.facade.SidecarAccess;
 import pcgen.facade.core.AbilityFacade;
 import pcgen.facade.core.CharacterFacade;
 import pcgen.facade.core.InfoFactory;
@@ -121,6 +122,60 @@ final class AbilityRoutes
 		return out.stream().distinct().toList();
 	}
 
+	/** The note that carries the GM-granted feats into the character file and onto the sheet. */
+	static final String GM_NOTE = "GM Granted Feats";
+
+	/**
+	 * Keeps the "GM Granted Feats" note in step with the abilities a GM handed out, one feat name per line. The note is
+	 * saved with the character and read by the sheet export, which marks those feats "(GM)".
+	 */
+	private void syncGmNote(CharacterFacade c)
+	{
+		List<String> names = new ArrayList<>();
+		var cats = c.getDataSet().getAbilities();
+		for (String entry : SidecarAccess.gmGranted(c))
+		{
+			String[] parts = entry.split("\\|", 2);
+			if (!"FEAT".equals(parts[0]))
+			{
+				continue;
+			}
+			for (AbilityFacade a : c.getAbilities(category(c, parts[0])))
+			{
+				if (a.getKeyName().equals(parts[1]) && !names.contains(a.getKeyName()))
+				{
+					names.add(a.getKeyName());
+				}
+			}
+		}
+		var d = c.getDescriptionFacade();
+		pcgen.core.NoteItem existing = null;
+		for (pcgen.core.NoteItem n : d.getNotes())
+		{
+			if (GM_NOTE.equals(n.getName()))
+			{
+				existing = n;
+			}
+		}
+		if (names.isEmpty())
+		{
+			if (existing != null)
+			{
+				d.deleteNote(existing);
+			}
+			return;
+		}
+		if (existing == null)
+		{
+			d.addNewNote();
+			List<pcgen.core.NoteItem> all = new ArrayList<>();
+			d.getNotes().forEach(all::add);
+			existing = all.get(all.size() - 1);
+			d.renameNote(existing, GM_NOTE);
+		}
+		d.setNote(existing, String.join("\n", names));
+	}
+
 	private Object add(Request q)
 	{
 		String id = q.param("id");
@@ -128,6 +183,21 @@ final class AbilityRoutes
 		AbilityCategory cat = category(c, q.requireStr("category"));
 		AbilityFacade ability = Lookup.find(c.getDataSet().getAbilities().getValue(cat), q.requireStr("name"),
 				"ability in " + cat.getKeyName(), AbilityFacade::getKeyName, Object::toString);
+		if (q.bool("gm", false))
+		{
+			// A GM-granted feat: no prerequisites, no feat slot, saved with the character and marked on the sheet.
+			if (!"FEAT".equals(cat.getKeyName()) || !(ability instanceof pcgen.core.Ability real))
+			{
+				throw new ApiException(400, "only feats can be flagged as granted by the GM");
+			}
+			SidecarAccess.addGmAbility(c, cat, real);
+			boolean there = SidecarAccess.gmGranted(c).contains(cat.getKeyName() + "|" + real.getKeyName());
+			if (there)
+			{
+				syncGmNote(c);
+			}
+			return characters.changed(id, c, Map.of("added", there ? real.getKeyName() : "", "gm", true));
+		}
 		c.addAbility(cat, ability);
 		return characters.changed(id, c, Map.of("added", ability.getKeyName()));
 	}
@@ -139,6 +209,12 @@ final class AbilityRoutes
 		AbilityCategory cat = category(c, q.requireStr("category"));
 		AbilityFacade ability = Lookup.find(c.getAbilities(cat), q.requireStr("name"),
 				"ability on this character in " + cat.getKeyName(), AbilityFacade::getKeyName, Object::toString);
+		if (ability instanceof pcgen.core.Ability real && SidecarAccess.gmGranted(c).contains(cat.getKeyName() + "|" + real.getKeyName()))
+		{
+			SidecarAccess.removeGmAbility(c, cat, real);
+			syncGmNote(c);
+			return characters.changed(id, c, Map.of("removed", ability.getKeyName(), "gm", true));
+		}
 		c.removeAbility(cat, ability);
 		return characters.changed(id, c, Map.of("removed", ability.getKeyName()));
 	}
