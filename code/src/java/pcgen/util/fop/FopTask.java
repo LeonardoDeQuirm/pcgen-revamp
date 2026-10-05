@@ -26,9 +26,12 @@ import java.io.OutputStream;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.xml.transform.ErrorListener;
 import javax.xml.transform.SourceLocator;
+import javax.xml.transform.Templates;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
@@ -99,6 +102,42 @@ public final class FopTask implements Runnable
 		return builder.build();
 	}
 
+	/**
+	 * Compiled style sheets. Compiling a character sheet's XSLT takes about a tenth of the time a PDF takes and the
+	 * result does not depend on the character, so keep it. The key includes the time the sheet (and the files
+	 * beside it, which it may include) last changed, so editing a sheet still takes effect straight away.
+	 */
+	private static final Map<String, Templates> COMPILED_SHEETS = new HashMap<>();
+
+	private static String sheetKey(File xsltFile)
+	{
+		long newest = xsltFile.lastModified();
+		File[] beside = xsltFile.getAbsoluteFile().getParentFile().listFiles();
+		if (beside != null)
+		{
+			for (File f : beside)
+			{
+				newest = Math.max(newest, f.lastModified());
+			}
+		}
+		return xsltFile.getAbsolutePath() + '|' + newest + '|' + xsltFile.length();
+	}
+
+	private static synchronized Templates compiledSheet(File xsltFile) throws TransformerException
+	{
+		String key = sheetKey(xsltFile);
+		Templates compiled = COMPILED_SHEETS.get(key);
+		if (compiled == null)
+		{
+			compiled = TRANS_FACTORY.newTemplates(new StreamSource(xsltFile));
+			// An edited sheet leaves its old compiled version behind; only the latest of each is worth keeping.
+			COMPILED_SHEETS.keySet().removeIf(k -> k.startsWith(xsltFile.getAbsolutePath() + '|'));
+			COMPILED_SHEETS.put(key, compiled);
+		}
+		return compiled;
+	}
+
+	private final File xsltFile;
 	private final StreamSource inputSource;
 	private final StreamSource xsltSource;
 	private final Renderer renderer;
@@ -106,8 +145,10 @@ public final class FopTask implements Runnable
 
 	private final StringBuilder errorBuilder = new StringBuilder(32);
 
-	private FopTask(StreamSource inputXml, StreamSource xsltSource, Renderer renderer, OutputStream outputStream)
+	private FopTask(StreamSource inputXml, File xsltFile, StreamSource xsltSource, Renderer renderer,
+		OutputStream outputStream)
 	{
+		this.xsltFile = xsltFile;
 		this.inputSource = inputXml;
 		this.xsltSource = xsltSource;
 		this.renderer = renderer;
@@ -148,7 +189,7 @@ public final class FopTask implements Runnable
 	{
 		StreamSource xsltSource = createXsltStreamSource(xsltFile);
 		userAgent = FOP_FACTORY.newFOUserAgent();
-		return new FopTask(new StreamSource(inputXmlStream), xsltSource, null, outputPdf);
+		return new FopTask(new StreamSource(inputXmlStream), xsltFile, xsltSource, null, outputPdf);
 	}
 
 	/**
@@ -167,7 +208,7 @@ public final class FopTask implements Runnable
 	{
 		StreamSource xsltSource = createXsltStreamSource(xsltFile);
 		userAgent = renderer.getUserAgent();
-		return new FopTask(new StreamSource(inputXmlStream), xsltSource, renderer, null);
+		return new FopTask(new StreamSource(inputXmlStream), xsltFile, xsltSource, renderer, null);
 	}
 
 	public String getErrorMessages()
@@ -214,7 +255,7 @@ public final class FopTask implements Runnable
 			Transformer transformer;
 			if (xsltSource != null)
 			{
-				transformer = TRANS_FACTORY.newTransformer(xsltSource);
+				transformer = compiledSheet(xsltFile).newTransformer();
 			}
 			else
 			{
