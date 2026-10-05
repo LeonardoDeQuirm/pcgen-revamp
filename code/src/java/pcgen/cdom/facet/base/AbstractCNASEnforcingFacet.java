@@ -23,6 +23,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.WeakHashMap;
 
 import pcgen.cdom.enumeration.CharID;
 import pcgen.cdom.facet.event.DataFacetChangeEvent;
@@ -33,6 +34,37 @@ import pcgen.cdom.helper.CNAbilitySelectionUtilities;
 public class AbstractCNASEnforcingFacet extends AbstractDataFacet<CharID, CNAbilitySelection>
 		implements DataFacetChangeListener<CharID, CNAbilitySelection>
 {
+	/**
+	 * How many times the contents for each character have been changed. Lets subclasses keep derived data (an
+	 * index of the contents) and know when it has gone stale.
+	 */
+	private final WeakHashMap<CharID, long[]> changeCounts = new WeakHashMap<>();
+
+	protected final synchronized long changeCount(CharID id)
+	{
+		long[] count = changeCounts.get(id);
+		return count == null ? 0 : count[0];
+	}
+
+	private synchronized void changed(CharID id)
+	{
+		changeCounts.computeIfAbsent(id, k -> new long[1])[0]++;
+	}
+
+	@Override
+	public Object setCache(CharID id, Object o)
+	{
+		changed(id);
+		return super.setCache(id, o);
+	}
+
+	@Override
+	public Object removeCache(CharID id)
+	{
+		changed(id);
+		return super.removeCache(id);
+	}
+
 	public boolean isEmpty(CharID id)
 	{
 		List<List<SourcedCNAS>> list = getList(id);
@@ -43,6 +75,7 @@ public class AbstractCNASEnforcingFacet extends AbstractDataFacet<CharID, CNAbil
 	{
 		Objects.requireNonNull(cnas, "Attempt to add null to list");
 		Objects.requireNonNull(source, "Attempt to add object with null source to list");
+		changed(id);
 		List<List<SourcedCNAS>> list = getConstructingList(id);
 		for (List<SourcedCNAS> slist : list)
 		{
@@ -69,6 +102,7 @@ public class AbstractCNASEnforcingFacet extends AbstractDataFacet<CharID, CNAbil
 		{
 			return false;
 		}
+		changed(id);
 		for (Iterator<List<SourcedCNAS>> listIT = list.iterator(); listIT.hasNext();)
 		{
 			List<SourcedCNAS> array = listIT.next();
@@ -144,6 +178,7 @@ public class AbstractCNASEnforcingFacet extends AbstractDataFacet<CharID, CNAbil
 		List<List<SourcedCNAS>> list = getList(source);
 		if (list != null)
 		{
+			changed(copy);
 			List<List<SourcedCNAS>> constructingList = getConstructingList(copy);
 			for (List<SourcedCNAS> orig : list)
 			{
