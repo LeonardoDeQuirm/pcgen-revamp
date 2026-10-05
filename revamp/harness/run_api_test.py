@@ -308,6 +308,27 @@ def run_checks():
                   and read("/health")[1]["pendingBuilder"] is not None, (st, str(m)[:150]))
         call("POST", "/builder/cancel")
 
+    # ---- attack calculator inputs: the engine's own weapon figures
+    write("PATCH", C, {"funds": "5000"})
+    write("POST", C + "/equipment/buy", {"item": "Longsword", "quantity": 1})
+    write("POST", C + "/equipment/buy", {"item": "Greatsword", "quantity": 1})
+    # only what the character carries or wields is in the weapon list, so put them in the current set
+    write("POST", C + "/equipment/equip", {"item": "Longsword"})
+    write("POST", C + "/equipment/equip", {"item": "Greatsword"})
+    st, att = read(C + "/attacks")
+    by_name = {w["name"].lstrip("*"): w for w in att.get("weapons", [])} if st == 200 else {}
+    check("attacks: base attack bonus and a weapon list", st == 200 and isinstance(att.get("bab"), int) and len(att["weapons"]) >= 2, str(att)[:200])
+    ls = by_name.get("Longsword")
+    check("attacks: a longsword has dice, critical range, to-hit list and damage by grip",
+          ls is not None and ls["dice"] == "1d8" and ls["critRange"] == "19-20" and ls["critMult"] == 2 and ls["melee"] is True
+          and len(ls["baseHit"]) >= 1 and isinstance(ls["damageBonus"]["oneHand"], int) and isinstance(ls["damageBonus"]["twoHand"], int)
+          and isinstance(ls["damageBonus"]["offHand"], int) and ls["twoHanded"] is False and ls["light"] is False, ls)
+    gs = by_name.get("Greatsword")
+    check("attacks: a two-handed weapon is flagged and still has a to-hit list", gs is not None and gs["twoHanded"] is True and len(gs["baseHit"]) >= 1
+          and gs["dice"] == "2d6", gs)
+    check("attacks: the two-handed damage bonus is at least the one-handed one", ls is not None and ls["damageBonus"]["twoHand"] >= ls["damageBonus"]["oneHand"] >= ls["damageBonus"]["offHand"], ls)
+    check("attacks: unknown character is 404", call("GET", "/characters/nobody/attacks")[0] == 404)
+
     # ---- notes and charges on owned items (wands)
     write("PATCH", C, {"funds": "5000"})
     write("POST", C + "/equipment/buy", {"item": "Wand of Acid Arrow", "quantity": 1})

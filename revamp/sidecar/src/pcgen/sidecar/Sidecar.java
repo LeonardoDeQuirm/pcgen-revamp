@@ -237,6 +237,7 @@ public final class Sidecar
 		new DescriptionRoutes(session, characters).register(router);
 		new LanguageRoutes(session, characters).register(router);
 		new ExportRoutes(session).register(router);
+		new AttackRoutes(session).register(router);
 		new DatasetRoutes(session).register(router);
 		new InfoRoutes(session).register(router);
 		new DomainRoutes(session).register(router);

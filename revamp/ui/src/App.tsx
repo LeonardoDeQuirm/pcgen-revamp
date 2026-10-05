@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import * as api from './api'
+import { Attacks } from './components/Attacks'
 import { Bio } from './components/Bio'
 import { NewCharacterWizard } from './components/NewCharacter'
 import { BuilderDialog, ChooserDialog, ConfirmDialog, OpenDialog, SaveAsDialog } from './components/Dialogs'
@@ -15,7 +16,7 @@ import { DetailPanel, useDetail } from './detail'
 import { useStore } from './store'
 import type { Changed, Character } from './types'
 
-const TABS = ['Overview', 'Class', 'Feats', 'Skills', 'Spells', 'Gear', 'Biography', 'Sheet'] as const
+const TABS = ['Overview', 'Class', 'Feats', 'Skills', 'Spells', 'Gear', 'Attacks', 'Biography', 'Sheet'] as const
 type Tab = (typeof TABS)[number]
 
 function tabFromHash(): Tab {
@@ -255,6 +256,7 @@ export default function App() {
             {tab === 'Skills' && <Skills character={character} />}
             {tab === 'Spells' && <Spells character={character} />}
             {tab === 'Gear' && <Gear character={character} />}
+            {tab === 'Attacks' && <Attacks character={character} />}
             {tab === 'Biography' && <Bio character={character} />}
             {tab === 'Sheet' && <Export character={character} />}
           </div>

@@ -600,6 +600,28 @@ try {
   await page.waitForFunction((g) => !document.querySelector(`button[aria-label="Take back ${g}"]`), { timeout: 20000 }, gift)
   check('and can be taken back', true)
 
+  // Attack calculator: the weapons' figures from the sheet, then a combat option changes them.
+  // The earlier steps left a wizard open; the fighter is the one with Power Attack.
+  await page.evaluate(() => [...document.querySelectorAll('.char-item')].find((e) => e.innerText.includes('Clarent'))?.click())
+  await sleep(1500)
+  await clickText('.tabs button', 'Attacks')
+  await page.waitForSelector('table[aria-label="Attacks"] tbody tr', { timeout: 20000 })
+  // Use the sword, whatever else the earlier steps left in the character's hands.
+  const sword = await page.$eval('select[aria-label="Main hand weapon"]', (s) => [...s.options].find((o) => /sword/i.test(o.text))?.value)
+  if (sword !== undefined) await page.select('select[aria-label="Main hand weapon"]', sword)
+  await sleep(400)
+  const firstRow = () => page.$eval('table[aria-label="Attacks"] tbody tr', (r) => [...r.querySelectorAll('td')].map((c) => c.innerText.trim()))
+  const row0 = await firstRow()
+  check('the Attacks tab lists the character\'s attacks with to hit and damage', /^[+−-]\d+$/.test(row0[1]) && /\d+d\d+/.test(row0[2]), row0)
+  await page.click('button[aria-label="More Power Attack"]')
+  await sleep(500)
+  const row1 = await firstRow()
+  const num = (t) => Number(t.replace('−', '-'))
+  check('Power Attack lowers the to-hit and raises the damage', num(row1[1]) === num(row0[1]) - 1 && Number(row1[3]) > Number(row0[3]), [row0, row1])
+  await page.type('input[aria-label="Target armor class"]', '20')
+  await page.waitForFunction(() => /Expected against AC 20/.test(document.body.innerText), { timeout: 10000 })
+  check('a target armor class adds hit chances and expected damage', true)
+
   // Deity picker: searching by domain finds gods, and choosing one changes the character's deity.
   await clickText('.tabs button', 'Overview')
   await page.waitForFunction(() => [...document.querySelectorAll('.vital')].some((v) => v.innerText.startsWith('Deity')), { timeout: 20000 })

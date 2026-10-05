@@ -15,7 +15,7 @@ results = []
 
 
 def run(label, cmd, ok, timeout=3600, **kw):
-    p = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True, encoding="utf-8", errors="replace",
+    p = subprocess.run(cmd, cwd=kw.pop("cwd", ROOT), capture_output=True, text=True, encoding="utf-8", errors="replace",
                        timeout=timeout, env=env, **kw)
     out = p.stdout + p.stderr
     good = ok(p.returncode, out)
@@ -32,6 +32,7 @@ def all_ok(o, what="ok"):
     return bool(m) and m.group(1) == m.group(2)
 
 
+run("attack calculator tests", ["npm.cmd", "run", "test:calc"], lambda rc, o: rc == 0, cwd=str(ROOT / "revamp" / "ui"))
 run("export harness", [sys.executable, str(HARNESS / "run_harness.py")], lambda rc, o: all_ok(o))
 run("sidecar test", [sys.executable, str(HARNESS / "run_sidecar_test.py")], lambda rc, o: all_ok(o, "sidecars ok"))  # how many sidecars depends on which private characters exist
 run("API test", [sys.executable, str(HARNESS / "run_api_test.py")],
