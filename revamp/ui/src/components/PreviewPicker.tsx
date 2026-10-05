@@ -35,6 +35,9 @@ export function PreviewPicker({
   onAdd,
   onClose,
   addLabel = 'Add',
+  extra,
+  blocked,
+  onSelect,
 }: {
   title: string
   subtitle?: string
@@ -50,6 +53,11 @@ export function PreviewPicker({
   onClose(): void
   /** Verb on the confirm button ("Add" for feats and spells, "Choose" for a race). */
   addLabel?: string
+  /** Extra controls shown in the reading pane for the selected entry (e.g. metamagic feats to apply). */
+  extra?(selectedId: string): ReactNode
+  /** A reason the selected entry cannot be added with the current extra choices (disables Add and says why). */
+  blocked?(selectedId: string): string | null
+  onSelect?(id: string | null): void
 }) {
   const [selected, setSelected] = useState<string | null>(null)
   const [info, setInfo] = useState<InfoLike | null>(null)
@@ -77,7 +85,8 @@ export function PreviewPicker({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [settled])
 
-  const canAdd = !!chosen && !chosen.unavailable && info?.qualified !== false && !loading && info !== null
+  const blockedReason = selected && blocked ? blocked(selected) : null
+  const canAdd = !!chosen && !chosen.unavailable && info?.qualified !== false && !loading && info !== null && !blockedReason
 
   return (
     <Modal
@@ -118,7 +127,10 @@ export function PreviewPicker({
                 role="option"
                 aria-selected={o.id === selected}
                 className={'pick' + (o.unavailable ? ' dim' : '')}
-                onClick={() => setSelected(o.id)}
+                onClick={() => {
+                  setSelected(o.id)
+                  onSelect?.(o.id)
+                }}
                 onDoubleClick={() => {
                   if (!o.unavailable) {
                     onClose()
@@ -158,6 +170,8 @@ export function PreviewPicker({
             <>
               <h3 className="preview-title">{info.name}</h3>
               {chosen?.note && <div className="notice warn">{chosen.note}</div>}
+              {extra?.(selected)}
+              {blockedReason && <div className="notice bad">{blockedReason}</div>}
               <InfoBody key={selected} info={info} />
             </>
           )}

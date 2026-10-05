@@ -140,6 +140,27 @@ public class RecordingUIDelegate implements UIDelegate
 	 */
 	private java.util.Map<String, Answer> replay;
 
+	/** When set, the next chooser is answered by picking the options with these names, without asking anyone. */
+	private java.util.Set<String> scriptedChoice;
+
+	/**
+	 * Runs {@code action} with the engine's chooser answered from a list of names (case-insensitive, key or display
+	 * name). Used when the caller already knows what it wants, such as the metamagic feats to prepare a spell with.
+	 */
+	void withScriptedChoice(java.util.Collection<String> names, Runnable action)
+	{
+		scriptedChoice = new java.util.HashSet<>();
+		names.forEach(n -> scriptedChoice.add(n.toLowerCase(java.util.Locale.ROOT)));
+		try
+		{
+			action.run();
+		}
+		finally
+		{
+			scriptedChoice = null;
+		}
+	}
+
 	/** Runs {@code action}, answering any question the engine repeats from the first answer. */
 	void withRepeatedAnswers(Runnable action)
 	{
@@ -251,6 +272,23 @@ public class RecordingUIDelegate implements UIDelegate
 		{
 			record("chooser-declined", String.valueOf(chooser.getName()), "no API operation is running");
 			return false;
+		}
+		if (scriptedChoice != null)
+		{
+			var offered = chooser.getAvailableList();
+			List<InfoFacade> wanted = new ArrayList<>();
+			for (int i = 0; i < offered.getSize(); i++)
+			{
+				InfoFacade f = offered.getElementAt(i);
+				if (scriptedChoice.contains(String.valueOf(f.getKeyName()).toLowerCase(java.util.Locale.ROOT))
+						|| scriptedChoice.contains(String.valueOf(f).toLowerCase(java.util.Locale.ROOT)))
+				{
+					wanted.add(f);
+				}
+			}
+			wanted.forEach(chooser::addSelected);
+			chooser.commit();
+			return true;
 		}
 		Answer picks = null;
 		boolean repeated = false;

@@ -8,7 +8,7 @@
 // checks the skills table, opens the item customiser and cancels it, and renders the PDF sheet.
 // It leaves the character as it found it (nothing is saved).
 import puppeteer from 'puppeteer-core'
-import { existsSync, mkdirSync, rmSync } from 'node:fs'
+import { copyFileSync, existsSync, mkdirSync, rmSync } from 'node:fs'
 import { resolve } from 'node:path'
 
 const URL = process.env.UI_URL ?? 'http://127.0.0.1:5173/'
@@ -455,8 +455,45 @@ try {
   await sleep(500)
   check('Save As writes the .pcg file', existsSync(outFile))
   rmSync(outFile, { force: true })
+
+  // Metamagic: a generated wizard whose only metamagic feat is Aquatic Spell (+1 level). Work on a copy.
+  const wizCopy = resolve(saveDir, 'e2e-wizard5.pcg')
+  copyFileSync(resolve('..', 'harness', 'characters', 'corpus_wizard5.pcg'), wizCopy)
+  let opened = await (await fetch('http://127.0.0.1:8765/characters', { method: 'POST', body: JSON.stringify({ path: wizCopy }) })).json()
+  while (opened.pendingConfirm || opened.pendingChooser) {
+    opened = opened.pendingConfirm
+      ? await (await fetch(`http://127.0.0.1:8765/confirms/${opened.pendingConfirm.id}`, { method: 'POST', body: JSON.stringify({ ok: true }) })).json()
+      : await (await fetch(`http://127.0.0.1:8765/choosers/${opened.pendingChooser.id}`, { method: 'POST', body: JSON.stringify({ cancel: true }) })).json()
+  }
+  const wizId = opened.id
+  await fetch(`http://127.0.0.1:8765/characters/${wizId}/spells/known`, { method: 'POST', body: JSON.stringify({ class: 'Wizard', level: '1', spell: 'Magic Missile' }) })
+  await page.reload({ waitUntil: 'networkidle0' }) // a hash-only goto would not reload the character list
+  await page.waitForFunction(() => [...document.querySelectorAll('.char-item')].some((e) => e.innerText.includes('Wizard5')), { timeout: 20000 })
+  await page.evaluate(() => [...document.querySelectorAll('.char-item')].find((e) => e.innerText.includes('Wizard5'))?.click())
+  await page.waitForFunction(() => /Corpus Wizard5/.test(document.querySelector('.hero-name')?.value ?? ''), { timeout: 20000 })
+  // Switching character resets to the Overview a moment after it loads, so keep opening Spells until it sticks.
+  for (let i = 0; i < 10 && !(await page.evaluate(() => [...document.querySelectorAll('button')].some((b) => b.innerText.trim() === 'Prepare spell'))); i++) {
+    await sleep(700)
+    await clickText('.tabs button', 'Spells')
+  }
+  await page.waitForFunction(() => [...document.querySelectorAll('button')].some((b) => b.innerText.trim() === 'Prepare spell'), { timeout: 20000 })
+  await clickText('button', 'Prepare spell')
+  await page.waitForSelector('.modal .pick')
+  await page.evaluate(() => [...document.querySelectorAll('.modal .pick')].find((e) => e.innerText.includes('Magic Missile'))?.click())
+  await page.waitForFunction(() => /Metamagic/.test(document.querySelector('.modal')?.innerText ?? ''), { timeout: 20000 })
+  const featsOffered = await page.evaluate(() => [...document.querySelectorAll('.modal .check-row')].map((e) => e.innerText.trim()))
+  check('only the characters own metamagic feat is offered', featsOffered.length === 1 && featsOffered[0].startsWith('Aquatic Spell'), featsOffered.join(' | '))
+  await page.evaluate(() => document.querySelector('.modal .check-row input')?.click())
+  await page.waitForFunction(() => /Prepared as a level 2 spell/.test(document.querySelector('.modal')?.innerText ?? ''), { timeout: 10000 })
+  check('metamagic shows the slot level the spell will take', true)
+  await shot('metamagic')
+  await clickText('.modal button', 'Prepare ')
+  await page.waitForFunction(() => !document.querySelector('.modal'), { timeout: 20000 })
+  await page.waitForFunction(() => /Magic Missile\s*\(Aquatic Spell\)/.test(document.body.innerText) && /Level 2: 1\/3 prepared/.test(document.body.innerText), { timeout: 20000 })
+  check('the metamagic spell is prepared in a level 2 slot', true)
+  rmSync(wizCopy, { force: true })
 } catch (e) {
-  check('test run completed', false, String(e))
+  check('test run completed', false, String(e) + ' @ ' + String(e.stack ?? '').split('\n').find((l) => l.includes('smoke.mjs')))
   await shot('failure').catch(() => {})
 } finally {
   await browser.close()

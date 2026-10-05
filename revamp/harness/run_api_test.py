@@ -241,6 +241,11 @@ def run_checks():
     check("unknown domain is 404", read(C + "/domains/info", name="No Such Domain")[0] == 404)
     sp = read(C + "/spells")[1]
     check("spell levels carry the bonus (domain/school) slot", all("bonus" in x for x in sp["classes"][0]["levels"]), sp["classes"][0]["levels"][:2])
+    known = sp["known"]
+    check("domain spells are told apart from class spells", any(r.get("domain") for r in known) and any(not r.get("domain") for r in known), [r["spell"] for r in known if r.get("domain")][:5])
+    check("a domain spell has its plain name", all("[" not in r["spell"] for r in known if r.get("domain")), [r["spell"] for r in known if r.get("domain")][:5])
+    check("the known count leaves domain spells out", sum(x["knownNow"] for x in sp["classes"][0]["levels"]) == len([r for r in known if not r.get("domain")]), (sum(x["knownNow"] for x in sp["classes"][0]["levels"]), len([r for r in known if not r.get("domain")])))
+    check("the view lists the character's metamagic feats (none for this cleric)", sp.get("metamagicFeats") == [], sp.get("metamagicFeats"))
     check("a cleric gets a +1 domain slot at spell level 1", next(x for x in sp["classes"][0]["levels"] if x["level"] == 1)["bonus"] == "+1", sp["classes"][0]["levels"][:3])
 
     # ---- levels (level-up raises an ability-score chooser)
@@ -456,6 +461,9 @@ def run_checks():
     write("DELETE", W + "/spells/prepared", {"class": "Wizard", "level": "0", "spell": cantrip, "list": "Prepared"})
     write("DELETE", W + "/spells/prepared", {"class": "Wizard", "level": "0", "spell": cantrip, "list": "Prepared"})
     check("un-preparing removes the copies", not [r for r in read(W + "/spells")[1]["prepared"] if r["spell"]], read(W + "/spells")[1]["prepared"])
+    st, d = write("POST", W + "/spells/prepared", {"class": "Wizard", "level": "0", "spell": cantrip, "list": "Prepared", "metamagic": ["Empower Spell"]})
+    check("metamagic the character has no feat for is refused", st == 400 and "does not have the metamagic feat" in str(d), (st, d))
+    check("nothing was prepared by the refused request", not [r for r in read(W + "/spells")[1]["prepared"] if r["spell"]])
     check("a spell that is not known cannot be prepared", write("POST", W + "/spells/prepared", {"class": "Wizard", "level": "0", "spell": "Not A Spell", "list": "Prepared"})[0] == 404)
     write("DELETE", W + "/spells/known", {"class": "Wizard", "level": "0", "spell": cantrip})
     for _ in range(16):
