@@ -178,6 +178,22 @@ final class CharacterView
 				am.put("key", a.getKeyName());
 				am.put("name", text(a));
 				am.put("nature", text(c.getAbilityNature(a)));
+				if ("GM Awards".equals(cat.getKeyName()))
+				{
+					// What the award was used for: how many times, or which feats / languages / skills.
+					List<String> picks = new ArrayList<>();
+					int times = 0;
+					for (String sel : pcgen.gui2.facade.SidecarAccess.awardSelections(c, a.getKeyName()))
+					{
+						times++;
+						if (!sel.isBlank())
+						{
+							picks.add(pcgen.gui2.facade.SidecarAccess.awardChoiceText(sel));
+						}
+					}
+					am.put("times", times);
+					am.put("choices", picks);
+				}
 				if (gm.contains(cat.getKeyName() + "|" + a.getKeyName()))
 				{
 					am.put("gm", true); // handed out by the GM: no prerequisites, no slot, marked on the sheet

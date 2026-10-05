@@ -5,7 +5,7 @@ import type { AbilityCategory, Changed, Character } from '../types'
 import { AbilityPicker } from './PreviewPicker'
 import { useDetail, type DetailRef } from '../detail'
 import { useCollapsed } from './collapse'
-import { categoriesIn, type Group } from './groups'
+import { categoriesIn, GM_AWARDS, type Group } from './groups'
 import { Card, Empty, Icon } from './ui'
 
 /** A card whose header folds the body away. The action buttons stay visible so a collapsed section is still usable. */
@@ -34,10 +34,12 @@ export function Category({ character, category }: { character: Character; catego
   const detail = useDetail()
   const [adding, setAdding] = useState(false)
   const id = encodeURIComponent(character.id)
+  // GM awards have no slots to fill: a GM can hand out any of them, any number of times.
+  const awards = category.key === GM_AWARDS
   return (
     <Section
       id={category.key}
-      title={category.name}
+      title={awards ? 'GM awards' : category.name}
       count={category.abilities.length}
       action={
         <span style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
@@ -69,7 +71,7 @@ export function Category({ character, category }: { character: Character; catego
               {category.remaining > 0 ? `${category.remaining} left to choose` : 'all chosen'}
             </span>
           )}
-          {category.total > 0 && (
+          {(category.total > 0 || awards) && (
             <button className="btn small primary" onClick={() => setAdding(true)}>
               Add
             </button>
@@ -78,11 +80,15 @@ export function Category({ character, category }: { character: Character; catego
       }
     >
       {category.abilities.length === 0 ? (
-        <div className="muted">None yet.</div>
+        <div className="muted">{awards ? 'Nothing handed out by the GM yet. Add gives the list: bonus feats, languages, ability score changes and more.' : 'None yet.'}</div>
       ) : (
         <div className="rows">
           {category.abilities.map((a) => {
-            const removable = category.total > 0 && (!!a.gm || !a.nature || a.nature === 'NORMAL')
+            // The feat and language awards are lists of what was given; those are taken back where they show (the feat
+            // list, the languages card), so the feat or language goes with them.
+            const listAward = awards && (a.key === 'Add a Feat Ignoring Restrictions' || a.key === 'Add Language')
+            const removable = awards ? !listAward : category.total > 0 && (!!a.gm || !a.nature || a.nature === 'NORMAL')
+            const used = awards ? (a.choices && a.choices.length > 0 ? a.choices.join(', ') : (a.times ?? 0) > 1 ? `Given ${a.times} times` : '') : ''
             const ref: DetailRef = { kind: 'ability', characterId: character.id, categoryKey: category.key, categoryName: category.name, key: a.key, name: a.name, removable }
             const selected = detail.isOpen(ref)
             return (
@@ -98,8 +104,14 @@ export function Category({ character, category }: { character: Character; catego
               >
                 <div className="row-main">
                   <div className="row-title">{a.name}</div>
+                  {used && <div className="row-sub">{used}</div>}
                 </div>
                 <span style={{ display: 'flex', gap: 8, alignItems: 'center' }} onClick={(e) => e.stopPropagation()}>
+                  {listAward && (
+                    <span className="muted" style={{ fontSize: 12 }}>
+                      {a.key === 'Add Language' ? 'change under Biography › Languages' : 'change in the feat list above'}
+                    </span>
+                  )}
                   {a.gm && <span className="chip accent" title="Handed out by the GM (PCGen's GM award): ignores prerequisites">GM</span>}
                   {!a.gm && category.total > 0 && a.nature && a.nature !== 'NORMAL' && <span className="chip">granted</span>}
                   {removable && (

@@ -362,6 +362,27 @@ def run_checks():
     zero = feat_cat()
     check("and taken back to none", st == 200 and zero["total"] == before["total"] and zero.get("gmBonusSlots") == 0, (st, zero["total"], zero.get("gmBonusSlots")))
     check("a silly slot count is 400", write("POST", C + "/gm/bonus-feats", {"count": 500})[0] == 400)
+
+    # ---- a language from the GM (PCGen's "Add Language" award) and the awards list
+    lv = read(C + "/languages")[1]
+    check("the language view says which languages a GM could give", len(lv.get("gmAvailable", [])) > 5
+          and not set(lv["gmAvailable"]) & {l["name"] for l in lv["languages"]}, lv.get("gmAvailable", [])[:5])
+    gift = lv["gmAvailable"][0]
+    st, d = write("POST", C + "/gm/languages", {"name": gift})
+    lv2 = read(C + "/languages")[1]
+    check("a GM can give a language", st == 200 and any(l["name"] == gift and l.get("gm") for l in lv2["languages"]), (st, str(d)[:120]))
+    check("giving it twice is 409", write("POST", C + "/gm/languages", {"name": gift})[0] == 409)
+    check("an unknown language is 404", write("POST", C + "/gm/languages", {"name": "Zzzish"})[0] == 404)
+    award_rows = {a["key"]: a for a in next(x for x in snap()["abilityCategories"] if x["key"] == "GM Awards")["abilities"]}
+    check("the awards list shows what was given", award_rows.get("Add Language", {}).get("choices") == [gift], award_rows)
+    st, d = write("DELETE", C + "/gm/languages", {"name": gift})
+    check("and it can be taken back", st == 200 and not any(l["name"] == gift for l in read(C + "/languages")[1]["languages"]), (st, str(d)[:120]))
+    check("taking back a language the GM did not give is 404", write("DELETE", C + "/gm/languages", {"name": gift})[0] == 404)
+    st, d = write("POST", C + "/abilities", {"category": "GM Awards", "name": "+1 Hit Point"})
+    row = next((a for a in next(x for x in snap()["abilityCategories"] if x["key"] == "GM Awards")["abilities"] if a["key"] == "+1 Hit Point"), None)
+    check("any other award can be added from the awards list", st == 200 and row is not None and row.get("times") == 1, (st, row))
+    st, d = write("DELETE", C + "/abilities", {"category": "GM Awards", "name": "+1 Hit Point"})
+    check("and removed again", st == 200 and not any(a["key"] == "+1 Hit Point" for a in next(x for x in snap()["abilityCategories"] if x["key"] == "GM Awards")["abilities"]), st)
     write("POST", C + "/save")
 
     # ---- deities: catalog with alignment, search by domain, may-follow flag

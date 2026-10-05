@@ -42,7 +42,31 @@ final class LanguageRoutes
 	private Map<String, Object> view(CharacterFacade c)
 	{
 		Map<String, Object> m = new LinkedHashMap<>();
-		m.put("languages", CharacterView.languages(c));
+		List<Map<String, Object>> known = CharacterView.languages(c);
+		List<String> fromGm = pcgen.gui2.facade.SidecarAccess.awardSelections(c, pcgen.gui2.facade.SidecarAccess.LANGUAGE_AWARD);
+		for (Map<String, Object> l : known)
+		{
+			if (fromGm.stream().anyMatch(String.valueOf(l.get("name"))::equalsIgnoreCase))
+			{
+				l.put("gm", true);
+			}
+		}
+		m.put("languages", known);
+		// Languages a GM could hand out: every spoken language the character does not know yet. Absent when the game
+		// has no GM awards.
+		if (pcgen.gui2.facade.SidecarAccess.awardsCategory(c) != null)
+		{
+			List<String> could = new ArrayList<>();
+			for (Language lang : pcgen.core.Globals.getContext().getReferenceContext().getConstructedCDOMObjects(Language.class))
+			{
+				if (lang.isType("Spoken") && known.stream().noneMatch(k -> lang.getDisplayName().equals(k.get("name"))))
+				{
+					could.add(lang.getDisplayName());
+				}
+			}
+			java.util.Collections.sort(could);
+			m.put("gmAvailable", could);
+		}
 		List<Map<String, Object>> cs = new ArrayList<>();
 		List<LanguageChooserFacade> list = choosers(c);
 		for (int i = 0; i < list.size(); i++)

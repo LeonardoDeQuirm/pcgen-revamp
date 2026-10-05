@@ -32,6 +32,8 @@ final class AbilityRoutes
 		r.post("/characters/{id}/abilities", this::add);
 		r.delete("/characters/{id}/abilities", this::remove);
 		r.post("/characters/{id}/gm/bonus-feats", this::bonusFeats);
+		r.post("/characters/{id}/gm/languages", this::gmLanguage);
+		r.delete("/characters/{id}/gm/languages", this::gmLanguageRemove);
 	}
 
 	private AbilityCategory category(CharacterFacade c, String name)
@@ -218,6 +220,42 @@ final class AbilityRoutes
 			have--;
 		}
 		return characters.changed(id, c, Map.of("bonusSlots", SidecarAccess.gmBonusSlots(c)));
+	}
+
+	/** A language handed out by the GM (PCGen's "Add Language" award): name. */
+	private Object gmLanguage(Request q)
+	{
+		String id = q.param("id");
+		CharacterFacade c = s.character(id);
+		String name = q.requireStr("name");
+		AbilityCategory awards = awards(c);
+		AbilityFacade award = award(c, awards, SidecarAccess.LANGUAGE_AWARD);
+		if (SidecarAccess.awardSelections(c, SidecarAccess.LANGUAGE_AWARD).stream().anyMatch(name::equalsIgnoreCase))
+		{
+			throw new ApiException(409, name + " was already given by the GM");
+		}
+		s.ui.withScriptedChoice(List.of(name), () -> c.addAbility(awards, award));
+		if (SidecarAccess.awardSelections(c, SidecarAccess.LANGUAGE_AWARD).stream().noneMatch(name::equalsIgnoreCase))
+		{
+			throw new ApiException(404, "no language named '" + name + "' can be given (the character may know it already)");
+		}
+		return characters.changed(id, c, Map.of("added", name, "gm", true));
+	}
+
+	/** Takes back a language the GM handed out: name. */
+	private Object gmLanguageRemove(Request q)
+	{
+		String id = q.param("id");
+		CharacterFacade c = s.character(id);
+		String name = q.requireStr("name");
+		AbilityCategory awards = awards(c);
+		AbilityFacade award = award(c, awards, SidecarAccess.LANGUAGE_AWARD);
+		if (SidecarAccess.awardSelections(c, SidecarAccess.LANGUAGE_AWARD).stream().noneMatch(name::equalsIgnoreCase))
+		{
+			throw new ApiException(404, name + " was not given by the GM");
+		}
+		s.ui.withScriptedChoice(List.of(), List.of(name), () -> c.addAbility(awards, award));
+		return characters.changed(id, c, Map.of("removed", name, "gm", true));
 	}
 
 	private Object add(Request q)

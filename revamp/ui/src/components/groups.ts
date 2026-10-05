@@ -12,7 +12,11 @@ const FEAT = /\bfeats?\b/i
  * don't recognise lands under Class, which is where most of the long tail (archetypes, mysteries,
  * judgments, favoured-class choices) belongs.
  */
+/** PCGen's list of things a GM can hand out (bonus feats, languages, ability score bumps...). */
+export const GM_AWARDS = 'GM Awards'
+
 export function groupOf(category: Pick<AbilityCategory, 'key' | 'name'>, character: Pick<Character, 'race'>): Group {
+  if (category.key === GM_AWARDS) return 'feats' // next to the feats, where most of them end up being used
   if (category.key === 'FEAT' || FEAT.test(category.name)) return 'feats'
   if (/class|archetype|mystery|revelation|judgment|favou?red/i.test(category.name)) return 'class'
   if (character.race && category.name.startsWith(character.race)) return 'background'
@@ -22,8 +26,8 @@ export function groupOf(category: Pick<AbilityCategory, 'key' | 'name'>, charact
 
 /** Visible categories of one group, in a sensible reading order. */
 export function categoriesIn(character: Character, group: Group): AbilityCategory[] {
-  const rank = (c: AbilityCategory) => (c.key === 'FEAT' ? 0 : /archetype/i.test(c.name) ? 1 : /favou?red/i.test(c.name) ? 3 : 2)
+  const rank = (c: AbilityCategory) => (c.key === 'FEAT' ? 0 : c.key === GM_AWARDS ? 9 : /archetype/i.test(c.name) ? 1 : /favou?red/i.test(c.name) ? 3 : 2)
   return character.abilityCategories
-    .filter((c) => (c.total > 0 || c.abilities.length > 0) && groupOf(c, character) === group)
+    .filter((c) => (c.total > 0 || c.abilities.length > 0 || c.key === GM_AWARDS) && groupOf(c, character) === group)
     .sort((a, b) => rank(a) - rank(b) || a.name.localeCompare(b.name))
 }

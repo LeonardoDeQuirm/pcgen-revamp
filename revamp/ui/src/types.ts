@@ -37,6 +37,9 @@ export interface AbilityRow {
   nature: string | null
   /** Handed out by the GM: no prerequisites, no slot used, marked (GM) on the sheet. */
   gm?: boolean
+  /** GM awards only: how many times the award was given, and what it was used for (feats, languages...). */
+  times?: number
+  choices?: string[]
 }
 
 export interface AbilityCategory {

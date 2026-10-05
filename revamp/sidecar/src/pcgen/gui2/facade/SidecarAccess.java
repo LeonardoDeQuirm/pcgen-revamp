@@ -26,6 +26,9 @@ public final class SidecarAccess
 	/** The award that adds one feat slot; each selection is one slot. */
 	public static final String SLOT_AWARD = "+1 Bonus Feat";
 
+	/** The award that teaches a language; each selection is one language. */
+	public static final String LANGUAGE_AWARD = "Add Language";
+
 	/** The "GM Awards" ability category, or null when the game has none. */
 	public static pcgen.core.AbilityCategory awardsCategory(CharacterFacade c)
 	{
@@ -64,6 +67,17 @@ public final class SidecarAccess
 	{
 		String[] p = selection.split("\\||&pipe;");
 		return p.length >= 2 && p[0].startsWith("CATEGORY=") ? p[1] : p[0];
+	}
+
+	/** An award selection as a person would read it: "CATEGORY=FEAT|Weapon Focus|Dagger" is "Weapon Focus (Dagger)". */
+	public static String awardChoiceText(String selection)
+	{
+		String[] p = selection.split("\\||&pipe;");
+		if (p.length >= 2 && p[0].startsWith("CATEGORY="))
+		{
+			return p.length >= 3 ? p[1] + " (" + p[2] + ")" : p[1];
+		}
+		return selection;
 	}
 
 	/** The feats handed out through the award, as category key plus feat key (the form CharacterView looks up). */

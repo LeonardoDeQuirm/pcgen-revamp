@@ -569,6 +569,19 @@ try {
   await page.click('button[aria-label="Take away a GM bonus feat slot"]')
   await page.waitForFunction((n) => Number(document.querySelector('section[data-section="FEAT"] .stepper b')?.innerText) === n - 1, { timeout: 20000 }, slotsNow)
   check('a GM bonus slot can be taken away with the minus button', true)
+  // The GM awards card lists PCGen's awards and can add any of them; languages from the GM are given on Biography.
+  await page.waitForSelector('section[data-section="GM Awards"]', { timeout: 20000 })
+  check('the feats tab has a GM awards card with an Add button', await page.evaluate(() => [...document.querySelectorAll('section[data-section="GM Awards"] button')].some((b) => b.innerText.trim() === 'Add')))
+  await clickText('.tabs button', 'Biography')
+  await page.waitForSelector('select[aria-label="Language to give"]', { timeout: 20000 })
+  const gift = await page.evaluate(() => document.querySelector('select[aria-label="Language to give"]').options[1].value)
+  await page.select('select[aria-label="Language to give"]', gift)
+  await clickText('.card button', 'Give')
+  await page.waitForFunction((g) => !!document.querySelector(`button[aria-label="Take back ${g}"]`), { timeout: 20000 }, gift)
+  check('a language given by the GM shows with a GM mark', true)
+  await page.click(`button[aria-label="Take back ${gift}"]`)
+  await page.waitForFunction((g) => !document.querySelector(`button[aria-label="Take back ${g}"]`), { timeout: 20000 }, gift)
+  check('and can be taken back', true)
 
   // Deity picker: searching by domain finds gods, and choosing one changes the character's deity.
   await clickText('.tabs button', 'Overview')

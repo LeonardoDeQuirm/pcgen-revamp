@@ -194,7 +194,9 @@ function Notes({ character }: { character: Character }) {
 }
 
 interface LanguageView {
-  languages: { name: string; automatic: boolean; removable: boolean }[]
+  languages: { name: string; automatic: boolean; removable: boolean; gm?: boolean }[]
+  /** Languages a GM could hand out (PCGen's "Add Language" award); absent when the game has no GM awards. */
+  gmAvailable?: string[]
   choosers: { index: number; name: string; remaining: number; available: string[]; selected: string[] }[]
 }
 
@@ -202,6 +204,7 @@ function Languages({ character }: { character: Character }) {
   const { act, mutate } = useStore()
   const [view, setView] = useState<LanguageView | null>(null)
   const [pick, setPick] = useState('')
+  const [gmPick, setGmPick] = useState('')
   const id = encodeURIComponent(character.id)
 
   useEffect(() => {
@@ -218,9 +221,21 @@ function Languages({ character }: { character: Character }) {
     <Card title="Languages">
       <div className="badge-row" style={{ paddingBottom: 12 }}>
         {view.languages.map((l) => (
-          <span key={l.name} className={'chip ' + (l.automatic ? '' : 'accent')}>
+          <span key={l.name} className={'chip ' + (l.automatic && !l.gm ? '' : 'accent')} title={l.gm ? 'Given by the GM' : undefined}>
             {l.name}
-            {l.removable && (
+            {l.gm && <b style={{ fontSize: 10, letterSpacing: '0.06em' }}>GM</b>}
+            {l.gm && (
+              <button
+                className="btn ghost small"
+                style={{ padding: '0 2px' }}
+                title={`Take back ${l.name}`}
+                aria-label={`Take back ${l.name}`}
+                onClick={() => void mutate(() => api.del<Changed>(`/characters/${id}/gm/languages`, { name: l.name }))}
+              >
+                &times;
+              </button>
+            )}
+            {!l.gm && l.removable && (
               <button
                 className="btn ghost small"
                 style={{ padding: '0 2px' }}
@@ -256,6 +271,29 @@ function Languages({ character }: { character: Character }) {
         </div>
       ))}
       {open.length === 0 && <div className="muted">No languages left to choose.</div>}
+      {view.gmAvailable && (
+        <div style={{ display: 'flex', gap: 8, alignItems: 'center', paddingTop: 10 }}>
+          <span className="muted" style={{ minWidth: 190 }}>Given by the GM</span>
+          <select className="select" aria-label="Language to give" value={gmPick} onChange={(e) => setGmPick(e.target.value)}>
+            <option value="">Choose a language…</option>
+            {view.gmAvailable.map((a) => (
+              <option key={a}>{a}</option>
+            ))}
+          </select>
+          <button
+            className="btn"
+            disabled={!gmPick}
+            title="Uses no language choice: PCGen's Add Language award"
+            onClick={() => {
+              const name = gmPick
+              setGmPick('')
+              void mutate(() => api.post<Changed>(`/characters/${id}/gm/languages`, { name }))
+            }}
+          >
+            Give
+          </button>
+        </div>
+      )}
     </Card>
   )
 }
