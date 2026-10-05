@@ -42,6 +42,18 @@ Everything below is committed and all tests pass (harness 10, sidecar 5, API 118
 2. Data: Half-Orcs never received the hidden `Race ~ Half-Orc` template, so every `PREFACT:...IsHalfOrc=true` requirement failed (all half-orc favored class bonuses). One token added in `data/pathfinder/.../races/half_orc/halforc_abilities_race.lst`.
 Neither is reported upstream yet. (Before the fork was set up these lived as patch files; the commits replace them.)
 
+## Code review fixes (after the first publish)
+A review of the sidecar found eight problems; all are fixed and have tests in `run_api_test.py`:
+- **Anyone's web page could drive the local API** (shutdown, save, export). Now `Host`, `Origin` and `Sec-Fetch-Site` are checked (`Sidecar.guardCaller`; extra origins via `--allow-origin`). The Vite proxy sends the UI's own origin, which is allowed.
+- **The HTTP server ran every request on one thread**, so a slow export blocked `/health`, answers to questions and `/shutdown`, and the 409 path could never fire. Now one thread per request. Engine calls still run one at a time, but a request that arrives while another runs **waits its turn** (slow is fine); only an operation parked on a question for a person gives 409 (`runOp`, `Operation.isParked`).
+- **Templates could be any file on disk.** Now only files really inside the output sheets folder (after `..` and symlinks are resolved); saves must be `.pcg` in an existing folder.
+- **A failed save left the character pointing at the bad path.** The old file is restored.
+- **A patch with one bad value still applied the earlier fields.** All values are looked up and parsed before any change.
+- **Malformed `%` escapes in a query gave 500.** Now 400.
+- **The PDF warm-up could be handed another request's questions.** It is now its own (silent) operation that cannot park.
+- **`stop-dev.ps1` killed whatever was on port 5173** and trusted stale pid files. Now it only stops processes that are recognisably ours.
+Not covered by that review (read it again if you touch them): AbilityRoutes, SkillRoutes, EquipmentRoutes, SpellRoutes, DescriptionRoutes, LanguageRoutes, DatasetRoutes, CharacterView and the React components.
+
 ## Engine quirks and rough edges found (not fixed unless said)
 - Possibly the same missing-template omission as the half-orc: monkey_goblin, samsaran, skinwalker, svirfneblin (from a regex scan of `core_essentials/races`; NOT verified).
 - Core+APG loads log `Illegal FACT subtoken 'IsOrc'` for `orc_templates.lst` (3 LSTERRORs, plus ~72 "invalid variable 'Score'" warnings). Clarent's set doesn't log it. Not investigated.

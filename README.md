@@ -1,3 +1,79 @@
+# PCGen Revamp
+
+A fork of [PCGen](https://github.com/PCGen/pcgen) with a modern front end for **Pathfinder 1e** character building. The rules engine and the data books are PCGen's, untouched; the old Swing interface is replaced by a browser-style app that is fast to use, easy to read, and explains the rules in plain words.
+
+> This is an independent fork and is not affiliated with the PCGen project. It is not meant to be merged back upstream. The original PCGen README follows [further down](#about-pcgen-upstream-readme).
+
+## Why
+
+PCGen holds more than twenty years of carefully written rules data, and its engine is the part that is hard to get right. The interface is the part that has aged: dense dialogs, jargon straight from the data files, and a long start-up. The idea of this project is to keep everything that is valuable and replace only what players touch.
+
+- **Keep the engine and the data.** No rewrite of the rules engine or the LST data format. Every number on the sheet still comes from PCGen.
+- **Make it fast once it is running.** Loading the rules data takes seconds, so it is done once at start-up and then kept in memory. After that, reads take milliseconds and most changes well under a second.
+- **Say what the rules say, in plain words.** When something cannot be taken, the app names the requirement it fails ("must be a Half Orc; needs Inquisitor") instead of "requirements not met". PCGen's internal type tags are tucked away in a "Technical details" fold-out.
+- **Slow is fine, failing is not.** Nothing the engine is doing is ever cut off by a timeout.
+- **Test against the real engine,** not against mocks.
+
+## What it looks like in use
+
+Open a character and work in tabs: **Overview** (ability scores, levels, hit points, experience, identity, what is still to do), **Class**, **Feats**, **Skills**, **Spells**, **Gear**, **Biography** (appearance, languages, notes, race and background) and **Sheet** (a live PDF character sheet). Sections fold; clicking a feat, class feature, trait or spell opens its full description in a side panel; the "Add" pickers show what an entry does before you take it, and filter themselves to what your character can actually take (spell levels your class can cast, favored class bonuses you qualify for). When PCGen needs a decision from you, such as which ability score to raise at level 4, it appears as a dialog.
+
+## How it works
+
+```
+browser (React app, revamp/ui)
+   |  /api  (Vite dev server proxies to the sidecar)
+   v
+sidecar (Java HTTP server, revamp/sidecar, 127.0.0.1 only)
+   |  calls PCGen's own "facade" layer, the same one its Swing UI uses
+   v
+PCGen engine (unchanged) + the rules data
+```
+
+- **One process per rule set.** PCGen can hold one data set per Java process and keeps global state, so the sidecar loads one game mode and source-book set at start-up and runs every engine call on a single worker thread. The character you open decides which books are loaded.
+- **The engine asks questions mid-operation.** Choosers ("pick a school for Spell Focus"), yes/no confirmations and the custom-item builder block inside PCGen until someone answers. The sidecar parks the operation and replies **HTTP 202** with the question; the answer call resumes it and returns the final result. The UI turns these into dialogs.
+- **Descriptions come from PCGen itself.** The engine's own info text is parsed into labelled sections, and the unmet part of a requirement is read from its red markup.
+- **PDF sheets** use PCGen's own FOP pipeline; a throwaway PDF is rendered after start-up to warm it.
+- **The API is local only.** The server binds to the loopback address and refuses requests with a foreign `Host` or `Origin` header, so a web page you visit cannot drive it. Templates and saves are confined to the output-sheets folder and `.pcg` files.
+- **Tests run the real engine:** command-line export snapshots, a sidecar per sample character, every API route group with latency budgets, and a browser test that drives the UI in Edge.
+
+## Changes to PCGen's own files
+
+Everything new lives in [`revamp/`](revamp/). Changes to PCGen proper are deliberate and kept as separate small commits:
+
+1. Variable channels and wrappers are cached per character. Before this, **funds were shared by every open character** in a session.
+2. The Half-Orc race now applies its identifying template, so half-orc favored class bonuses (which require `IsHalfOrc`) can be taken. They never could.
+
+## Status
+
+Working: the tabs above, level-ups with a hit point roll dialog, feats and class choices, skills, spells (known lists and per-class level limits), gear and the custom item builder, languages, notes, PDF export. Not built yet: spell preparation and spell books in the UI, equipment sets, companions and familiars, kits and temporary bonuses, a new-character wizard, a source-book picker and launcher, and packaging as a desktop app. [`revamp/PROGRESS.md`](revamp/PROGRESS.md) has the full list and the order planned.
+
+## Run it
+
+You need JDK 25, Node 22 or newer, Python 3 and Microsoft Edge (for the browser test) on Windows.
+
+```powershell
+# once: build the engine (about 1.5 minutes) and the sidecar
+$env:JAVA_HOME = 'C:\path\to\jdk-25'      # wherever your JDK 25 is
+.\gradlew qbuild -x test
+.\revamp\sidecar\build.ps1
+cd revamp\ui; npm install; cd ..\..
+
+# start the engine and the UI on a copy of one of your characters
+.\revamp\start-dev.ps1 -Character path\to\your.pcg      # opens http://127.0.0.1:5173
+.\revamp\stop-dev.ps1
+```
+
+The script works on a **copy** of the character, so nothing is saved to your file unless you copy it back. More in [`revamp/README.md`](revamp/README.md) and [`CLAUDE.md`](CLAUDE.md) (commands, tests, gotchas).
+
+## License
+
+PCGen is licensed under the LGPL; this fork keeps that license ([LICENSE](LICENSE)).
+
+---
+
+# About PCGen (upstream README)
+
 ![PCGenShot](https://user-images.githubusercontent.com/470400/67638917-5f6e8a80-f8c0-11e9-972b-7adf4c9126e7.png)
 
 PCGen is a program designed to create and manage player characters in pen & paper games like D&D.

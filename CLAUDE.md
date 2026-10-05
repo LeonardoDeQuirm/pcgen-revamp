@@ -48,6 +48,8 @@ The harness also compares `revamp/local/clarent.pcg` when it exists; without it 
 ## Key engine facts (verified)
 - Facades in `code/src/java/pcgen/facade/core/`, implementations in `pcgen/gui2/facade/`. One data set per JVM; global static state; not thread-safe. So: one process per game mode + source set, every engine call on one worker thread (`Sidecar.runOp`).
 - The engine asks questions synchronously mid-operation (choosers, yes/no confirms, the custom-item builder). The sidecar parks the worker, answers the original HTTP call with **202** (`pendingChooser` / `pendingConfirm` / `pendingBuilder`), and the answer call returns the operation's final result. `revamp/ui/src/api.ts` `change()` loops on this. Only one operation at a time; others get 409.
+- Requests run on their own threads; **engine calls queue** (a waiting request is fine, a failed one is not), and only an operation parked on a question gives 409. `/health`, answers and `/shutdown` bypass the queue. Don't put long work on an HTTP thread outside `runOp`.
+- The API is guarded against other websites (`guardCaller`: Host, Origin, Sec-Fetch-Site) and confines templates and saves; keep those checks when adding routes that read or write files.
 - `ChooserFactory.setDelegate` is only called by the Swing GUI; the sidecar sets it itself.
 - Per-level skill ranks are running totals (don't sum levels). `getAvailableList()` on a language chooser rebuilds it (call once). `maybeShowWarningConfirm` returning `false` silently cancels the first level-up: it must be answered.
 - The engine marks freshly opened characters as modified; the UI tracks real edits itself.
