@@ -159,7 +159,8 @@ public class RecordingUIDelegate implements UIDelegate
 	private boolean confirm(String title, String message, boolean ifNobodyToAsk)
 	{
 		Sidecar.Operation op = currentOperation.get();
-		if (op == null)
+		// A silent (background) operation has nobody to ask, exactly like having no operation at all.
+		if (op == null || op.silent)
 		{
 			record("warning", title, message);
 			return ifNobodyToAsk;
@@ -225,7 +226,8 @@ public class RecordingUIDelegate implements UIDelegate
 	public boolean showGeneralChooser(ChooserFacade chooser)
 	{
 		Sidecar.Operation op = currentOperation.get();
-		if (op == null)
+		// A silent (background) operation has nobody to ask, exactly like having no operation at all.
+		if (op == null || op.silent)
 		{
 			record("chooser-declined", String.valueOf(chooser.getName()), "no API operation is running");
 			return false;
@@ -339,7 +341,8 @@ public class RecordingUIDelegate implements UIDelegate
 	public CustomEquipResult showCustomEquipDialog(CharacterFacade character, EquipmentBuilderFacade equipBuilder)
 	{
 		Sidecar.Operation op = currentOperation.get();
-		if (op == null)
+		// A silent (background) operation has nobody to ask, exactly like having no operation at all.
+		if (op == null || op.silent)
 		{
 			record("custom-equip-declined", "", "no API operation is running");
 			return CustomEquipResult.CANCELLED;

@@ -30,12 +30,13 @@ results = []   # (name, ok, detail)
 timings = []   # (label, ms, budget)
 
 
-def call(method, route, body=None, budget=None, **query):
+def call(method, route, body=None, budget=None, _headers=None, **query):
     url = f"http://127.0.0.1:{PORT}{route}"
     if query:
         url += "?" + urllib.parse.urlencode(query)
     data = json.dumps(body).encode() if body is not None else (b"" if method in ("POST", "PUT", "PATCH") else None)
-    req = urllib.request.Request(url, method=method, data=data, headers={"Content-Type": "application/json"})
+    headers = {"Content-Type": "application/json", **(_headers or {})}
+    req = urllib.request.Request(url, method=method, data=data, headers=headers)
     try:
         with urllib.request.urlopen(req, timeout=120) as r:
             status, raw, ms, ctype = r.status, r.read(), r.headers.get("X-Time-Ms"), r.headers.get("Content-Type")
@@ -400,6 +401,59 @@ def run_checks():
     check("the wizard's available spells include 9th level", 9 in levels_in_list and len(d["available"]) > 200, levels_in_list)
     check("the engine's slots report per-day numbers", cls is not None and cls["levels"][9]["perDay"] > 0, cls and cls["levels"][9])
     write("DELETE", W)
+
+    # ---- hardening: who may call the sidecar, where files may be read and written, and how requests queue
+    st, d = call("GET", "/health", _headers={"Host": "evil.example"})
+    check("a foreign Host header is refused (DNS rebinding)", st == 403, (st, d))
+    st, d = call("POST", "/shutdown", _headers={"Origin": "http://evil.example"})
+    check("a request from another website cannot shut the engine down", st == 403, (st, d))
+    check("and the engine is still up afterwards", read("/health")[0] == 200)
+    check("a browser-reported cross-site request is refused",
+          call("GET", "/health", _headers={"Sec-Fetch-Site": "cross-site"})[0] == 403)
+    check("the UI's own origin is accepted", call("GET", "/health", _headers={"Origin": "http://127.0.0.1:5173"})[0] == 200)
+    check("a malformed query string is the caller's error (400)", call("GET", "/characters?x=%zz")[0] == 400)
+
+    own_dir = str(PCGEN / "outputsheets")
+    st, d = call("POST", C + "/export", {"template": str(PCGEN / "build.gradle")})
+    check("a template outside the output sheets folder is refused", st == 403, (st, str(d)[:80]))
+    st, d = call("POST", C + "/export", {"template": "../build.gradle"})
+    check("so is one reached with ../", st == 403, (st, str(d)[:80]))
+    check("a missing template inside the folder is a plain 404",
+          call("POST", C + "/export", {"template": "d20/fantasy/text/nope.TXT"})[0] == 404)
+    check("a real template still works", call("POST", C + "/export", {"template": str(PCGEN / TEMPLATES["plain"])})[0] == 200)
+
+    before = snap()
+    st, d = call("POST", C + "/save", {"path": os.path.join(tempfile.gettempdir(), "no_such_folder_xyz", "x.pcg")})
+    check("saving into a missing folder is refused", st == 400, (st, d))
+    check("saving to a non-.pcg name is refused", call("POST", C + "/save", {"path": os.path.join(tempfile.gettempdir(), "x.txt")})[0] == 400)
+    check("a refused save leaves the character's file alone", snap()["file"] == before["file"], (before["file"], snap()["file"]))
+
+    name_before = snap()["name"]
+    st, d = call("PATCH", C, {"name": "Should Not Stick", "race": "Not A Real Race"})
+    check("a patch with one bad value is refused", st == 404, (st, d))
+    check("and none of its other changes were applied", snap()["name"] == name_before, snap()["name"])
+    st, d = call("PATCH", C, {"name": "Should Not Stick Either", "funds": "lots"})
+    check("a bad number is refused before anything changes", st == 400 and snap()["name"] == name_before, (st, snap()["name"]))
+
+    # A slow engine call must not block health, and other engine calls wait their turn instead of failing.
+    outcome = {}
+
+    def slow_export():
+        t0 = time.time()
+        outcome["export"] = call("POST", C + "/export", {"template": "d20/fantasy/pdf/csheet_fantasy_std_blue.xslt"})[0]
+        outcome["export_s"] = time.time() - t0
+
+    worker_thread = threading.Thread(target=slow_export)
+    worker_thread.start()
+    time.sleep(0.5)
+    t0 = time.time()
+    st_health = call("GET", "/health")[0]
+    health_s = time.time() - t0
+    st_read = call("GET", C)[0]  # waits for the export, then answers
+    worker_thread.join()
+    check("health answers at once while an export runs", st_health == 200 and health_s < 1.0, f"{st_health} in {health_s:.2f}s")
+    check("an engine read during the export waits and succeeds (no 409)", st_read == 200, st_read)
+    check("and the export itself completed", outcome.get("export") == 200, outcome)
 
     # ---- no operation left hanging
     check("no chooser pending at the end", read("/health")[1]["pendingChooser"] is None)

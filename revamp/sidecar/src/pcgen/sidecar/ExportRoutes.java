@@ -99,19 +99,44 @@ final class ExportRoutes
 		return Path.of(ConfigurationSettings.getOutputSheetsDir()).toAbsolutePath().normalize();
 	}
 
-	/** Accepts an absolute path, or one relative to the output sheets directory. */
+	/**
+	 * Accepts an absolute path or one relative to the output sheets folder, but only files that really live inside
+	 * that folder (after resolving "..", symlinks and the like). Otherwise this would be a way to read any file on
+	 * the machine through the text exporter.
+	 */
 	private File resolve(String template)
 	{
-		File f = new File(template);
-		if (!f.isAbsolute())
+		Path root = sheetsDir();
+		Path wanted;
+		try
 		{
-			f = sheetsDir().resolve(template).toFile();
+			Path given = Path.of(template);
+			wanted = (given.isAbsolute() ? given : root.resolve(given)).toAbsolutePath().normalize();
 		}
-		if (!f.isFile())
+		catch (java.nio.file.InvalidPathException e)
+		{
+			throw new ApiException(400, "not a valid template path: " + template);
+		}
+		Path real;
+		Path realRoot;
+		try
+		{
+			realRoot = root.toRealPath();
+			real = wanted.toRealPath();
+		}
+		catch (IOException e)
 		{
 			throw new ApiException(404, "no such template: " + template + " (see GET /templates)");
 		}
-		return f;
+		if (!real.startsWith(realRoot))
+		{
+			throw new ApiException(403, "templates must be inside the output sheets folder");
+		}
+		if (!Files.isRegularFile(real))
+		{
+			throw new ApiException(404, "no such template: " + template + " (see GET /templates)");
+		}
+		return real.toFile();
 	}
 
 	/**

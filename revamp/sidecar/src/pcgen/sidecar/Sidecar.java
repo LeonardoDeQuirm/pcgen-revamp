@@ -10,7 +10,9 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -62,15 +64,31 @@ public final class Sidecar
 	private final long startedAt = System.currentTimeMillis();
 	private Operation current; // guarded by this
 	private HttpServer server;
+	/** Host headers we answer to (stops DNS-rebinding pages from reading us) and origins allowed to call us. */
+	private Set<String> allowedHosts = Set.of();
+	private Set<String> allowedOrigins = Set.of();
 	private volatile String pdfWarmup = "pending"; // pending, running, done or disabled
 
 	/** An in-flight engine call. Its events are either a chooser the engine waits on, or Done. */
 	static final class Operation
 	{
+		/** Background work (the PDF warm-up): never parks on a question, answers them itself. */
+		final boolean silent;
 		final BlockingQueue<Object> events = new LinkedBlockingQueue<>();
 		volatile RecordingUIDelegate.PendingChooser pending;
 		volatile RecordingUIDelegate.PendingBuilder builder;
 		volatile RecordingUIDelegate.PendingConfirm confirm;
+
+		Operation(boolean silent)
+		{
+			this.silent = silent;
+		}
+
+		/** True while the engine is stopped waiting for a person to answer something. */
+		boolean isParked()
+		{
+			return pending != null || builder != null || confirm != null;
+		}
 	}
 
 	private record Done(Object result, Throwable error)
@@ -89,7 +107,7 @@ public final class Sidecar
 		if (settings == null)
 		{
 			System.err.println("usage: Sidecar --settings-dir DIR (--from-character FILE.pcg | "
-					+ "--game-mode MODE --sources A,B) [--port 8765]");
+					+ "--game-mode MODE --sources A,B) [--port 8765] [--allow-origin URL,URL]");
 			System.exit(2);
 		}
 		Sidecar s = new Sidecar();
@@ -101,7 +119,7 @@ public final class Sidecar
 				return null;
 			}).get();
 			s.registerRoutes();
-			s.startHttp(Integer.parseInt(args.getOrDefault("port", "8765")));
+			s.startHttp(Integer.parseInt(args.getOrDefault("port", "8765")), args.get("allow-origin"));
 		}
 		catch (Throwable t)
 		{
@@ -202,13 +220,42 @@ public final class Sidecar
 
 	// ---- HTTP ----
 
-	private void startHttp(int port) throws IOException
+	private void startHttp(int port, String extraOrigins) throws IOException
 	{
 		server = HttpServer.create(new InetSocketAddress(InetAddress.getLoopbackAddress(), port), 0);
+		allowedHosts = Set.of("127.0.0.1:" + port, "localhost:" + port, "[::1]:" + port);
+		// The UI dev server (and its proxy) is the normal caller. Anything else must be named explicitly.
+		Set<String> origins = new java.util.HashSet<>(List.of("http://127.0.0.1:5173", "http://localhost:5173",
+				"http://127.0.0.1:" + port, "http://localhost:" + port));
+		if (extraOrigins != null)
+		{
+			for (String o : extraOrigins.split(","))
+			{
+				if (!o.isBlank())
+				{
+					origins.add(o.trim());
+				}
+			}
+		}
+		allowedOrigins = Set.copyOf(origins);
 		server.createContext("/", this::handle);
+		// One thread per request. Engine work is still one at a time (see runOp), but /health, answering a
+		// question and /shutdown must never queue behind a slow export.
+		server.setExecutor(Executors.newCachedThreadPool(new java.util.concurrent.ThreadFactory()
+		{
+			private final java.util.concurrent.atomic.AtomicInteger n = new java.util.concurrent.atomic.AtomicInteger();
+
+			@Override
+			public Thread newThread(Runnable r)
+			{
+				Thread t = new Thread(r, "http-" + n.incrementAndGet());
+				t.setDaemon(true);
+				return t;
+			}
+		}));
 		server.start();
 		System.out.println("READY http://127.0.0.1:" + port);
-		// After READY so startup isn't slower; requests that arrive meanwhile queue behind it on the worker.
+		// After READY so startup isn't slower; requests that arrive meanwhile wait their turn behind it.
 		if ("false".equals(System.getProperty("sidecar.warmup")))
 		{
 			pdfWarmup = "disabled";
@@ -216,10 +263,50 @@ public final class Sidecar
 		else
 		{
 			pdfWarmup = "running";
-			worker.submit(() -> {
-				ExportRoutes.warmUp(session);
-				pdfWarmup = "done";
-			});
+			Thread warm = new Thread(() -> {
+				try
+				{
+					// A real operation, so a request that arrives meanwhile queues instead of being handed the
+					// warm-up's questions; silent, so the warm-up can never wait on a person.
+					runOp(() -> {
+						ExportRoutes.warmUp(session);
+						return null;
+					}, true);
+				}
+				catch (Exception e)
+				{
+					Logging.log(Logging.WARNING, "PDF warm-up did not run: " + e);
+				}
+				finally
+				{
+					pdfWarmup = "done";
+				}
+			}, "pdf-warmup");
+			warm.setDaemon(true);
+			warm.start();
+		}
+	}
+
+	/**
+	 * Rejects requests that did not come from us or from the UI. The server listens on loopback only, but a web
+	 * page the user visits can still make their browser call it. Three checks: the Host header (DNS rebinding),
+	 * the Origin header (a page on another site), and Sec-Fetch-Site (the browser's own statement).
+	 */
+	private void guardCaller(HttpExchange ex)
+	{
+		String host = ex.getRequestHeaders().getFirst("Host");
+		if (host != null && !allowedHosts.contains(host.toLowerCase(java.util.Locale.ROOT)))
+		{
+			throw new ApiException(403, "unexpected Host header");
+		}
+		String origin = ex.getRequestHeaders().getFirst("Origin");
+		if (origin != null && !allowedOrigins.contains(origin))
+		{
+			throw new ApiException(403, "requests from " + origin + " are not allowed");
+		}
+		if ("cross-site".equalsIgnoreCase(ex.getRequestHeaders().getFirst("Sec-Fetch-Site")))
+		{
+			throw new ApiException(403, "cross-site requests are not allowed");
 		}
 	}
 
@@ -231,6 +318,7 @@ public final class Sidecar
 		byte[] body;
 		try
 		{
+			guardCaller(ex);
 			Object result = dispatch(ex);
 			if (result instanceof Reply reply)
 			{
@@ -295,7 +383,14 @@ public final class Sidecar
 				int eq = pair.indexOf('=');
 				String k = eq < 0 ? pair : pair.substring(0, eq);
 				String v = eq < 0 ? "" : pair.substring(eq + 1);
-				q.put(URLDecoder.decode(k, StandardCharsets.UTF_8), URLDecoder.decode(v, StandardCharsets.UTF_8));
+				try
+				{
+					q.put(URLDecoder.decode(k, StandardCharsets.UTF_8), URLDecoder.decode(v, StandardCharsets.UTF_8));
+				}
+				catch (IllegalArgumentException e)
+				{
+					throw new ApiException(400, "malformed query string (bad % escape)");
+				}
 			}
 		}
 		return q;
@@ -377,18 +472,32 @@ public final class Sidecar
 
 	private Object runOp(Callable<Object> task) throws Exception
 	{
-		Operation op = new Operation();
+		return runOp(task, false);
+	}
+
+	/**
+	 * Runs one engine operation at a time. A request that arrives while another is running simply waits its turn
+	 * (slow is fine). The exception is an operation that is parked on a question for a person: nothing can run
+	 * until it is answered, so waiting would hang for as long as the person takes; those requests get a 409.
+	 */
+	private Object runOp(Callable<Object> task, boolean silent) throws Exception
+	{
+		Operation op = new Operation(silent);
 		synchronized (this)
 		{
-			if (current != null)
+			while (current != null)
 			{
-				RecordingUIDelegate.PendingChooser p = current.pending;
-				RecordingUIDelegate.PendingBuilder b = current.builder;
-				RecordingUIDelegate.PendingConfirm k = current.confirm;
-				throw new ApiException(409, "another operation is in progress"
-						+ (k == null ? "" : "; it is waiting for a yes/no answer (" + k.id + ")")
-						+ (p == null ? "" : "; it is waiting on chooser " + p.id)
-						+ (b == null ? "" : "; it is waiting on the custom equipment builder (see /builder)"));
+				if (current.isParked())
+				{
+					RecordingUIDelegate.PendingChooser p = current.pending;
+					RecordingUIDelegate.PendingBuilder b = current.builder;
+					RecordingUIDelegate.PendingConfirm k = current.confirm;
+					throw new ApiException(409, "another operation is in progress"
+							+ (k == null ? "" : "; it is waiting for a yes/no answer (" + k.id + ")")
+							+ (p == null ? "" : "; it is waiting on chooser " + p.id)
+							+ (b == null ? "" : "; it is waiting on the custom equipment builder (see /builder)"));
+				}
+				wait();
 			}
 			current = op;
 		}
@@ -411,6 +520,11 @@ public final class Sidecar
 	private Object awaitEvent(Operation op) throws Exception
 	{
 		Object event = op.events.take();
+		synchronized (this)
+		{
+			// Parked or finished: either way, requests waiting for their turn need to look again.
+			notifyAll();
+		}
 		if (event instanceof RecordingUIDelegate.PendingConfirm k)
 		{
 			Map<String, Object> body = new LinkedHashMap<>();
@@ -437,6 +551,7 @@ public final class Sidecar
 		synchronized (this)
 		{
 			current = null;
+			notifyAll();
 		}
 		if (done.error() instanceof Exception e)
 		{

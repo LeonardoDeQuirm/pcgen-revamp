@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TreeSet;
 
@@ -151,15 +152,44 @@ final class CharacterRoutes
 	{
 		String id = q.param("id");
 		CharacterFacade c = s.character(id);
+		File previous = c.getFileRef().get();
+		File target = previous;
 		if (q.has("path"))
 		{
-			c.setFile(new File(q.requireStr("path")).getAbsoluteFile());
+			String path = q.requireStr("path");
+			if (!path.toLowerCase(Locale.ROOT).endsWith(".pcg"))
+			{
+				throw new ApiException(400, "character files end in .pcg");
+			}
+			target = new File(path).getAbsoluteFile();
+			File folder = target.getParentFile();
+			if (folder == null || !folder.isDirectory())
+			{
+				throw new ApiException(400, "that folder does not exist: " + folder);
+			}
 		}
-		if (c.getFileRef().get() == null)
+		if (target == null)
 		{
 			throw new ApiException(400, "character has no file yet; pass path");
 		}
-		boolean ok = CharacterManager.saveCharacter(c);
+		boolean changedFile = !target.equals(previous);
+		if (changedFile)
+		{
+			c.setFile(target);
+		}
+		boolean ok = false;
+		try
+		{
+			ok = CharacterManager.saveCharacter(c);
+		}
+		finally
+		{
+			// A failed save must not leave the character pointing at a file that was never written.
+			if (!ok && changedFile)
+			{
+				c.setFile(previous);
+			}
+		}
 		if (!ok)
 		{
 			throw new ApiException(500, "save failed: " + s.ui.drain());
@@ -174,28 +204,55 @@ final class CharacterRoutes
 		String id = q.param("id");
 		CharacterFacade c = s.character(id);
 		var data = s.dataSet();
-		// Order matters a little: race and class-affecting choices before cosmetic fields.
-		if (q.has("race"))
+
+		// 1. Look everything up and parse every number first. A bad value anywhere refuses the whole request
+		//    before the first change is made, so a rejected request never leaves half of itself applied.
+		var race = q.has("race") ? Lookup.pObject(data.getRaces(), q.requireStr("race"), "race") : null;
+		var alignment = q.has("alignment") ? Lookup.pObject(data.getAlignments(), q.requireStr("alignment"), "alignment") : null;
+		var deity = q.has("deity") ? Lookup.pObject(data.getDeities(), q.requireStr("deity"), "deity") : null;
+		var gender = q.has("gender")
+				? Lookup.find(c.getAvailableGenders(), q.requireStr("gender"), "gender", Enum::name, Object::toString) : null;
+		var handed = q.has("handed")
+				? Lookup.find(c.getAvailableHands(), q.requireStr("handed"), "handedness", Enum::name, Object::toString) : null;
+		Integer age = q.has("age") ? q.requireInt("age") : null;
+		String ageCategory = q.has("ageCategory") ? q.requireStr("ageCategory") : null;
+		String xpTable = q.has("xpTable") ? q.requireStr("xpTable") : null;
+		String characterType = q.has("characterType") ? q.requireStr("characterType") : null;
+		Integer xp = q.has("xp") ? q.requireInt("xp") : null;
+		Integer addXp = q.has("addXp") ? q.requireInt("addXp") : null;
+		BigDecimal funds = null;
+		if (q.has("funds"))
 		{
-			c.setRace(Lookup.pObject(data.getRaces(), q.requireStr("race"), "race"));
+			try
+			{
+				funds = new BigDecimal(q.requireStr("funds"));
+			}
+			catch (NumberFormatException e)
+			{
+				throw new ApiException(400, "funds must be a number");
+			}
 		}
-		if (q.has("alignment"))
+
+		// 2. Apply. Order matters a little: race and class-affecting choices before cosmetic fields.
+		if (race != null)
 		{
-			c.setAlignment(Lookup.pObject(data.getAlignments(), q.requireStr("alignment"), "alignment"));
+			c.setRace(race);
 		}
-		if (q.has("deity"))
+		if (alignment != null)
 		{
-			c.setDeity(Lookup.pObject(data.getDeities(), q.requireStr("deity"), "deity"));
+			c.setAlignment(alignment);
 		}
-		if (q.has("gender"))
+		if (deity != null)
 		{
-			c.setGender(Lookup.find(c.getAvailableGenders(), q.requireStr("gender"), "gender", Enum::name,
-					Object::toString));
+			c.setDeity(deity);
 		}
-		if (q.has("handed"))
+		if (gender != null)
 		{
-			c.setHanded(Lookup.find(c.getAvailableHands(), q.requireStr("handed"), "handedness", Enum::name,
-					Object::toString));
+			c.setGender(gender);
+		}
+		if (handed != null)
+		{
+			c.setHanded(handed);
 		}
 		if (q.has("name"))
 		{
@@ -209,40 +266,33 @@ final class CharacterRoutes
 		{
 			c.setTabName(q.str("tabName"));
 		}
-		if (q.has("age"))
+		if (age != null)
 		{
-			c.setAge(q.requireInt("age"));
+			c.setAge(age);
 		}
-		if (q.has("ageCategory"))
+		if (ageCategory != null)
 		{
-			c.setAgeCategory(q.requireStr("ageCategory"));
+			c.setAgeCategory(ageCategory);
 		}
-		if (q.has("xpTable"))
+		if (xpTable != null)
 		{
-			c.setXPTable(q.requireStr("xpTable"));
+			c.setXPTable(xpTable);
 		}
-		if (q.has("characterType"))
+		if (characterType != null)
 		{
-			c.setCharacterType(q.requireStr("characterType"));
+			c.setCharacterType(characterType);
 		}
-		if (q.has("xp"))
+		if (xp != null)
 		{
-			c.setXP(q.requireInt("xp"));
+			c.setXP(xp);
 		}
-		if (q.has("addXp"))
+		if (addXp != null)
 		{
-			c.adjustXP(q.requireInt("addXp"));
+			c.adjustXP(addXp);
 		}
-		if (q.has("funds"))
+		if (funds != null)
 		{
-			try
-			{
-				c.setFunds(new BigDecimal(q.requireStr("funds")));
-			}
-			catch (NumberFormatException e)
-			{
-				throw new ApiException(400, "funds must be a number");
-			}
+			c.setFunds(funds);
 		}
 		return changed(q);
 	}
