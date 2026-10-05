@@ -148,9 +148,11 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       // A previous page (closed or reloaded mid-question) can leave the engine waiting for an answer
       // nobody will give. Cancel it so this page isn't locked out.
       if (!recoveredRef.current && (h.pendingBuilder || h.pendingChooser || h.pendingConfirm)) {
-        if (h.pendingBuilder) await api.request('POST', '/builder/cancel')
+        // Questions first: a builder edit can be stuck on one, and cancelling the builder would wait behind it.
         if (h.pendingChooser) await api.request('POST', `/choosers/${h.pendingChooser}`, { cancel: true })
         if (h.pendingConfirm) await api.request('POST', `/confirms/${h.pendingConfirm}`, { ok: false })
+        h = await api.get<Health>('/health')
+        if (h.pendingBuilder) await api.request('POST', '/builder/cancel')
         h = await api.get<Health>('/health')
       }
       recoveredRef.current = true

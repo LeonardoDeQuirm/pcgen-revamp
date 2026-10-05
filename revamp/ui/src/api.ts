@@ -114,6 +114,22 @@ export async function change<T>(
   query?: Record<string, string | number | boolean | undefined>,
 ): Promise<T> {
   let res = await request(method, path, body, query)
+  while (res.status === 202 && res.data?.pendingBuilder) {
+    const builder = res.data.pendingBuilder as BuilderState
+    res = interactions ? await interactions.runBuilder(builder) : await request('POST', '/builder/cancel')
+    res = await answerQuestions(res)
+  }
+  res = await answerQuestions(res)
+  if (res.status >= 400) throw failure(res)
+  return res.data as T
+}
+
+/**
+ * Answers the engine's chooser and yes/no questions until the operation gives its real reply. Also used by the item
+ * builder, whose edits (adding an enchantment) can ask things too: without this they wait forever.
+ */
+export async function answerQuestions(first: RawResponse): Promise<RawResponse> {
+  let res = first
   while (res.status === 202) {
     if (res.data?.pendingChooser) {
       const chooser = res.data.pendingChooser as PendingChooser
@@ -123,15 +139,11 @@ export async function change<T>(
       const confirm = res.data.pendingConfirm as PendingConfirm
       const ok = interactions ? await interactions.askConfirm(confirm) : false
       res = await request('POST', `/confirms/${confirm.id}`, { ok })
-    } else if (res.data?.pendingBuilder) {
-      const builder = res.data.pendingBuilder as BuilderState
-      res = interactions ? await interactions.runBuilder(builder) : await request('POST', '/builder/cancel')
     } else {
       break
     }
   }
-  if (res.status >= 400) throw failure(res)
-  return res.data as T
+  return res
 }
 
 export const post = <T>(path: string, body?: unknown, query?: Record<string, string | number | boolean | undefined>) =>

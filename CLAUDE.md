@@ -35,9 +35,9 @@ powershell revamp/sidecar/build.ps1                                   # after an
 python revamp/harness/run_harness.py          # CLI exports vs baselines. --update rewrites baselines
 python revamp/harness/run_sidecar_test.py     # one sidecar per sample character, chooser bridge
 python revamp/harness/run_all_gates.py [fp_baseline.json]   # ALL of the below plus PCGen unit tests, in one go (~10 min)
-python revamp/harness/run_api_test.py         # every route group + latency budgets (210 checks)
+python revamp/harness/run_api_test.py         # every route group + latency budgets (212 checks)
 python revamp/harness/run_packaged_test.py    # sidecar serving the built UI, free port, token (needs npm run build in revamp/ui)
-cd revamp/ui; npm run typecheck; npm run e2e -- ..\.run\<copy>.pcg   # needs start-dev.ps1 running; 68 checks. Restart start-dev afterwards: the e2e edits the copy
+cd revamp/ui; npm run typecheck; npm run e2e -- ..\.run\<copy>.pcg   # needs start-dev.ps1 running; 70 checks. Restart start-dev afterwards: the e2e edits the copy
 ```
 The harness also compares `revamp/local/clarent.pcg` when it exists; without it that case is skipped.
 

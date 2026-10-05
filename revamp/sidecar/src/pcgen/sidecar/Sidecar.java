@@ -547,7 +547,7 @@ public final class Sidecar
 			Request request = new Request(method, path, Map.of(), query, body);
 			Object result = BuilderRoutes.handle(op == null ? null : op.builder, request, session);
 			// commit/cancel let the parked operation finish; hand back its outcome.
-			return result == BuilderRoutes.FINISHED ? awaitEvent(op) : result;
+			return result == BuilderRoutes.FINISHED || result == BuilderRoutes.EDITING ? awaitEvent(op) : result;
 		}
 		if (path.equals("/health") && method.equals("GET"))
 		{
@@ -643,6 +643,19 @@ public final class Sidecar
 			body.put("answerWith", "POST /choosers/" + p.id
 					+ " {select: [option indexes to add], deselect: [alreadySelected indexes to remove]} or {cancel: true}");
 			return new Reply(202, body);
+		}
+		if (event instanceof RecordingUIDelegate.EditDone edit)
+		{
+			// A builder edit ended; the operation itself stays parked in the builder.
+			if (edit.error() instanceof Exception e)
+			{
+				throw e;
+			}
+			if (edit.error() != null)
+			{
+				throw new RuntimeException(edit.error());
+			}
+			return edit.result();
 		}
 		Done done = (Done) event;
 		synchronized (this)

@@ -304,11 +304,11 @@ export function BuilderDialog() {
   if (!initial || !state) return null
 
   const finish = async (path: string, body?: unknown) => {
-    const res = await act(() => api.request('POST', path, body))
+    const res = await act(() => api.request('POST', path, body).then(api.answerQuestions))
     if (res) resolveBuilder(res)
   }
   const edit = async (method: string, path: string, body?: unknown) => {
-    const res = await act(() => api.request(method, path, body))
+    const res = await act(() => api.request(method, path, body).then(api.answerQuestions))
     if (res && res.status < 400) setState(res.data as BuilderState)
   }
 

@@ -281,8 +281,8 @@ export default function App() {
           }}
         />
       )}
-      {chooserRequest && <ChooserDialog />}
       {builderRequest && <BuilderDialog />}
+      {chooserRequest && <ChooserDialog />}
       {confirmRequest && <ConfirmDialog />}
       <Toasts />
     </div>

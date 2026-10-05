@@ -269,8 +269,8 @@ export function Gear({ character }: { character: Character }) {
         <Card title={`Gear · ${gear.length}`}>
           {gear.length === 0 && <div className="muted">Nothing owned yet. Use the shop to buy something.</div>}
           <div className="rows">
-            {gear.map((g) => (
-              <div key={g.key} className="row">
+            {gear.map((g, i) => (
+              <div key={`${g.key}#${i}`} className="row">
                 <div className="row-main">
                   <div className="row-title">
                     <button className="link-btn" title="Show what this does" onClick={() => detail.open(catalogRef(character.id, 'equipment', g.key, g.name))}>

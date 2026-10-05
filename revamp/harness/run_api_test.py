@@ -287,6 +287,18 @@ def run_checks():
     check("cancelling an upgrade changes nothing", st == 200 and d.get("customized") is False, (st, d if st != 200 else d.get("customized")))
     check("customizing more than owned is 400", write("POST", C + "/equipment/customize", {"item": "Dagger", "quantity": 99})[0] == 400)
 
+    # an enchantment that asks a question ("Add Type" asks which types) must come back as a 202 chooser, not hang
+    st, d = write("POST", C + "/equipment/customize", {"item": "Dagger", "quantity": 1})
+    if st == 202:
+        st, q = call("POST", "/builder/modifiers", {"name": "Add Type"})
+        check("an enchantment that asks something returns the question (202)", st == 202 and "pendingChooser" in q, (st, str(q)[:150]))
+        if st == 202 and "pendingChooser" in q:
+            chooser = q["pendingChooser"]
+            st, m = call("POST", f"/choosers/{chooser['id']}", {"select": list(range(max(chooser["choicesRequired"], 1)))})
+            check("answering it returns the edited item and keeps the builder open", st == 200 and "heads" in m
+                  and read("/health")[1]["pendingBuilder"] is not None, (st, str(m)[:150]))
+        call("POST", "/builder/cancel")
+
     # ---- notes and charges on owned items (wands)
     write("PATCH", C, {"funds": "5000"})
     write("POST", C + "/equipment/buy", {"item": "Wand of Acid Arrow", "quantity": 1})

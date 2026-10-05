@@ -75,6 +75,11 @@ public class RecordingUIDelegate implements UIDelegate
 		}
 	}
 
+	/** The end of a builder edit that was started with {@link PendingBuilder#startOnEngine}. */
+	record EditDone(Object result, Throwable error)
+	{
+	}
+
 	/** Work for the engine thread, queued by an HTTP thread while the engine is parked in a dialog. */
 	private record EngineTask(Callable<Object> body, CompletableFuture<Object> out)
 	{
@@ -90,6 +95,8 @@ public class RecordingUIDelegate implements UIDelegate
 		final EquipmentBuilderFacade builder;
 		private final BlockingQueue<EngineTask> tasks = new LinkedBlockingQueue<>();
 		private volatile CustomEquipResult result;
+		/** The running operation's event queue: edits report their end (or a question they ask) there. */
+		volatile BlockingQueue<Object> events;
 
 		PendingBuilder(String id, EquipmentBuilderFacade builder)
 		{
@@ -120,6 +127,21 @@ public class RecordingUIDelegate implements UIDelegate
 				}
 				throw e;
 			}
+		}
+
+		/**
+		 * Starts an edit that may ask the person something (adding an enchantment can: "Add Type" asks which types).
+		 * Returns at once; the outcome, or the question, comes through the operation's event queue (Sidecar.awaitEvent).
+		 */
+		void startOnEngine(Callable<Object> body)
+		{
+			if (result != null)
+			{
+				throw new IllegalStateException("builder session already finished");
+			}
+			CompletableFuture<Object> out = new CompletableFuture<>();
+			out.whenComplete((v, e) -> events.add(new EditDone(v, e)));
+			tasks.add(new EngineTask(body, out));
 		}
 
 		/** Ends the session; the engine thread leaves the dialog and carries on. */
@@ -424,6 +446,7 @@ public class RecordingUIDelegate implements UIDelegate
 		}
 		PendingBuilder pending = new PendingBuilder("b" + (++chooserCounter), equipBuilder);
 		op.builder = pending;
+		pending.events = op.events;
 		op.events.add(pending);
 		try
 		{

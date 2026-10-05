@@ -23,6 +23,8 @@ final class BuilderRoutes
 {
 	/** Returned by {@link #handle} when the session ended and the caller should collect the operation's result. */
 	static final Object FINISHED = new Object();
+	/** An edit was started that may ask a question; its outcome comes through the operation's events. */
+	static final Object EDITING = new Object();
 
 	private BuilderRoutes()
 	{
@@ -154,7 +156,8 @@ final class BuilderRoutes
 		}
 		if (path.equals("/builder/modifiers") && method.equals("POST"))
 		{
-			return pb.runOnEngine(() -> {
+			// Adding or removing an enchantment can ask a question, so the outcome comes back as an event.
+			pb.startOnEngine(() -> {
 				EquipmentModifier em = modifier(b.getAvailList(head(q)), q.requireStr("name"), "available modifier");
 				if (!b.addModToEquipment(em, head(q)))
 				{
@@ -162,10 +165,12 @@ final class BuilderRoutes
 				}
 				return describe(pb);
 			});
+			return EDITING;
 		}
 		if (path.equals("/builder/modifiers") && method.equals("DELETE"))
 		{
-			return pb.runOnEngine(() -> {
+			// Adding or removing an enchantment can ask a question, so the outcome comes back as an event.
+			pb.startOnEngine(() -> {
 				EquipmentModifier em = modifier(b.getSelectedList(head(q)), q.requireStr("name"), "applied modifier");
 				if (!b.removeModFromEquipment(em, head(q)))
 				{
@@ -173,6 +178,7 @@ final class BuilderRoutes
 				}
 				return describe(pb);
 			});
+			return EDITING;
 		}
 		if (path.equals("/builder/commit") && method.equals("POST"))
 		{
