@@ -2,12 +2,14 @@
 #
 #   .\revamp\start-dev.ps1 -Character some.pcg   # any character; it also decides which rules/sources are loaded
 #   .\revamp\start-dev.ps1                       # uses revamp\local\clarent.pcg if you have one
+#   .\revamp\start-dev.ps1 -ExtraSources "Dragon Empires Gazetteer"   # also load that book (its gods, classes...)
 #
 # Your .pcg is copied to .run\ first and the app works on the copy, so nothing is saved to your original
 # unless you copy the file back yourself. Stop everything with .\stop-dev.ps1.
 param(
     [string]$Character = (Join-Path $PSScriptRoot 'local\clarent.pcg'),
     [int]$Port = 8765,
+    [string]$ExtraSources = '',   # more source books to load, comma separated, e.g. "Dragon Empires Gazetteer"
     [switch]$NoBrowser
 )
 $ErrorActionPreference = 'Stop'
@@ -30,9 +32,11 @@ Write-Host "Working on a copy: $copy"
 
 # Engine. Loading the rules takes 5-15 seconds depending on how many source books the character uses.
 Push-Location $repo
+$engineArgs = @('-cp', 'revamp/sidecar/build;build/libs/*', 'pcgen.sidecar.Sidecar', '--settings-dir', 'revamp/.run/settings',
+                '--from-character', "revamp/.run/$(Split-Path $Character -Leaf)", '--port', $Port)
+if ($ExtraSources) { $engineArgs += @('--extra-sources', "`"$ExtraSources`"") }
 $engine = Start-Process "$jdk\bin\java.exe" -PassThru -NoNewWindow `
-    -ArgumentList @('-cp', 'revamp/sidecar/build;build/libs/*', 'pcgen.sidecar.Sidecar', '--settings-dir', 'revamp/.run/settings',
-                    '--from-character', "revamp/.run/$(Split-Path $Character -Leaf)", '--port', $Port) `
+    -ArgumentList $engineArgs `
     -RedirectStandardOutput (Join-Path $run 'sidecar.out') -RedirectStandardError (Join-Path $run 'sidecar.err')
 Pop-Location
 $engine.Id | Out-File (Join-Path $run 'sidecar.pid')

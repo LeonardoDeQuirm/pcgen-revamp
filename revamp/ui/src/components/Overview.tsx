@@ -3,6 +3,7 @@ import * as api from '../api'
 import { useStore } from '../store'
 import type { Changed, Character, Stat } from '../types'
 import { HP_MODES, readHpMode, useHpMode, type HpMode } from '../hpMode'
+import { DeityPicker } from './DeityPicker'
 import { HpDialog } from './HpDialog'
 import { Picker } from './Picker'
 import { catalogRef, useDetail } from '../detail'
@@ -248,11 +249,12 @@ function Identity({ character }: { character: Character }) {
       {row('Age', character.age ? `${character.age}${character.ageCategory ? ` (${character.ageCategory})` : ''}` : null)}
       {character.templates.length > 0 && row('Templates', character.templates.join(', '))}
       {character.domains.length > 0 && row('Domains', character.domains.map((d) => d.name).join(', '))}
-      {picker && (
+      {picker === 'deity' && <DeityPicker character={character} onClose={() => setPicker(null)} />}
+      {picker && picker !== 'deity' && (
         <Picker
           title={config[picker].title}
           path={config[picker].path}
-          previewKind={picker === 'race' ? 'race' : picker === 'deity' ? 'deity' : undefined}
+          previewKind={picker === 'race' ? 'race' : undefined}
           onClose={() => setPicker(null)}
           onPick={(it) => void mutate(() => api.patch<Changed>(`/characters/${id}`, { [config[picker].field]: it.key ?? it.name }))}
         />

@@ -106,8 +106,10 @@ final class CharacterRoutes
 		}
 		List<String> needNames = new ArrayList<>();
 		needed.getCampaigns().forEach(c -> needNames.add(c.getKeyName()));
+		// Every book the character needs must be loaded. Extra books (see --extra-sources) are fine: the character
+		// just has more to choose from.
 		if (!needed.getGameMode().get().getName().equals(s.gameMode.getName())
-				|| !new TreeSet<>(needNames).equals(new TreeSet<>(s.campaignNames())))
+				|| !new TreeSet<>(s.campaignNames()).containsAll(needNames))
 		{
 			throw new ApiException(409, "character needs " + needed.getGameMode().get().getName() + " " + needNames
 					+ " but this sidecar loaded " + s.gameMode.getName() + " " + s.campaignNames());

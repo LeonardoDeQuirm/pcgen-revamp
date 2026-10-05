@@ -107,7 +107,7 @@ public final class Sidecar
 		if (settings == null)
 		{
 			System.err.println("usage: Sidecar --settings-dir DIR (--from-character FILE.pcg | "
-					+ "--game-mode MODE --sources A,B) [--port 8765|0] [--allow-origin URL,URL] [--ui-dir DIR] [--token SECRET]");
+					+ "--game-mode MODE --sources A,B) [--port 8765|0] [--extra-sources A,B] [--allow-origin URL,URL] [--ui-dir DIR] [--token SECRET]");
 			System.exit(2);
 		}
 		Sidecar s = new Sidecar();
@@ -193,6 +193,26 @@ public final class Sidecar
 					throw new IllegalStateException("unknown campaign: " + name);
 				}
 				session.campaigns.add(c);
+			}
+		}
+		// Books to load on top of the character's own (so its gods, classes... are on offer): --extra-sources A,B
+		if (args.containsKey("extra-sources"))
+		{
+			for (String name : args.get("extra-sources").split(","))
+			{
+				if (name.isBlank())
+				{
+					continue;
+				}
+				Campaign c = Globals.getCampaignKeyedSilently(name.trim());
+				if (c == null)
+				{
+					throw new IllegalStateException("unknown source book in --extra-sources: " + name);
+				}
+				if (!session.campaigns.contains(c))
+				{
+					session.campaigns.add(c);
+				}
 			}
 		}
 		session.loader = new SourceFileLoader(ui,

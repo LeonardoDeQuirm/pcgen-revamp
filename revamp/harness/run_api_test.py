@@ -231,6 +231,17 @@ def run_checks():
     st, d = read(C + "/spells", available="true", limit=5)
     check("available spells honour limit", st == 200 and 0 < len(d["available"]) <= 5, d)
 
+    # ---- deities: catalog with alignment, search by domain, may-follow flag
+    st, d = read("/dataset/deities", character=CID, limit=500)
+    check("deity catalog carries alignment and whether the character may follow", st == 200 and d["total"] > 20 and all("alignment" in i and "qualified" in i for i in d["items"]), (st, str(d)[:200]))
+    st, fire = read("/dataset/deities", character=CID, q="fire", limit=500)
+    st2, name_only = read("/dataset/deities", q="fire", limit=500)
+    check("a search also finds gods by domain (more hits than by name alone)", st == 200 and fire["total"] > name_only["total"], (fire["total"], name_only["total"]))
+    st, one = read(C + "/info", kind="deity", name=d["items"][1]["key"])
+    check("a deity's info says whether the character may follow them", st == 200 and "qualified" in one and one["sections"], str(one)[:200])
+    st, onlyq = read("/dataset/deities", character=CID, qualified="true", limit=500)
+    check("qualified=true keeps only deities the character may follow", st == 200 and all(i["qualified"] for i in onlyq["items"]) and onlyq["total"] <= d["total"], (st, onlyq["total"], d["total"]))
+
     # ---- domains and the extra domain slot
     st, d = read(C + "/domains")
     check("domains route lists taken, remaining and available", st == 200 and set(d) >= {"selected", "remaining", "available"}, d)

@@ -18,6 +18,7 @@ const FIRST = ['Description', 'Benefit', 'Special', 'Normal', 'Requirements', 'P
 
 /** The engine writes stat checks as "var: PreStatScore_STR at least 13"; show them the way players say it. */
 function tidy(label: string, text: string): string {
+  if (label === 'Favored Weapon') return text.replace(/\|/g, ', ')
   if (label !== 'Requirements' && label !== 'Prerequisites') return text
   return text.replace(/var: PreStatScore_(\w+) at least (\d+)/g, '$1 $2').replace(/var: /g, '')
 }

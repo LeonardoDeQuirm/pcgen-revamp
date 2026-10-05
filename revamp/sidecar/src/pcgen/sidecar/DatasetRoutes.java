@@ -168,6 +168,55 @@ final class DatasetRoutes
 				}
 			}, only ? o -> !(o instanceof pcgen.core.PCClass c) || who.isQualifiedFor(c) : null);
 		}
+		if (kind.equals("deities"))
+		{
+			// Deities carry their alignment; with ?character=<id> also whether that character may follow them
+			// (alignment and class rules), and ?qualified=true drops the rest. A search also looks in the god's
+			// domains, portfolio and pantheon, so "fire" or "travel" finds the gods that fit.
+			pcgen.facade.core.CharacterFacade who = q.has("character") ? s.character(q.requireStr("character")) : null;
+			boolean only = who != null && q.bool("qualified", false);
+			String needle = q.str("q") == null ? "" : q.str("q").trim().toLowerCase();
+			Map<String, String> query = new java.util.LinkedHashMap<>(q.query());
+			query.remove("q");
+			Request noText = new Request(q.method(), q.path(), q.params(), query, q.body());
+			return page(items.get(), noText, (o, e) -> {
+				if (o instanceof pcgen.core.Deity d)
+				{
+					var al = d.get(pcgen.cdom.enumeration.ObjectKey.ALIGNMENT);
+					e.put("alignment", al == null || al.get() == null ? null : al.get().getKeyName());
+					if (who != null)
+					{
+						e.put("qualified", who.isQualifiedFor(d));
+					}
+				}
+			}, o -> {
+				if (!(o instanceof pcgen.core.Deity d))
+				{
+					return true;
+				}
+				if (only && !who.isQualifiedFor(d))
+				{
+					return false;
+				}
+				if (needle.isEmpty() || d.getDisplayName().toLowerCase().contains(needle)
+						|| d.getKeyName().toLowerCase().contains(needle))
+				{
+					return true;
+				}
+				if (who == null || "None".equals(d.getKeyName()))
+				{
+					return false;
+				}
+				for (Map<String, String> sec : InfoText.sections(who.getInfoFactory().getHTMLInfo(d)))
+				{
+					if (!"Source".equals(sec.get("label")) && sec.get("text").toLowerCase().contains(needle))
+					{
+						return true;
+					}
+				}
+				return false;
+			});
+		}
 		return page(items.get(), q);
 	}
 

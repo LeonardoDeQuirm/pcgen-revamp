@@ -4,6 +4,7 @@ import { useStore } from '../store'
 import type { Changed, Character } from '../types'
 import { useDetail, type DetailRef } from '../detail'
 import type { InfoLike } from './InfoBody'
+import { DeityPicker } from './DeityPicker'
 import { PreviewPicker, type PickOption } from './PreviewPicker'
 import { Card, Empty, useDebounced } from './ui'
 
@@ -318,6 +319,7 @@ function Domains({ character }: { character: Character }) {
   const { act, mutate } = useStore()
   const [view, setView] = useState<DomainView | null>(null)
   const [adding, setAdding] = useState(false)
+  const [pickDeity, setPickDeity] = useState(false)
   const [q, setQ] = useState('')
   const id = encodeURIComponent(character.id)
 
@@ -330,6 +332,7 @@ function Domains({ character }: { character: Character }) {
   }, [id, character, act])
 
   if (!view || (view.selected.length === 0 && view.remaining === 0)) return null
+  const noDeity = !character.deity || /^(none|<)/i.test(character.deity)
   const have = new Set(view.selected.map((d) => d.key))
   const options: PickOption[] = view.available
     .filter((d) => !have.has(d.key) && d.name.toLowerCase().includes(q.toLowerCase()))
@@ -345,6 +348,18 @@ function Domains({ character }: { character: Character }) {
         ) : undefined
       }
     >
+      <div className="badge-row" style={{ paddingBottom: 8 }}>
+        <span className="muted">Deity</span>
+        <b>{noDeity ? 'none' : character.deity}</b>
+        <button className="btn small ghost" onClick={() => setPickDeity(true)}>
+          {noDeity ? 'Choose a deity' : 'Change'}
+        </button>
+      </div>
+      {noDeity && view.available.length > 0 && view.available.every((d) => d.qualified === false) && (
+        <p className="muted" style={{ paddingBottom: 8 }}>
+          Domains depend on your deity: none can be taken until you choose one.
+        </p>
+      )}
       <div className="badge-row">
         {view.selected.map((d) => (
           <span key={d.key} className="chip accent">
@@ -367,6 +382,7 @@ function Domains({ character }: { character: Character }) {
           {view.remaining} more to choose. Each domain adds an extra spell slot every spell level and its own spells.
         </p>
       )}
+      {pickDeity && <DeityPicker character={character} onClose={() => setPickDeity(false)} />}
       {adding && (
         <PreviewPicker
           title="Add a domain"

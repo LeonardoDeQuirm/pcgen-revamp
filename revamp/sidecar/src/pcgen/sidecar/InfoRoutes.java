@@ -113,6 +113,8 @@ final class InfoRoutes
 				key = o.getKeyName();
 				display = o.getDisplayName();
 				html = f.getHTMLInfo(o);
+				classQualified = c.isQualifiedFor(o);
+				classUnmet = Requirements.unmet(html);
 			}
 			case "template" -> {
 				PCTemplate o = Lookup.pObject(data.getTemplates(), name, "template");
@@ -183,8 +185,8 @@ final class InfoRoutes
 			if (!classQualified)
 			{
 				m.put("unmet", classUnmet);
-				m.put("reason", classUnmet.isEmpty() ? "This character does not meet the requirements for this class."
-						: Requirements.sentence(classUnmet));
+				m.put("reason", classUnmet.isEmpty() ? "This character does not meet the requirements for this "
+						+ (kind.equals("deity") ? "deity (usually alignment)." : "class.") : Requirements.sentence(classUnmet));
 			}
 		}
 		m.put("key", key);
