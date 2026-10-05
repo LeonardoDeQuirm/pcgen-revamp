@@ -1,10 +1,10 @@
 """How long does the engine take to load a character's source books?
 
-Usage: python harness/measure_load.py [character.pcg] [runs]
+Usage: python harness/measure_load.py [character.pcg] [runs]     (extra JVM options: set JVM_ARGS)
 Starts the sidecar on a COPY of the character (default: revamp/local/clarent.pcg, the 49-source one) and
 prints the seconds from process start to READY, and the engine's own "loading sources" to "loaded" span.
 """
-import re, shutil, subprocess, sys, tempfile, threading, time
+import os, re, shutil, subprocess, sys, tempfile, threading, time
 from pathlib import Path
 
 from run_harness import DEFAULT_JDK, PCGEN
@@ -20,7 +20,7 @@ times = []
 for i in range(runs):
     t0 = time.time()
     proc = subprocess.Popen(
-        [str(DEFAULT_JDK / "bin" / "java.exe"), "-cp", "revamp/sidecar/build;build/libs/*", "pcgen.sidecar.Sidecar",
+        [str(DEFAULT_JDK / "bin" / "java.exe"), *os.environ.get("JVM_ARGS", "").split(), "-cp", "revamp/sidecar/build;build/libs/*", "pcgen.sidecar.Sidecar",
          "--settings-dir", tempfile.mkdtemp(prefix="load-settings-"), "--from-character", str(char), "--port", "8778"],
         cwd=PCGEN, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True)
     ready = threading.Event()

@@ -26,7 +26,7 @@ Read `revamp/PROGRESS.md` next: current state, verified engine facts, API summar
 powershell .\revamp\start-dev.ps1 -Character path\to\a.pcg [-NoBrowser]   # engine + UI at http://127.0.0.1:5173
 powershell .\revamp\stop-dev.ps1
 ```
-The character you start with decides which game mode and source books the engine loads (one process = one source set). A 49-source character loads in ~9 s (was ~13 s before the AbilityCategory speed-up); the core set in ~5 s. Measure with `python revamp/harness/measure_load.py`.
+The character you start with decides which game mode and source books the engine loads (one process = one source set). A 49-source character loads in ~7.3 s (was ~12.3 s before the load-time fixes); the core set in ~5 s. Measure with `python revamp/harness/measure_load.py`.
 
 ## Tests (run all before calling something done; all passed at the last commit)
 ```
@@ -34,6 +34,7 @@ $env:JAVA_HOME='C:\Program Files\Eclipse Adoptium\jdk-25.0.4.101-hotspot'; .\gra
 powershell revamp/sidecar/build.ps1                                   # after any sidecar change
 python revamp/harness/run_harness.py          # CLI exports vs baselines. --update rewrites baselines
 python revamp/harness/run_sidecar_test.py     # one sidecar per sample character, chooser bridge
+python revamp/harness/run_all_gates.py [fp_baseline.json]   # ALL of the below plus PCGen unit tests, in one go (~10 min)
 python revamp/harness/run_api_test.py         # every route group + latency budgets (153 checks)
 python revamp/harness/run_packaged_test.py    # sidecar serving the built UI, free port, token (needs npm run build in revamp/ui)
 cd revamp/ui; npm run typecheck; npm run e2e -- ..\.run\<copy>.pcg   # needs start-dev.ps1 running; 49 checks. Restart start-dev afterwards: the e2e edits the copy
