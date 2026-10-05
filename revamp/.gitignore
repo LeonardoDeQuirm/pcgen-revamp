@@ -9,3 +9,4 @@ __pycache__/
 *.pyc
 # Snapshots made from a private character (revamp/local); the Pathfinder sample snapshots are tracked
 harness/baseline/clarent.*
+harness/baseline/kaito.*

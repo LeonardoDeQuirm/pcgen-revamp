@@ -39,7 +39,7 @@ python revamp/harness/run_api_test.py         # every route group + latency budg
 python revamp/harness/run_packaged_test.py    # sidecar serving the built UI, free port, token (needs npm run build in revamp/ui)
 cd revamp/ui; npm run typecheck; npm run e2e -- ..\.run\<copy>.pcg   # needs start-dev.ps1 running; 70 checks. Restart start-dev afterwards: the e2e edits the copy
 ```
-The harness also compares `revamp/local/clarent.pcg` when it exists; without it that case is skipped.
+The harness also compares `revamp/local/clarent.pcg` and `revamp/local/kaito.pcg` (a 14th-level Kitsune rogue with many added feats, 26 sources) when they exist; without them those cases are skipped. Their baselines are git-ignored.
 
 ## Machine notes (Windows 11, Git Bash + PowerShell)
 - JDK 25 (Temurin) at `C:\Program Files\Eclipse Adoptium\jdk-25.0.4.101-hotspot`; the system `JAVA_HOME` is still JDK 17, so set it per command. Gradle does not auto-download Java 25.

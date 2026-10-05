@@ -23,14 +23,14 @@ CHAR_GLOB = "pf_*.pcg"  # Pathfinder 1e only
 # Generated characters (see build_corpus.py): many classes and races on the 49-source data set. Committed.
 CORPUS_DIR = REVAMP / "harness" / "characters"
 # Real characters supplied by the user, kept in revamp/local (not in git). Only ever read, never saved.
-EXTRA_CHARS = [REVAMP / "local" / "clarent.pcg"]   # git-ignored; skipped when absent
+EXTRA_CHARS = [REVAMP / "local" / "clarent.pcg", REVAMP / "local" / "kaito.pcg"]   # git-ignored; skipped when absent
 
 
 # Characters whose export ORDER is not stable between runs (content is). Seen with clarent.pcg: the order
 # of same-level spells differs from run to run, mostly under parallel load (same lines every time). It
 # survives removing the spells the data set can't find, so it is not just those placeholders. Likely
 # identity-hash ordering somewhere in the engine; see PROGRESS.md "Candidate core fixes".
-UNORDERED = {"clarent"}
+UNORDERED = {"clarent", "kaito"}
 
 
 # Exports whose CONTENT differs from run to run on the unmodified upstream engine (measured: the Aberrant bloodline
