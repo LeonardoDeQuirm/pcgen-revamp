@@ -206,6 +206,23 @@ export function AbilityPicker({
   // A GM can hand a character any feat: no prerequisites, no feat slot. It is saved with the character and the sheet
   // marks it "(GM)". Only feats can be given this way.
   const [gm, setGm] = useState(false)
+  // A feat from the GM still takes a feat slot in PCGen; the GM's "+1 Bonus Feat" award gives the slot back. On by default
+  // so a gift costs the character nothing; the choice is remembered.
+  const [slot, setSlot] = useState(() => {
+    try {
+      return window.localStorage.getItem('pcgen.ui.gmFeatSlot') !== 'no'
+    } catch {
+      return true
+    }
+  })
+  const rememberSlot = (v: boolean) => {
+    setSlot(v)
+    try {
+      window.localStorage.setItem('pcgen.ui.gmFeatSlot', v ? 'yes' : 'no')
+    } catch {
+      /* ignore */
+    }
+  }
   const canGm = categoryKey === 'FEAT'
   const { act, mutate } = useStore()
   const [q, setQ] = useState('')
@@ -244,9 +261,15 @@ export function AbilityPicker({
       filters={
         <>
           {canGm && (
-            <label className="check-row" title="Handed out by the GM: ignores prerequisites, uses no feat slot, and the sheet marks it (GM)">
+            <label className="check-row" title="Handed out by the GM (PCGen's GM award): ignores prerequisites, and the sheet marks it (GM)">
               <input type="checkbox" checked={gm} onChange={(e) => setGm(e.target.checked)} />
-              Granted by the GM (ignores prerequisites and uses no feat slot)
+              Granted by the GM (ignores prerequisites)
+            </label>
+          )}
+          {canGm && gm && (
+            <label className="check-row" style={{ paddingLeft: 22 }} title="PCGen's +1 Bonus Feat award: one more feat slot, so the new feat does not use up a regular one">
+              <input type="checkbox" checked={slot} onChange={(e) => rememberSlot(e.target.checked)} />
+              Also give a bonus feat slot for it
             </label>
           )}
           {!gm && (
@@ -259,7 +282,7 @@ export function AbilityPicker({
       }
       loadInfo={(key) => act(() => api.get<InfoLike>(`/characters/${id}/abilities/info`, { category: categoryKey, name: key }))}
       onAdd={(key) => {
-        void mutate(() => api.post<Changed>(`/characters/${id}/abilities`, { category: categoryKey, name: key, ...(gm ? { gm: true } : {}) })).then(() => onAdded?.())
+        void mutate(() => api.post<Changed>(`/characters/${id}/abilities`, { category: categoryKey, name: key, ...(gm ? { gm: true, slot } : {}) })).then(() => onAdded?.())
       }}
       onClose={onClose}
     />

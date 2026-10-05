@@ -19,104 +19,116 @@ public final class SidecarAccess
 		return ((CharacterFacadeImpl) c).getTheCharacter();
 	}
 
+	// ---- GM awards: PCGen's own mechanism (ability category "GM Awards") for handing out feats and feat slots ----
+
+	/** The award that grants a feat without checking prerequisites; each selection is one feat. */
+	public static final String FEAT_AWARD = "Add a Feat Ignoring Restrictions";
+	/** The award that adds one feat slot; each selection is one slot. */
+	public static final String SLOT_AWARD = "+1 Bonus Feat";
+
+	/** The "GM Awards" ability category, or null when the game has none. */
+	public static pcgen.core.AbilityCategory awardsCategory(CharacterFacade c)
+	{
+		for (pcgen.core.AbilityCategory k : c.getDataSet().getAbilities().getKeys())
+		{
+			if ("GM Awards".equals(k.getKeyName()))
+			{
+				return k;
+			}
+		}
+		return null;
+	}
+
+	/** What the character has been given through one award, as the engine stores it (one entry per selection). */
+	public static java.util.List<String> awardSelections(CharacterFacade c, String awardKey)
+	{
+		java.util.List<String> out = new java.util.ArrayList<>();
+		pcgen.core.AbilityCategory cat = awardsCategory(c);
+		if (cat == null)
+		{
+			return out;
+		}
+		PlayerCharacter pc = playerCharacter(c);
+		for (pcgen.cdom.content.CNAbility cna : pc.getPoolAbilities(cat, pcgen.cdom.enumeration.Nature.NORMAL))
+		{
+			if (cna.getAbility().getKeyName().equals(awardKey))
+			{
+				out.addAll(pc.getAssociationList(cna));
+			}
+		}
+		return out;
+	}
+
+	/** The feat an award selection stands for ("CATEGORY=FEAT|Dodge" is Dodge; a feat with a choice keeps only the feat). */
+	static String awardedFeat(String selection)
+	{
+		String[] p = selection.split("\\||&pipe;");
+		return p.length >= 2 && p[0].startsWith("CATEGORY=") ? p[1] : p[0];
+	}
+
+	/** The feats handed out through the award, as category key plus feat key (the form CharacterView looks up). */
+	public static java.util.Set<String> gmGranted(CharacterFacade c)
+	{
+		java.util.Set<String> out = new java.util.LinkedHashSet<>();
+		for (String sel : awardSelections(c, FEAT_AWARD))
+		{
+			out.add("FEAT|" + awardedFeat(sel));
+		}
+		return out;
+	}
+
 	/**
-	 * Adds an ability the way a GM hands one out: as a saved VIRTUAL ability, which the engine does not check
-	 * against prerequisites, does not count against the category's selections, and writes to the character file.
-	 * Abilities that ask for a choice (a weapon for Weapon Focus) ask through the usual chooser.
+	 * Withdraws the feat(s) an award handed out. Removing the award's selection in the chooser only drops the award's record
+	 * of it; the feat itself was granted to the character with the award as its source and stays until that grant is
+	 * taken back. Feats restored from a saved file have no such grant and are removed as ordinary feats by the caller.
 	 */
-	public static void addGmAbility(CharacterFacade c, pcgen.core.AbilityCategory cat, pcgen.core.Ability ability)
+	public static void revokeAwardedFeat(CharacterFacade c, pcgen.core.Ability award, String featKey)
 	{
 		PlayerCharacter pc = playerCharacter(c);
-		pc.setDirty(true);
-		pc.getSpellList();
-		pcgen.cdom.content.CNAbility cna = pcgen.cdom.content.CNAbilityFactory.getCNAbility(cat, pcgen.cdom.enumeration.Nature.VIRTUAL, ability);
-		if (!ability.getSafe(pcgen.cdom.enumeration.ObjectKey.MULTIPLE_ALLOWED))
+		java.util.List<Object[]> grants = new java.util.ArrayList<>();
+		try
 		{
-			pc.addSavedAbility(new pcgen.cdom.helper.CNAbilitySelection(cna), pcgen.cdom.base.UserSelection.getInstance(),
-				pcgen.cdom.base.UserSelection.getInstance());
-		}
-		var manager = pcgen.core.chooser.ChooserUtilities.getConfiguredController(cna, pc, cat, new java.util.ArrayList<>());
-		if (manager != null)
-		{
-			// The engine lets a multiple-choice ability make as many choices as the category has free selections
-			// (none left means none allowed). A GM's gift does not use a selection, so lend it one for the choosing
-			// and put the count back exactly as it was.
-			java.math.BigDecimal original = pc.getAvailableAbilityPool(cat);
-			try
+			// The facet keeps every grant together with what granted it, but only lets subclasses look.
+			var direct = pcgen.cdom.facet.FacetLibrary.getFacet(pcgen.cdom.facet.DirectAbilityFacet.class);
+			java.lang.reflect.Method getList = pcgen.cdom.facet.base.AbstractCNASEnforcingFacet.class.getDeclaredMethod("getList",
+				pcgen.cdom.enumeration.CharID.class);
+			getList.setAccessible(true);
+			java.util.List<?> lists = (java.util.List<?>) getList.invoke(direct, pc.getCharID());
+			for (Object list : lists == null ? java.util.List.of() : lists)
 			{
-				if (original.compareTo(java.math.BigDecimal.ONE) < 0)
+				for (Object sourced : (java.util.List<?>) list)
 				{
-					pc.adjustAbilities(cat, java.math.BigDecimal.ONE.subtract(original));
+					java.lang.reflect.Field fc = sourced.getClass().getDeclaredField("cnas");
+					java.lang.reflect.Field fs = sourced.getClass().getDeclaredField("source");
+					fc.setAccessible(true);
+					fs.setAccessible(true);
+					pcgen.cdom.helper.CNAbilitySelection cnas = (pcgen.cdom.helper.CNAbilitySelection) fc.get(sourced);
+					Object source = fs.get(sourced);
+					if (cnas.getCNAbility().getAbility().getKeyName().equals(featKey)
+						&& cnas.getCNAbility().getAbilityCategory().equals(pcgen.core.AbilityCategory.FEAT)
+						&& !(source instanceof pcgen.cdom.base.UserSelection))
+					{
+						grants.add(new Object[] {cnas, source});
+					}
 				}
-				chooseAndSave(pc, cna, manager);
-			}
-			finally
-			{
-				pc.adjustAbilities(cat, original.subtract(pc.getAvailableAbilityPool(cat)));
 			}
 		}
-		pc.getSpellList();
+		catch (ReflectiveOperationException e)
+		{
+			throw new IllegalStateException("cannot look up what granted the feat", e);
+		}
+		for (Object[] g : grants)
+		{
+			pc.removeAbility((pcgen.cdom.helper.CNAbilitySelection) g[0], award, g[1]);
+		}
 		pc.calcActiveBonuses();
 		refreshAbilities(c);
 	}
 
-	private static <T> void chooseAndSave(PlayerCharacter pc, pcgen.cdom.content.CNAbility cna,
-		pcgen.core.chooser.ChoiceManagerList<T> manager)
+	/** How many extra feat slots the GM has handed out. */
+	public static int gmBonusSlots(CharacterFacade c)
 	{
-		java.util.ArrayList<T> available = new java.util.ArrayList<>();
-		java.util.ArrayList<T> selected = new java.util.ArrayList<>();
-		manager.getChoices(pc, available, selected);
-		if (available.isEmpty() && selected.isEmpty())
-		{
-			return;
-		}
-		java.util.List<T> before = new java.util.ArrayList<>(selected);
-		java.util.List<T> chosen = manager.doChooser(pc, available, selected, new java.util.ArrayList<>());
-		chosen.removeAll(before);
-		for (T pick : chosen)
-		{
-			pc.addSavedAbility(new pcgen.cdom.helper.CNAbilitySelection(cna, manager.encodeChoice(pick)),
-				pcgen.cdom.base.UserSelection.getInstance(), pcgen.cdom.base.UserSelection.getInstance());
-		}
-	}
-
-	/** Takes back a GM-granted ability (every selection of it). False if the character has none. */
-	public static boolean removeGmAbility(CharacterFacade c, pcgen.core.AbilityCategory cat, pcgen.core.Ability ability)
-	{
-		PlayerCharacter pc = playerCharacter(c);
-		boolean any = false;
-		for (pcgen.cdom.helper.CNAbilitySelection cnas : new java.util.ArrayList<>(pc.getSaveAbilities()))
-		{
-			pcgen.cdom.content.CNAbility cna = cnas.getCNAbility();
-			if (cna.getAbilityCategory().equals(cat) && cna.getAbility().equals(ability))
-			{
-				pc.removeSavedAbility(cnas, pcgen.cdom.base.UserSelection.getInstance(),
-					pcgen.cdom.base.UserSelection.getInstance());
-				any = true;
-			}
-		}
-		if (any)
-		{
-			pc.setDirty(true);
-			pc.calcActiveBonuses();
-			refreshAbilities(c);
-		}
-		return any;
-	}
-
-	/** The abilities a GM handed out (saved virtual abilities), as category key plus ability key. */
-	public static java.util.Set<String> gmGranted(CharacterFacade c)
-	{
-		java.util.Set<String> out = new java.util.LinkedHashSet<>();
-		for (pcgen.cdom.helper.CNAbilitySelection cnas : playerCharacter(c).getSaveAbilities())
-		{
-			pcgen.cdom.content.CNAbility cna = cnas.getCNAbility();
-			if (cna.getNature() == pcgen.cdom.enumeration.Nature.VIRTUAL)
-			{
-				out.add(cna.getAbilityCategory().getKeyName() + "|" + cna.getAbility().getKeyName());
-			}
-		}
-		return out;
+		return awardSelections(c, SLOT_AWARD).size();
 	}
 
 	/** Rebuilds the facade's ability lists after the character was changed underneath it. */

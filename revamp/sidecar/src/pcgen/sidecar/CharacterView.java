@@ -167,6 +167,10 @@ final class CharacterView
 			m.put("name", cat.getDisplayName());
 			m.put("total", c.getTotalSelections(cat));
 			m.put("remaining", c.getRemainingSelections(cat));
+			if ("FEAT".equals(cat.getKeyName()) && pcgen.gui2.facade.SidecarAccess.awardsCategory(c) != null)
+			{
+				m.put("gmBonusSlots", pcgen.gui2.facade.SidecarAccess.gmBonusSlots(c));
+			}
 			List<Map<String, Object>> abilities = new ArrayList<>();
 			for (AbilityFacade a : c.getAbilities(cat))
 			{

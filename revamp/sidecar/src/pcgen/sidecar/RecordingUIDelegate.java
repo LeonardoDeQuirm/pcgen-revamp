@@ -67,6 +67,8 @@ public class RecordingUIDelegate implements UIDelegate
 		final String id;
 		final ChooserFacade chooser;
 		final CompletableFuture<Answer> answer = new CompletableFuture<>();
+		/** When set, only options starting with this (lower case) are shown to the person. */
+		volatile String onlyPrefix;
 
 		PendingChooser(String id, ChooserFacade chooser)
 		{
@@ -164,6 +166,10 @@ public class RecordingUIDelegate implements UIDelegate
 
 	/** When set, the next chooser is answered by picking the options with these names, without asking anyone. */
 	private java.util.Set<String> scriptedChoice;
+	/** With {@link #scriptedChoice}: already-selected entries to take back out (a name matches "Name" and "Name (choice)"). */
+	private java.util.Set<String> scriptedRemoval = java.util.Set.of();
+	/** If nothing matches by name, the person is asked, but only about entries that start with this (a feat's own choices). */
+	private String scriptedPrefix;
 
 	/**
 	 * Runs {@code action} with the engine's chooser answered from a list of names (case-insensitive, key or display
@@ -171,8 +177,27 @@ public class RecordingUIDelegate implements UIDelegate
 	 */
 	void withScriptedChoice(java.util.Collection<String> names, Runnable action)
 	{
+		withScriptedChoice(names, java.util.List.of(), action);
+	}
+
+	/**
+	 * As above, and also takes the named entries out of the chooser's already-selected list. Only the first chooser
+	 * is answered this way; any later one (a feat that asks for a weapon) goes to the person as usual.
+	 */
+	void withScriptedChoice(java.util.Collection<String> names, java.util.Collection<String> remove, Runnable action)
+	{
+		withScriptedChoice(names, remove, null, action);
+	}
+
+	/** As above; {@code prefix} narrows the question to entries starting with it when no name matched. */
+	void withScriptedChoice(java.util.Collection<String> names, java.util.Collection<String> remove, String prefix,
+		Runnable action)
+	{
+		scriptedPrefix = prefix == null ? null : prefix.toLowerCase(java.util.Locale.ROOT);
 		scriptedChoice = new java.util.HashSet<>();
 		names.forEach(n -> scriptedChoice.add(n.toLowerCase(java.util.Locale.ROOT)));
+		scriptedRemoval = new java.util.HashSet<>();
+		remove.forEach(n -> scriptedRemoval.add(n.toLowerCase(java.util.Locale.ROOT)));
 		try
 		{
 			action.run();
@@ -180,6 +205,8 @@ public class RecordingUIDelegate implements UIDelegate
 		finally
 		{
 			scriptedChoice = null;
+			scriptedRemoval = java.util.Set.of();
+			scriptedPrefix = null;
 		}
 	}
 
@@ -295,6 +322,7 @@ public class RecordingUIDelegate implements UIDelegate
 			record("chooser-declined", String.valueOf(chooser.getName()), "no API operation is running");
 			return false;
 		}
+		String narrowTo = null;
 		if (scriptedChoice != null)
 		{
 			var offered = chooser.getAvailableList();
@@ -308,9 +336,40 @@ public class RecordingUIDelegate implements UIDelegate
 					wanted.add(f);
 				}
 			}
-			wanted.forEach(chooser::addSelected);
-			chooser.commit();
-			return true;
+			List<InfoFacade> taking = new ArrayList<>();
+			var selected = chooser.getSelectedList();
+			for (int i = 0; i < selected.getSize(); i++)
+			{
+				InfoFacade f = selected.getElementAt(i);
+				String shown = String.valueOf(f).toLowerCase(java.util.Locale.ROOT);
+				for (String r : scriptedRemoval)
+				{
+					if (shown.equals(r) || shown.startsWith(r + " (")
+							|| String.valueOf(f.getKeyName()).equalsIgnoreCase(r))
+					{
+						taking.add(f);
+						break;
+					}
+				}
+			}
+			if (wanted.isEmpty() && taking.isEmpty() && scriptedPrefix != null)
+			{
+				narrowTo = scriptedPrefix;
+			}
+			else
+			{
+				taking.forEach(chooser::removeSelected);
+				wanted.forEach(chooser::addSelected);
+				chooser.commit();
+				// One-shot: a follow-up question (which weapon?) is for the person to answer.
+				scriptedChoice = null;
+				scriptedRemoval = java.util.Set.of();
+				scriptedPrefix = null;
+				return true;
+			}
+			scriptedChoice = null;
+			scriptedRemoval = java.util.Set.of();
+			scriptedPrefix = null;
 		}
 		Answer picks = null;
 		boolean repeated = false;
@@ -321,6 +380,7 @@ public class RecordingUIDelegate implements UIDelegate
 			repeated = true;
 		}
 		PendingChooser pending = new PendingChooser("c" + (++chooserCounter), chooser);
+		pending.onlyPrefix = narrowTo;
 		if (!repeated)
 		{
 			op.pending = pending;
@@ -407,7 +467,12 @@ public class RecordingUIDelegate implements UIDelegate
 		int i = 0;
 		for (InfoFacade item : c.getAvailableList())
 		{
-			options.add(java.util.Map.of("index", i++, "name", String.valueOf(item), "key", String.valueOf(item.getKeyName())));
+			int at = i++;
+			if (p.onlyPrefix != null && !String.valueOf(item).toLowerCase(java.util.Locale.ROOT).startsWith(p.onlyPrefix))
+			{
+				continue;
+			}
+			options.add(java.util.Map.of("index", at, "name", String.valueOf(item), "key", String.valueOf(item.getKeyName())));
 		}
 		java.util.Map<String, Object> m = new java.util.LinkedHashMap<>();
 		m.put("id", p.id);

@@ -7,13 +7,20 @@ Needs: `gradlew qbuild` in pcgen/ and `powershell sidecar/build.ps1` first.
 Per character it checks: health, open, list, export (x2, must match baseline), 404/400
 error handling, a 409 when opening a character with different sources, close, shutdown.
 """
-import json, subprocess, sys, tempfile, threading, urllib.error, urllib.parse, urllib.request
+import json, re, subprocess, sys, tempfile, threading, urllib.error, urllib.parse, urllib.request
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 from run_harness import BASELINE, DEFAULT_JDK, PCGEN, ROOT, TEMPLATES, all_chars, normalize, same
 
 BASE_PORT = 8800
+
+
+def without_gm_marks(text):
+    """The export route keeps a "GM Granted Feats" note in step with the character's GM awards and the sheet marks those
+    feats "(GM)". The CLI baselines know nothing of either, so leave them out of the comparison."""
+    text = re.sub(r"\n[ \t]*<note>\s*<name>GM Granted Feats</name>.*?</note>\n?(?:[ \t]*\n)?", "\n", text, flags=re.S)
+    return text.replace(" (GM)</name>", "</name>")
 
 
 def call(port, method, route, **params):
@@ -123,6 +130,7 @@ def test_character(idx, char, others):
             base = (BASELINE / f"{char.stem}.{tname}.out").read_text(encoding="utf-8", errors="replace")
             for attempt in (1, 2):
                 st, body = call(port, "POST", f"/characters/{cid}/export", template=str(PCGEN / tpath))
+                body = without_gm_marks(body)
                 check(st == 200 and same(char.stem, normalize(body), base), f"export {tname} #{attempt}: status {st}, "
                       f"{'matches' if same(char.stem, normalize(body), base) else 'DIFFERS from'} baseline")
 

@@ -31,6 +31,7 @@ final class AbilityRoutes
 		r.get("/characters/{id}/abilities/info", this::info);
 		r.post("/characters/{id}/abilities", this::add);
 		r.delete("/characters/{id}/abilities", this::remove);
+		r.post("/characters/{id}/gm/bonus-feats", this::bonusFeats);
 	}
 
 	private AbilityCategory category(CharacterFacade c, String name)
@@ -129,7 +130,7 @@ final class AbilityRoutes
 	 * Keeps the "GM Granted Feats" note in step with the abilities a GM handed out, one feat name per line. The note is
 	 * saved with the character and read by the sheet export, which marks those feats "(GM)".
 	 */
-	private void syncGmNote(CharacterFacade c)
+	static void syncGmNote(CharacterFacade c)
 	{
 		List<String> names = new ArrayList<>();
 		var cats = c.getDataSet().getAbilities();
@@ -140,7 +141,8 @@ final class AbilityRoutes
 			{
 				continue;
 			}
-			for (AbilityFacade a : c.getAbilities(category(c, parts[0])))
+			for (AbilityFacade a : c.getAbilities(Lookup.find(c.getDataSet().getAbilities().getKeys(), parts[0], "ability category",
+					AbilityCategory::getKeyName, AbilityCategory::getDisplayName)))
 			{
 				if (a.getKeyName().equals(parts[1]) && !names.contains(a.getKeyName()))
 				{
@@ -176,6 +178,48 @@ final class AbilityRoutes
 		d.setNote(existing, String.join("\n", names));
 	}
 
+	private AbilityCategory awards(CharacterFacade c)
+	{
+		AbilityCategory awards = SidecarAccess.awardsCategory(c);
+		if (awards == null)
+		{
+			throw new ApiException(400, "this game has no GM awards");
+		}
+		return awards;
+	}
+
+	private AbilityFacade award(CharacterFacade c, AbilityCategory awards, String key)
+	{
+		return Lookup.find(c.getDataSet().getAbilities().getValue(awards), key, "GM award", AbilityFacade::getKeyName,
+				Object::toString);
+	}
+
+	/** Sets how many extra feat slots the GM has handed out (PCGen's "+1 Bonus Feat" award, one selection per slot). */
+	private Object bonusFeats(Request q)
+	{
+		String id = q.param("id");
+		CharacterFacade c = s.character(id);
+		int want = q.requireInt("count");
+		if (want < 0 || want > 99)
+		{
+			throw new ApiException(400, "count must be between 0 and 99");
+		}
+		AbilityCategory awards = awards(c);
+		AbilityFacade slot = award(c, awards, SidecarAccess.SLOT_AWARD);
+		int have = SidecarAccess.gmBonusSlots(c);
+		while (have < want)
+		{
+			c.addAbility(awards, slot);
+			have++;
+		}
+		while (have > want)
+		{
+			c.removeAbility(awards, slot);
+			have--;
+		}
+		return characters.changed(id, c, Map.of("bonusSlots", SidecarAccess.gmBonusSlots(c)));
+	}
+
 	private Object add(Request q)
 	{
 		String id = q.param("id");
@@ -185,18 +229,24 @@ final class AbilityRoutes
 				"ability in " + cat.getKeyName(), AbilityFacade::getKeyName, Object::toString);
 		if (q.bool("gm", false))
 		{
-			// A GM-granted feat: no prerequisites, no feat slot, saved with the character and marked on the sheet.
-			if (!"FEAT".equals(cat.getKeyName()) || !(ability instanceof pcgen.core.Ability real))
+			// A feat handed out by the GM: PCGen's own award "Add a Feat Ignoring Restrictions" (no prerequisites, no slot).
+			if (!"FEAT".equals(cat.getKeyName()))
 			{
 				throw new ApiException(400, "only feats can be flagged as granted by the GM");
 			}
-			SidecarAccess.addGmAbility(c, cat, real);
-			boolean there = SidecarAccess.gmGranted(c).contains(cat.getKeyName() + "|" + real.getKeyName());
-			if (there)
+			AbilityCategory awards = awards(c);
+			AbilityFacade award = award(c, awards, SidecarAccess.FEAT_AWARD);
+			// A feat with choices (Skill Focus) is asked about, but only its own choices ("Skill Focus (Acrobatics)").
+			s.ui.withScriptedChoice(List.of(ability.getKeyName()), List.of(), ability.getKeyName() + " (",
+					() -> c.addAbility(awards, award));
+			boolean there = SidecarAccess.gmGranted(c).contains("FEAT|" + ability.getKeyName());
+			if (there && q.bool("slot", false))
 			{
-				syncGmNote(c);
+				// the feat still takes a feat slot; "+1 Bonus Feat" gives the character one so it costs nothing
+				c.addAbility(awards, award(c, awards, SidecarAccess.SLOT_AWARD));
 			}
-			return characters.changed(id, c, Map.of("added", there ? real.getKeyName() : "", "gm", true));
+			syncGmNote(c);
+			return characters.changed(id, c, Map.of("added", there ? ability.getKeyName() : "", "gm", true));
 		}
 		c.addAbility(cat, ability);
 		return characters.changed(id, c, Map.of("added", ability.getKeyName()));
@@ -209,9 +259,21 @@ final class AbilityRoutes
 		AbilityCategory cat = category(c, q.requireStr("category"));
 		AbilityFacade ability = Lookup.find(c.getAbilities(cat), q.requireStr("name"),
 				"ability on this character in " + cat.getKeyName(), AbilityFacade::getKeyName, Object::toString);
-		if (ability instanceof pcgen.core.Ability real && SidecarAccess.gmGranted(c).contains(cat.getKeyName() + "|" + real.getKeyName()))
+		if (SidecarAccess.gmGranted(c).contains(cat.getKeyName() + "|" + ability.getKeyName()))
 		{
-			SidecarAccess.removeGmAbility(c, cat, real);
+			// Take the feat back out of the award's list of feats (the award itself stays).
+			AbilityCategory awards = awards(c);
+			AbilityFacade award = award(c, awards, SidecarAccess.FEAT_AWARD);
+			if (award instanceof pcgen.core.Ability awardAbility)
+			{
+				SidecarAccess.revokeAwardedFeat(c, awardAbility, ability.getKeyName());
+			}
+			s.ui.withScriptedChoice(List.of(), List.of(ability.getKeyName()), () -> c.addAbility(awards, award));
+			if (c.getAbilities(cat).containsElement(ability))
+			{
+				// the feat itself is also kept as an ordinary selection in the character; take that back too
+				c.removeAbility(cat, ability);
+			}
 			syncGmNote(c);
 			return characters.changed(id, c, Map.of("removed", ability.getKeyName(), "gm", true));
 		}

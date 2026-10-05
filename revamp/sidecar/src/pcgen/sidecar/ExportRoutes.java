@@ -256,6 +256,8 @@ final class ExportRoutes
 	private Object export(Request q)
 	{
 		CharacterFacade c = s.character(q.param("id"));
+		// The sheet marks GM-granted feats from this note; bring it up to date with the GM awards first.
+		AbilityRoutes.syncGmNote(c);
 		String template = q.str("template");
 		if (template == null || template.isBlank())
 		{

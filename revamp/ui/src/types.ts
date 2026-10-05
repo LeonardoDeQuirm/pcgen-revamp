@@ -44,6 +44,8 @@ export interface AbilityCategory {
   name: string
   total: number
   remaining: number
+  /** Feat slots the GM has handed out (PCGen's "+1 Bonus Feat" award); only on the feat category of games that have GM awards. */
+  gmBonusSlots?: number
   abilities: AbilityRow[]
 }
 

@@ -154,6 +154,7 @@ final class CharacterRoutes
 	{
 		String id = q.param("id");
 		CharacterFacade c = s.character(id);
+		AbilityRoutes.syncGmNote(c); // keeps the "GM Granted Feats" note in the file in step with the GM awards
 		File previous = c.getFileRef().get();
 		File target = previous;
 		if (q.has("path"))

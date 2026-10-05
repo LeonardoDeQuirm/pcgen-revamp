@@ -41,6 +41,29 @@ export function Category({ character, category }: { character: Character; catego
       count={category.abilities.length}
       action={
         <span style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+          {category.gmBonusSlots !== undefined && (
+            <span className="stepper" title="Extra feat slots the GM has handed out (the +1 Bonus Feat award)">
+              <span className="muted" style={{ fontSize: 12 }}>
+                GM bonus slots
+              </span>
+              <button
+                className="btn small icon"
+                aria-label="Take away a GM bonus feat slot"
+                disabled={category.gmBonusSlots <= 0}
+                onClick={() => void mutate(() => api.post<Changed>(`/characters/${id}/gm/bonus-feats`, { count: (category.gmBonusSlots ?? 0) - 1 }))}
+              >
+                <Icon name="minus" size={14} />
+              </button>
+              <b className="num">{category.gmBonusSlots}</b>
+              <button
+                className="btn small icon"
+                aria-label="Give a GM bonus feat slot"
+                onClick={() => void mutate(() => api.post<Changed>(`/characters/${id}/gm/bonus-feats`, { count: (category.gmBonusSlots ?? 0) + 1 }))}
+              >
+                <Icon name="plus" size={14} />
+              </button>
+            </span>
+          )}
           {category.total > 0 && (
             <span className={'chip num ' + (category.remaining > 0 ? 'warn' : 'good')}>
               {category.remaining > 0 ? `${category.remaining} left to choose` : 'all chosen'}
@@ -77,7 +100,7 @@ export function Category({ character, category }: { character: Character; catego
                   <div className="row-title">{a.name}</div>
                 </div>
                 <span style={{ display: 'flex', gap: 8, alignItems: 'center' }} onClick={(e) => e.stopPropagation()}>
-                  {a.gm && <span className="chip accent" title="Handed out by the GM: ignores prerequisites and uses no feat slot">GM</span>}
+                  {a.gm && <span className="chip accent" title="Handed out by the GM (PCGen's GM award): ignores prerequisites">GM</span>}
                   {!a.gm && category.total > 0 && a.nature && a.nature !== 'NORMAL' && <span className="chip">granted</span>}
                   {removable && (
                     <button

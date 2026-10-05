@@ -562,6 +562,13 @@ try {
   await page.evaluate(() => [...document.querySelectorAll('section[data-section="FEAT"] .row')].find((r) => r.innerText.includes('Whirlwind Attack'))?.querySelector('button.danger')?.click())
   await page.waitForFunction(() => ![...document.querySelectorAll('section[data-section="FEAT"] .row')].some((r) => r.innerText.includes('Whirlwind Attack')), { timeout: 20000 })
   check('and it can be taken back', true)
+  // The "also give a bonus feat slot" tick (on by default) added one slot; the stepper shows it and can change it.
+  const slotCount = () => page.evaluate(() => Number(document.querySelector('section[data-section="FEAT"] .stepper b')?.innerText ?? '-1'))
+  const slotsNow = await slotCount()
+  check('the GM bonus slot count shows on the feats card and includes the slot the grant added', slotsNow >= 1, slotsNow)
+  await page.click('button[aria-label="Take away a GM bonus feat slot"]')
+  await page.waitForFunction((n) => Number(document.querySelector('section[data-section="FEAT"] .stepper b')?.innerText) === n - 1, { timeout: 20000 }, slotsNow)
+  check('a GM bonus slot can be taken away with the minus button', true)
 
   // Deity picker: searching by domain finds gods, and choosing one changes the character's deity.
   await clickText('.tabs button', 'Overview')
