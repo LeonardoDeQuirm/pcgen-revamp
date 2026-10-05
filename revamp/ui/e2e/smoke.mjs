@@ -586,6 +586,19 @@ try {
   // Deity picker: searching by domain finds gods, and choosing one changes the character's deity.
   await clickText('.tabs button', 'Overview')
   await page.waitForFunction(() => [...document.querySelectorAll('.vital')].some((v) => v.innerText.startsWith('Deity')), { timeout: 20000 })
+  // Clicking into an ability score and out again without typing must not change it (it used to save 0), and Escape
+  // must throw away what was typed.
+  const strBox = 'input[aria-label="Strength base score"]'
+  const strBefore = await page.$eval(strBox, (e) => e.value)
+  await page.click(strBox)
+  await page.$eval(strBox, (e) => e.blur())
+  await sleep(1200)
+  check('clicking into an ability score and away leaves it alone', (await page.$eval(strBox, (e) => e.value)) === strBefore && Number(strBefore) > 0, [strBefore, await page.$eval(strBox, (e) => e.value)])
+  await page.click(strBox)
+  await page.keyboard.type('3')
+  await page.keyboard.press('Escape')
+  await sleep(1200)
+  check('Escape discards a typed ability score', (await page.$eval(strBox, (e) => e.value)) === strBefore, await page.$eval(strBox, (e) => e.value))
   await page.evaluate(() => [...document.querySelectorAll('.vital')].find((v) => v.innerText.startsWith('Deity'))?.querySelector('button.small')?.click())
   await page.waitForSelector('.modal .pick')
   const allGods = await page.$$eval('.modal .pick', (els) => els.length)

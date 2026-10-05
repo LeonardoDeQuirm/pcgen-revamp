@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import * as api from '../api'
 import { useStore } from '../store'
 import type { Changed, Character, Stat } from '../types'
@@ -13,9 +13,19 @@ function AbilityTile({ stat, character }: { stat: Stat; character: Character }) 
   const { mutate } = useStore()
   const [draft, setDraft] = useState<string | null>(null)
   const bonus = stat.raceBonus + stat.otherBonus
+  // Set by Escape so the blur that follows throws the typed text away instead of saving it.
+  const cancelled = useRef(false)
   const commit = async () => {
-    const v = Number(draft)
+    const typed = draft
     setDraft(null)
+    if (cancelled.current) {
+      cancelled.current = false
+      return
+    }
+    // Nothing typed (the box was only clicked into), or emptied: leave the score alone. Number(null) and Number('')
+    // are both 0, which would otherwise be saved as the new score.
+    if (typed === null || typed.trim() === '') return
+    const v = Number(typed)
     if (!Number.isFinite(v) || v === stat.base) return
     await mutate(() => api.put<Changed>(`/characters/${encodeURIComponent(character.id)}/stats/${stat.key}`, { base: Math.round(v) }))
   }
@@ -34,7 +44,7 @@ function AbilityTile({ stat, character }: { stat: Stat; character: Character }) 
         onKeyDown={(e) => {
           if (e.key === 'Enter') e.currentTarget.blur()
           if (e.key === 'Escape') {
-            setDraft(null)
+            cancelled.current = true
             e.currentTarget.blur()
           }
         }}
