@@ -31,6 +31,7 @@ final class EquipmentRoutes
 	{
 		r.get("/characters/{id}/equipment", this::view);
 		r.put("/characters/{id}/equipment/scheme", this::setScheme);
+		r.get("/characters/{id}/equipment/where", this::where);
 		r.get("/characters/{id}/kits", this::kits);
 		r.post("/characters/{id}/kits", this::applyKit);
 		r.post("/characters/{id}/equipment/buy", this::buy);
@@ -42,9 +43,11 @@ final class EquipmentRoutes
 		r.delete("/characters/{id}/equipment-sets", this::deleteSet);
 	}
 
-	private Map<String, Object> item(EquipmentFacade e, int quantity)
+	private Map<String, Object> item(CharacterFacade c, EquipmentFacade e, int quantity)
 	{
 		Map<String, Object> m = new LinkedHashMap<>();
+		m.put("weight", c.getInfoFactory().getWeight(e)); // each, in the game's weight unit (pounds)
+		m.put("cost", c.getInfoFactory().getCost(e)); // each, in gold
 		m.put("key", e.getKeyName());
 		m.put("name", e.toString());
 		m.put("quantity", quantity);
@@ -68,14 +71,91 @@ final class EquipmentRoutes
 		List<Map<String, Object>> purchased = new ArrayList<>();
 		for (EquipmentFacade e : owned)
 		{
-			purchased.add(item(e, owned.getQuantity(e)));
+			purchased.add(item(c, e, owned.getQuantity(e)));
 		}
 		m.put("purchased", purchased);
 		m.put("sets", CharacterView.names(c.getEquipmentSets()));
 		EquipmentSetFacade set = c.getEquipmentSetRef().get();
+		// How much of each item is in the current set (worn, wielded or carried in a container), so the list can say so.
+		Map<String, Integer> inSet = new LinkedHashMap<>();
+		if (set != null)
+		{
+			for (EquipNode n : set.getNodes())
+			{
+				if (n.getNodeType() == EquipNode.NodeType.EQUIPMENT && n.getEquipment() != null)
+				{
+					inSet.merge(n.getEquipment().getKeyName(), set.getQuantity(n), Integer::sum);
+				}
+			}
+		}
+		for (Map<String, Object> row : purchased)
+		{
+			row.put("inSet", inSet.getOrDefault(String.valueOf(row.get("key")), 0));
+		}
+		m.put("loadInfo", loadInfo(c));
 		m.put("currentSet", set == null ? null : CharacterView.text(set.getNameRef()));
 		m.put("slots", set == null ? List.of() : nodes(set));
 		return m;
+	}
+
+	/**
+	 * How heavy the load is and where the bands lie: the weight carried, and the most each of light, medium and heavy
+	 * allows (heavier than the last is overloaded). The engine's own figures: strength, size and bonuses all counted.
+	 */
+	private Map<String, Object> loadInfo(CharacterFacade c)
+	{
+		var pc = pcgen.gui2.facade.SidecarAccess.playerCharacter(c);
+		var display = pc.getDisplay();
+		Map<String, Object> m = new LinkedHashMap<>();
+		m.put("carried", display.totalWeight().doubleValue());
+		m.put("unit", pcgen.core.Globals.getGameModeUnitSet().getWeightUnit().trim());
+		List<Map<String, Object>> bands = new ArrayList<>();
+		for (pcgen.util.enumeration.Load l : pcgen.util.enumeration.Load.values())
+		{
+			double limit = display.getLoadToken(l.toString());
+			if (limit > 0)
+			{
+				Map<String, Object> b = new LinkedHashMap<>();
+				b.put("name", pcgen.core.utils.CoreUtility.capitalizeFirstLetter(l.toString()));
+				b.put("upTo", Double.parseDouble(pcgen.core.Globals.getGameModeUnitSet().displayWeightInUnitSet(limit)));
+				bands.add(b);
+			}
+		}
+		m.put("bands", bands);
+		return m;
+	}
+
+	/** Where an owned item could be put in the current set: one entry per place (hand, body slot, container...). */
+	private Object where(Request q)
+	{
+		CharacterFacade c = s.character(q.param("id"));
+		EquipmentSetFacade set = currentSet(c);
+		EquipmentFacade e = ownedItem(c, q.requireStr("item"));
+		String preferred = set.getPreferredLoc(e);
+		List<EquipNode> nodes = new ArrayList<>();
+		set.getNodes().forEach(nodes::add);
+		List<Map<String, Object>> out = new ArrayList<>();
+		java.util.Set<String> seen = new java.util.HashSet<>();
+		for (int i = 0; i < nodes.size(); i++)
+		{
+			EquipNode n = nodes.get(i);
+			if (n.getNodeType() == EquipNode.NodeType.EQUIPMENT || !set.canEquip(n, e))
+			{
+				continue;
+			}
+			String loc = set.getLocation(n);
+			if (!seen.add(loc + "|" + n))
+			{
+				continue;
+			}
+			Map<String, Object> m = new LinkedHashMap<>();
+			m.put("node", i);
+			m.put("location", loc);
+			m.put("name", n.toString());
+			m.put("preferred", preferred != null && preferred.equalsIgnoreCase(loc));
+			out.add(m);
+		}
+		return Map.of("item", e.toString(), "places", out);
 	}
 
 	private List<Map<String, Object>> nodes(EquipmentSetFacade set)

@@ -192,6 +192,39 @@ def run_checks():
     check("select set", write("PUT", C + "/equipment-sets/current", {"name": "Travel"})[0] == 200)
     check("delete set", write("DELETE", C + "/equipment-sets", None, name="Travel")[0] == 200)
 
+    # ---- gear depth: weights and costs, what is in use, the load bands, where an item can go, equipment sets
+    write("POST", C + "/equipment/buy", {"item": "Dagger", "quantity": 3})
+    gv = read(C + "/equipment")[1]
+    dag = next(x for x in gv["purchased"] if x["key"] == "Dagger")
+    check("owned items carry their weight and cost", dag["weight"] > 0 and dag["cost"] > 0 and dag["quantity"] == 3, dag)
+    check("the load comes with its bands (light < medium < heavy)", [b["name"] for b in gv["loadInfo"]["bands"]][:3] == ["Light", "Medium", "Heavy"]
+          and gv["loadInfo"]["bands"][0]["upTo"] < gv["loadInfo"]["bands"][1]["upTo"] < gv["loadInfo"]["bands"][2]["upTo"] and gv["loadInfo"]["carried"] > 0, gv["loadInfo"])
+    st, wh = read(C + "/equipment/where", item="Dagger")
+    check("where an item can go lists real places", st == 200 and len(wh["places"]) >= 2 and all("node" in p and p["location"] for p in wh["places"]), (st, str(wh)[:200]))
+    check("where for an item not owned is 404", read(C + "/equipment/where", item="Zzz Not Real")[0] == 404)
+    write("POST", C + "/equipment/equip", {"item": "Dagger", "node": wh["places"][0]["node"], "quantity": 2})
+    dag = next(x for x in read(C + "/equipment")[1]["purchased"] if x["key"] == "Dagger")
+    check("what is in the current set is counted", dag["inSet"] == 2, dag)
+    st, d = write("POST", C + "/equipment-sets", {"name": "Travel"})
+    sets = read(C + "/equipment")[1]
+    check("a new equipment set can be made and chosen", st == 200 and "Travel" in sets["sets"], sets["sets"])
+    st, d = write("PUT", C + "/equipment-sets/current", {"name": "Travel"})
+    check("choosing a set switches to it", read(C + "/equipment")[1]["currentSet"] == "Travel")
+    dag = next(x for x in read(C + "/equipment")[1]["purchased"] if x["key"] == "Dagger")
+    check("a new set starts as a copy of the one it was made from", dag["inSet"] == 2, dag)
+    for x in [x for x in read(C + "/equipment")[1]["slots"] if x["type"] == "EQUIPMENT" and x.get("equipment") == "Dagger"]:
+        write("POST", C + "/equipment/unequip", {"node": x["node"], "quantity": 99})
+    check("emptying the new set empties it", next(x for x in read(C + "/equipment")[1]["purchased"] if x["key"] == "Dagger")["inSet"] == 0)
+    write("PUT", C + "/equipment-sets/current", {"name": sets["sets"][0]})
+    # (Engine note: sets share the same item objects, so taking an item out of one set can also take it out of another's
+    # carried count; the UI therefore only promises a set is a named loadout, not a fully independent copy.)
+    write("DELETE", C + "/equipment-sets", {"name": "Travel"})
+    check("a set can be deleted", "Travel" not in read(C + "/equipment")[1]["sets"])
+    nodes = [x for x in read(C + "/equipment")[1]["slots"] if x["type"] == "EQUIPMENT" and x.get("equipment") == "Dagger"]
+    for x in nodes:
+        write("POST", C + "/equipment/unequip", {"node": x["node"], "quantity": 99})
+    write("POST", C + "/equipment/sell", {"item": "Dagger", "quantity": 3})
+
     # ---- custom equipment builder (enchantments, materials, renaming)
     check("set funds", write("PATCH", C, {"funds": "2000"})[0] == 200)  # a masterwork sword costs 315 gp
     st, d = write("POST", C + "/equipment/buy", {"item": "Longsword", "customize": True})
