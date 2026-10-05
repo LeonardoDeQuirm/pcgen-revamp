@@ -135,6 +135,14 @@ def run_checks():
           and len(s0["stats"]) == 6 and s0["hp"] == 25, {k: s0[k] for k in ("race", "classes", "hp")})
     check("snapshot has abilities", any(c["key"] == "FEAT" and len(c["abilities"]) == 3 for c in s0["abilityCategories"]))
 
+    # ---- descriptions of catalog entries (race, class, skill, deity, equipment, template)
+    for kind, name in (("race", "Human"), ("class", "Cleric"), ("skill", "Heal"), ("deity", "Sarenrae"),
+                       ("equipment", "Longsword")):
+        st, d = read(C + "/info", kind=kind, name=name)
+        check(f"info: {kind} {name} has readable sections", st == 200 and d["name"] and len(d["sections"]) > 0, (st, str(d)[:200]))
+    check("info: unknown name is 404", read(C + "/info", kind="race", name="Nonexistent Race")[0] == 404)
+    check("info: bad kind is 400", read(C + "/info", kind="spaceship", name="x")[0] == 400)
+
     # ---- identity + stats
     st, d = write("PATCH", C, {"name": "API Test", "addXp": 50, "playersName": "Tester"})
     s1 = d["character"] if st == 200 else {}
@@ -357,6 +365,31 @@ def run_checks():
     write("PATCH", f"/characters/{nid}", {"funds": "777"})
     check("funds are per character", snap()["funds"] == cleric_funds and read(f"/characters/{nid}")[1]["funds"] == "777",
           (snap()["funds"], read(f"/characters/{nid}")[1]["funds"]))
+    # Regression: buying anything on a brand-new character crashed (its funds are an Integer, not a BigDecimal).
+    st, d = write("POST", f"/characters/{nid}/equipment/buy", {"item": "Dagger", "quantity": 1})
+    check("buy on a brand-new character works", st == 200, (st, str(d)[:200]))
+    # Price scheme: "Cashless" makes buying free, and each character keeps its own scheme.
+    st, d = write("PUT", f"/characters/{nid}/equipment/scheme", {"scheme": "Cashless - Buy 0 Sell 0"})
+    check("price scheme can be set", st == 200 and read(f"/characters/{nid}/equipment")[1]["buySellScheme"].startswith("Cashless"), (st, str(d)[:200]))
+    write("PATCH", f"/characters/{nid}", {"funds": "5"})
+    st, d = write("POST", f"/characters/{nid}/equipment/buy", {"item": "Greataxe", "quantity": 1})
+    check("cashless buying costs nothing", st == 200 and read(f"/characters/{nid}")[1]["funds"] in ("5", "5.000"), (st, read(f"/characters/{nid}")[1]["funds"]))
+    check("the other character keeps its own scheme", not read(C + "/equipment")[1]["buySellScheme"].startswith("Cashless"))
+    check("unknown price scheme is 404", write("PUT", f"/characters/{nid}/equipment/scheme", {"scheme": "Free beer"})[0] == 404)
+    st, d = read(f"/characters/{nid}/kits")
+    check("kits route answers with available and applied lists", st == 200 and "available" in d and "applied" in d, (st, str(d)[:200]))
+    # Which classes may this character take? Strength 3 cannot be a Barbarian-style prerequisite-free fighter,
+    # but the filter must at least return a subset, and every kept class must be marked qualified.
+    st, allc = read(f"/dataset/classes", character=nid, limit=500)
+    st2, okc = read(f"/dataset/classes", character=nid, limit=500, qualified="true")
+    check("class catalog marks who qualifies",
+          st == 200 and all("qualified" in i for i in allc["items"]) and okc["total"] <= allc["total"]
+          and all(i["qualified"] for i in okc["items"]), (st, allc["total"], okc["total"]))
+    st, d = read(f"/characters/{nid}/info", kind="class", name="Wizard")
+    check("class info says whether the character qualifies", st == 200 and "qualified" in d, str(d)[:200])
+    st, d = read(f"/characters/{nid}/info", kind="race", name="Dwarf")
+    check("race info lists the racial traits, ability changes first",
+          st == 200 and d["sections"] and d["sections"][0]["label"].startswith("+2"), str(d)[:300])
     check("close", write("DELETE", f"/characters/{nid}")[0] == 200)
     st, d = write("POST", "/characters", path=path)
     check("reopen saved character", st == 200 and d["name"] == "Fresh Face", d)

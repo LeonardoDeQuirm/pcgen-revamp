@@ -2,8 +2,10 @@ import { useState } from 'react'
 import * as api from '../api'
 import { useStore } from '../store'
 import type { Changed, Character, Stat } from '../types'
+import { HP_MODES, readHpMode, useHpMode, type HpMode } from '../hpMode'
 import { HpDialog } from './HpDialog'
 import { Picker } from './Picker'
+import { catalogRef, useDetail } from '../detail'
 import { Card, Empty, signed } from './ui'
 
 function AbilityTile({ stat, character }: { stat: Stat; character: Character }) {
@@ -44,11 +46,24 @@ function AbilityTile({ stat, character }: { stat: Stat; character: Character }) 
 }
 
 function Levels({ character }: { character: Character }) {
-  const { mutate } = useStore()
+  const { mutate, act, notify } = useStore()
+  const detail = useDetail()
+  const [hpMode, setHpMode] = useHpMode()
   const [picking, setPicking] = useState(false)
   const [hpLevel, setHpLevel] = useState<number | null>(null)
   const id = encodeURIComponent(character.id)
   const total = character.levels.length
+  const applyHp = async (lvl: number, mode: HpMode, die: number) => {
+    if (!die) return
+    if (mode === 'roll') {
+      const res = await act(() => api.post<Changed & { rolled: number }>(`/characters/${id}/levels/${lvl}/hp/roll`, {}))
+      if (res) notify('info', `Level ${lvl}: rolled ${res.rolled} on the d${die}.`)
+      return
+    }
+    const rolled = mode === 'max' ? die : Math.floor(die / 2) + 1
+    const res = await mutate(() => api.put<Changed>(`/characters/${id}/levels/${lvl}/hp`, { rolled }))
+    if (res) notify('info', `Level ${lvl}: took ${mode === 'max' ? 'the maximum' : 'the average'} (${rolled}) on the d${die}.`)
+  }
   return (
     <Card
       title={`Levels · ${total}`}
@@ -71,6 +86,16 @@ function Levels({ character }: { character: Character }) {
         </span>
       }
     >
+      <label className="field" style={{ marginBottom: 12, maxWidth: 260 }}>
+        <span>Hit points when you level up</span>
+        <select className="input" value={hpMode} onChange={(e) => setHpMode(e.target.value as HpMode)}>
+          {HP_MODES.map((m) => (
+            <option key={m.value} value={m.value}>
+              {m.label}
+            </option>
+          ))}
+        </select>
+      </label>
       {total === 0 ? (
         <Empty title="No levels yet">Pick a class to take the first level.</Empty>
       ) : (
@@ -78,7 +103,13 @@ function Levels({ character }: { character: Character }) {
           {character.levels.map((l) => (
             <div key={l.level} className="level-row">
               <span className="level-num num">{l.level}</span>
-              <span className="row-title">{l.class}</span>
+              <span className="row-title">
+                {l.class ? (
+                  <button className="link-btn" title="Show what this class gives" onClick={() => detail.open(catalogRef(character.id, 'class', l.class ?? '', l.class ?? ''))}>
+                    {l.class}
+                  </button>
+                ) : null}
+              </span>
               <button
                 className="btn ghost small num"
                 title={`Rolled ${l.hpRolled}${l.hpBonus ? ` ${signed(l.hpBonus)} from Constitution and bonuses` : ''}. Click to change.`}
@@ -98,12 +129,18 @@ function Levels({ character }: { character: Character }) {
           title="Choose a class"
           subtitle="This adds one level."
           path="/dataset/classes"
+          previewKind="class"
+          qualifyFilter
           describe={(it) => it.type?.replace('Base.', '').replace('.', ' · ')}
           onClose={() => setPicking(false)}
           onPick={(it) =>
-            void mutate(() => api.post<Changed>(`/characters/${id}/levels`, { class: it.key ?? it.name })).then((r) => {
-              // A new level means a new hit die to roll: ask for the player's result.
-              if (r && r.character.levels.length > total) setHpLevel(r.character.levels.length)
+            void mutate(() => api.post<Changed>(`/characters/${id}/levels`, { class: it.key ?? it.name })).then(async (r) => {
+              if (!r || r.character.levels.length <= total) return
+              const lvl = r.character.levels.length
+              const mode = readHpMode()
+              // The first level is always the full die (the usual rule); otherwise follow the player's setting.
+              if (mode === 'ask' || lvl === 1) return setHpLevel(lvl)
+              await applyHp(lvl, mode, r.character.levels[lvl - 1]?.hitDie ?? 0)
             })
           }
         />
@@ -171,13 +208,22 @@ function Vitals({ character }: { character: Character }) {
 
 function Identity({ character }: { character: Character }) {
   const { mutate } = useStore()
+  const detail = useDetail()
   const [picker, setPicker] = useState<null | 'race' | 'deity' | 'alignment'>(null)
   const id = encodeURIComponent(character.id)
   const row = (label: string, value: string | number | null, kind?: 'race' | 'deity' | 'alignment') => (
     <div className="vital">
       <span className="vital-label">{label}</span>
       <span className="vital-value">
-        {value === null || value === '' ? '—' : value}
+        {value === null || value === '' || String(value).startsWith('<') ? (
+          '—'
+        ) : kind === 'race' || kind === 'deity' ? (
+          <button className="link-btn" title="Show details" onClick={() => detail.open(catalogRef(character.id, kind, String(value), String(value)))}>
+            {value}
+          </button>
+        ) : (
+          value
+        )}
         {kind && (
           <button className="btn small ghost" onClick={() => setPicker(kind)}>
             Change
@@ -205,6 +251,7 @@ function Identity({ character }: { character: Character }) {
         <Picker
           title={config[picker].title}
           path={config[picker].path}
+          previewKind={picker === 'race' ? 'race' : picker === 'deity' ? 'deity' : undefined}
           onClose={() => setPicker(null)}
           onPick={(it) => void mutate(() => api.patch<Changed>(`/characters/${id}`, { [config[picker].field]: it.key ?? it.name }))}
         />

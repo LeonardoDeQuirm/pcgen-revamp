@@ -52,7 +52,8 @@ interface Store {
   notify(kind: Toast['kind'], text: string): void
   select(id: string): void
   openPath(path: string): Promise<void>
-  createCharacter(): Promise<void>
+  /** Makes an empty character and returns its id (undefined if that failed). */
+  createCharacter(): Promise<string | undefined>
   closeCharacter(id: string): Promise<void>
   /** Runs a change that returns the updated character, applies it, and surfaces engine messages. */
   mutate(fn: () => Promise<Changed>): Promise<Changed | null>
@@ -227,11 +228,12 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
   const createCharacter = useCallback(async () => {
     const res = await act(() => api.post<Changed>('/characters/new', {}))
-    if (!res) return
+    if (!res) return undefined
     const list = await act(() => api.get<CharacterSummary[]>('/characters'))
     if (list) setCharacters(list)
     setActiveId(res.character.id)
     setCharacter(res.character)
+    return res.character.id
   }, [act])
 
   const closeCharacter = useCallback(

@@ -57,6 +57,7 @@ export function HpDialog({ character, level, onClose }: { character: Character; 
       <p className="muted" style={{ paddingBottom: 12, lineHeight: 1.5 }}>
         Roll your d{die} and type the result, or press Roll to have the app do it. The number shown to start with is the
         app&rsquo;s own roll.
+        {level === 1 && ' Your first level normally takes the full die, so it starts at the maximum.'}
       </p>
       <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
         <label className="field" style={{ width: 120 }}>

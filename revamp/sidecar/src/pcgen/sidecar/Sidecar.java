@@ -107,7 +107,7 @@ public final class Sidecar
 		if (settings == null)
 		{
 			System.err.println("usage: Sidecar --settings-dir DIR (--from-character FILE.pcg | "
-					+ "--game-mode MODE --sources A,B) [--port 8765] [--allow-origin URL,URL]");
+					+ "--game-mode MODE --sources A,B) [--port 8765|0] [--allow-origin URL,URL] [--ui-dir DIR] [--token SECRET]");
 			System.exit(2);
 		}
 		Sidecar s = new Sidecar();
@@ -119,6 +119,8 @@ public final class Sidecar
 				return null;
 			}).get();
 			s.registerRoutes();
+			s.uiDir = args.containsKey("ui-dir") ? Path.of(args.get("ui-dir")).toRealPath() : null;
+			s.token = args.get("token");
 			s.startHttp(Integer.parseInt(args.getOrDefault("port", "8765")), args.get("allow-origin"));
 		}
 		catch (Throwable t)
@@ -213,6 +215,7 @@ public final class Sidecar
 		new LanguageRoutes(session, characters).register(router);
 		new ExportRoutes(session).register(router);
 		new DatasetRoutes(session).register(router);
+		new InfoRoutes(session).register(router);
 		new FileRoutes().register(router);
 		router.get("/messages", q -> ui.drain());
 		router.get("/routes", q -> router.describe());
@@ -220,9 +223,77 @@ public final class Sidecar
 
 	// ---- HTTP ----
 
+	/** Folder holding the built UI to serve at "/" (packaged app); null in development, where Vite serves it. */
+	private Path uiDir;
+	/** When set, every API call must carry it in the X-Pcgen-Token header (the desktop shell passes it to its window). */
+	private String token;
+
+	/** The path of an API call: the UI reaches the API under /api/, direct callers (tests, the shell) may omit it. */
+	private static String apiPath(String path)
+	{
+		return path.startsWith("/api/") ? path.substring(4) : path;
+	}
+
+	private static final Map<String, String> STATIC_TYPES = Map.ofEntries(Map.entry("html", "text/html; charset=utf-8"),
+			Map.entry("js", "text/javascript; charset=utf-8"), Map.entry("css", "text/css; charset=utf-8"),
+			Map.entry("svg", "image/svg+xml"), Map.entry("png", "image/png"), Map.entry("ico", "image/x-icon"),
+			Map.entry("woff2", "font/woff2"), Map.entry("json", "application/json"), Map.entry("map", "application/json"));
+
+	/**
+	 * Serves a file of the built UI. Only GET of a file that really lives inside the UI folder (symlinks and ..
+	 * resolved); anything else is left to the API. Returns false when this was not a UI request.
+	 */
+	private boolean serveStatic(HttpExchange ex) throws IOException
+	{
+		String path = ex.getRequestURI().getPath();
+		if (uiDir == null || !ex.getRequestMethod().equals("GET") || path.startsWith("/api/"))
+		{
+			return false;
+		}
+		Path file;
+		try
+		{
+			file = uiDir.resolve(path.equals("/") ? "index.html" : path.substring(1)).toRealPath();
+		}
+		catch (IOException | java.nio.file.InvalidPathException e)
+		{
+			return false;
+		}
+		if (!file.startsWith(uiDir) || !java.nio.file.Files.isRegularFile(file))
+		{
+			return false;
+		}
+		String name = file.getFileName().toString();
+		String type = STATIC_TYPES.getOrDefault(name.substring(name.lastIndexOf('.') + 1).toLowerCase(java.util.Locale.ROOT),
+				"application/octet-stream");
+		byte[] bytes = java.nio.file.Files.readAllBytes(file);
+		ex.getResponseHeaders().set("Content-Type", type);
+		ex.sendResponseHeaders(200, bytes.length);
+		try (var out = ex.getResponseBody())
+		{
+			out.write(bytes);
+		}
+		return true;
+	}
+
+	private void requireToken(HttpExchange ex)
+	{
+		if (token == null)
+		{
+			return;
+		}
+		String given = ex.getRequestHeaders().getFirst("X-Pcgen-Token");
+		if (given == null || !java.security.MessageDigest.isEqual(given.getBytes(StandardCharsets.UTF_8),
+				token.getBytes(StandardCharsets.UTF_8)))
+		{
+			throw new ApiException(403, "missing or wrong access token");
+		}
+	}
+
 	private void startHttp(int port, String extraOrigins) throws IOException
 	{
 		server = HttpServer.create(new InetSocketAddress(InetAddress.getLoopbackAddress(), port), 0);
+		port = server.getAddress().getPort(); // port 0 asks the system for a free one
 		allowedHosts = Set.of("127.0.0.1:" + port, "localhost:" + port, "[::1]:" + port);
 		// The UI dev server (and its proxy) is the normal caller. Anything else must be named explicitly.
 		Set<String> origins = new java.util.HashSet<>(List.of("http://127.0.0.1:5173", "http://localhost:5173",
@@ -319,6 +390,11 @@ public final class Sidecar
 		try
 		{
 			guardCaller(ex);
+			if (serveStatic(ex))
+			{
+				return;
+			}
+			requireToken(ex);
 			Object result = dispatch(ex);
 			if (result instanceof Reply reply)
 			{
@@ -350,7 +426,7 @@ public final class Sidecar
 		if (ms >= SLOW_REQUEST_MS)
 		{
 			Logging.log(Logging.WARNING, "slow request (" + ms + " ms): " + ex.getRequestMethod() + " "
-					+ ex.getRequestURI().getPath());
+					+ apiPath(ex.getRequestURI().getPath()));
 		}
 		ex.getResponseHeaders().set("Content-Type", contentType);
 		ex.getResponseHeaders().set("X-Time-Ms", Long.toString(ms));
@@ -359,7 +435,7 @@ public final class Sidecar
 		{
 			out.write(body);
 		}
-		if (status == 200 && ex.getRequestURI().getPath().equals("/shutdown"))
+		if (status == 200 && apiPath(ex.getRequestURI().getPath()).equals("/shutdown"))
 		{
 			shutdown();
 		}
@@ -427,7 +503,7 @@ public final class Sidecar
 	{
 		String method = ex.getRequestMethod();
 		URI uri = ex.getRequestURI();
-		String path = uri.getPath();
+		String path = apiPath(uri.getPath());
 		Map<String, String> query = query(uri);
 		Map<String, Object> body = readBody(ex);
 

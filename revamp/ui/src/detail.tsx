@@ -5,8 +5,33 @@ import { Icon } from './components/ui'
 import { useStore } from './store'
 import type { Changed } from './types'
 
-/** Something the side panel can describe: an ability (feat, class feature, trait...) or a spell. */
+/** The kinds of catalog entry the panel can describe besides abilities and spells. */
+export type CatalogKind = 'race' | 'class' | 'skill' | 'deity' | 'template' | 'equipment'
+
+const CATALOG_LABEL: Record<CatalogKind, string> = {
+  race: 'Race',
+  class: 'Class',
+  skill: 'Skill',
+  deity: 'Deity',
+  template: 'Template',
+  equipment: 'Equipment',
+}
+
+/** A reference to a race, class, skill, deity, template or item, for the side panel. */
+export function catalogRef(characterId: string, catKind: CatalogKind, key: string, name?: string): DetailRef {
+  return { kind: 'catalog', characterId, catKind, key, name: name ?? key, removable: false }
+}
+
+/** Something the side panel can describe: an ability (feat, class feature, trait...), a spell, or a catalog entry. */
 export type DetailRef =
+  | {
+      kind: 'catalog'
+      characterId: string
+      catKind: CatalogKind
+      key: string
+      name: string
+      removable: false
+    }
   | {
       kind: 'ability'
       characterId: string
@@ -30,6 +55,7 @@ export type DetailRef =
     }
 
 export function idOf(r: DetailRef): string {
+  if (r.kind === 'catalog') return `c|${r.characterId}|${r.catKind}|${r.key}`
   return r.kind === 'ability' ? `a|${r.characterId}|${r.categoryKey}|${r.key}` : `s|${r.characterId}|${r.className}|${r.level}|${r.name}`
 }
 
@@ -67,6 +93,7 @@ export function useDetail(): DetailCtx {
 /** Fetches the description of a ref from the engine. */
 export function infoRoute(ref: DetailRef): { path: string; query: Record<string, string> } {
   const id = encodeURIComponent(ref.characterId)
+  if (ref.kind === 'catalog') return { path: `/characters/${id}/info`, query: { kind: ref.catKind, name: ref.key } }
   return ref.kind === 'ability'
     ? { path: `/characters/${id}/abilities/info`, query: { category: ref.categoryKey, name: ref.key } }
     : { path: `/characters/${id}/spells/info`, query: { class: ref.className, level: ref.level, spell: ref.name } }
@@ -109,6 +136,7 @@ export function DetailPanel() {
   if (!detail) return null
 
   const remove = () => {
+    if (!detail.removable) return
     const id = encodeURIComponent(detail.characterId)
     const call =
       detail.kind === 'ability'
@@ -123,7 +151,9 @@ export function DetailPanel() {
         <div style={{ minWidth: 0 }}>
           <h2>{info?.name ?? detail.name}</h2>
           <div className="detail-sub">
-            {detail.kind === 'ability' ? (
+            {detail.kind === 'catalog' ? (
+              <span className="chip accent">{CATALOG_LABEL[detail.catKind]}</span>
+            ) : detail.kind === 'ability' ? (
               <span className="chip accent">{detail.categoryName}</span>
             ) : (
               <>

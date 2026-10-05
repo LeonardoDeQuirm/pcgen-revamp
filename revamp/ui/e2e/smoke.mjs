@@ -8,7 +8,8 @@
 // checks the skills table, opens the item customiser and cancels it, and renders the PDF sheet.
 // It leaves the character as it found it (nothing is saved).
 import puppeteer from 'puppeteer-core'
-import { mkdirSync } from 'node:fs'
+import { existsSync, mkdirSync, rmSync } from 'node:fs'
+import { resolve } from 'node:path'
 
 const URL = process.env.UI_URL ?? 'http://127.0.0.1:5173/'
 const EDGE = process.env.BROWSER ?? 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe'
@@ -47,13 +48,25 @@ const clickText = async (sel, label) => {
   )
   if (!ok) throw new Error(`no enabled ${sel} starting with "${label}"`)
 }
+// Race and class pickers show a reading pane: select the entry, wait for its text, then confirm with "Choose ...".
+const pickFrom = async (label) => {
+  const title = await page.evaluate((l) => {
+    const el = [...document.querySelectorAll('.modal .pick')].find((e) => e.innerText.trim().startsWith(l))
+    if (!el) return null
+    el.click()
+    return el.querySelector('.row-title')?.innerText.trim() ?? l
+  }, label)
+  if (!title) throw new Error(`no choice starting with "${label}"`)
+  await page.waitForFunction((t) => [...document.querySelectorAll('.modal button')].some((b) => b.innerText.trim() === 'Choose ' + t && !b.disabled), { timeout: 20000 }, title)
+  await clickText('.modal button', 'Choose ' + title)
+}
 const shot = (name) => page.screenshot({ path: `../.run/shots/e2e-${name}.png` })
 
 try {
   // Open the character through the same API the dialog uses, then load the UI.
   // (start-dev.ps1 already opened it; a second open just answers "already open", which is fine.)
   await fetch('http://127.0.0.1:8765/characters', { method: 'POST', body: JSON.stringify({ path: charPath }) })
-  const id = charPath.split(/[\/]/).pop().replace(/\.[^.]*$/, '')
+  const id = charPath.split(/[\\/]/).pop().replace(/\.[^.]*$/, '')
   const snapshot = await (await fetch(`http://127.0.0.1:8765/characters/${id}`)).json()
   const levels = snapshot.levels.length
   await page.goto(URL + '#Overview', { waitUntil: 'networkidle0' })
@@ -65,10 +78,10 @@ try {
 
   // Level up -> class picker -> engine asks for an ability score -> confirm
   await clickText('button', 'Level up')
-  await page.waitForSelector('.modal .result')
+  await page.waitForSelector('.modal .pick')
   await page.type('.modal input', 'Fighter')
   await sleep(500)
-  await clickText('.modal .result', 'Fighter')
+  await pickFrom('Fighter')
   // Some level-ups (every 4th) make the engine ask which ability score to raise; others finish straight away.
   const settled = await Promise.race([
     page.waitForSelector('.modal .choice', { timeout: 30000 }).then(() => 'question'),
@@ -300,10 +313,10 @@ try {
   await page.goto(URL + '#Overview', { waitUntil: 'domcontentloaded' })
   await page.waitForFunction(() => document.querySelectorAll('.level-row').length === 3, { timeout: 20000 })
   await clickText('button', 'Level up')
-  await page.waitForSelector('.modal .result')
+  await page.waitForSelector('.modal .pick')
   await page.type('.modal input', 'Inquisitor')
   await sleep(500)
-  await clickText('.modal .result', 'Inquisitor')
+  await pickFrom('Inquisitor')
   await page.waitForSelector('.modal .choice', { timeout: 30000 })
   check('level 4 raises the ability-score question', (await text()).includes('ability score'))
   await shot('chooser')
@@ -320,21 +333,105 @@ try {
   check('the chosen ability score went up by one', Number(after) === Number(before) + 1, `${before} -> ${after}`)
   await clickText('.modal button', 'Cancel').catch(() => {})
 
-  // A brand-new character: the first level asks "are your abilities set as you'd like them?"
+  // Details panels for skills, gear and classes, and the reading pane in the race picker.
+  const sidePanel = () => page.evaluate(() => document.querySelector('.detail')?.innerText ?? '')
+  await clickText('.tabs button', 'Skills')
+  await page.waitForSelector('table .link-btn')
+  await page.click('table .link-btn')
+  await page.waitForFunction(() => document.querySelector('.detail .detail-body')?.innerText.length > 40, { timeout: 20000 })
+  check('a skill opens its description in the side panel', /Skill/.test(await sidePanel()))
+  await page.keyboard.press('Escape')
+  await clickText('.tabs button', 'Gear')
+  await page.waitForSelector('.rows .link-btn')
+  await page.click('.rows .link-btn')
+  await page.waitForFunction(() => document.querySelector('.detail .detail-body')?.innerText.length > 20, { timeout: 20000 })
+  check('an item opens its description in the side panel', /Equipment/.test(await sidePanel()))
+  await page.keyboard.press('Escape')
+  await clickText('.tabs button', 'Overview')
+  await page.waitForSelector('.level-row .link-btn')
+  await page.click('.level-row .link-btn')
+  await page.waitForFunction(() => document.querySelector('.detail .detail-body')?.innerText.length > 40, { timeout: 20000 })
+  check('a class in the level list opens its description', /Class/.test(await sidePanel()))
+  await page.keyboard.press('Escape')
+  await clickText('.vital button', 'Change') // the first Change button is the race
+  await page.waitForSelector('.split .pick')
+  await page.click('.split .pick')
+  await page.waitForFunction(() => document.querySelector('.split-preview .preview-title'), { timeout: 20000 })
+  check('the race picker reads out what a race does', (await page.evaluate(() => document.querySelector('.split-preview')?.innerText.length)) > 60)
+  await page.keyboard.press('Escape')
+
+  // A brand-new character goes through the guided wizard: name + point-buy scores, race, class.
   await clickText('.sidebar-actions button', 'New')
-  await page.waitForFunction(() => document.querySelectorAll('.char-item').length === 2, { timeout: 20000 })
-  await page.waitForSelector('.ability')
-  await clickText('button', 'Level up')
-  await page.waitForSelector('.modal .result')
+  await page.waitForFunction(() => /New character/.test(document.querySelector('.modal')?.innerText ?? ''), { timeout: 20000 })
+  check('New opens the wizard', true)
+  await page.type('.modal input', 'Wizard Test') // the name field selects its text on focus
+  await clickText('.modal button', 'Point buy')
+  await clickText('.modal button', 'Next')
+  await waitText('Choose a race')
+  await clickText('.modal button', 'Choose a race')
+  await page.waitForSelector('.modal .pick')
+  await page.type('.modal input', 'Human')
+  await sleep(500)
+  await pickFrom('Human')
+  await page.waitForFunction(() => /Race\s*Human/.test(document.querySelector('.modal')?.innerText ?? ''), { timeout: 20000 })
+  check('the wizard sets the race', true)
+  await clickText('.modal button', 'Next')
+  await clickText('.modal button', 'Choose a class')
+  await page.waitForSelector('.modal .pick')
   await page.type('.modal input', 'Wizard')
   await sleep(500)
-  await clickText('.modal .result', 'Wizard')
-  await page.waitForFunction(() => /abilit/i.test(document.querySelector('.modal')?.innerText ?? ''), { timeout: 20000 })
-  check('the first level asks a yes/no question in a dialog', true)
-  await shot('confirm')
-  await clickText('.modal button', 'Go back')
+  await pickFrom('Wizard')
+  // The engine may ask questions on the way (abilities final? which school?): answer each until the level is added.
+  for (let i = 0; i < 8 && !(await text()).includes('Level 1 hit points'); i++) {
+    await page
+      .waitForFunction(
+        () =>
+          /Level 1 hit points/.test(document.body.innerText) ||
+          document.querySelector('.modal .choice') ||
+          [...document.querySelectorAll('.modal button')].some((b) => b.innerText.trim() === 'Continue'),
+        { timeout: 30000 },
+      )
+    if ((await text()).includes('Level 1 hit points')) break
+    if (await page.$('.modal .choice')) {
+      await page.click('.modal .choice')
+      await clickText('.modal button', 'Confirm')
+    } else await clickText('.modal button', 'Continue')
+    await sleep(400)
+  }
+  await waitText('Level 1 hit points')
+  check('the wizard adds the first class level', true)
+  await shot('wizard')
+  await clickText('.modal button', 'Next')
+  await waitText('is ready')
+  // Starting gold is offered to a first-level character; it asks how, and the money appears.
+  await waitText('Get starting gold')
+  await clickText('.modal button', 'Get starting gold')
+  await page.waitForSelector('.modal .choice')
+  check('starting gold asks how, in plain words', (await text()).includes('Roll for it') && (await text()).includes('Take the average'))
+  await clickText('.modal .choice', 'Take the maximum')
+  await clickText('.modal button', 'Confirm')
+  await page.waitForFunction(() => /[1-9]\d* gp/.test(document.querySelector('.modal')?.innerText ?? ''), { timeout: 20000 })
+  check('the starting gold lands in the funds', true)
+  await clickText('.modal button', 'Finish')
   await page.waitForFunction(() => !document.querySelector('.modal'), { timeout: 20000 })
-  check('going back adds no level', (await page.$$('.level-row')).length === 0)
+  check('the wizard finishes', (await page.$$('.level-row')).length === 1)
+
+  // Save for a never-saved character asks where, and writes the file.
+  const saveDir = resolve('..', '.run')
+  const outFile = resolve(saveDir, 'e2e-saveas.pcg')
+  rmSync(outFile, { force: true })
+  await page.evaluate((d) => localStorage.setItem('pcgen.ui.saveDir', d), saveDir)
+  await clickText('button', 'Save')
+  await page.waitForFunction(() => /Save character/.test(document.querySelector('.modal')?.innerText ?? ''), { timeout: 20000 })
+  check('Save on an unsaved character opens Save As', true)
+  await page.waitForSelector('.modal label input')
+  await page.$eval('.modal label input', (el) => (el.value = ''))
+  await page.type('.modal label input', 'e2e-saveas')
+  await clickText('.modal button', 'Save')
+  await page.waitForFunction(() => !document.querySelector('.modal'), { timeout: 20000 })
+  await sleep(500)
+  check('Save As writes the .pcg file', existsSync(outFile))
+  rmSync(outFile, { force: true })
 } catch (e) {
   check('test run completed', false, String(e))
   await shot('failure').catch(() => {})

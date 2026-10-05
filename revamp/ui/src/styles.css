@@ -373,3 +373,6 @@ h1, h2, h3, p { margin: 0; }
 
 .chip.bad { background: var(--bad-soft); color: var(--bad); border-color: transparent; }
 .notice.warn { background: var(--warn-soft); color: var(--warn); border: 1px solid var(--warn); }
+.link-btn { border: 0; background: transparent; padding: 0; cursor: pointer; color: inherit; font: inherit; text-align: left; }
+.link-btn:hover { color: var(--accent); text-decoration: underline; }
+.link-btn.on { color: var(--accent); }

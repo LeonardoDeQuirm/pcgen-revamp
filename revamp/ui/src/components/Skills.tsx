@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import * as api from '../api'
 import { useStore } from '../store'
 import type { Changed, Character } from '../types'
+import { catalogRef, useDetail } from '../detail'
 import { Card, Empty, Icon, signed } from './ui'
 
 interface SkillRow {
@@ -15,6 +16,7 @@ interface SkillRow {
 
 export function Skills({ character }: { character: Character }) {
   const { act, mutate } = useStore()
+  const detail = useDetail()
   const [rows, setRows] = useState<SkillRow[]>([])
   const [all, setAll] = useState(false)
   const [q, setQ] = useState('')
@@ -69,7 +71,15 @@ export function Skills({ character }: { character: Character }) {
         <tbody>
           {shown.map((s) => (
             <tr key={s.key}>
-              <td className="row-title">{s.name}</td>
+              <td className="row-title">
+                <button
+                  className={'link-btn' + (detail.isOpen(catalogRef(character.id, 'skill', s.key)) ? ' on' : '')}
+                  title="Show what this skill does"
+                  onClick={() => detail.open(catalogRef(character.id, 'skill', s.key, s.name))}
+                >
+                  {s.name}
+                </button>
+              </td>
               <td>{s.cost ? <span className={'chip ' + (s.cost === 'CLASS' ? 'accent' : '')}>{s.cost === 'CLASS' ? 'class' : s.cost.toLowerCase().replace('_', ' ')}</span> : null}</td>
               <td className="r num">{s.modifier != null ? signed(s.modifier) : ''}</td>
               <td className="r num"><b>{s.total ?? ''}</b></td>

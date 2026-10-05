@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import * as api from './api'
 import { Bio } from './components/Bio'
-import { BuilderDialog, ChooserDialog, ConfirmDialog, OpenDialog } from './components/Dialogs'
+import { NewCharacterWizard } from './components/NewCharacter'
+import { BuilderDialog, ChooserDialog, ConfirmDialog, OpenDialog, SaveAsDialog } from './components/Dialogs'
 import { Export } from './components/Export'
 import { ClassTab, Feats } from './components/Feats'
 import { groupOf } from './components/groups'
@@ -41,8 +42,8 @@ function tabFor(engineTab: string, field?: string | null, character?: Character)
   return 'Overview'
 }
 
-function Sidebar({ onOpen }: { onOpen: () => void }) {
-  const { characters, activeId, select, createCharacter, closeCharacter, health, connection } = useStore()
+function Sidebar({ onOpen, onNew }: { onOpen: () => void; onNew: () => void }) {
+  const { characters, activeId, select, closeCharacter, health, connection } = useStore()
   return (
     <aside className="sidebar">
       <div className="brand">
@@ -55,7 +56,7 @@ function Sidebar({ onOpen }: { onOpen: () => void }) {
         <button className="btn primary" style={{ flex: 1 }} onClick={onOpen}>
           <Icon name="folder" /> Open
         </button>
-        <button className="btn" style={{ flex: 1 }} onClick={() => void createCharacter()}>
+        <button className="btn" style={{ flex: 1 }} onClick={onNew}>
           <Icon name="plus" /> New
         </button>
       </div>
@@ -110,7 +111,9 @@ function Hero({ character, tab, setTab }: { character: Character; tab: Tab; setT
   const classes = character.classes.map((c) => `${c.class} ${c.level}`).join(' / ')
   const count = (t: Tab) => character.todo.filter((x) => (x.tab ? tabFor(x.tab, x.field, character) : 'Overview') === t).length
 
+  const [saveAs, setSaveAs] = useState(false)
   const save = async () => {
+    if (!character.file) return setSaveAs(true) // never saved: ask where
     const res = await act(() => api.post<Changed>(`/characters/${id}/save`, {}))
     if (res) {
       markSaved(character.id)
@@ -120,6 +123,18 @@ function Hero({ character, tab, setTab }: { character: Character; tab: Tab; setT
 
   return (
     <header className="hero">
+      {saveAs && (
+        <SaveAsDialog
+          characterId={character.id}
+          suggestedName={character.name ?? ''}
+          onClose={() => setSaveAs(false)}
+          onSaved={() => {
+            setSaveAs(false)
+            markSaved(character.id)
+            notify('info', 'Saved.')
+          }}
+        />
+      )}
       <div className="hero-top">
         <input
           className="hero-name"
@@ -132,8 +147,11 @@ function Hero({ character, tab, setTab }: { character: Character; tab: Tab; setT
         />
         <div className="badge-row">
           {unsaved && <span className="chip warn">Unsaved changes</span>}
-          <button className="btn" onClick={() => void save()} disabled={!character.file}>
+          <button className="btn" onClick={() => void save()}>
             Save
+          </button>
+          <button className="btn ghost" onClick={() => setSaveAs(true)}>
+            Save as&hellip;
           </button>
         </div>
       </div>
@@ -178,6 +196,12 @@ export default function App() {
   const { character, connection, characters, busy, createCharacter, chooserRequest, builderRequest, confirmRequest } = useStore()
   const [tab, setTab] = useState<Tab>(tabFromHash)
   const [opening, setOpening] = useState(false)
+  const [wizardId, setWizardId] = useState<string | null>(null)
+  const { closeCharacter } = useStore()
+  const startNew = async () => {
+    const id = await createCharacter()
+    if (id) setWizardId(id)
+  }
   const lastId = useRef<string | undefined>(undefined)
   const { detail } = useDetail()
 
@@ -214,7 +238,7 @@ export default function App() {
           <p className="muted" style={{ paddingBottom: 18 }}>Pick a saved .pcg file, or start a fresh character.</p>
           <div style={{ display: 'flex', gap: 10, justifyContent: 'center' }}>
             <button className="btn primary" onClick={() => setOpening(true)}>Open a file</button>
-            <button className="btn" onClick={() => void createCharacter()}>New character</button>
+            <button className="btn" onClick={() => void startNew()}>New character</button>
           </div>
         </div>
       </div>
@@ -242,10 +266,21 @@ export default function App() {
   return (
     <div className="app">
       {busy && <div className="busy-bar" />}
-      <Sidebar onOpen={() => setOpening(true)} />
+      <Sidebar onOpen={() => setOpening(true)} onNew={() => void startNew()} />
       <main className={'main' + (detail ? ' has-detail' : '')}>{body}</main>
       <DetailPanel />
       {opening && <OpenDialog onClose={() => setOpening(false)} />}
+      {wizardId && character && character.id === wizardId && (
+        <NewCharacterWizard
+          character={character}
+          goTo={(t) => setTab(tabFor(t, null, character))}
+          onDone={() => setWizardId(null)}
+          onCancel={() => {
+            setWizardId(null)
+            void closeCharacter(wizardId)
+          }}
+        />
+      )}
       {chooserRequest && <ChooserDialog />}
       {builderRequest && <BuilderDialog />}
       {confirmRequest && <ConfirmDialog />}

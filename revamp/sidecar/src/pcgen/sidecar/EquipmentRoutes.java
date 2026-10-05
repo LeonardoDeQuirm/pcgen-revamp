@@ -30,6 +30,9 @@ final class EquipmentRoutes
 	void register(Router r)
 	{
 		r.get("/characters/{id}/equipment", this::view);
+		r.put("/characters/{id}/equipment/scheme", this::setScheme);
+		r.get("/characters/{id}/kits", this::kits);
+		r.post("/characters/{id}/kits", this::applyKit);
 		r.post("/characters/{id}/equipment/buy", this::buy);
 		r.post("/characters/{id}/equipment/sell", this::sell);
 		r.post("/characters/{id}/equipment/equip", this::equip);
@@ -126,12 +129,74 @@ final class EquipmentRoutes
 		String id = q.param("id");
 		CharacterFacade c = s.character(id);
 		EquipmentFacade e = datasetItem(c, q.requireStr("item"));
+		assertScheme(c);
 		// With customize=true the engine opens the custom-equipment builder (202; see BuilderRoutes).
 		// Like the GUI, buying is not blocked for unqualified items; the flag lets the client warn.
 		boolean qualified = c.isQualifiedFor(e);
-		BigDecimal before = c.getFundsRef().get();
+		// Funds are a BigDecimal for loaded characters but a plain Integer on a brand-new one: only print them.
+		Object before = c.getFundsRef().get();
 		c.addPurchasedEquipment(e, quantity(q), q.bool("customize", false), q.bool("free", false));
 		return characters.changed(id, c, Map.of("fundsBefore", String.valueOf(before), "qualified", qualified));
+	}
+
+	/**
+	 * The engine stores the buy and sell rates in one global setting, shared by every open character. Each
+	 * character remembers its own price scheme, so put it back in force before any money changes hands.
+	 */
+	private void assertScheme(CharacterFacade c)
+	{
+		var scheme = c.getGearBuySellRef().get();
+		if (scheme != null)
+		{
+			c.setGearBuySellRef(scheme);
+		}
+	}
+
+	/** Prices: market price, character build (full price back), cashless (everything free), crafting... */
+	private Object setScheme(Request q)
+	{
+		String id = q.param("id");
+		CharacterFacade c = s.character(id);
+		var scheme = Lookup.find(s.dataSet().getGearBuySellSchemes(), q.requireStr("scheme"), "price scheme",
+				Object::toString, Object::toString);
+		c.setGearBuySellRef(scheme);
+		return characters.changed(id, c, Map.of());
+	}
+
+	/** Kits available to this character (starting gold is one) and the ones already applied. */
+	private Object kits(Request q)
+	{
+		CharacterFacade c = s.character(q.param("id"));
+		List<String> applied = new ArrayList<>();
+		c.getKits().forEach(k -> applied.add(k.getDisplayName()));
+		List<Map<String, Object>> available = new ArrayList<>();
+		for (pcgen.core.Kit k : c.getAvailableKits())
+		{
+			Map<String, Object> m = new LinkedHashMap<>();
+			m.put("key", k.getKeyName());
+			m.put("name", k.getDisplayName());
+			m.put("type", k.getType());
+			m.put("applied", applied.contains(k.getDisplayName()));
+			m.put("qualified", c.isQualifiedFor(k));
+			available.add(m);
+		}
+		return Map.of("available", available, "applied", applied);
+	}
+
+	/** Applies a kit. Starting gold asks (through the chooser bridge) whether to roll, take the maximum or the average. */
+	private Object applyKit(Request q)
+	{
+		String id = q.param("id");
+		CharacterFacade c = s.character(id);
+		pcgen.core.Kit kit = Lookup.pObject(c.getAvailableKits(), q.requireStr("kit"), "kit");
+		if (!c.isQualifiedFor(kit))
+		{
+			throw new ApiException(409, "this character does not qualify for " + kit.getDisplayName());
+		}
+		BigDecimal before = new BigDecimal(String.valueOf(c.getFundsRef().get()));
+		s.ui.withRepeatedAnswers(() -> c.addKit(kit));
+		return characters.changed(id, c, Map.of("fundsBefore", before.toPlainString(),
+				"fundsAfter", String.valueOf(c.getFundsRef().get())));
 	}
 
 	private Object sell(Request q)
@@ -139,6 +204,7 @@ final class EquipmentRoutes
 		String id = q.param("id");
 		CharacterFacade c = s.character(id);
 		EquipmentFacade e = ownedItem(c, q.requireStr("item"));
+		assertScheme(c);
 		c.removePurchasedEquipment(e, quantity(q), q.bool("free", false));
 		return characters.changed(id, c, Map.of());
 	}

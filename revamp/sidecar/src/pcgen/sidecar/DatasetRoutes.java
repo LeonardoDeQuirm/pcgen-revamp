@@ -156,6 +156,18 @@ final class DatasetRoutes
 			throw new ApiException(404, "unknown catalog '" + kind + "'; available: " + String.join(", ", kinds.keySet())
 					+ ", abilities");
 		}
+		if (kind.equals("classes") && q.has("character"))
+		{
+			// With ?character=<id> say which classes that character may take; ?qualified=true drops the rest.
+			pcgen.facade.core.CharacterFacade who = s.character(q.requireStr("character"));
+			boolean only = q.bool("qualified", false);
+			return page(items.get(), q, (o, e) -> {
+				if (o instanceof pcgen.core.PCClass c)
+				{
+					e.put("qualified", who.isQualifiedFor(c));
+				}
+			}, only ? o -> !(o instanceof pcgen.core.PCClass c) || who.isQualifiedFor(c) : null);
+		}
 		return page(items.get(), q);
 	}
 

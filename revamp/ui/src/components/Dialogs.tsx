@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import * as api from '../api'
 import { useDialogBridge, useStore } from '../store'
-import type { BuilderState, Catalog, FileListing } from '../types'
+import type { BuilderState, Catalog, Changed, FileListing } from '../types'
 import { Icon, Modal, useDebounced } from './ui'
 
 /** The engine stopped mid-change and wants the user to pick something (a feat's school, an ability to raise...). */
@@ -26,7 +26,14 @@ export function ChooserDialog() {
   // keep the first sentence as the heading and move the rest into the subtitle.
   const plain = chooser.title.replace(/<br\s*\/?>/gi, ' ').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim()
   const cut = plain.search(/[.!?]\s+[A-Z]/)
-  const title = cut > 0 ? plain.slice(0, cut + 1) : plain
+  const heading = cut > 0 ? plain.slice(0, cut + 1) : plain
+  const goldChoice = /starting gold/i.test(heading)
+  const title = goldChoice ? 'How do you want your starting gold?' : heading
+  // The data names these three choices after the book; say what they mean.
+  const label = (n: string) => {
+    const m = goldChoice ? /~\s*(Random|Maximum|Average)\s*$/i.exec(n) : null
+    return m ? { random: 'Roll for it', maximum: 'Take the maximum', average: 'Take the average' }[m[1].toLowerCase()] ?? n : n
+  }
   const note = cut > 0 ? plain.slice(cut + 2) : ''
   const options = chooser.options.filter((o) => o.name.toLowerCase().includes(filter.toLowerCase()))
   // Removing something frees a slot, which lets the user pick a replacement in the same step.
@@ -90,7 +97,7 @@ export function ChooserDialog() {
               checked={picked.includes(o.index)}
               onChange={() => toggle(o.index)}
             />
-            <span>{o.name}</span>
+            <span>{label(o.name)}</span>
           </label>
         ))}
         {options.length === 0 && <div className="muted">Nothing matches.</div>}
@@ -147,6 +154,110 @@ export function OpenDialog({ onClose }: { onClose: () => void }) {
             ))}
             {listing.entries.length === 0 && <div className="empty">No folders or .pcg files here.</div>}
           </div>
+        </>
+      )}
+      {!listing && (
+        <div className="empty">
+          <span className="spinner" />
+        </div>
+      )}
+    </Modal>
+  )
+}
+
+const SAVE_DIR_KEY = 'pcgen.ui.saveDir'
+
+/** Choose a folder and a file name for a character. Replacing an existing file asks first. */
+export function SaveAsDialog({ characterId, suggestedName, onClose, onSaved }: { characterId: string; suggestedName: string; onClose: () => void; onSaved: () => void }) {
+  const { act } = useStore()
+  const [listing, setListing] = useState<FileListing | null>(null)
+  const [dir, setDir] = useState<string>(() => {
+    try {
+      return window.localStorage.getItem(SAVE_DIR_KEY) ?? ''
+    } catch {
+      return ''
+    }
+  })
+  const [fileName, setFileName] = useState(() => suggestedName.replace(/[\\/:*?"<>|]+/g, '').trim() || 'character')
+
+  useEffect(() => {
+    let live = true
+    void act(() => api.get<FileListing>('/files', { dir })).then((l) => live && l && setListing(l))
+    return () => {
+      live = false
+    }
+  }, [dir, act])
+
+  const finalName = /\.pcg$/i.test(fileName.trim()) ? fileName.trim() : `${fileName.trim()}.pcg`
+  const sep = listing?.dir.includes('\\') ? '\\' : '/'
+  const target = listing ? `${listing.dir.replace(/[\\/]$/, '')}${sep}${finalName}` : ''
+  const exists = !!listing?.entries.some((f) => f.type === 'pcg' && f.name.toLowerCase() === finalName.toLowerCase())
+
+  const save = async () => {
+    if (!listing || !fileName.trim()) return
+    if (exists && !window.confirm(`${finalName} already exists in this folder. Replace it?`)) return
+    const res = await act(() => api.post<Changed>(`/characters/${encodeURIComponent(characterId)}/save`, { path: target }))
+    if (!res) return
+    try {
+      window.localStorage.setItem(SAVE_DIR_KEY, listing.dir)
+    } catch {
+      /* ignore */
+    }
+    onSaved()
+  }
+
+  return (
+    <Modal
+      title="Save character"
+      subtitle="Choose a folder, then a file name"
+      onClose={onClose}
+      wide
+      footer={
+        <>
+          <button className="btn ghost" onClick={onClose}>
+            Cancel
+          </button>
+          <button className="btn primary" disabled={!listing || !fileName.trim()} onClick={() => void save()}>
+            {exists ? 'Replace' : 'Save'}
+          </button>
+        </>
+      }
+    >
+      {listing && (
+        <>
+          <div className="file-path">
+            <button className="btn small icon" title="Up one folder" disabled={!listing.parent} onClick={() => listing.parent && setDir(listing.parent)}>
+              <Icon name="up" />
+            </button>
+            <button className="btn small" onClick={() => setDir(listing.home)}>Home</button>
+            {listing.roots.map((r) => (
+              <button key={r} className="btn small" onClick={() => setDir(r)}>{r}</button>
+            ))}
+            <span className="muted num" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{listing.dir}</span>
+          </div>
+          <div className="file-list">
+            {listing.entries.map((f) => (
+              <button
+                key={f.path}
+                className="file"
+                onClick={() => (f.type === 'dir' ? setDir(f.path) : setFileName(f.name))}
+              >
+                <Icon name={f.type === 'dir' ? 'folder' : 'file'} />
+                <span style={{ flex: 1 }}>{f.name}</span>
+              </button>
+            ))}
+            {listing.entries.length === 0 && <div className="empty">No folders or .pcg files here yet.</div>}
+          </div>
+          <label className="field" style={{ marginTop: 14 }}>
+            <span>File name</span>
+            <input
+              className="input"
+              value={fileName}
+              onChange={(e) => setFileName(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && void save()}
+            />
+          </label>
+          {exists && <p className="muted" style={{ marginTop: 8 }}>A file with this name is already here and will be replaced.</p>}
         </>
       )}
       {!listing && (

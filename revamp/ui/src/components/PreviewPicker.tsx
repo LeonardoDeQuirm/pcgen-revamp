@@ -34,6 +34,7 @@ export function PreviewPicker({
   loadInfo,
   onAdd,
   onClose,
+  addLabel = 'Add',
 }: {
   title: string
   subtitle?: string
@@ -47,6 +48,8 @@ export function PreviewPicker({
   loadInfo(id: string): Promise<InfoLike | undefined>
   onAdd(id: string): void
   onClose(): void
+  /** Verb on the confirm button ("Add" for feats and spells, "Choose" for a race). */
+  addLabel?: string
 }) {
   const [selected, setSelected] = useState<string | null>(null)
   const [info, setInfo] = useState<InfoLike | null>(null)
@@ -96,7 +99,7 @@ export function PreviewPicker({
               onAdd(selected)
             }}
           >
-            {chosen ? `Add ${chosen.title}` : 'Add'}
+            {chosen ? `${addLabel} ${chosen.title}` : addLabel}
           </button>
         </>
       }

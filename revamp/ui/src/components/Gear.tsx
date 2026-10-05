@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import * as api from '../api'
 import { useStore } from '../store'
 import type { Catalog, Changed, Character } from '../types'
+import { catalogRef, useDetail } from '../detail'
+import { StartingGoldCard } from './StartingGold'
 import { Card, Icon, useDebounced } from './ui'
 
 interface Owned {
@@ -28,6 +30,7 @@ interface GearView {
   purchased: Owned[]
   sets: string[]
   currentSet: string | null
+  buySellScheme: string | null
   slots: Slot[]
 }
 
@@ -35,10 +38,12 @@ const COINS = /^(Copper|Silver|Gold|Platinum) Piece$/i
 
 export function Gear({ character }: { character: Character }) {
   const { act, mutate } = useStore()
+  const detail = useDetail()
   const [view, setView] = useState<GearView | null>(null)
   const [q, setQ] = useState('')
   const dq = useDebounced(q)
   const [shop, setShop] = useState<Catalog | null>(null)
+  const [schemes, setSchemes] = useState<string[]>([])
   const id = encodeURIComponent(character.id)
 
   useEffect(() => {
@@ -61,6 +66,14 @@ export function Gear({ character }: { character: Character }) {
     }
   }, [dq, act])
 
+  useEffect(() => {
+    let live = true
+    void act(() => api.get<Catalog>('/dataset/gear-buy-sell')).then((r) => live && r && setSchemes(r.items.map((i) => i.name)))
+    return () => {
+      live = false
+    }
+  }, [act])
+
   if (!view) return <div className="empty"><span className="spinner" /></div>
 
   const equipped = view.slots.filter((s) => s.type === 'EQUIPMENT')
@@ -73,12 +86,14 @@ export function Gear({ character }: { character: Character }) {
     mutate(() => api.post<Changed>(`/characters/${id}/equipment/buy`, { item: key, quantity: 1, customize }))
   const sell = (key: string, quantity: number) =>
     mutate(() => api.post<Changed>(`/characters/${id}/equipment/sell`, { item: key, quantity }))
+  const setScheme = (scheme: string) => mutate(() => api.put<Changed>(`/characters/${id}/equipment/scheme`, { scheme }))
   const equip = (key: string) => mutate(() => api.post<Changed>(`/characters/${id}/equipment/equip`, { item: key }))
   const unequip = (node: number) => mutate(() => api.post<Changed>(`/characters/${id}/equipment/unequip`, { node }))
 
   return (
     <div className="grid sheet" style={{ gap: 18 }}>
       <div className="grid" style={{ gap: 18 }}>
+        <StartingGoldCard character={character} />
         <Card title={`Gear · ${gear.length}`}>
           {gear.length === 0 && <div className="muted">Nothing owned yet. Use the shop to buy something.</div>}
           <div className="rows">
@@ -86,7 +101,10 @@ export function Gear({ character }: { character: Character }) {
               <div key={g.key} className="row">
                 <div className="row-main">
                   <div className="row-title">
-                    {g.name} {g.quantity > 1 && <span className="muted num">&times;{g.quantity}</span>}
+                    <button className="link-btn" title="Show what this does" onClick={() => detail.open(catalogRef(character.id, 'equipment', g.key, g.name))}>
+                      {g.name}
+                    </button>{' '}
+                    {g.quantity > 1 && <span className="muted num">&times;{g.quantity}</span>}
                   </div>
                   <div className="row-sub">{g.types.slice(0, 4).join(' · ')}</div>
                 </div>
@@ -108,7 +126,9 @@ export function Gear({ character }: { character: Character }) {
               {shop.items.map((it) => (
                 <div key={(it.key ?? it.name) + (it.source ?? '')} className="result" style={{ cursor: 'default', alignItems: 'center' }}>
                   <span style={{ minWidth: 0 }}>
-                    <span className="row-title">{it.name}</span>
+                    <button className="link-btn row-title" title="Show what this does" onClick={() => detail.open(catalogRef(character.id, 'equipment', it.key ?? it.name, it.name))}>
+                      {it.name}
+                    </button>
                     <span className="row-sub" style={{ display: 'block', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                       {(it.type ?? '').split('.').slice(0, 4).join(' · ')}
                     </span>
@@ -130,6 +150,21 @@ export function Gear({ character }: { character: Character }) {
           {coins.map((c) => (
             <div key={c.key} className="vital"><span className="vital-label">{c.name}s</span><span className="vital-value num">{c.quantity}</span></div>
           ))}
+          <label className="field" style={{ padding: '10px 0 4px' }}>
+            <span>Prices</span>
+            <select className="input" value={view.buySellScheme ?? ''} onChange={(e) => void setScheme(e.target.value)}>
+              {schemes.map((n) => (
+                <option key={n} value={n}>
+                  {n}
+                </option>
+              ))}
+            </select>
+          </label>
+          {/cashless/i.test(view.buySellScheme ?? '') && (
+            <p className="muted" style={{ lineHeight: 1.5, paddingBottom: 6 }}>
+              Cashless: buying and selling cost nothing, so add gear freely.
+            </p>
+          )}
           <div className="vital"><span className="vital-label">Load</span><span className="vital-value">{view.load}</span></div>
           <div className="vital"><span className="vital-label">Carried</span><span className="vital-value num">{view.carried}</span></div>
           <div className="vital"><span className="vital-label">Weight limit</span><span className="vital-value num">{view.weightLimit}</span></div>
@@ -141,7 +176,12 @@ export function Gear({ character }: { character: Character }) {
               <div className="muted" style={{ fontSize: 12, fontWeight: 600, paddingBottom: 2 }}>{loc}</div>
               {items.map((s) => (
                 <div key={s.node} className="row" style={{ padding: '5px 2px' }}>
-                  <span>{s.equipment}{(s.quantity ?? 1) > 1 ? <span className="muted num"> &times;{s.quantity}</span> : null}</span>
+                  <span>
+                    <button className="link-btn" title="Show what this does" onClick={() => s.equipment && detail.open(catalogRef(character.id, 'equipment', s.equipment, s.equipment))}>
+                      {s.equipment}
+                    </button>
+                    {(s.quantity ?? 1) > 1 ? <span className="muted num"> &times;{s.quantity}</span> : null}
+                  </span>
                   <button className="btn small ghost" onClick={() => void unequip(s.node)}>Unequip</button>
                 </div>
               ))}

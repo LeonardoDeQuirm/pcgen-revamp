@@ -34,8 +34,9 @@ $env:JAVA_HOME='C:\Program Files\Eclipse Adoptium\jdk-25.0.4.101-hotspot'; .\gra
 powershell revamp/sidecar/build.ps1                                   # after any sidecar change
 python revamp/harness/run_harness.py          # CLI exports vs baselines. --update rewrites baselines
 python revamp/harness/run_sidecar_test.py     # one sidecar per sample character, chooser bridge
-python revamp/harness/run_api_test.py         # every route group + latency budgets (118 checks)
-cd revamp/ui; npm run typecheck; npm run e2e -- ..\.run\<copy>.pcg   # needs start-dev.ps1 running; 39 checks. Restart start-dev afterwards: the e2e edits the copy
+python revamp/harness/run_api_test.py         # every route group + latency budgets (153 checks)
+python revamp/harness/run_packaged_test.py    # sidecar serving the built UI, free port, token (needs npm run build in revamp/ui)
+cd revamp/ui; npm run typecheck; npm run e2e -- ..\.run\<copy>.pcg   # needs start-dev.ps1 running; 49 checks. Restart start-dev afterwards: the e2e edits the copy
 ```
 The harness also compares `revamp/local/clarent.pcg` when it exists; without it that case is skipped.
 

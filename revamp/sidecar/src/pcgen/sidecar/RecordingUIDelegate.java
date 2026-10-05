@@ -133,6 +133,26 @@ public class RecordingUIDelegate implements UIDelegate
 	private final List<Message> messages = new ArrayList<>();
 	private Supplier<Sidecar.Operation> currentOperation = () -> null;
 	private int chooserCounter;
+	/**
+	 * While set, a question asked again with the same name gets the earlier answer without asking the person twice.
+	 * Applying a kit makes the engine ask each of its questions twice (once as a rehearsal on a copy of the
+	 * character, once for real).
+	 */
+	private java.util.Map<String, Answer> replay;
+
+	/** Runs {@code action}, answering any question the engine repeats from the first answer. */
+	void withRepeatedAnswers(Runnable action)
+	{
+		replay = new java.util.HashMap<>();
+		try
+		{
+			action.run();
+		}
+		finally
+		{
+			replay = null;
+		}
+	}
 
 	void setCurrentOperation(Supplier<Sidecar.Operation> s)
 	{
@@ -232,13 +252,30 @@ public class RecordingUIDelegate implements UIDelegate
 			record("chooser-declined", String.valueOf(chooser.getName()), "no API operation is running");
 			return false;
 		}
+		Answer picks = null;
+		boolean repeated = false;
+		String repeatKey = chooser.getName();
+		if (replay != null && repeatKey != null && replay.containsKey(repeatKey))
+		{
+			picks = replay.get(repeatKey);
+			repeated = true;
+		}
 		PendingChooser pending = new PendingChooser("c" + (++chooserCounter), chooser);
-		op.pending = pending;
-		op.events.add(pending);
-		Answer picks;
+		if (!repeated)
+		{
+			op.pending = pending;
+			op.events.add(pending);
+		}
 		try
 		{
-			picks = pending.answer.get(CHOOSER_TIMEOUT_SECONDS, TimeUnit.SECONDS);
+			if (!repeated)
+			{
+				picks = pending.answer.get(CHOOSER_TIMEOUT_SECONDS, TimeUnit.SECONDS);
+				if (replay != null && repeatKey != null && picks != null)
+				{
+					replay.put(repeatKey, picks);
+				}
+			}
 		}
 		catch (TimeoutException e)
 		{

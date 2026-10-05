@@ -17,6 +17,27 @@ export interface RawResponse {
 
 const BASE = '/api'
 
+/**
+ * The desktop app opens its window with ?token=... (a secret made at launch). Keep it in memory for the API calls,
+ * remember it for reloads of this window only, and take it out of the address bar.
+ */
+const TOKEN_KEY = 'pcgen.ui.token'
+const token: string | null = (() => {
+  try {
+    const t = new URLSearchParams(window.location.search).get('token')
+    if (t) {
+      window.sessionStorage.setItem(TOKEN_KEY, t)
+      const clean = new URL(window.location.href)
+      clean.searchParams.delete('token')
+      window.history.replaceState(null, '', clean.pathname + clean.search + clean.hash)
+      return t
+    }
+    return window.sessionStorage.getItem(TOKEN_KEY)
+  } catch {
+    return null
+  }
+})()
+
 function url(path: string, query?: Record<string, string | number | boolean | undefined>): string {
   const q = new URLSearchParams()
   for (const [k, v] of Object.entries(query ?? {})) if (v !== undefined && v !== '') q.set(k, String(v))
@@ -35,7 +56,10 @@ export async function request(
   try {
     res = await fetch(url(path, query), {
       method,
-      headers: body === undefined ? undefined : { 'Content-Type': 'application/json' },
+      headers: {
+        ...(body === undefined ? {} : { 'Content-Type': 'application/json' }),
+        ...(token ? { 'X-Pcgen-Token': token } : {}),
+      },
       body: body === undefined ? undefined : JSON.stringify(body),
     })
   } catch {
