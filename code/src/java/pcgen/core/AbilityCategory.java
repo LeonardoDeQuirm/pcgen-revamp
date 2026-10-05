@@ -23,11 +23,15 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.IdentityHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.WeakHashMap;
 
 import pcgen.cdom.formula.Formula;
 import pcgen.cdom.base.BasicClassIdentity;
@@ -37,6 +41,7 @@ import pcgen.cdom.base.ClassIdentity;
 import pcgen.cdom.base.FormulaFactory;
 import pcgen.cdom.base.Loadable;
 import pcgen.cdom.enumeration.DisplayLocation;
+import pcgen.cdom.enumeration.ListKey;
 import pcgen.cdom.enumeration.ObjectKey;
 import pcgen.cdom.enumeration.Type;
 import pcgen.cdom.reference.CDOMAllRef;
@@ -733,6 +738,76 @@ public class AbilityCategory
 		return (validator != null) && validator.allowUnconstructed(getReferenceIdentity(), key);
 	}
 
+	/**
+	 * Which abilities of a parent manufacturer carry which Type, built once and reused by every category that
+	 * is populated from the same parent. Populating used to test every ability against every category's types
+	 * (and sort the parent's whole object list again for each category), which was about half of the time
+	 * spent loading a large source set. Valid while the parent holds the same number of objects, which is true
+	 * for the whole of one resolution pass.
+	 */
+	private static final class TypeIndex
+	{
+		final int count;
+		final IdentityHashMap<Ability, Integer> position = new IdentityHashMap<>();
+		final Map<Type, List<Ability>> byType = new HashMap<>();
+
+		TypeIndex(ReferenceManufacturer<Ability> parentCrm)
+		{
+			count = parentCrm.getConstructedObjectCount();
+			int i = 0;
+			for (Ability ability : parentCrm.getAllObjects())
+			{
+				position.put(ability, i++);
+				List<Type> abilityTypes = ability.getListFor(ListKey.TYPE);
+				if (abilityTypes != null)
+				{
+					for (Type type : new HashSet<>(abilityTypes))
+					{
+						byType.computeIfAbsent(type, k -> new ArrayList<>()).add(ability);
+					}
+				}
+			}
+		}
+
+		boolean isCurrent(ReferenceManufacturer<Ability> parentCrm)
+		{
+			return count == parentCrm.getConstructedObjectCount();
+		}
+	}
+
+	/** One index per parent manufacturer: categories are populated from a handful of different parents, interleaved. */
+	private static final Map<ReferenceManufacturer<Ability>, TypeIndex> TYPE_INDEXES = new WeakHashMap<>();
+
+	/** The parent's abilities that have at least one of the types, in the parent's own order. */
+	private static synchronized List<Ability> abilitiesOfTypes(ReferenceManufacturer<Ability> parentCrm,
+		Set<Type> wanted)
+	{
+		TypeIndex index = TYPE_INDEXES.get(parentCrm);
+		if (index == null || !index.isCurrent(parentCrm))
+		{
+			index = new TypeIndex(parentCrm);
+			TYPE_INDEXES.put(parentCrm, index);
+		}
+		final TypeIndex found = index;
+		if (wanted.size() == 1)
+		{
+			List<Ability> only = found.byType.get(wanted.iterator().next());
+			return only == null ? Collections.emptyList() : only;
+		}
+		Set<Ability> union = Collections.newSetFromMap(new IdentityHashMap<>());
+		for (Type type : wanted)
+		{
+			List<Ability> some = found.byType.get(type);
+			if (some != null)
+			{
+				union.addAll(some);
+			}
+		}
+		List<Ability> result = new ArrayList<>(union);
+		result.sort(Comparator.comparingInt(a -> found.position.get(a)));
+		return result;
+	}
+
 	@Override
 	public boolean populate(ReferenceManufacturer<Ability> parentCrm, ReferenceManufacturer<Ability> rm,
 		UnconstructedValidator validator)
@@ -741,32 +816,29 @@ public class AbilityCategory
 		{
 			return true;
 		}
-		Collection<Ability> allObjects = parentCrm.getAllObjects();
 		// Don't add things twice or we'll get dupe messages :)
 		Set<Ability> added = Collections.newSetFromMap(new IdentityHashMap<>());
 		/*
 		 * Pull in all the base objects... note this skips containsDirectly
 		 * because items haven't been resolved
 		 */
-		for (final Ability ability : allObjects)
+		Collection<Ability> candidates;
+		if (isAllAbilityTypes)
 		{
-			boolean use = isAllAbilityTypes;
-			if (!use && (types != null))
-			{
-				for (Type type : types)
-				{
-					if (ability.isType(type))
-					{
-						use = true;
-						break;
-					}
-				}
-			}
-			if (use)
-			{
-				added.add(ability);
-				rm.addObject(ability, ability.getKeyName());
-			}
+			candidates = parentCrm.getAllObjects();
+		}
+		else if (types != null && !types.isEmpty())
+		{
+			candidates = abilitiesOfTypes(parentCrm, types);
+		}
+		else
+		{
+			candidates = Collections.emptyList();
+		}
+		for (final Ability ability : candidates)
+		{
+			added.add(ability);
+			rm.addObject(ability, ability.getKeyName());
 		}
 		boolean returnGood = true;
 		if (containedAbilities != null)
